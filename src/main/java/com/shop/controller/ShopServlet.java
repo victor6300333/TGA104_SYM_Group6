@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -38,81 +41,82 @@ public class ShopServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
-
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
 
 		@SuppressWarnings("unchecked")
-		List<Product> buylist = (Vector<Product>) session.getAttribute("shoppingcart");
-		HashMap<Integer, List<Product>> check = new HashMap<Integer, List<Product>>();
+//		List<Product> buylist = (Vector<Product>) session.getAttribute("check");
+		Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
 		
 		String action = req.getParameter("action");
 
 		if (!action.equals("CHECKOUT")) {
-//			Jedis jedis = new Jedis("localhost", 6379);
-//			jedis.select(5);
 
-			// 刪除購物車中的書籍
-			if (action.equals("DELETE")) {
-				String del = req.getParameter("del");
-		
-				
-				int d = Integer.parseInt(del);
-				buylist.remove(d);
-			}
 			// 新增書籍至購物車中
-			else if (action.equals("ADD")) {
+			 if (action.equals("ADD")) {
 
 				// 取得後來新增的書籍
 				Product product = getProduct(req);
+				Integer storeID = product.getStoreID();
+				
 
-				if (buylist == null) {
 
-					buylist = new Vector<Product>();
-					buylist.add(product);
-//					check.put(product.getStoreID(), buylist);
-//					jedis.hset("1", product.getName(), product.getQuantity().toString());
+				if (check==null) {
+					
+					List list = new ArrayList();
+					list.add(product);
+					
+					check = new HashMap<Integer, List<Product>>();
+					check.put(storeID, list);
 
 				} else {
+					if(check.get(storeID)==null) {
+						List<Product> buylist = new ArrayList<Product>();
+						buylist.add(product);
+						check.put(storeID, buylist);
+					} else {
+						
+					List<Product> buylist = check.get(storeID);
 					
-
 					if (buylist.contains(product)) {
 
-						Product innerBOOK = buylist.get(buylist.indexOf(product));
-						innerBOOK.setQuantity(innerBOOK.getQuantity() + product.getQuantity());
-
-//						jedis.hset("1", product.getName(), innerBOOK.getQuantity().toString());
+						Product innerProduct = buylist.get(buylist.indexOf(product));
+						innerProduct.setQuantity(innerProduct.getQuantity() + product.getQuantity());
 
 					} else {
 						buylist.add(product);
-//						jedis.hset("1", product.getName(), product.getQuantity().toString());
+						check.put(storeID, buylist);
+				
 					}
+				  }
 				}
-//        product.setQuantity(Integer.parseInt(jedis.get(product.getMemberID().toString())));
-				check.put(product.getStoreID(), buylist);
-			}
-			
-//			jedis.hvals(1)
 
-			session.setAttribute("shoppingcart", buylist);
+			
+			}
+	
 			session.setAttribute("check", check);
 
 			String url = "/front-end/shop/Cart.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}
+		
 
 		// 結帳，計算購物車書籍價錢總數
-		else if (action.equals("CHECKOUT")) {
+		if (action.equals("CHECKOUT")) {
 			int total = 0;
+			
+			Set<Integer> set = check.keySet();
+			Iterator<Integer> it = set.iterator();
+			
+			while (it.hasNext()) {
+			
 			List<OrderlistVO> orderlist = new ArrayList<OrderlistVO>();
-			for (int i = 0; i < buylist.size(); i++) {
-				Product order = buylist.get(i);
+			
+			for (int i = 0; i < check.get(it.next()).size(); i++) {
+				Product order = check.get(it.next()).get(i);
 				Integer price = order.getPrice();
 				Integer quantity = order.getQuantity();
 				Integer productID = order.getProductID();
@@ -126,33 +130,29 @@ public class ShopServlet extends HttpServlet {
 				list.setPrice(price);
 				list.setQuantity(quantity);
 				list.setSubTotal(price*quantity);
-			
-//				list.setShopReview("none");
-//				list.setShopComment("none");
-//				list.setBuyerReview("none");
-//				list.setBuyerComment("none");
+
 				orderlist.add(list);
 		
-			}
-//			OrderlistService orderlistService = new OrderlistService();
-//			orderlistService.addOrderlist(orderlist);
-		
-
+			 }
+			
+			
 			String amount = String.valueOf(total);
 			req.setAttribute("amount", amount);
 
 			OrderVO ordervo = new OrderVO();
 
-			String receiver = req.getParameter("receiver");
-			String phone = req.getParameter("phone");
-			String address = req.getParameter("address");
-			String paytype = req.getParameter("paytype");
+			String str = req.getParameter("storeID"+it.next().toString());
+			Integer storeID = Integer.parseInt(str);
+			String receiver = req.getParameter("receiver"+str);
+			String phone = req.getParameter("phone"+str);
+			String address = req.getParameter("address"+str);
+			String paytype = req.getParameter("paytype"+str);
 
-			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"));
-			Double count = Double.valueOf(req.getParameter("couponID"));
+			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold")+str);
+			Double count = Double.valueOf(req.getParameter("couponID")+str);
 
 			ordervo.setMemberID(1);
-			ordervo.setStoreID(2);
+			ordervo.setStoreID(storeID);
 			ordervo.setCreditcardNumber("10");
 			ordervo.setPayType(paytype);
 			ordervo.setReceiver(receiver);
@@ -170,7 +170,17 @@ public class ShopServlet extends HttpServlet {
 			OrderService ordsvc = new OrderService();
 			ordsvc.addOrder(ordervo, orderlist);
 
-			req.setAttribute("orderprint", ordervo);
+			session.setAttribute("orderprint"+str, ordervo);
+			
+			
+			
+			
+			}
+//			OrderlistService orderlistService = new OrderlistService();
+//			orderlistService.addOrderlist(orderlist);
+		
+
+			
 
 			String url = "/front-end/shop/Checkout.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -212,6 +222,7 @@ public class ShopServlet extends HttpServlet {
 		product.setStoreID(Integer.parseInt(storeID));
 		return product;
 	}
+	
 
 //	static void addCart(Long userID, Long productID, int num) {
 //		Jedis jedis = new Jedis("localhost",6379);

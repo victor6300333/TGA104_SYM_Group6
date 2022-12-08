@@ -41,7 +41,7 @@
       <input type="hidden" name="price" value="600">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="1">
+      <input type="hidden" name="storeID" value="2">
   </form>
 
   
@@ -58,7 +58,7 @@
       <input type="hidden" name="price" value="200">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
-      <input type="hidden" name="storeID" value="1">
+      <input type="hidden" name="storeID" value="2">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
@@ -91,7 +91,7 @@
       <input type="hidden" name="price" value="180">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeID" value="4">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
@@ -107,7 +107,7 @@
       <input type="hidden" name="price" value="300">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
-      <input type="hidden" name="storeID" value="3">
+      <input type="hidden" name="storeID" value="4">
   </form>
 
 
