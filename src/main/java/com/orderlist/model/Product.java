@@ -14,6 +14,18 @@ public class Product implements java.io.Serializable {
 	private String name;
 	private Integer productID;
 	private Integer storeID;
+	private String storeName;
+	private Integer price;
+	private Integer quantity;
+	
+	
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
 	
 	
 	public Integer getStoreID() {
@@ -23,8 +35,6 @@ public class Product implements java.io.Serializable {
 		this.storeID = storeID;
 	}
 
-	private Integer price;
-	private Integer quantity;
 
 	public Integer getProductID() {
 		return productID;

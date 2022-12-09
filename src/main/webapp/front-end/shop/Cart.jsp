@@ -60,7 +60,7 @@
 		<tr id="my-car-tr">
 			<td width="140"><%=order.getName()%></td>
 			<td width="110"><%=order.getPrice()%></td>
-			<td width="110"><%=order.getStoreID()%></td>
+			<td width="110"><%=order.getStoreName()%></td>
 
 			<td id="minus"><input type="button"
 				onclick="minuser<%=index + 1 + count%>()" value="-" /></td>
@@ -69,7 +69,7 @@
 				onclick="adder<%=index + 1 + count%>()" value="+" /></td>
 
 			<td class="my-car-td" width="120" align="center" valign="middle"
-				id="<%=-index - 1 + count%>"><%=order.getPrice() * order.getQuantity()%></td>
+				id="<%=-index - 1 - count%>"><%=order.getPrice() * order.getQuantity()%></td>
 		</tr>
 	</table>
 
@@ -80,16 +80,16 @@
 		
 		function adder<%=index + 1 + count%>() {
 			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=-index - 1 + count%>").innerHTML;
+			var sum = document.getElementById("<%=-index - 1 - count%>").innerHTML;
 			count = parseInt(count) + 1;
 			sum = <%=order.getPrice()%> * count;
 			document.getElementById("<%=index + 1 + count%>").innerHTML = count;
-			document.getElementById("<%=-index - 1 + count%>").innerHTML = sum;
+			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
 			
 		}
 		function minuser<%=index + 1 + count%>() {
 			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=-index - 1 + count%>").innerHTML;
+			var sum = document.getElementById("<%=-index - 1 - count%>").innerHTML;
 			if (count <= 0) {
 				count = 0;
 				sum = 0;
@@ -100,7 +100,7 @@
 
 			
 			document.getElementById("<%=index + 1 + count%>").innerHTML = count;
-			document.getElementById("<%=-index - 1 + count%>").innerHTML = sum;
+			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
 		}
 		
 		document.getElementById("total").innerHTML = total;
@@ -123,7 +123,8 @@
 	
 
 		
-		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>"> <br> 
+		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>"> 
+		<input type="hidden" name="storeName<%=storeID%>" value="<%=buylist.get(0).getStoreName()%>">
 		<b>收件者: </b><input type="text" name="receiver<%=storeID%>"> <br> 
 		<b>電話號碼:</b><input type="text" name="phone<%=storeID%>"> <br>  
 		<b>收件地址:</b><input type="text" name="address<%=storeID%>"> <br> 
@@ -169,6 +170,7 @@ addTotal()
 	<%
 	}
 	%>
+
 
 <input type="hidden" name="action" value="CHECKOUT">
 <input type="submit" value="送出" class="button">

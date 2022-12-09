@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 public class OrderVO {
 	private Integer orderID ;
 	private Integer storeID ;
+	private String storeName ;
 	private Integer memberID ;
 	private Timestamp orderDate ;
 	private Integer orderStatus;
@@ -20,6 +21,12 @@ public class OrderVO {
 	private Integer useCouponGold;
 	private Integer finalTotal;
     
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 	public Integer getOrderID() {
 		return orderID;
 	}

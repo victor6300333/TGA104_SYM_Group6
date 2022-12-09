@@ -106,17 +106,23 @@ public class ShopServlet extends HttpServlet {
 
 		// 結帳，計算購物車書籍價錢總數
 		if (action.equals("CHECKOUT")) {
-			int total = 0;
+			
+//			List<OrderVO> orderVO_list = new ArrayList();
+			Map<OrderVO,List<OrderlistVO>> orderVO_list = new HashMap<OrderVO,List<OrderlistVO>>();
 			
 			Set<Integer> set = check.keySet();
 			Iterator<Integer> it = set.iterator();
 			
 			while (it.hasNext()) {
+			int total = 0;
 			
 			List<OrderlistVO> orderlist = new ArrayList<OrderlistVO>();
+			Integer storeID = it.next();
+			List<Product> buylist = check.get(storeID);
 			
-			for (int i = 0; i < check.get(it.next()).size(); i++) {
-				Product order = check.get(it.next()).get(i);
+			for (int i = 0; i < buylist.size(); i++) {
+				Product order = buylist.get(i);
+				String name = order.getName();
 				Integer price = order.getPrice();
 				Integer quantity = order.getQuantity();
 				Integer productID = order.getProductID();
@@ -124,9 +130,10 @@ public class ShopServlet extends HttpServlet {
 				total += (price * quantity);
 
 				
-				OrderlistVO list = new OrderlistVO();
+				OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
 
 				list.setProductID(productID);
+				list.setProductName(name);
 				list.setPrice(price);
 				list.setQuantity(quantity);
 				list.setSubTotal(price*quantity);
@@ -139,20 +146,22 @@ public class ShopServlet extends HttpServlet {
 			String amount = String.valueOf(total);
 			req.setAttribute("amount", amount);
 
-			OrderVO ordervo = new OrderVO();
-
-			String str = req.getParameter("storeID"+it.next().toString());
-			Integer storeID = Integer.parseInt(str);
+			OrderVO ordervo = new OrderVO(); //產生訂單物件
+			
+			String str = req.getParameter("storeID"+storeID.toString());
+			Integer storeid = Integer.parseInt(str);
+			String storeName = req.getParameter("storeName"+str);
 			String receiver = req.getParameter("receiver"+str);
 			String phone = req.getParameter("phone"+str);
 			String address = req.getParameter("address"+str);
 			String paytype = req.getParameter("paytype"+str);
 
-			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold")+str);
-			Double count = Double.valueOf(req.getParameter("couponID")+str);
+			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"+str));
+			Double count = Double.valueOf(req.getParameter("couponID"+str));
 
 			ordervo.setMemberID(1);
-			ordervo.setStoreID(storeID);
+			ordervo.setStoreID(storeid);
+			ordervo.setStoreName(storeName);
 			ordervo.setCreditcardNumber("10");
 			ordervo.setPayType(paytype);
 			ordervo.setReceiver(receiver);
@@ -165,17 +174,23 @@ public class ShopServlet extends HttpServlet {
 			ordervo.setUseCouponGold((int) (total * (1 - count)));
 			ordervo.setUseShoppingGold(useShoppingGold);
 			ordervo.setFinalTotal((int) (total * count - useShoppingGold));
+			
+			orderVO_list.put(ordervo, orderlist);
 
 
 			OrderService ordsvc = new OrderService();
 			ordsvc.addOrder(ordervo, orderlist);
 
-			session.setAttribute("orderprint"+str, ordervo);
 			
+//			session.setAttribute("orderVO"+str, ordervo);
 			
 			
 			
 			}
+			
+			session.setAttribute("orderVO_list", orderVO_list);
+			
+			
 //			OrderlistService orderlistService = new OrderlistService();
 //			orderlistService.addOrderlist(orderlist);
 		
@@ -186,7 +201,7 @@ public class ShopServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 
-			session.removeAttribute("shoppingcart");
+			session.removeAttribute("check");
 
 //			receiver:input, phone:input, address:input
 //			creditcard:信用卡, atm: atm轉帳, arrive:貨到付款, coupon:85 75, 
@@ -211,6 +226,7 @@ public class ShopServlet extends HttpServlet {
 		String price = req.getParameter("price");
 		String productID = req.getParameter("productID");
 		String storeID = req.getParameter("storeID");
+		String storeName = req.getParameter("storeName");
 //		String storeID = req.getParameter("storeID");
 
 		Product product = new Product();
@@ -220,6 +236,7 @@ public class ShopServlet extends HttpServlet {
 		product.setPrice(new Integer(price));
 		product.setQuantity((new Integer(quantity)).intValue());
 		product.setStoreID(Integer.parseInt(storeID));
+		product.setStoreName(storeName);
 		return product;
 	}
 	

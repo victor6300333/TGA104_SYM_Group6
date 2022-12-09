@@ -11,7 +11,7 @@
 <hr>
 <table id="table-1">
   <tr> 
-    <th width="200">商品名稱</th><th width="100">價格</th>
+    <th width="200">商品名稱</th><th width="200">賣場名稱</th><th width="100">價格</th>
     <th width="120">數量</th><th width="120"><img src="images/shopping-cart.png" width="45px" height="35px"></th>
   </tr></table>
  
@@ -41,7 +41,8 @@
       <input type="hidden" name="price" value="600">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeID" value="1">
+      <input type="hidden" name="storeName" value="當鋪">
   </form>
 
   
@@ -59,6 +60,7 @@
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
       <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeName" value="寶可夢">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
@@ -75,6 +77,7 @@
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
       <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeName" value="寶可夢">
 
   </form>
   
@@ -91,7 +94,8 @@
       <input type="hidden" name="price" value="180">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="4">
+      <input type="hidden" name="storeID" value="3">
+      <input type="hidden" name="storeName" value="塔羅牌">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
@@ -107,7 +111,8 @@
       <input type="hidden" name="price" value="300">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
-      <input type="hidden" name="storeID" value="4">
+      <input type="hidden" name="storeID" value="3">
+      <input type="hidden" name="storeName" value="塔羅牌">
   </form>
 
 

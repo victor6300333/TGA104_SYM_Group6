@@ -4,7 +4,8 @@ public class OrderlistVO {
 	Integer orderDetailID;
 	Integer orderID;
     Integer productID;
-    Integer quantity;
+    String productName;
+	Integer quantity;
     Integer price;
     Integer subTotal;
     String shopReview;
@@ -12,9 +13,15 @@ public class OrderlistVO {
     String buyerReview;
     String buyerComment;
     
-   
+  
     
-    public Integer getOrderDetailID() {
+    public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public Integer getOrderDetailID() {
 		return orderDetailID;
 	}
 	public void setOrderDetailID(Integer orderDetailID) {
