@@ -98,7 +98,7 @@ public class ShopServlet extends HttpServlet {
 	
 			session.setAttribute("check", check);
 
-			String url = "/front-end/shop/Cart.jsp";
+			String url = "/front-end/shop/Cart_new.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
 		}

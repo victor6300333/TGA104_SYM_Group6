@@ -25,7 +25,15 @@
 	while (it.hasNext()) {
 		OrderVO ordervo = it.next(); 
 		List<OrderlistVO> orderlist = orderVO_list.get(ordervo);
-	
+		%>	
+		 <tr>
+		<th width="200">坝珇嘿</th>
+		<th width="100">基</th>
+		<th width="100">计秖</th>
+		<th width="120"><h3>羆基</h3></th>
+	</tr>
+		
+	<%
 		for (int i = 0; i < orderlist.size(); i++) {
 			OrderlistVO order = orderlist.get(i);
 			String name = order.getProductName();	
@@ -35,12 +43,7 @@
 		%>
 <table style="margin: auto;">	
 
-     <tr>
-		<th width="200">坝珇嘿</th>
-		<th width="100">基</th>
-		<th width="100">计秖</th>
-		<th width="120"><h3>羆基</h3></th>
-	</tr>	
+    	
 	<tr>
 		<td width="200"><%=name%>     </td>
 		<td width="100"><%=price%>    </td>

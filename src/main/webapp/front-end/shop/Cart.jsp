@@ -2,7 +2,7 @@
 <%@ page import="java.util.* ,com.orderlist.model.Product"%>
 <html>
 <head>
-<title>Mode II 嚙範嚙課程嚙踝蕭 - Cart.jsp</title>
+<title>Mode II  - Cart.jsp</title>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/ShoppingCart.css">
 </head>
@@ -153,19 +153,25 @@ let total = 0;
 
 
 
-function addTotal(){
-// for td total
-carList.forEach((e)=>{ 
-	total += e.textContent
-})
-// result
-count.textContent = total
+<script>
+var count1 = document.querySelector("#count");
+
+var total = 0;
+
+function addTotal() {
+ 
+
+  total += parseInt(
+    document.querySelectorAll(".my-car-td")[i].textContent,
+    10
+  );
+
+  // result
+  count1.innerhtml = total;
 }
 
-addTotal()
+addTotal();
 
-// console.log(total);
-// console.log(carList);
 </script>
 	<%
 	}

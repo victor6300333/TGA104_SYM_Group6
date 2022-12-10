@@ -31,6 +31,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">不一樣的養生法</div></td>
+      <td width="200"><div align="center">當鋪</div></td>
 
       <td width="100"><div align="center">600</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -49,6 +50,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">哈利波特-神秘的魔法石</div></td>
+      <td width="200"><div align="center">寶可夢</div></td>
 
       <td width="100"><div align="center">200</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -66,6 +68,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">麻辣女教師</div></td>
+      <td width="200"><div align="center">寶可夢</div></td>
 
       <td width="100"><div align="center">190</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -84,6 +87,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">把話說到心窩</div></td>
+      <td width="200"><div align="center">塔羅牌</div></td>
  
       <td width="100"><div align="center">180</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -101,6 +105,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table ><tr> 
       <td width="200"><div align="center">一個人聖經</div></td>
+      <td width="200"><div align="center">塔羅牌</div></td>
   
       <td width="100"><div align="center">300</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
