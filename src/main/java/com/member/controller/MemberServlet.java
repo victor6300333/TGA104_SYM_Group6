@@ -72,7 +72,7 @@ public class MemberServlet extends HttpServlet {
 //			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("memVO2", memVO); // 資料庫取出的empVO物件,存入req
+			req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 			String url = "/member/listAllMember.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
@@ -152,6 +152,8 @@ public class MemberServlet extends HttpServlet {
 
 			Integer memberId = memSvc.getOne();
 
+			String mail = req.getParameter("mail");
+
 			MemberVO memVO = new MemberVO();
 			memVO.setGender(gender);
 			memVO.setBirthday(birthday);
@@ -165,7 +167,7 @@ public class MemberServlet extends HttpServlet {
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("memVO2", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/register2.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
@@ -173,11 +175,15 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			memVO = memSvc.updateMember(memberId, gender, birthday, userPhoto, mailCertification, idNumber, address,
+			memSvc.updateMember(memberId, gender, birthday, userPhoto, mailCertification, idNumber, address,
 					sellerAuditApprovalState, currentShoppingCoin);
 
+			memVO = memSvc.loginOneMem(mail);
+
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("memVO2", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
+
+			HttpSession session = req.getSession();
+			session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 			String url = "/front-end/member/my-account.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -250,9 +256,11 @@ public class MemberServlet extends HttpServlet {
 			memVO.setUserPhoto(userPhoto);
 			memVO.setMemberId(memberId);
 
+			HttpSession session = req.getSession();
+
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("memVO2", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				session.setAttribute("memVO", memVO);// 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/my-account.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
@@ -261,9 +269,53 @@ public class MemberServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 
 			memVO = memSvc.updateOneMember(memberId, userName, userAccount, phone, mail, userPhoto);
-
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("memVO2", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
+			session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
+			String url = "/front-end/member/my-account.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+			successView.forward(req, res);
+
+		}
+
+		if ("updateOnePassword".equals(action)) { // 來自update_emp_input.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			MemberService memSvc = new MemberService();
+
+			String userPassword = req.getParameter("userPassword").trim();
+//			System.out.println("userPassword = " + userPassword);
+			String userPasswordReg = "^[(a-zA-Z0-9)]{2,10}$";
+			if (userPassword == null || userPassword.trim().length() == 0) {
+				errorMsgs.add("使用者密碼: 請勿空白");
+			} else if (!userPassword.trim().matches(userPasswordReg)) { // 以下練習正則(規)表示式(regular-expression)
+				errorMsgs.add("使用者密碼: 只能是英文字母和數字 , 且長度必需在2到10之間");
+			}
+
+			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+
+			MemberVO memVO = new MemberVO();
+			memVO.setMemberId(memberId);
+			memVO.setUserPassword(userPassword);
+
+			HttpSession session = req.getSession();
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/my-account.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
+			}
+
+			/*************************** 2.開始修改資料 *****************************************/
+
+			memSvc.updateMemberPassword(memberId, userPassword);
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+//			session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 			String url = "/front-end/member/my-account.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -287,6 +339,7 @@ public class MemberServlet extends HttpServlet {
 			}
 
 			String userPassword = req.getParameter("userPassword").trim();
+//			System.out.println("userPassword = " + userPassword);
 			String userPasswordReg = "^[(a-zA-Z0-9)]{2,10}$";
 			if (userPassword == null || userPassword.trim().length() == 0) {
 				errorMsgs.add("使用者密碼: 請勿空白");
@@ -396,26 +449,73 @@ public class MemberServlet extends HttpServlet {
 				errorMsgs1.add("請輸入正確的信箱格式！");
 			}
 
-			MemberVO memVO2 = new MemberVO();
-			memVO2.setMail(mail);
+			String userPassword = req.getParameter("userPassword").trim();
+			String userPasswordReg = "^[(a-zA-Z0-9)]{2,10}$";
+			if (userPassword == null || userPassword.trim().length() == 0) {
+				errorMsgs1.add("使用者密碼: 請勿空白");
+			} else if (!userPassword.trim().matches(userPasswordReg)) { // 以下練習正則(規)表示式(regular-expression)
+				errorMsgs1.add("使用者密碼: 只能是英文字母和數字 , 且長度必需在2到10之間");
+			}
+
+			MemberVO memVO = new MemberVO();
+			memVO.setMail(mail);
+			memVO.setUserPassword(userPassword);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs1.isEmpty()) {
-				req.setAttribute("memVO2", memVO2); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("memVO2", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
 
-			/*************************** 2.開始查詢資料 ****************************************/
-			MemberService memSvc = new MemberService();
-			memVO2 = memSvc.loginOneMem(mail);
+			MemberService memSvcLogin = new MemberService();
 
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("memVO2", memVO2); // 資料庫取出的empVO物件,存入req
-			String url = "/front-end/member/my-account.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
-			successView.forward(req, res);
+			System.out.println(memSvcLogin.getOneForLogin(mail, userPassword));
+			if (!(memSvcLogin.getOneForLogin(mail, userPassword))) { // 【帳號 , 密碼無效時】
+
+				errorMsgs1.add("使用者帳號或密碼錯誤");
+				if (!errorMsgs1.isEmpty()) {
+					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+
+			} else { // 【帳號 , 密碼有效時, 才做以下工作】
+				HttpSession session = req.getSession();
+				session.setAttribute("mail", mail); // *工作1: 才在session內做已經登入過的標識
+
+				try {
+					String location = (String) session.getAttribute("location");
+					if (location != null) {
+						session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+						res.sendRedirect(location);
+						return;
+					}
+				} catch (Exception ignored) {
+				}
+
+				MemberService memSvc = new MemberService();
+				memVO = memSvc.loginOneMem(mail);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+				res.sendRedirect(req.getContextPath() + "/front-end/member/my-account.jsp"); // *工作3:
+																								// (-->如無來源網頁:則重導至login_success.jsp)
+			}
+
+		}
+
+		if ("getOne_For_LogOut".equals(action)) {
+
+			HttpSession session = req.getSession();
+			// 登出操作，清除用戶的登入狀態
+			session.removeAttribute("mail");
+
+			// 重定向到登入頁面
+			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
+
 		}
 
 	}

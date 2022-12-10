@@ -29,8 +29,8 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
-<link href="lib/slick/slick.css" rel="stylesheet" />
-<link href="lib/slick/slick-theme.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css" rel="stylesheet" />
 
 <!-- Template Stylesheet -->
 <link href="${pageContext.request.contextPath}/front-end/member/css/style.css" rel="stylesheet" />
@@ -80,7 +80,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<a href="login.html" class="nav-link">登入/註冊</a>
+						<a href="login.jsp" class="nav-link">登入/註冊</a>
 					</div>
 				</div>
 			</nav>
@@ -94,7 +94,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="img/logo.png" alt="Logo" />
+						<a href="index.html"> <img src="${pageContext.request.contextPath}/front-end/member/img/logo.png" alt="Logo" />
 						</a>
 					</div>
 				</div>
@@ -213,8 +213,9 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<br /> <br />
 									<div class="col-md">
 										<input type="hidden" name="action" value="update"> <input
-											type="hidden" name="memberId" value=""> <input
-											class="btn" type="submit" value="註冊">
+											type="hidden" name="memberId" value="${memVO.getMemberId()}"> 
+											<input type="hidden" name="mail" value="${memVO.getMail()}">
+											<input class="btn" type="submit" value="註冊">
 
 
 									</div>
