@@ -66,6 +66,16 @@ public class MemberService {
 		return memberVO;
 	}
 
+	public MemberVO updateMemberPassword(Integer memberId, String userPassword) {
+		MemberVO memberVO = new MemberVO();
+
+		memberVO.setMemberId(memberId);
+		memberVO.setUserPassword(userPassword);
+		dao.updateOnePasswoed(memberVO);
+
+		return memberVO;
+	}
+
 	public void deleteMember(Integer memberId) {
 		dao.delete(memberId);
 	}
@@ -80,6 +90,10 @@ public class MemberService {
 
 	public Integer getOne() {
 		return dao.selectLastMemberID();
+	}
+
+	public Boolean getOneForLogin(String mail, String userPassword) {
+		return dao.findOneMemberForLogin(mail, userPassword);
 	}
 
 	public List<MemberVO> getAll() {

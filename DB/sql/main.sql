@@ -673,6 +673,7 @@ create table orderDetail(
 	orderDetailID int not null auto_increment comment '訂單明細ID', 
 	orderID int not null comment '訂單ID',
     productID int not null comment '商品ID',
+    productName int not null comment '商品名稱',
     quantity int not null comment '訂購數量',
     price int not null comment '訂購單價',
     subTotal int not null comment '小計',

@@ -22,10 +22,10 @@ public class OrderDAO implements OrderDAO_interface {
 	String userid = "root";
 	String passwd = "password";
 
-	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, memberID, "
+	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, "
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
 			+ "address, payType, couponID, originalTotal, useShoppingGold, useCouponGold, finalTotal) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 	private static final String GET_ONE_STMT = "SELECT orderID, storeID, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order` where orderID = ?";
@@ -47,19 +47,20 @@ public class OrderDAO implements OrderDAO_interface {
 			
 //			pstmt.setInt(1, orderVO.getOrderID());
 			pstmt.setInt(1,orderVO.getStoreID());
-			pstmt.setInt(2, orderVO.getMemberID());
-			pstmt.setTimestamp(3, orderVO.getOrderDate());
-			pstmt.setInt(4, orderVO.getOrderStatus());
-			pstmt.setString(5, orderVO.getReceiver());
-			pstmt.setString(6, orderVO.getPhone());
-			pstmt.setString(7, orderVO.getCreditcardNumber());
-			pstmt.setString(8, orderVO.getAddress());
-			pstmt.setString(9, orderVO.getPayType());
-			pstmt.setInt(10, orderVO.getCouponID());
-			pstmt.setInt(11, orderVO.getOriginalTotal());
-			pstmt.setInt(12, orderVO.getUseShoppingGold());
-			pstmt.setInt(13, orderVO.getUseCouponGold());
-			pstmt.setInt(14, orderVO.getFinalTotal());
+			pstmt.setString(2,orderVO.getStoreName());
+			pstmt.setInt(3, orderVO.getMemberID());
+			pstmt.setTimestamp(4, orderVO.getOrderDate());
+			pstmt.setInt(5, orderVO.getOrderStatus());
+			pstmt.setString(6, orderVO.getReceiver());
+			pstmt.setString(7, orderVO.getPhone());
+			pstmt.setString(8, orderVO.getCreditcardNumber());
+			pstmt.setString(9, orderVO.getAddress());
+			pstmt.setString(10, orderVO.getPayType());
+			pstmt.setInt(11, orderVO.getCouponID());
+			pstmt.setInt(12, orderVO.getOriginalTotal());
+			pstmt.setInt(13, orderVO.getUseShoppingGold());
+			pstmt.setInt(14, orderVO.getUseCouponGold());
+			pstmt.setInt(15, orderVO.getFinalTotal());
 //			Statement stmt=	con.createStatement();
 			pstmt.executeUpdate();
 			
@@ -140,6 +141,7 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
 				orderVO.setStoreID(rs.getInt("storeID"));
+				orderVO.setStoreName(rs.getString("storeName"));
 				orderVO.setMemberID(rs.getInt("memberID"));
 				orderVO.setOrderDate(rs.getTimestamp("orderDate"));
 				orderVO.setOrderStatus(rs.getInt("orderStatus"));
@@ -203,6 +205,7 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
 				orderVO.setStoreID(rs.getInt("storeID"));
+				orderVO.setStoreName(rs.getString("storeName"));
 				orderVO.setMemberID(rs.getInt("memberID"));
 				orderVO.setOrderDate(rs.getTimestamp("orderDate"));
 				orderVO.setOrderStatus(rs.getInt("orderStatus"));

@@ -4,10 +4,10 @@
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.creditCard.model.*"%>
 <%
-MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
+MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
 CreditCardService cardSvc = new CreditCardService();
-List<CreditCardVO> list = cardSvc.getAll(memVO2.getMemberId());
+List<CreditCardVO> list = cardSvc.getAll(memVO.getMemberId());
 pageContext.setAttribute("list", list);
 %>
 <!DOCTYPE html>
@@ -21,7 +21,9 @@ pageContext.setAttribute("list", list);
 <meta content="eCommerce HTML Template Free Download" name="description" />
 
 <!-- Favicon -->
-<link href="./img/logoSYM.jpg" rel="icon" />
+<link
+	href="${pageContext.request.contextPath}/front-end/img/logoSYM.jpg"
+	rel="icon" />
 
 <!-- Google Fonts -->
 <link
@@ -35,17 +37,35 @@ pageContext.setAttribute("list", list);
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
-<link href="lib/slick/slick.css" rel="stylesheet" />
-<link href="lib/slick/slick-theme.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css"
+	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/front-end/member/css/style.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/member/css/woody.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
+	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
 
 <body>
+
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
       <div class="container-fluid">
@@ -91,12 +111,15 @@ pageContext.setAttribute("list", list);
 
 						<a href="my-account.html" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO2.memberId}"
-							alt="" style="width: 40px; height: 40px" /> <%=memVO2.getUserAccount()%>
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO.memberId}"
+							alt="" style="width: 40px; height: 40px" /> <%=memVO.getUserName()%>
 						</a>
 						<div class="dropdown-menu">
-							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
-								href="index.html" class="dropdown-item">登出</a>
+							<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="dropdown-item">我的帳號</a>	
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemberServlet"> 
+							<input type="hidden" name="action" value="getOne_For_LogOut">
+							<input class="dropdown-item" type="submit" name="action" value="登出"></a>
+							</FORM>
 
 						</div>
 					</div>
@@ -112,7 +135,9 @@ pageContext.setAttribute("list", list);
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="img/logo.png" alt="Logo" />
+						<a href="index.html"> <img
+							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
+							alt="Logo" />
 						</a>
 					</div>
 				</div>
@@ -172,7 +197,7 @@ pageContext.setAttribute("list", list);
 							id="payment-nav" data-toggle="pill" href="#payment-tab"
 							role="tab"><i class="fa-solid fa-coins"></i>我的購物金</a> <a
 							class="nav-link" id="address-nav" data-toggle="pill"
-							href="#address-tab" role="tab"><i class="fa-solid fa-ticket"></i></i>我的優惠券</a>
+							href="#coupon-tab" role="tab"><i class="fa-solid fa-ticket"></i></i>我的優惠券</a>
 						<a class="nav-link" id="blocklist-nav" data-toggle="pill"
 							href="#blocklist-tab" role="tab"><i
 							class="fa-solid fa-user-xmark"></i>封鎖名單</a>
@@ -302,45 +327,44 @@ pageContext.setAttribute("list", list);
 											</div>
 
 											<input type="hidden" name="memberId"
-												value="${memVO2.getMemberId() }"> <input
+												value="${memVO.getMemberId() }"> <input
 												type="hidden" name="action" value="insert"> <input
 												class="btn" type="submit" value="新增信用卡"> <br /> <br />
 										</FORM>
 										<hr>
-									<thead class="thead-dark">
-										<tr>
-
-											<th>信用卡卡號</th>
-											<th>安全碼</th>
-											<th>到期日</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-									<tbody>
-
-										<c:forEach var="cardVO" items="${list}">
+										<thead class="thead-dark">
 											<tr>
 
-												<td>${cardVO.creditCardNumber}</td>
-												<td>${cardVO.securityCode}</td>
-												<td>${cardVO.exDate}</td>
-
-												<td>
-													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/member/CreditCardServlet"
-														style="margin-bottom: 0px;">
-														<input type="hidden" name="creditCardId"
-															value="${cardVO.creditCardId}"> <input
-															type="hidden" name="memberId"
-															value="${memVO2.getMemberId() }"> <input
-															type="hidden" name="action" value="delete"> <input
-															class="btn" type="submit" value="刪除">
-													</FORM>
-												</td>
+												<th>信用卡卡號</th>
+												<th>安全碼</th>
+												<th>到期日</th>
+												<th>操作</th>
 											</tr>
-										</c:forEach>
-									</tbody>
+										</thead>
+										<tbody>
 
+											<c:forEach var="cardVO" items="${list}">
+												<tr>
+
+													<td>${cardVO.creditCardNumber}</td>
+													<td>${cardVO.securityCode}</td>
+													<td>${cardVO.exDate}</td>
+
+													<td>
+														<FORM METHOD="post"
+															ACTION="<%=request.getContextPath()%>/member/CreditCardServlet"
+															style="margin-bottom: 0px;">
+															<input type="hidden" name="creditCardId"
+																value="${cardVO.creditCardId}"> <input
+																type="hidden" name="memberId"
+																value="${memVO.getMemberId()}"> <input
+																type="hidden" name="action" value="delete"> <input
+																class="btn" type="submit" value="刪除">
+														</FORM>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
 								</table>
 
 
@@ -348,14 +372,70 @@ pageContext.setAttribute("list", list);
 						</div>
 						<div class="tab-pane fade" id="payment-tab" role="tabpanel"
 							aria-labelledby="payment-nav">
-							<h4>Payment Method</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								In condimentum quam ac mi viverra dictum. In efficitur ipsum
-								diam, at dignissim lorem tempor in. Vivamus tempor hendrerit
-								finibus. Nulla tristique viverra nisl, sit amet bibendum ante
-								suscipit non. Praesent in faucibus tellus, sed gravida lacus.
-								Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus
-								scelerisque.</p>
+							<div
+								style="display: flex; flex-direction: column; align-items: center;">
+								<div style="display: flex;">
+									<div>我的購物金:</div>
+									<div id="shoppingGold">50</div>
+									<div>元</div>
+								</div>
+							</div>
+
+							<div class="daysContainer">
+								<div>購物金簽到</div>
+								<div class="dayRow">
+									<div class="dayBlock">Day1</div>
+									<div class="dayBlock">Day2</div>
+									<div class="dayBlock">Day3</div>
+									<div class="dayBlock">Day4</div>
+									<div class="dayBlock">Day5</div>
+									<div class="dayBlock">Day6</div>
+									<div class="dayBlock">Day7</div>
+								</div>
+								<div>完成實名認證即可領取購物金</div>
+							</div>
+							<div class="table-outbox">
+								<table>
+									<thead>
+										<tr>
+											<th>日期</th>
+											<th>會員ID</th>
+											<th>購物金異動金額</th>
+											<th>使用/獲得</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>test-1</td>
+											<td>test-1</td>
+											<td>test-1</td>
+											<td>test-1</td>
+										</tr>
+
+										<tr>
+											<td>test-2</td>
+											<td>test-2</td>
+											<td>test-2</td>
+											<td>test-2</td>
+										</tr>
+
+										<tr>
+											<td>test-3</td>
+											<td>test-3</td>
+											<td>test-3</td>
+											<td>test-3</td>
+										</tr>
+
+										<tr>
+											<td>test-4</td>
+											<td>test-4</td>
+											<td>test-4</td>
+											<td>test-4</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="tab-pane fade" id="blocklist-tab" role="tabpanel"
 							aria-labelledby="blocklist-nav">
@@ -391,22 +471,88 @@ pageContext.setAttribute("list", list);
 								</table>
 							</div>
 						</div>
-						<div class="tab-pane fade" id="address-tab" role="tabpanel"
-							aria-labelledby="address-nav">
-							<h4>Address</h4>
-							<div class="row">
-								<div class="col-md-6">
-									<h5>Payment Address</h5>
-									<p>123 Payment Street, Los Angeles, CA</p>
-									<p>Mobile: 012-345-6789</p>
-									<button class="btn">Edit Address</button>
+						<div class="tab-pane fade" id="coupon-tab" role="tabpanel"
+							aria-labelledby="coupon-nav">
+							<div class="quan" v-for="(item,i) in couponList" : key="i">
+								<div class="quanInfo">
+									<text class="couponMpoey">$200元<text
+										class="couponMpoeyInfo"> 滿1500元折抵200元</text></text>
+									<text class="couponName">全館滿額折抵200</text>
+									<text class="couponTime">2022-11-14~2022-11-25</text>
 								</div>
-								<div class="col-md-6">
-									<h5>Shipping Address</h5>
-									<p>123 Shipping Street, Los Angeles, CA</p>
-									<p>Mobile: 012-345-6789</p>
-									<button class="btn">Edit Address</button>
+								<div class="receiveBtn">
+									<div>
+										<button class="receive">使用</button>
+									</div>
 								</div>
+							</div>
+							<div class="quan" v-for="(item,i) in couponList" : key="i">
+								<div class="quanInfo">
+									<text class="couponMpoey">85折<text
+										class="couponMpoeyInfo"> 不限購買金額</text></text>
+									<text class="couponName">全館優惠85折</text>
+									<text class="couponTime">2022-11-11~2022-11-22</text>
+								</div>
+								<div class="receiveBtn">
+									<div>
+										<button class="receive">使用</button>
+									</div>
+								</div>
+							</div>
+							<div class="quan" v-for="(item,i) in couponList" : key="i">
+								<div class="quanInfo">
+									<text class="couponMpoey">$100元<text
+										class="couponMpoeyInfo"> 滿1000元折抵100元</text></text>
+									<text class="couponName">全館滿額折抵100</text>
+									<text class="couponTime">2022-11-13~2022-11-24</text>
+								</div>
+								<div class="receiveBtn">
+									<div>
+										<button class="receive">使用</button>
+									</div>
+								</div>
+							</div>
+							<div class="table-outbox">
+								<table>
+									<thead>
+										<tr>
+											<th>使用日期</th>
+											<th>會員ID</th>
+											<th>優惠券ID</th>
+											<th>使用紀錄</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>test-1</td>
+											<td>test-1</td>
+											<td>test-1</td>
+											<td>test-1</td>
+										</tr>
+
+										<tr>
+											<td>test-2</td>
+											<td>test-2</td>
+											<td>test-2</td>
+											<td>test-2</td>
+										</tr>
+
+										<tr>
+											<td>test-3</td>
+											<td>test-3</td>
+											<td>test-3</td>
+											<td>test-3</td>
+										</tr>
+
+										<tr>
+											<td>test-4</td>
+											<td>test-4</td>
+											<td>test-4</td>
+											<td>test-4</td>
+										</tr>
+
+									</tbody>
+								</table>
 							</div>
 						</div>
 						<div class="tab-pane fade active show" id="account-tab"
@@ -430,24 +576,24 @@ pageContext.setAttribute("list", list);
 											<div class="col-md py-1">
 												<input class="form-control" type="text" name="userName"
 													placeholder="姓名"
-													value="<%=(memVO2.getUserName() == null) ? "" : memVO2.getUserName()%>" />
+													value="<%=(memVO.getUserName() == null) ? "" : memVO.getUserName()%>" />
 											</div>
 											<div class="col-md py-1">
 												<input class="form-control" type="text" name="userAccount"
 													placeholder="帳號"
-													value="<%=(memVO2.getUserAccount() == null) ? "" : memVO2.getUserAccount()%>" />
+													value="<%=(memVO.getUserAccount() == null) ? "" : memVO.getUserAccount()%>" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
 												<input class="form-control" type="text" name="phone"
 													placeholder="手機號碼"
-													value="<%=(memVO2.getPhone() == null) ? "" : memVO2.getPhone()%>" />
+													value="<%=(memVO.getPhone() == null) ? "" : memVO.getPhone()%>" />
 											</div>
 											<div class="col-md py-1">
 												<input class="form-control" type="text" name="mail"
 													placeholder="電子信箱"
-													value="<%=(memVO2.getMail() == null) ? "" : memVO2.getMail()%>" />
+													value="<%=(memVO.getMail() == null) ? "" : memVO.getMail()%>" />
 											</div>
 										</div>
 
@@ -458,7 +604,7 @@ pageContext.setAttribute("list", list);
 											<div class="col-md py-1">
 												<input type="hidden" name="action" value="updateOne">
 												<input type="hidden" name="memberId"
-													value="<%=(memVO2 == null) ? "" : memVO2.getMemberId()%>">
+													value="<%=(memVO == null) ? "" : memVO.getMemberId()%>">
 												<input class="btn" type="submit" value="更新資料"> <br />
 												<br />
 											</div>
@@ -472,7 +618,7 @@ pageContext.setAttribute("list", list);
 											<div
 												class="col-6 p-1 align-self-center d-flex justify-content-center">
 												<img class="rounded-circle user_img"
-													src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO2.memberId}"
+													src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO.memberId}"
 													alt="" style="width: 160px; height: 160px" />
 											</div>
 											<div class="w-100"></div>
@@ -522,22 +668,42 @@ pageContext.setAttribute("list", list);
 						<div class="tab-pane fade" id="password-tab" role="tabpanel"
 							aria-labelledby="password-nav">
 
+
 							<h4>變更密碼</h4>
-							<div class="row">
-								<div class="col-md-12">
-									<input class="form-control" type="password"
-										placeholder="請輸入舊密碼" />
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+								style="margin-bottom: 0px;">
+								
+								<div class="row">
+								<%-- 錯誤表列 --%>
+								<c:if test="${not empty errorMsgs}">
+									<font style="color: red">請修正以下錯誤:</font>
+									<ul>
+										<c:forEach var="message" items="${errorMsgs}">
+											<li style="color: red">${message}</li>
+										</c:forEach>
+									</ul>
+								</c:if>
+									<div class="col-md-12">
+										<input class="form-control" type="password"
+											placeholder="請輸入舊密碼" />
+									</div>
+									<div class="col-md-6">
+										<input class="form-control" type="password"
+											name="userPassword" placeholder="請輸入新密碼" />
+									</div>
+									<div class="col-md-6">
+										<input class="form-control" type="password"
+											placeholder="請再輸入一次新密碼" />
+									</div>
+									<div class="col-md-12">
+										<input type="hidden" name="action" value="updateOnePassword">
+										<input type="hidden" name="memberId"
+											value="<%=memVO.getMemberId()%>"> <input class="btn"
+											type="submit" value="送出">
+									</div>
 								</div>
-								<div class="col-md-6">
-									<input class="form-control" type="text" placeholder="請輸入新密碼" />
-								</div>
-								<div class="col-md-6">
-									<input class="form-control" type="text" placeholder="請再輸入一次新密碼" />
-								</div>
-								<div class="col-md-12">
-									<button class="btn">修改密碼</button>
-								</div>
-							</div>
+							</FORM>
 						</div>
 					</div>
 				</div>
@@ -651,8 +817,10 @@ pageContext.setAttribute("list", list);
 	<script src="lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
 </body>
 
 </html>

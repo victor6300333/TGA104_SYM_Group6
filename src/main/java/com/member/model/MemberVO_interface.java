@@ -9,6 +9,8 @@ public interface MemberVO_interface {
 
 	public void updateOne(MemberVO memberVO);
 
+	public void updateOnePasswoed(MemberVO memberVO);
+
 	public void delete(Integer memberId);
 
 	public MemberVO findByPrimaryKey(Integer memberId);
@@ -20,5 +22,7 @@ public interface MemberVO_interface {
 	public List<MemberVO> getAll();
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<EmpVO> getAll(Map<String, String[]> map); 
+
+	public Boolean findOneMemberForLogin(String mail, String userPassword);
 
 }

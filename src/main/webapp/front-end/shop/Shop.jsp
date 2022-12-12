@@ -11,7 +11,7 @@
 <hr>
 <table id="table-1">
   <tr> 
-    <th width="200">商品名稱</th><th width="100">價格</th>
+    <th width="200">商品名稱</th><th width="200">賣場名稱</th><th width="100">價格</th>
     <th width="120">數量</th><th width="120"><img src="images/shopping-cart.png" width="45px" height="35px"></th>
   </tr></table>
  
@@ -31,6 +31,7 @@
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">不一樣的養生法</div></td>
+      <td width="200"><div align="center">當鋪</div></td>
 
       <td width="100"><div align="center">600</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -41,13 +42,15 @@
       <input type="hidden" name="price" value="600">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeID" value="1">
+      <input type="hidden" name="storeName" value="當鋪">
   </form>
 
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">哈利波特-神秘的魔法石</div></td>
+      <td width="200"><div align="center">寶可夢</div></td>
 
       <td width="100"><div align="center">200</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -59,11 +62,13 @@
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
       <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeName" value="寶可夢">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">麻辣女教師</div></td>
+      <td width="200"><div align="center">寶可夢</div></td>
 
       <td width="100"><div align="center">190</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -75,12 +80,14 @@
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
       <input type="hidden" name="storeID" value="2">
+      <input type="hidden" name="storeName" value="寶可夢">
 
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table><tr> 
       <td width="200"><div align="center">把話說到心窩</div></td>
+      <td width="200"><div align="center">塔羅牌</div></td>
  
       <td width="100"><div align="center">180</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -91,12 +98,14 @@
       <input type="hidden" name="price" value="180">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="1">
-      <input type="hidden" name="storeID" value="4">
+      <input type="hidden" name="storeID" value="3">
+      <input type="hidden" name="storeName" value="塔羅牌">
   </form>
   
   <form name="shoppingForm" action="ShopServlet" method="POST">
     <table ><tr> 
       <td width="200"><div align="center">一個人聖經</div></td>
+      <td width="200"><div align="center">塔羅牌</div></td>
   
       <td width="100"><div align="center">300</div></td>
       <td width="120"><div align="center">數量：<input type="text" name="quantity" size="3" value=1></div></td>
@@ -107,7 +116,8 @@
       <input type="hidden" name="price" value="300">
       <input type="hidden" name="action" value="ADD">
       <input type="hidden" name="productID" value="2">
-      <input type="hidden" name="storeID" value="4">
+      <input type="hidden" name="storeID" value="3">
+      <input type="hidden" name="storeName" value="塔羅牌">
   </form>
 
 

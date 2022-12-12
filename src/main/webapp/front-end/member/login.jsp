@@ -16,7 +16,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 <meta content="eCommerce HTML Template Free Download" name="description" />
 
 <!-- Favicon -->
-<link href="./img/logoSYM.jpg" rel="icon" />
+<link href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg" rel="icon" />
 
 <!-- Google Fonts -->
 <link
@@ -81,7 +81,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<a href="login.html" class="nav-link">登入/註冊</a>
+						<a href="login.jsp" class="nav-link">登入/註冊</a>
 					</div>
 				</div>
 			</nav>
@@ -95,14 +95,13 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="img/logo.png" alt="Logo" />
+						<a href="index.html"> <img src="${pageContext.request.contextPath}/front-end/member/img/logo.png" alt="Logo" />
 						</a>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<input type="text" placeholder="商品搜尋
-                " />
+						<input type="text" placeholder="商品搜尋" />
 						<button>
 							<i class="fa fa-search"></i>
 						</button>
@@ -205,10 +204,10 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 							<div class="row">
 								<div class="col-md-6">
 									<label>電子信箱</label> <input class="form-control" type="text" name="mail"
-										placeholder="電子信箱" value="<%= (memVO2==null)? "" : memVO.getMail()%>" />
+										placeholder="電子信箱" value="<%= (memVO2==null)? "" : memVO2.getMail()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>密碼</label> <input class="form-control" type="text" name="password"
+									<label>密碼</label> <input class="form-control" type="password" name="userPassword"
 										placeholder="密碼" />
 								</div>
 								<div class="col-md-12">
