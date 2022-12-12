@@ -24,7 +24,7 @@
           <!-- /.card-header -->
 
           <!-- form start -->
-          <form id="memberSearch" METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/administrator/adServlet">
+          <form id="memberSearch" METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/administrator/administratorServlet">
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-12">

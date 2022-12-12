@@ -3,20 +3,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.administrator.model.*"%>
 
-<%
-	AdministratorService adminSvc = new AdministratorService();
-    List<AdministratorVO> list = adminSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
 
 
 <html>
 <head>
-<title>所有廣告 - listAllAd2.jsp</title>
+<title>商家審核 - listAllAd2.jsp</title>
 </head>
 <body>
 <%@ include file="styles.jsp" %>
-    <div class="container-fluid position-relative bg-white d-flex p-0">
+<div class="container-fluid position-relative bg-white d-flex p-0">
       <!-- Spinner Start -->
       <div
         id="spinner"
@@ -58,9 +53,6 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"
-              ><i class="fa fa-tachometer-alt me-2"></i>管理員資料</a
-            >
 
             <div class="nav-item dropdown">
               <a
@@ -141,6 +133,7 @@
       </div>
       <!-- Sidebar End -->
 
+     
       <!-- Content Start -->
       <div class="content sym-yellow-bk">
         <!-- Navbar Start -->
@@ -214,14 +207,6 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                <i class="fa fa-bell me-lg-2"></i>
-                <span class="d-none d-lg-inline-flex">通知</span>
-              </a>
               <div
                 class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"
               >
@@ -269,29 +254,19 @@
         </nav>
         <!-- Navbar End -->
 
-        <!-- Content starts-->
-        <div class="wrapper">
-          <header id="header"></header>
-          <!-- Main Sidebar Container 主側邊欄-->
-          <aside
-            id="sidebar"
-            class="main-sidebar sidebar-dark-primary elevation-4"
-          ></aside>
-          <!-- Content Wrapper. Contains page content 主頁面欄位-->
-          <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h2 class="m-0 sym-dark-font">商家審核列表</h2>
+                    <h2 class="m-0 sym-dark-font">商家審核</h2>
                   </div>
                   <div class="col-sm-6 flex-direction">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item">
-                        <a href="<%=request.getContextPath()%>/back-end/administrator/memberInfo.jsp">回上一頁</a>
+                        <a href="<%=request.getContextPath()%>/back-end/administrator/AdministratorServlet">商家管理</a>
                       </li>
-                      <li class="breadcrumb-item active">商場申請列表</li>
+                      <li class="breadcrumb-item active">商家審核</li>
                     </ol>
                   </div>
                 </div>
@@ -299,89 +274,6 @@
             </div>
             <!-- /.content-header -->
 
-            <!-- Main content -->
-            <div class="">
-              <div class="container-fluid">
-                <div class="row">
-                  <!-- left column -->
-                  <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                      <div class="card-header sym-darkpurple">
-                        <h3 class="card-title sym-yellow-font">商家搜尋</h3>
-                      </div>
-                      <!-- /.card-header -->
-                      <!-- form start -->
-
-                      <!-- form start -->
-                      <form id="memberSearch" onsubmit="search();return false">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-6 mb-2rem">
-                                    <label class="sym-dark-font"
-                                      ><h5>搜尋類別</h5></label
-                                    >
-                                    <select
-                                      id="searchID"
-                                      name="searchID"
-                                      class="form-control"
-                                    >
-                                      <option value="memName">賣場編號</option>
-                                      <option value="memID">會員帳號</option>
-                                      <option value="memEmail">電子信箱</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-6">
-                                    <label class="sym-dark-font"
-                                      ><h5>輸入欄位</h5></label
-                                    >
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      id="searchValue"
-                                      name="searchValue"
-                                    />
-                                  </div>
-
-                                  <div class="col-6 mb-2rem">
-                                    <label class="sym-dark-font"
-                                      ><h5>其他條件</h5></label
-                                    >
-                                    <select
-                                      id="searchID"
-                                      name="searchID"
-                                      class="form-control"
-                                    >
-                                      <option value="">已審核</option>
-                                      <option value="">待審核</option>
-                                      <option value="">所有</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                          <button
-                            type="submit"
-                            class="btn sym-darkpurple sym-yellow-font mb-2rem btn_style"
-                          >
-                            <i class="fa fa-search"></i>
-                            搜尋
-                          </button>
-                          <!-- <button
-                            id="resetTable"
-                            class="btn btn-default float-right"
-                          >
-                            重置
-                          </button> -->
-                        </div>
-                      </form>
 
 
 <!-- Main content -->
@@ -407,31 +299,34 @@
                             >
                               <thead>
                                 <tr>
-                                  	<th>會員帳號</th>
+ 									<th>會員帳號</th>
 									<th>賣場名稱</th>
 									<th>賣場地址</th>
 									<th>連絡電話</th>
 									<th>創建日期</th>
+									<th>更新日期</th>
 									<th>統一編號</th>
 									<th>審核狀態</th>
 									<th>設定</th>
                                 </tr>
                               </thead>
 		<tr>
-		<td>${administratorVO.memberID}</td>
-		<td>${administratorVO.groupBuyID}</td>
-		<td>${administratorVO.adTitle}</td>
-		<td>${administratorVO.adDescribe}</td> 
-		<td>${administratorVO.adStartDate}</td>
-		<td>${administratorVO.adStartDate}</td>
-		<td>${administratorVO.adEndDate}</td>
+		<td>${memberVO.memberID}</td>
+		<td>${memberVO.storeName}</td>
+		<td>${memberVO.storeAddress}</td>
+		<td>${memberVO.phoneNumber}</td> 
+		<td>${memberVO.createDate}</td>
+		<td>${memberVO.updateDate}</td>
+		<td>${memberVO.taxID}</td>			
+		<td>${memberVO.storeAuditStatus}</td>		
 		<td>
-		  <FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/back-end/administrator/AdministratorServlet" style="margin-bottom: 0px;">
-		     <input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" valuadSeriale="修改">
-		     <input type="hidden" name="memberID"  value="${administrator.memberID}">
+		  <FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemberServlet" style="margin-bottom: 0px;">
+		     <input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="審核">
+		     <input type="hidden" name="memberID"  value="${memberVO.memberID}">
 		     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 		</td>
 	</tr>
+                   
                             </table>
                           </div>
                           <!-- /.card-body -->
@@ -441,7 +336,6 @@
                       <div class="card-footer mb-2rem">
                       
                        <!-- /.card-body -->
-                    
                     
                     
                       </div>
@@ -460,10 +354,7 @@
               </div>
             </div>
              <!-- Footer Start -->
-       
-      <!-- Content End -->
-          </div>
- <div class="container-fluid pt-4 px-4">
+        <div class="container-fluid pt-4 px-4">
           <div class="bg-light rounded-top p-4">
             <div class="row">
               <div class="col-12 col-sm-6 text-center text-sm-start">
@@ -479,6 +370,9 @@
         </div>
         <!-- Footer End -->
       </div>
+      <!-- Content End -->
+          </div>
+
 
 </body>
 </html>

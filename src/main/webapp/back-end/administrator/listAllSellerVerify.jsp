@@ -1,14 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.administrator.model.*"%>
+
+<%
+	AdministratorService adminSvc = new AdministratorService();
+    List<AdministratorVO> list = adminSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
+
+
 <html>
 <head>
-<meta charset="UTF-8">
-<title>footer</title>
+<title>商家查詢 - listAllSellerVerify.jsp</title>
 </head>
 <body>
 <%@ include file="styles.jsp" %>
-<div class="container-fluid position-relative bg-white d-flex p-0">
+    <div class="container-fluid position-relative bg-white d-flex p-0">
       <!-- Spinner Start -->
       <div
         id="spinner"
@@ -50,9 +58,6 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"
-              ><i class="fa fa-tachometer-alt me-2"></i>管理員資料</a
-            >
 
             <div class="nav-item dropdown">
               <a
@@ -133,7 +138,6 @@
       </div>
       <!-- Sidebar End -->
 
-     
       <!-- Content Start -->
       <div class="content sym-yellow-bk">
         <!-- Navbar Start -->
@@ -212,36 +216,6 @@
                 class="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                <i class="fa fa-bell me-lg-2"></i>
-                <span class="d-none d-lg-inline-flex">通知</span>
-              </a>
-              <div
-                class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"
-              >
-                <a href="#" class="dropdown-item">
-                  <h6 class="fw-normal mb-0">公告消息更新</h6>
-                  <small>15 minutes ago</small>
-                </a>
-                <hr class="dropdown-divider" />
-                <a href="#" class="dropdown-item">
-                  <h6 class="fw-normal mb-0">會員審核申請</h6>
-                  <small>15 minutes ago</small>
-                </a>
-                <hr class="dropdown-divider" />
-                <a href="#" class="dropdown-item">
-                  <h6 class="fw-normal mb-0">廣告上架更新</h6>
-                  <small>15 minutes ago</small>
-                </a>
-                <hr class="dropdown-divider" />
-                <a href="#" class="dropdown-item text-center">所有通知</a>
-              </div>
-            </div>
-            <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
                 <img
                   class="rounded-circle me-lg-2"
                   src="../img/logoSYM3.jpg"
@@ -261,7 +235,7 @@
           </div>
         </nav>
         <!-- Navbar End -->
-<!------------------插入區塊--------------------------------------------------------------->
+
         <!-- Content starts-->
         <div class="wrapper">
           <header id="header"></header>
@@ -277,29 +251,179 @@
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h1 class="m-0 sym-dark-font">會員管理</h1>
+                    <h2 class="m-0 sym-dark-font">商家查詢</h2>
                   </div>
-                  <!-- /.col -->
                   <div class="col-sm-6 flex-direction">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item">
-                        <a href="#">Home</a>
+                        <a href="<%=request.getContextPath()%>/back-end/administrator/memberInfo.jsp">Home</a>
                       </li>
-                      <li class="breadcrumb-item active">會員管理</li>
+                      <li class="breadcrumb-item active">商家查詢</li>
                     </ol>
                   </div>
                 </div>
               </div>
             </div>
             <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="">
+              <div class="container-fluid">
+                <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                      <div class="card-header sym-darkpurple">
+                        <h3 class="card-title sym-yellow-font">搜尋欄位</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+
+                      <!-- form start -->
+                      <form id="memberSearch" onsubmit="search();return false">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="form-group">
+                                <div class="row">
+<!--                                   <div class="col-6 mb-2rem"> -->
+<!--                                     <label class="sym-dark-font" -->
+<!--                                       ><h5>搜尋類別</h5></label -->
+<!--                                     > -->
+<!--                                     <select -->
+<!--                                       id="searchID" -->
+<!--                                       name="searchID" -->
+<!--                                       class="form-control" -->
+<!--                                     > -->
+<!--                                       <option value="memName">賣場編號</option> -->
+<!--                                       <option value="memID">會員帳號</option> -->
+<!--                                       <option value="memEmail">電子信箱</option> -->
+<!--                                     </select> -->
+<!--                                   </div> -->
+<!--                                   <div class="col-6"> -->
+<!--                                     <label class="sym-dark-font" -->
+<!--                                       ><h5>輸入欄位</h5></label -->
+<!--                                     > -->
+<!--                                     <input -->
+<!--                                       type="text" -->
+<!--                                       class="form-control" -->
+<!--                                       id="searchValue" -->
+<!--                                       name="searchValue" -->
+<!--                                     /> -->
+<!--                                   </div> -->
+
+                                  <div class="col-6 mb-2rem">
+                                    <label class="sym-dark-font"
+                                      ><h5>商家申請狀態</h5></label
+                                    >
+                                    <select
+                                      id="searchID"
+                                      name="searchID"
+                                      class="form-control"
+                                    >
+                                      <option value="">待審核</option>
+                                      <option value="">已審核</option>
+                                      <option value="">全部</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+              <button
+                type="submit"
+                class="btn sym-darkpurple sym-yellow-font mb-2rem btn_style"
+              >
+                <i class="fa fa-search"></i>
+               <a href='listAllMember.jsp' style="color: white;">搜尋</a>
+              </button>
+                          <!-- <button
+                            id="resetTable"
+                            class="btn btn-default float-right"
+                          >
+                            重置
+                          </button> -->
+                        </div>
+                      </form>
+
+
+<!-- Main content -->
+            <div class="">
+              <div class="container-fluid">
+                <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                      <div class="card-header sym-darkpurple">
+                        <h3 class="card-title sym-yellow-font">搜尋結果</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="col-md-12">
+                        <div class="card card-primary">
             
-<!-- main start -->
-<%-- <%@ include file="xxxx.jsp" %> --%>
-<!-- main ends -->
-<!------------------插入區塊--------------------------------------------------------------->
-        </div>
-        <!-- Content ends-->
-        	<%-- 錯誤表列 --%>
+                          <!-- /.card-header -->
+                          <div class="card-body">
+                            <table
+                              id="memberTable"
+                              class="table table-bordered table-hover"
+                            >
+                              <thead>
+                                <tr>
+                                  	<th>會員帳號</th>
+									<th>賣場名稱</th>
+									<th>賣場地址</th>
+									<th>連絡電話</th>
+									<th>創建日期</th>
+									<th>統一編號</th>
+									<th>審核狀態</th>
+									<th>設定</th>
+                                </tr>
+                              </thead>
+<%-- 	<%@ include file="page1.file" %>  --%>
+<%-- 				<c:forEach var="administratorVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
+		<tr>
+<%-- 		<td>${administratorVO.memberID}</td> --%>
+<%-- 		<td>${administratorVO.groupBuyID}</td> --%>
+<%-- 		<td>${administratorVO.adTitle}</td> --%>
+<%-- 		<td>${administratorVO.adDescribe}</td>  --%>
+<%-- 		<td>${administratorVO.adStartDate}</td> --%>
+<%-- 		<td>${administratorVO.adStartDate}</td> --%>
+<%-- 		<td>${administratorVO.adEndDate}</td> --%>
+		<td>1</td>
+		<td>企鵝賣場</td>
+		<td>W123456</td>
+		<td>1234567</td>
+		<td>2022-12-07</td>
+		<td>OX123456</td>
+		<td>通過</td>
+		
+		<td>
+		  <FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/back-end/administrator/AdministratorServlet" style="margin-bottom: 0px;">
+		     <input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="審核">
+		     <input type="hidden" name="memberID"  value="${administrator.memberID}">
+		     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+		</td>
+	</tr>
+<%-- 		</c:forEach> --%>
+                            </table>
+                          </div>
+                          <!-- /.card-body -->
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+                      <div class="card-footer mb-2rem">
+                      
+                       <!-- /.card-body -->
+<%--                          <%@ include file="page2.file" %> --%>
+                    
+                    
+                      </div>
+                      <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 <font style="color: red">請修正以下錯誤:</font>
 <ul>
@@ -308,9 +432,16 @@
 </c:forEach>
 </ul>
 </c:if>
-
-        <!-- Footer Start -->
-        <div class="container-fluid pt-4 px-4">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <!-- Footer Start -->
+       
+      <!-- Content End -->
+          </div>
+ <div class="container-fluid pt-4 px-4">
           <div class="bg-light rounded-top p-4">
             <div class="row">
               <div class="col-12 col-sm-6 text-center text-sm-start">
@@ -326,9 +457,6 @@
         </div>
         <!-- Footer End -->
       </div>
-      <!-- Content End -->
-
-</div>
 
 </body>
 </html>

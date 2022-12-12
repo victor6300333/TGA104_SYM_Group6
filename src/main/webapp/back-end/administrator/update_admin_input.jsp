@@ -3,221 +3,337 @@
 <%@ page import="com.administrator.model.*"%>
 
 <%
-	AdministratorVO administratorVO = (AdministratorVO) request.getAttribute("administratorVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
+	AdministratorVO administratorVO = (AdministratorVO) request.getAttribute("administratorVO");
 %>
-<%-- --<%= adVO==null %>--${adVO.groupBuyID()}-- --%>
+<%-- --<%= administratorVO==null %>--${administratorVO.groupBuyID()}-- --%>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>廣告資料修改 - update_ad_input.jsp</title>
-
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
-
+<title>管理員修改 - update_admin_input2.jsp</title>
 </head>
-<body bgcolor='white'>
+<body>
+	<%@ include file="styles.jsp"%>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>員工資料修改 - update_ad_input.jsp</h3>
-				<h4>
-					<a href="select_page.jsp"><img src="images/back1.gif"
-						width="100" height="32" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<div class="container-fluid position-relative bg-white d-flex p-0">
+	<!-- Spinner Start -->
+<div id="spinner"
+	class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+	<div class="spinner-border text-primary"
+		style="width: 3rem; height: 3rem" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<!-- Spinner End -->
 
-	<h3>資料修改:</h3>
+<!-- Sidebar Start -->
+<div class="sidebar pe-4 pb-3 sym-skin">
+	<nav class="navbar sym-skin navbar-light">
+		<a href="index.html" class="navbar-brand mx-4 mb-3">
+			<h3 class="text-primary">
+				<img src="../img/logoSYM.jpg" alt="logo" width="100%" />
+			</h3>
+		</a>
+		<div class="d-flex align-items-center ms-4 mb-4">
+			<div class="position-relative">
+				<img class="rounded-circle" src="../img/logoSYM3.jpg" alt=""
+					style="width: 40px; height: 40px" />
+	<div
+		class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+</div>
+<div class="ms-3">
+	<!-- <h4 class="mb-0">歡迎您~</h4> -->
+				<span><h5>Admin</h5></span>
+			</div>
+		</div>
+		<div class="navbar-nav w-100">
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i
+					class="fa fa-tachometer-alt me-2"></i>公告管理</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="typography.html" class="dropdown-item">公告消息管理</a>
+				</div>
+			</div>
 
-	<FORM METHOD="post" enctype="multipart/form-data"
-		ACTION="<%=request.getContextPath()%>/back-end/ad/ad.do"
-		name="form1">
-		<table>
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>商家管理</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="button.html" class="dropdown-item">商家審核</a> <a
+						href="typography.html" class="dropdown-item">商家查詢</a>
+				</div>
+			</div>
 
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i class="fa fa-th me-2"></i>活動管理</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="button.html" class="dropdown-item">廣告設定</a> <a
+						href="typography.html" class="dropdown-item">優惠券設定</a>
+				</div>
+			</div>
 
-<!-- 			<tr> -->
-<!-- 				<td>廣告編號:<font color=red><b>*</b></font></td> -->
-<%-- 				<td><%=adVO.getAdSerialID()%></td> --%>
-<!-- 			</tr> -->
-			
-<%-- 			<jsp:useBean id="adSvc" scope="page" --%>
-<%-- 				class="com.ad.model.AdService" /> --%>
-<!-- 			<tr> -->
-<!-- 				<td>廣告類別:<font color=red><b>*</b></font></td> -->
-<!-- 				<td><select size="1" name="adType"> -->
-<%-- 						<c:forEach var="adVO" items="${adSvc.all}"> --%>
-<%-- 							<option value="${adVO.adType}" --%>
-<%-- 								${(adVO.adSerialID==adVO.adSerialID)?'selected':'' }>${adVO.adType} --%>
-<%-- 						</c:forEach> --%>
-<!-- 				</select></td> -->
-<!-- 			</tr> -->
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i class="fa fa-keyboard me-2"></i>會員管理</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="button.html" class="dropdown-item">會員查詢</a>
+				</div>
+			</div>
 
-<!-- 			<tr> -->
-<!-- 				<td>廣告標題:</td> -->
-<!-- 				<td><input type="TEXT" name="adTitle" size="45" -->
-<%-- 					value="<%=adVO.getAdTitle()%>" /></td> --%>
-<!-- 			</tr> -->
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="button.html" class="dropdown-item">團購訂單</a> <a
+						href="button.html" class="dropdown-item">商品管理</a>
+				</div>
+			</div>
 
-<!-- 			<tr> -->
-<!-- 				<td>廣告描述:</td> -->
-<!-- 				<td><input type="TEXT" name="adDescribe" size="45" -->
-<%-- 					value="<%=adVO.getAdDescribe()%>" /></td> --%>
-<!-- 			</tr> -->
-
-<!-- 			<tr> -->
-<!-- 				<td>開始日期:</td> -->
-<!-- 				<td><input name="adStartDate" id="start_date" -->
-<!-- 					type="text" /></td> -->
-<!-- 			</tr> -->
-
-<!-- 			<tr> -->
-<!-- 				<td>結束日期:</td> -->
-<!-- 				<td><input name="adEndDate" id="end_date" -->
-<!-- 					type="text" /></td> -->
-<!-- 			</tr> -->
-
-
-<!-- 			<tr> -->
-<!-- 				<td>圖片上傳:</td> -->
-<!-- 				<td><input name="data" id="p_file" type="file"></td> -->
-<!-- 			</tr> -->
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle"
+					data-bs-toggle="dropdown"><i class="fa fa-chart-bar me-2"></i>客服中心</a>
+				<div class="dropdown-menu bg-transparent border-0">
+					<a href="button.html" class="dropdown-item">平台幫助中心</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+<!-- Sidebar End -->
 
 
+<!-- Content Start -->
+<div class="content sym-yellow-bk">
+	<!-- Navbar Start -->
+<nav
+	class="navbar navbar-expand sym-skin sticky-top px-4 py-0 mb-2rem">
+	<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+		<h2 class="text-primary mb-0">
+			<i class="fa fa-hashtag"></i>
+		</h2>
+	</a> <a href="#" class="sidebar-toggler flex-shrink-0"> <i
+		class="fa fa-bars"></i>
+	</a>
 
-<!-- 		</table> -->
-<!-- 		<br> <input type="hidden" name="action" value="update"> <input -->
-<!-- 			type="hidden" name="adSerialID" -->
-<%-- 			value="<%=adVO.getAdSerialID()%>"> <input --%>
-<!-- 			type="submit" value="送出修改"> -->
-<!-- 	</FORM> -->
-<!-- </body> -->
+	<div class="navbar-nav align-items-center ms-auto">
+		<div class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle"
+				data-bs-toggle="dropdown"> <i class="fa fa-envelope me-lg-2"></i>
+				<span class="d-none d-lg-inline-flex">聊聊</span>
+			</a>
+			<div
+				class="dropdown-menu dropdown-menu-end border-0 rounded-0 rounded-bottom m-0">
+				<a href="#" class="dropdown-item">
+					<div class="d-flex align-items-center">
+						<img class="rounded-circle" src="../img/logoSYM3.jpg" alt=""
+							style="width: 40px; height: 40px" />
+			<div class="ms-2">
+				<h6 class="fw-normal mb-0">message</h6>
+				<small>15 minutes ago</small>
+			</div>
+		</div>
+	</a>
+	<hr class="dropdown-divider" />
+	<a href="#" class="dropdown-item">
+		<div class="d-flex align-items-center">
+			<img class="rounded-circle" src="../img/logoSYM3.jpg" alt=""
+				style="width: 40px; height: 40px" />
+			<div class="ms-2">
+				<h6 class="fw-normal mb-0">message</h6>
+				<small>15 minutes ago</small>
+			</div>
+		</div>
+	</a>
+	<hr class="dropdown-divider" />
+	<a href="#" class="dropdown-item">
+		<div class="d-flex align-items-center">
+			<img class="rounded-circle" src="../img/logoSYM3.jpg" alt=""
+				style="width: 40px; height: 40px" />
+				<div class="ms-2">
+					<h6 class="fw-normal mb-0">message</h6>
+					<small>15 minutes ago</small>
+				</div>
+			</div>
+		</a>
+		<hr class="dropdown-divider" />
+		<a href="#" class="dropdown-item text-center">所有消息</a>
+	</div>
+</div>
+<div class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle"
+		data-bs-toggle="dropdown"> <img
+		class="rounded-circle me-lg-2" src="../img/logoSYM3.jpg" alt=""
+		style="width: 40px; height: 40px" /> <span
+				class="d-none d-lg-inline-flex">歡迎您~ Admin</span>
+			</a>
+			<div
+				class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+				<a href="#" class="dropdown-item">個人中心</a> <a href="#"
+					class="dropdown-item">設定</a> <a href="#" class="dropdown-item">登出</a>
+			</div>
+		</div>
+	</div>
+</nav>
+<!-- Navbar End -->
+
+<!-- Content starts-->
+<div class="wrapper">
+	<header id="header"></header>
+	<!-- Main Sidebar Container 主側邊欄-->
+<aside id="sidebar"
+	class="main-sidebar sidebar-dark-primary elevation-4"></aside>
+<!-- Content Wrapper. Contains page content 主頁面欄位-->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h2 class="m-0 sym-dark-font">管理員資料修改</h2>
+			</div>
+			<!-- /.col -->
+		<div class="col-sm-6 flex-direction">
+			<ol class="breadcrumb float-sm-right">
+				<li class="breadcrumb-item"><a
+					href="<%=request.getContextPath()%>/back-end/administrator/LoginServlet">home</a>
+				</li>
+				<li class="breadcrumb-item active">管理員資料修改</li>
+			</ol>
+		</div>
+		<!-- /.col -->
+	</div>
+	<!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<div class="">
+	<div class="container-fluid">
+		<div class="row">
+			<!-- left column -->
+		<div class="col-md-12">
+			<!-- general form elements -->
+			<div class="card card-primary">
+				<div class="card-header sym-darkpurple">
+					<h3 class="card-title sym-yellow-font">管理員資料修改</h3>
+				</div>
+				<!-- /.card-header -->
+				<!-- form start -->
 
 
 
-<!-- <!-- =========================================以下為 datetimepicker 之相關設定========================================== --> -->
 
-<!-- <link rel="stylesheet" type="text/css" -->
-<%-- 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> --%>
-<%-- <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script> --%>
-<!-- <script -->
-<%-- 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
+				<!-- <FORM METHOD="post" enctype="multipart/form-data" -->
+				<%-- 	ACTION="<%=request.getContextPath()%>/back-end/ad/adServlet" --%>
+				<!-- name="form1">  -->
 
-<!-- <style> -->
-/* .xdsoft_datetimepicker .xdsoft_datepicker { */
-/* 	width: 300px; /* width:  300px; */ */
-/* } */
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="sym-dark-font"><h5>管理員名稱 :</h5></label> <input
+								type="TEXT" name="adTitle" class="form-control mb-2rem"
+								id="proName" placeholder=""
+								value="<%=administratorVO.getAdministratorName()%>" />
+						</div>
+					</div>
+				</div>
+				<br /> <label for="productNameInput" class="sym-dark-font"><h5>帳號
+						:</h5></label> <input type="TEXT" name="adTitle"
+					class="form-control mb-2rem" id="proName" placeholder="請輸入帳號"
+					value="<%=administratorVO.getAdministratorAccount()%>" />
 
-/* .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box { */
-/* 	height: 151px; /* height:  151px; */ */
-/* } */
-<!-- </style> -->
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label for="proPrice" class="sym-dark-font"><h5>密碼
+									:</h5></label> <input type="TEXT" name="adDescribe"
+								class="form-control" id="proPrice" placeholder="請輸入密碼"
+								value="<%=administratorVO.getAdministratorPassword()%>" />
+							<br />
+						</div>
+					</div>
+				</div>
+				<!-- /.card-body -->
+				<!-- <div class="card-footer"> -->
+				<!-- 	<button -->
+				<!-- 		class="btn sym-darkpurple sym-yellow-font btn_style" -->
+				<!-- 		type="hidden" name="action" value="update"> -->
+				<!-- 		送出修改 -->
+				<!-- 		</button> -->
+				<!-- 		<input type="hidden" name="adSerialID" -->
+				<%-- 			value="<%=administratorVO.getAdSerialID()%>" id="addProduct"> --%>
+				<!-- 		<input type="submit" value="送出修改"> -->
 
-<!-- <script> -->
-//         $.datetimepicker.setLocale('zh');
-//         $('#f_date1').datetimepicker({
-//            theme: '',              //theme: 'dark',
-//  	       timepicker:false,       //timepicker:true,
-//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-//  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-<%--  		   value: '<%=adVO.getUpdateTime()%> --%>
-// 	', // value:   new Date(),
-// 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-// 	//startDate:	            '2017/07/10',  // 起始日
-// 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-// 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-// 	});
 
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
+			</div>
 
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+		</div>
+		<!-- /.card -->
+		<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+	</div>
+</div>
+<!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</div>
 
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+<!-- /.content -->
+</div>
 
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-</script>
+</FORM>
+
+			<!-- Footer Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="bg-light rounded-top p-4">
+					<div class="row">
+						<div class="col-12 col-sm-6 text-center text-sm-start">
+							&copy; <a href="#">Tibame TGA104 第六組 SYM</a>, All Right Reserved.
+						</div>
+						<div class="col-12 col-sm-6 text-center text-sm-end">
+							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+							Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Footer End -->
+</body>
+
+
+
+<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script
+	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+
+
+<!-- JavaScript Libraries -->
+
 <script>
 	$.datetimepicker.setLocale('zh'); // kr ko ja en
 	$(function() {
@@ -246,4 +362,6 @@ th, td {
 				});
 	});
 </script>
+
+
 </html>

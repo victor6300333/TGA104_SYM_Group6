@@ -1,7 +1,6 @@
 package com.administrator.model;
 import java.util.List;
 
-
 public class AdministratorService {
 
 	private AdministratorDAO_interface dao;
@@ -9,23 +8,40 @@ public class AdministratorService {
 	public AdministratorService() {
 		dao = new AdministratorJDBCDAO();
 	}
-
-	public AdministratorVO updateAd(Integer storeAuditStatus) {
-
-		AdministratorVO AdministratorVO = new AdministratorVO();
-		AdministratorVO.setStoreAuditStatus(storeAuditStatus);
-
-		dao.update(AdministratorVO);
-
-		return AdministratorVO;
+	
+	public AdministratorVO addAdmin(String administratorName, String administratorAccount, String administratorPassword) {
+		AdministratorVO administratorVO = new AdministratorVO();
+		administratorVO.setAdministratorName(administratorName);
+		administratorVO.setAdministratorAccount(administratorAccount);
+		administratorVO.setAdministratorPassword(administratorPassword);
+		dao.insert(administratorVO);
+		
+		return administratorVO;
 	}
 
+	public AdministratorVO updateAdmin(String administratorName, String administratorAccount, String administratorPassword) {
 
-	public AdministratorVO getOneAd(Integer memberID) {
-		return dao.selectMemberID(memberID);
+		AdministratorVO administratorVO = new AdministratorVO();
+		administratorVO.setAdministratorName(administratorName);
+		administratorVO.setAdministratorAccount(administratorAccount);
+		administratorVO.setAdministratorPassword(administratorPassword);
+		dao.update(administratorVO);
+
+		return administratorVO;
 	}
+	
+	public AdministratorVO getOneAdmin(Integer administratorID) {
+		return dao.findOneAdmin(administratorID);
+	}
+	
+	
+
 
 	public List<AdministratorVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public void delete(Integer administratorID) {
+		dao.delete(administratorID);
 	}
 }

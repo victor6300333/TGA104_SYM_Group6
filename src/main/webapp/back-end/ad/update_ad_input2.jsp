@@ -334,29 +334,15 @@ name="form1">
 				placeholder="請輸入廣告描述"
 				value="<%=adVO.getAdDescribe()%>" /> <br />
 
-<form action="../api/0.01/product/uploadImage"
-	method="post" id="upload">
-
-	<div class="form-group">
-		<label for="proPicture" class="sym-dark-font"><h5>廣告圖片</h5></label>
-		<div class="bg-light color-palette"
-			style="border: 1px dashed; height: 180px; text-align: center; line-height: 180px;"
-			id="picPreview">預覽圖
-		</div>
-		<div class="input-group">
-				<div class="custom-file">
-							<input name="data" type="file"
-								class="custom-file-input" name="upfile"
-								id="p_file" accept="image/*" />
-							<label class="custom-file-label" for="proPicture"></label>
-						</div>
-				<div class="input-group-append sym-darkpurple">
-							<input
-								class="input-group-text sym-darkpurple sym-yellow-font btn_style"
-								type="submit" />
-						</div>
-		</div>
-	</div>
+ <form action="#" method="#" id="the_form">      
+<div>
+        <label>圖片：</label>
+        <input type="file" id="p_file">
+        <div id="drop_zone"><span class="text">圖片拖曳至此處</span></div>
+        <div id="preview">
+          <span class="text">預覽圖</span>
+        </div>
+      </div>
 </form>
 		</div>
 	</div>
@@ -426,17 +412,8 @@ name="form1">
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
 
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
-
+<script src="../js/app.js"></script>
 <!-- JavaScript Libraries -->
 
 <script>

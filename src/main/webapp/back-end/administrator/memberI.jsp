@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@page import="com.administrator.model.AdministratorJDBCDAO"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <html>
 <head>
 <meta charset="UTF-8">
-<title>footer</title>
+<title>會員查詢</title>
 </head>
 <body>
 <%@ include file="styles.jsp" %>
@@ -50,9 +51,6 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"
-              ><i class="fa fa-tachometer-alt me-2"></i>管理員資料</a
-            >
 
             <div class="nav-item dropdown">
               <a
@@ -261,7 +259,8 @@
           </div>
         </nav>
         <!-- Navbar End -->
-<!------------------插入區塊--------------------------------------------------------------->
+
+
         <!-- Content starts-->
         <div class="wrapper">
           <header id="header"></header>
@@ -293,14 +292,26 @@
             </div>
             <!-- /.content-header -->
             
-<!-- main start -->
-<%-- <%@ include file="xxxx.jsp" %> --%>
-<!-- main ends -->
-<!------------------插入區塊--------------------------------------------------------------->
-        </div>
-        <!-- Content ends-->
+             
 
-        <!-- Footer Start -->
+<!-- main start -->
+<%@ include file="memberSession.jsp" %>
+<!-- main ends -->
+  
+                      </div>
+                      <%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+<font style="color: red">請修正以下錯誤:</font>
+<ul>
+	<c:forEach var="message" items="${errorMsgs}">
+<li style="color: red">${message}</li>
+</c:forEach>
+</ul>
+</c:if>
+                    </div>
+                  </div>
+                </div>
+             <!-- Footer Start -->
         <div class="container-fluid pt-4 px-4">
           <div class="bg-light rounded-top p-4">
             <div class="row">
@@ -316,10 +327,8 @@
           </div>
         </div>
         <!-- Footer End -->
-      </div>
       <!-- Content End -->
 
-</div>
 
 </body>
 </html>

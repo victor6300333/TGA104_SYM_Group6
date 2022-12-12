@@ -2,12 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.administrator.model.*"%>
+<%-- 此頁練習採用 EL 的寫法取值 --%>
 
+<%
+	AdministratorService adminSvc = new AdministratorService();
+    List<AdministratorVO> list = adminSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
 
 
 <html>
 <head>
-<title>所有廣告 - listAllAd2.jsp</title>
+<title>管理員管理 - listAllAd2.jsp</title>
 </head>
 <body>
 <%@ include file="styles.jsp" %>
@@ -270,14 +276,14 @@
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h2 class="m-0 sym-dark-font">商家審核</h2>
+                    <h2 class="m-0 sym-dark-font">管理員管理</h2>
                   </div>
                   <div class="col-sm-6 flex-direction">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item">
-                        <a href="<%=request.getContextPath()%>/back-end/administrator/AdministratorServlet">回上一頁</a>
+                        <a href="<%=request.getContextPath()%>/back-end/loginAdm/indexAdmin.jsp">Home</a>
                       </li>
-                      <li class="breadcrumb-item active">商家審核</li>
+                      <li class="breadcrumb-item active">管理員管理</li>
                     </ol>
                   </div>
                 </div>
@@ -301,43 +307,44 @@
                       <!-- /.card-header -->
                       <div class="col-md-12">
                         <div class="card card-primary">
-            
                           <!-- /.card-header -->
                           <div class="card-body">
+                          <img src="../img/logo.jpg" width="150" heigh="150">
                             <table
                               id="memberTable"
                               class="table table-bordered table-hover"
                             >
                               <thead>
                                 <tr>
- 									<th>會員帳號</th>
-									<th>賣場名稱</th>
-									<th>賣場地址</th>
-									<th>連絡電話</th>
-									<th>創建日期</th>
-									<th>更新日期</th>
-									<th>統一編號</th>
-									<th>審核狀態</th>
-									<th>設定</th>
+                                  	<th>管理員編號</th>
+									<th>名稱</th>
+									<th>帳號</th>
+									<th>密碼</th>
+									<th>修改</th>
+									<th>刪除</th>
                                 </tr>
                               </thead>
+                                     	<%@ include file="page1.file" %> 
+				<c:forEach var="administratorVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<tr>
-		<td>${administratorVO.memberID}</td>
-		<td>${administratorVO.storeName}</td>
-		<td>${administratorVO.storeAddress}</td>
-		<td>${administratorVO.phoneNumber}</td> 
-		<td>${administratorVO.createDate}</td>
-		<td>${administratorVO.updateDate}</td>
-		<td>${administratorVO.taxID}</td>			
-		<td>${administratorVO.storeAuditStatus}</td>		
+		<td>${administratorVO.administratorID}</td>
+		<td>${administratorVO.administratorName}</td>
+		<td>${administratorVO.administratorAccount}</td>
+		<td>${administratorVO.administratorPassword}</td>
 		<td>
-		  <FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/back-end/ad/adServlet" style="margin-bottom: 0px;">
+		  <FORM METHOD="post" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/back-end/administrator/administratorServlet" style="margin-bottom: 0px;">
 		     <input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="修改">
-		     <input type="hidden" name="memberID"  value="${administratorVO.memberID}">
+		     <input type="hidden" name="administratorID"  value="${administratorVO.administratorID}">
 		     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 		</td>
+		<td>
+		  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/administrator/administratorServlet" style="margin-bottom: 0px;">
+		     <input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="刪除">
+		     <input type="hidden" name="administratorID"  value="${administratorVO.administratorID}">
+		     <input type="hidden" name="action" value="delete"></FORM>
+		</td>
 	</tr>
-                   
+          	</c:forEach>         
                             </table>
                           </div>
                           <!-- /.card-body -->
@@ -345,8 +352,12 @@
                       </div>
                       <!-- /.card-body -->
                       <div class="card-footer mb-2rem">
-                      
+                      	<button class="btn sym-darkpurple sym-yellow-font btn_style"
+				id="addAd2">
+				<a style="color: white" href='addAdmin.jsp'>新增人員</a>
+			</button>
                        <!-- /.card-body -->
+                     <%@ include file="page2.file" %>
                     
                     
                       </div>

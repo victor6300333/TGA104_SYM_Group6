@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Home</title>
+<title>搜尋廣告</title>
 
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="keywords" />
@@ -80,8 +80,6 @@
 			</div>
 		</div>
 		<div class="navbar-nav w-100">
-			<a href="index.html" class="nav-item nav-link active"><i
-				class="fa fa-tachometer-alt me-2"></i>管理員資料</a>
 
 			<div class="nav-item dropdown">
 				<a href="#" class="nav-link dropdown-toggle"
@@ -197,10 +195,6 @@
 	</div>
 </div>
 <div class="nav-item dropdown">
-	<a href="#" class="nav-link dropdown-toggle"
-		data-bs-toggle="dropdown"> <i class="fa fa-bell me-lg-2"></i>
-		<span class="d-none d-lg-inline-flex">通知</span>
-	</a>
 	<div
 		class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 		<a href="#" class="dropdown-item">
@@ -251,7 +245,7 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h2 class="m-0 sym-dark-font">廣告查詢</h2>
+				<h2 class="m-0 sym-dark-font">廣告設定</h2>
 			</div>
 			<!-- /.col -->
 <div class="col-sm-6 flex-direction">
