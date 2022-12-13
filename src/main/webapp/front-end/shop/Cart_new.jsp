@@ -153,6 +153,7 @@
 			</td>
 			
 			<td id="<%=index + 1 + count%>" width="30"><%=order.getQuantity()%></td>
+			<input type="hidden" id="product<%=order.getStoreID() %><%=index%>"  name="product<%=order.getStoreID() %><%=index%>"  value = "<%=order.getQuantity()%>" />
 			
 			<td id="plus" > 
 			    <input id="plus1" type="button" onclick="adder<%=index + 1 + count%>()" value="+" 
@@ -178,6 +179,11 @@
 			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
 			
 			add<%=storeID%>();
+			
+			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
+				
+				quantity.value = $("#<%=index + 1 + count%>").html();
+			
 		}
 		function minuser<%=index + 1 + count%>() {
 			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
@@ -195,6 +201,11 @@
 			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
 			
 			add<%=storeID%>();
+			
+			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
+			
+			quantity.value = $("#<%=index + 1 + count%>").html();
+			
 		}
 		
 		function add<%=storeID%>(){

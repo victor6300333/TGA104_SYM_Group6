@@ -6,7 +6,7 @@
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/shop/css/ShoppingCart.css">
  </head>
 <body>
-<img src="images/tomcat.gif"> <font size="+3">網路書店 - 結帳：（Checkout.jsp）</font>
+ <font size="+3">結帳：（Checkout.jsp）</font>
 <hr><p>
 
 

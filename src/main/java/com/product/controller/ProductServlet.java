@@ -379,7 +379,7 @@ public class ProductServlet extends HttpServlet {
 			 * 導向 listOneProduct頁面
 			 */
 			req.setAttribute("productVO", productVO);
-			String url = "/front-end/product/listOneProduct.jsp";
+			String url = "/front-end/product_detail/product_detail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
