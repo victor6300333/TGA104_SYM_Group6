@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import com.product.model.ProductVO;
 import com.product.service.ProductService;
 import com.product.service.ProductService_interface;
+import com.store.model.StoreVO;
 
 @WebServlet("/product/productServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -36,14 +37,10 @@ public class ProductServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/* 1. 請求參數的格式整理 */
-			Integer storeID = null;
-			try {
-				storeID = Integer.valueOf(req.getParameter("storeID").trim());
-			} catch (NumberFormatException e) {
-				storeID = 0;
-				errorMsgs.add("商店ID不正確");
-			}
-
+			HttpSession session = req.getSession();
+			StoreVO attribute = (StoreVO)session.getAttribute("storeVO2");
+			Integer storeID = attribute.getStoreID();
+			
 			String productName = req.getParameter("productName");
 			String productNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (productName == null || productName.trim().length() == 0) {
@@ -151,10 +148,10 @@ public class ProductServlet extends HttpServlet {
 			 * 如果報錯 轉去 addProduct 頁面
 			 */
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/Error.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -171,7 +168,7 @@ public class ProductServlet extends HttpServlet {
 			 * 導向 listOneProduct頁面
 			 */
 			req.setAttribute("productVO", productVO);
-			String url = "/front-end/product/listOneProduct.jsp";
+			String url = "/front-end/store/myStore.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -236,21 +233,6 @@ public class ProductServlet extends HttpServlet {
 				errorMsgs.add("產地: 請勿空白");
 			}
 
-			Integer productStatusInt = null;
-			try {
-				productStatusInt = Integer.valueOf(req.getParameter("productStatus").trim());
-			} catch (NumberFormatException e) {
-				errorMsgs.add("商品狀態請填寫正確");
-			}
-
-			Boolean productStatus = null;
-
-			if (new Integer(1).equals(productStatusInt)) {
-				productStatus = true;
-			} else {
-				productStatus = false;
-			}
-
 			/* 圖片1 */
 			/* getServletContext().getRealPath("front-end/images") */
 			String realPath = getServletContext().getRealPath(saveDirectory);
@@ -290,7 +272,6 @@ public class ProductServlet extends HttpServlet {
 			if (pList.contains("upfile3")) {
 				productVO.setProductImg3(bList.get(pList.indexOf("upfile3")));
 			}
-			productVO.setProductStatus(productStatus);
 			productVO.setCommentTotal(0);
 			productVO.setCommentAvgStar(0.0);
 
@@ -299,10 +280,10 @@ public class ProductServlet extends HttpServlet {
 			 * 如果報錯 轉去 addProduct 頁面
 			 */
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/Error.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -315,10 +296,10 @@ public class ProductServlet extends HttpServlet {
 			new ProductService().update(productVO);
 
 			/*
-			 * 導向 listOneProduct頁面
+			 * 導向 myStore頁面
 			 */
 			req.setAttribute("productVO", productVO);
-			String url = "/front-end/product/listOneProduct.jsp";
+			String url = "/front-end/store/myStore.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 
@@ -343,7 +324,7 @@ public class ProductServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -363,7 +344,7 @@ public class ProductServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -379,7 +360,7 @@ public class ProductServlet extends HttpServlet {
 			 * 導向 listOneProduct頁面
 			 */
 			req.setAttribute("productVO", productVO);
-			String url = "/front-end/product_detail/product_detail.jsp";
+			String url = "/front-end/product/listOneProduct.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -413,7 +394,7 @@ public class ProductServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -589,7 +570,7 @@ public class ProductServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
 				try {
 					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
