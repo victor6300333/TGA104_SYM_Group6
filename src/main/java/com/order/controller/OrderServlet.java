@@ -2,9 +2,11 @@ package com.order.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 //import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 //import com.emp.model.EmpVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
+import com.product.model.ProductVO;
+import com.product.service.ProductService;
 
 @WebServlet("/front-end/order/OrderServlet")
 public class OrderServlet extends HttpServlet {
@@ -43,26 +47,36 @@ public class OrderServlet extends HttpServlet {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				
 //				Integer orderID = Integer.valueOf(req.getParameter("orderID"));
-//				Date orderfromdate = java.sql.Date.valueOf(req.getParameter("fromdate").trim());     
-//				Date ordertodate = java.sql.Date.valueOf(req.getParameter("todate").trim());     
-//				String todate = req.getParameter("todate");
-//				String status = req.getParameter("status");
-
+				Map<String, String> queryString = new LinkedHashMap<String, String>();
+				
+				Date orderfromdate = java.sql.Date.valueOf(req.getParameter("fromdate").trim());
+				if (orderfromdate != null) {
+					queryString.put("orderDate", "" + orderfromdate);
+				}
+				Date ordertodate = java.sql.Date.valueOf(req.getParameter("todate").trim()); 
+				if (ordertodate != null) {
+					queryString.put("orderDate", "" + ordertodate);
+				}
 			
+				Integer status =Integer.parseInt(req.getParameter("status")) ;
+				if (status != null) {
+					queryString.put("orderStatus", "" + status);
+				}
+				
+				
 
 				
 				/***************************2.開始查詢資料*****************************************/
 				OrderService orderSvc = new OrderService();
 				
-				if(req.getParameter("fromdate").length()==0 && req.getParameter("todate").length()==0
-				        && req.getParameter("status").equals("全部"))  {
-					List<OrderVO> list = orderSvc.getAllOrder();
+			
+					List<OrderVO> list = orderSvc.getAllOrderByComposite(queryString);
 					req.setAttribute("list", list);
 					String url = "/front-end/order/listOrder.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 					successView.forward(req, res);
 					System.out.println("哈哈");
-				}
+				
 //				OrderVO orderVO = orderSvc.getOrder(orderID,orderfromdate,ordertodate,todate,status);
 
 				

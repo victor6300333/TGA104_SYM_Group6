@@ -210,16 +210,15 @@ OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //EmpServlet.java(C
 												<b>輸入訂單日期:</b> 
 													<input name="fromdate" id="f_date1" type="text" style="width: 100px; height: 25px">
 												<b>至</b> 
-												    <input name="todate" id="f_date2" type="text"
-													style="width: 100px; height: 25px"> <br><br>
+												    <input name="todate" id="f_date2" type="text" style="width: 100px; height: 25px"> <br><br>
 												<b>選擇訂單狀態:</b> 
 												    <select name="status" style="width: 80px; height: 25px">
 													
-													<option value="全部">全部</option>
-													<option value="待付款">待付款</option>
-													<option value="待出貨">待出貨</option>
-													<option value="已出貨">已出貨</option>
-													<option value="已取貨">已取貨</option>
+													<option value="0">全部</option>
+													<option value="1">待付款</option>
+													<option value="2">待出貨</option>
+													<option value="3">已出貨</option>
+													<option value="4">已取貨</option>
 											
 													</select> 
 												
@@ -346,7 +345,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //EmpServlet.java(C
 		$.datetimepicker.setLocale('zh');
 		$('#f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
-			timepicker : false, //timepicker:true,
+			timepicker : true, //timepicker:true,
 			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d', //format:'Y-m-d H:i:s',
 			value : '', // value:   new Date(),
@@ -357,7 +356,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //EmpServlet.java(C
 		});
 		$('#f_date2').datetimepicker({
 			theme : '', //theme: 'dark',
-			timepicker : false, //timepicker:true,
+			timepicker : true, //timepicker:true,
 			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d', //format:'Y-m-d H:i:s',
 			value : '', // value:   new Date(),

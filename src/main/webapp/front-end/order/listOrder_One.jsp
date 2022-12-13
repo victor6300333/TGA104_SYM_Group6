@@ -225,6 +225,7 @@ OrderVO orderVO_orderID = (OrderVO)request.getAttribute("orderVO_orderID");
 									<tr>
 										<th>訂單編號</th>
 										<th>賣場編號</th>
+										<th>賣場名稱</th>
 										<th>會員ID</th>
 										<th>訂單日期</th>
 										<th>訂單狀態</th>
@@ -244,6 +245,7 @@ OrderVO orderVO_orderID = (OrderVO)request.getAttribute("orderVO_orderID");
 
 										<td><%=orderVO_orderID.getOrderID()%></td>
 										<td><%=orderVO_orderID.getStoreID()%></td>
+										<td><%=orderVO_orderID.getStoreName()%></td>
 										<td><%=orderVO_orderID.getMemberID()%></td>
 										<td><%=orderVO_orderID.getOrderDate()%></td>
 										<td><%=orderVO_orderID.getOrderStatus()%></td>

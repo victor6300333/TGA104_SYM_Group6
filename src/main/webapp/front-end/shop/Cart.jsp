@@ -125,6 +125,7 @@
 		
 		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>"> 
 		<input type="hidden" name="storeName<%=storeID%>" value="<%=buylist.get(0).getStoreName()%>">
+		<input type="checkbox" name="member<%=storeID%>" value="12">
 		<b>收件者: </b><input type="text" name="receiver<%=storeID%>"> <br> 
 		<b>電話號碼:</b><input type="text" name="phone<%=storeID%>"> <br>  
 		<b>收件地址:</b><input type="text" name="address<%=storeID%>"> <br> 

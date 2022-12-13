@@ -245,9 +245,13 @@
 		<br>
 		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>" > 
 		<input type="hidden" name="storeName<%=storeID%>" value="<%=buylist.get(0).getStoreName()%>">
-		<b>收件者:  </b><input type="text" name="receiver<%=storeID%>" style="width:100px; height:26px"> <br> <br>
-		<b>電話號碼: </b><input type="text" name="phone<%=storeID%>" style="width:140px; height:26px"> <br>  <br>
-		<b>收件地址: </b><input type="text" name="address<%=storeID%>" style="width:300px; height:26px"> <br> <br>
+		<input type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>"><b>選用會員資料</b> <br><br>
+		<b>收件者:  </b><input type="text" name="receiver<%=storeID%>" id="receiver<%=storeID%>"
+		   style="width:100px; height:26px"> <br> <br>
+		<b>電話號碼: </b><input type="text" name="phone<%=storeID%>" id="phone<%=storeID%>"
+		   style="width:140px; height:26px"> <br>  <br>
+		<b>收件地址: </b><input type="text" name="address<%=storeID%>" id="address<%=storeID%>"
+		   style="width:300px; height:26px"> <br> <br>
 	    <b>付款方式:  </b> 
 	         <input type="radio" name="paytype<%=storeID%>" value="信用卡">信用卡 
 			<input type="radio" name="paytype<%=storeID%>" value="atm轉帳">atm轉帳 
@@ -275,6 +279,24 @@ function add<%=storeID%>(){
 		};
 		
 		add<%=storeID%>();
+		
+		const checkbox = document.getElementById('member<%=storeID%>');
+		const receiver = document.getElementById('receiver<%=storeID%>');
+		const phone = document.getElementById('phone<%=storeID%>');
+		const address = document.getElementById('address<%=storeID%>');
+
+		checkbox.addEventListener('change', (event) => {
+		  if (event.currentTarget.checked) {			
+			  receiver.value = "Eric";
+			  phone.value = "0912345678";
+			  address.value = "台北市內湖區";
+		  } else {
+			  receiver.value = "";
+			  phone.value = "";
+			  address.value = "";
+		  }
+		})
+
 		
 		
 	</script>
