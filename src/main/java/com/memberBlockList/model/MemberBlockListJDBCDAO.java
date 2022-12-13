@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.store.model.StoreVO;
+
 public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -17,7 +19,7 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO memberBlockList (memberID,storeID) VALUES(?, ?)";
 
-	private static final String GET_ALL_STMT = "SELECT blockListID, memberID, storeID FROM memberBlockList where memberID = ?";
+	private static final String GET_ALL_STMT = "select storeName, blockListID from v_memberblocklist where  memberID = ?";
 
 	private static final String DELETE = "DELETE FROM memberBlockList where blockListID = ?";
 
@@ -103,9 +105,9 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 	}
 
 	@Override
-	public List<MemberBlockListVO> getAll(Integer memberID) {
-		List<MemberBlockListVO> list = new ArrayList<MemberBlockListVO>();
-		MemberBlockListVO memberBlockListVO = null;
+	public List<ViewMemberBlockListVO> getAll(Integer memberID) {
+		List<ViewMemberBlockListVO> list = new ArrayList<ViewMemberBlockListVO>();
+		ViewMemberBlockListVO viewMemberBlockListVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -120,12 +122,11 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				memberBlockListVO = new MemberBlockListVO();
-				memberBlockListVO.setBlockListID(rs.getInt("blockListID"));
-				memberBlockListVO.setMemberID(rs.getInt("memberID"));
-				memberBlockListVO.setStoreID(rs.getInt("storeID"));
-				list.add(memberBlockListVO); // Store the row in the list
+				// VO 也稱為 Domain objects
+				viewMemberBlockListVO = new ViewMemberBlockListVO();
+				viewMemberBlockListVO.setStoreName(rs.getString("storeName"));
+				viewMemberBlockListVO.setBlockListID(rs.getInt("blockListID"));
+				list.add(viewMemberBlockListVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
@@ -163,7 +164,7 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 
 	// test
 //	public static void main(String[] args) {
-//
+////
 //		MemberBlockListJDBCDAO dao = new MemberBlockListJDBCDAO();
 
 //		// 新增
@@ -176,11 +177,11 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 //		dao.delete(2);
 
 //		// 查詢
-//		List<MemberBlockListVO> list = dao.getAll(6);
-//		for (MemberBlockListVO mbl : list) {
+//		List<ViewMemberBlockListVO> list = dao.getAll(23);
+//		for (ViewMemberBlockListVO mbl : list) {
 //			System.out.print(mbl.getBlockListID() + ",");
-//			System.out.print(mbl.getMemberID() + ",");
-//			System.out.print(mbl.getStoreID() + ",");
+//
+//			System.out.print(mbl.getStoreName() + ",");
 //			System.out.println("---------------------");
 //		}
 //	}

@@ -27,7 +27,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			+ ",productImg2,productImg3,productStatus,commentTotal,commentAvgStar FROM product where productID = ?";
 
 	private static final String UPDATE = "UPDATE product set productSecID=?, productName=?, productStock=?, productPrice=?, productDesc=?, source=?, productImg=?,"
-			+ "productImg2=?,productImg3=?,productStatus=? where productID = ?";
+			+ "productImg2=?,productImg3=? where productID = ?";
 
 	private static final String GET_MAX_ID = "select max(productID) as productID from product";
 	
@@ -107,8 +107,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 			pstmt.setBytes(7, productVO.getProductImg());
 			pstmt.setBytes(8, productVO.getProductImg2());
 			pstmt.setBytes(9, productVO.getProductImg3());
-			pstmt.setBoolean(10, productVO.getProductStatus());
-			pstmt.setInt(11, productVO.getProductID());
+			pstmt.setInt(10, productVO.getProductID());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

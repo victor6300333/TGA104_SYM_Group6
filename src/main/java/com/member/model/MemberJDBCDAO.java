@@ -32,13 +32,15 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	private static final String CONTINUE_UPDATE = "UPDATE member set gender=?, birthday=?, userPhoto=?, mailCertification=?, idNumber=?, address=?,sellerAuditApprovalState=?,currentShoppingCoin=? where memberID = ?";
 
-	private static final String UPDATEONE = "UPDATE member set userName=?, userAccount=?, phone=?, mail=?, userPhoto= coalesce(?, userPhoto)  where memberID = ?";
+	private static final String UPDATEONE = "UPDATE member set userName=?, userAccount=?, phone=?, mail=?, userPhoto= coalesce(?, userPhoto), idNumber=?, address=?  where memberID = ?";
 
 	private static final String UPDATEONE_PASSWOED = "UPDATE member set userPassword=? where memberID = ?";
 
 	private static final String GET_LASTONE_MEMBER = "select max(memberID) from member;";
 
 	private static final String MEMBER_LOGIN = "SELECT * FROM member WHERE mail = ?  AND userPassword = ?";
+
+	private static final String FORGET_PASSWORD = "SELECT * FROM member WHERE mail = ?";
 
 	@Override
 	public void insert(MemberVO memberVO) {
@@ -162,7 +164,9 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setString(3, memberVO.getPhone());
 			pstmt.setString(4, memberVO.getMail());
 			pstmt.setBytes(5, memberVO.getUserPhoto());
-			pstmt.setInt(6, memberVO.getMemberId());
+			pstmt.setString(6, memberVO.getIdNumber());
+			pstmt.setString(7, memberVO.getAddress());
+			pstmt.setInt(8, memberVO.getMemberId());
 
 			pstmt.executeUpdate();
 
@@ -276,7 +280,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 	}
 
 	@Override
-	public MemberVO findByPrimaryKey(Integer memberId) {
+	public MemberVO getByPrimaryKey(Integer memberId) {
 		MemberVO memberVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -347,7 +351,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 	}
 
 	@Override
-	public MemberVO findOneMemberByMail(String mail) {
+	public MemberVO getOneMemberByMail(String mail) {
 		MemberVO memberVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -602,6 +606,62 @@ public class MemberJDBCDAO implements MemberVO_interface {
 		}
 		return id;
 
+	}
+
+	@Override
+	public Boolean findMemberByMail(String mail) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Boolean haveMail;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(FORGET_PASSWORD);
+
+			pstmt.setString(1, mail);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next() && rs.getInt(1) > 0) {
+				haveMail = true;
+			} else {
+				haveMail = false;
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return haveMail;
 	}
 
 	// test

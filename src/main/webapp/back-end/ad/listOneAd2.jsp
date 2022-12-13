@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.administrator.model.*"%>
+<%@ page import="com.ad.model.*"%>
 
 <%
-	AdministratorVO administratorVO = (AdministratorVO) request.getAttribute("administratorVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
+	AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
 %>
 
 <html>
 <head>
-<title>新增廣告 - listOneAd2.jsp</title>
+<title>廣告單筆新增資料 - listOneAd2.jsp</title>
 
 <!-- Favicon -->
     <link href="../img/favicon.ico" rel="icon" />
@@ -91,9 +91,6 @@
             </div>
           </div>
           <div class="navbar-nav w-100">
-            <a href="index.html" class="nav-item nav-link active"
-              ><i class="fa fa-tachometer-alt me-2"></i>管理員資料</a
-            >
 
             <div class="nav-item dropdown">
               <a
@@ -248,14 +245,6 @@
               </div>
             </div>
             <div class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                <i class="fa fa-bell me-lg-2"></i>
-                <span class="d-none d-lg-inline-flex">通知</span>
-              </a>
               <div
                 class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"
               >
@@ -318,13 +307,13 @@
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h2 class="m-0 sym-dark-font">所有廣告</h2>
+                    <h2 class="m-0 sym-dark-font">新增廣告</h2>
                   </div>
                   <!-- /.col -->
                   <div class="col-sm-6 flex-direction">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item">
-                        <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp">回上一頁</a>
+                        <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp">廣告設定</a>
                       </li>
                       <li class="breadcrumb-item active">所有廣告</li>
                     </ol>

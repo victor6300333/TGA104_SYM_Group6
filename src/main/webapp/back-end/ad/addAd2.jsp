@@ -84,9 +84,6 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 					</div>
 				</div>
 				<div class="navbar-nav w-100">
-					<a href="index.html" class="nav-item nav-link active"><i
-						class="fa fa-tachometer-alt me-2"></i>管理員資料</a>
-
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"><i
@@ -202,10 +199,6 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 						</div>
 					</div>
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
-							data-bs-toggle="dropdown"> <i class="fa fa-bell me-lg-2"></i>
-							<span class="d-none d-lg-inline-flex">通知</span>
-						</a>
 						<div
 							class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 							<a href="#" class="dropdown-item">
@@ -263,9 +256,9 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 									<!-- /.col -->
 									<div class="col-sm-6 flex-direction">
 										<ol class="breadcrumb float-sm-right">
-											<li class="breadcrumb-item"><a href="select_page2.jsp">Home</a>
+											<li class="breadcrumb-item"><a href="select_page2.jsp">廣告設定</a>
 											</li>
-											<li class="breadcrumb-item active">廣告設定</li>
+											<li class="breadcrumb-item active">新增廣告</li>
 										</ol>
 									</div>
 									<!-- /.col -->
@@ -288,36 +281,41 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 												<h3 class="card-title sym-yellow-font">廣告設定 - 新增廣告</h3>
 											</div>
 											<!-- /.card-header -->
-											
-									
-										
-	
 											<!-- form start -->
 											<div class="card-body">
 												<div class="form-group">
-												
-												
-											<div class="display-flex mg-bottom-2">
-										<div class="col-sm-4">
-											<div class="form-group">
-												<h5>管理員編號:</h5>
-												<div class="mg-bottom-2"><input type="TEXT" name="administratorID" size="45" 
-													 value="<%=(adVO==null)? "1" : adVO.getAdministratorID()%>" />
-												</div>
-											</div>
-											<div class="col-sm-4">
-												<jsp:useBean id="adSvc" scope="page" class="com.ad.model.AdService" />
-													<h5>廣告類別:<font color=red><b>*</b></font></h5>
-															<select size="1" name="adType">
-																<c:forEach var="adVO" items="${adSvc.all}">
-																	<option value="${adVO.adType}" ${(adVO.adType==adVO.adType)? 'selected':'' } >${adVO.adType}
-																</c:forEach>
-															</select>
-											</div>
-										</div>
-										</div>
-												
-												
+
+
+													<div class="display-flex mg-bottom-2">
+														<div class="col-sm-4">
+															<div class="form-group">
+																<h5>管理員編號:</h5>
+																<!-- 												<div class="mg-bottom-2"><input type="TEXT" name="administratorID" size="45"  -->
+																<%-- 													 value="<%=(adVO==null)? "1" : adVO.getAdministratorID()%>" /> --%>
+																<!-- 												</div> -->
+																<jsp:useBean id="adSvc" scope="page"
+																	class="com.ad.model.AdService" />
+																<select size="1" name="administratorID">
+																	<c:forEach var="adVO" items="${adSvc.all}">
+																		<option value="${adVO.administratorID}"
+																			${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID}
+																	</c:forEach>
+																</select>
+															</div>
+															<div class="col-sm-4">
+																<%-- 												<jsp:useBean id="adSvc" scope="page" class="com.ad.model.AdService" /> --%>
+																<h5>
+																	廣告類別:<font color=red><b>*</b></font>
+																</h5>
+																<select size="1" name="adType">
+																	<c:forEach var="adVO" items="${adSvc.all}">
+																		<option value="${adVO.adType}"
+																			${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType}
+																	</c:forEach>
+																</select>
+															</div>
+														</div>
+													</div>
 													<div class="display-flex mg-bottom-2">
 														<div class="col-sm-4">
 															<div class="form-group">
@@ -343,8 +341,8 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 														placeholder="請輸入標題內容"
 														value="<%=(adVO == null) ? "請輸入標題內容" : adVO.getAdTitle()%>" />
 												</div>
-												
-												
+
+
 												<div class="row">
 													<div class="col-sm-4">
 														<div class="form-group">
@@ -374,6 +372,15 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 													class="btn sym-darkpurple sym-yellow-font btn_style"
 													id="addProduct" value="送出新增">
 											</div>
+
+											<form action="#" method="#" id="the_form">
+												<div>
+													<label>圖片：</label> <input type="file" name="pho" id="p_file">
+													<div id="preview">
+														<span class="text">預覽圖</span>
+													</div>
+												</div>
+											</form>
 			</FORM>
 
 
@@ -381,66 +388,41 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 			<div class="row margin-left-1">
 				<div class="col-sm-4">
 					<br />
-					<form action="../api/0.01/product/uploadImage" method="post"
-						id="upload">
-						<div class="form-group">
 
-							<label for="proPicture" class="sym-dark-font"><h5>廣告圖片：</h5></label>
-							<div id="drop_zone">
-								<span class="text">圖片拖曳至此處</span>
-							</div>
-							<div class="bg-light color-palette"
-								style="border: 1px dashed; height: 180px; text-align: center; line-height: 180px;"
-								id="picPreview">
-								<span class="text">預覽圖</span>
-							</div>
-							<div class="input-group">
-								<div class="custom-file">
-									<input type="file" class="custom-file-input" name="data"
-										id="p_file" accept="image/*" /> <label
-										class="custom-file-label" for="proPicture"></label>
-								</div>
-								<div class="input-group-append sym-darkpurple">
-									<input
-										class="input-group-text sym-darkpurple sym-yellow-font btn_style"
-										type="submit" />
-								</div>
-							</div>
-						</div>
-					</form>
-					<%-- 錯誤表列 --%>
-					<c:if test="${not empty errorMsgs}">
-						<font style="color: red">請修正以下錯誤:</font>
-						<ul>
-							<c:forEach var="message" items="${errorMsgs}">
-								<li style="color: red">${message}</li>
-							</c:forEach>
-						</ul>
-					</c:if>
+					<div>
+
+						<%-- 錯誤表列 --%>
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤:</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Content ends-->
+		<!-- Content ends-->
 
-	<!-- Footer Start -->
-	<div class="container-fluid pt-4 px-4">
-		<div class="bg-light rounded-top p-4">
-			<div class="row">
-				<div class="col-12 col-sm-6 text-center text-sm-start">
-					&copy; <a href="#">Tibame TGA104 第六組 SYM</a>, All Right Reserved.
-				</div>
-				<div class="col-12 col-sm-6 text-center text-sm-end">
-					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-					Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+		<!-- Footer Start -->
+		<div class="container-fluid pt-4 px-4">
+			<div class="bg-light rounded-top p-4">
+				<div class="row">
+					<div class="col-12 col-sm-6 text-center text-sm-start">
+
+						&copy; <a href="#">Tibame TGA104 第六組 SYM</a>, All Right Reserved.
+					</div>
+					<div class="col-12 col-sm-6 text-center text-sm-end">
+						<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+						Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Footer End -->
-	<!-- Content End -->
-
-
+		<!-- Footer End -->
+		<!-- Content End -->
 </body>
 
 
@@ -493,6 +475,9 @@ try {
 
 <!-- Template Javascript -->
 <script src="../js/main.js"></script>
+<script src="../js/app.js"></script>
+
+
 
 <script>
 	$.datetimepicker.setLocale('zh'); // kr ko ja en

@@ -16,7 +16,9 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 <meta content="eCommerce HTML Template Free Download" name="description" />
 
 <!-- Favicon -->
-<link href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg" rel="icon" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg"
+	rel="icon" />
 
 <!-- Google Fonts -->
 <link
@@ -34,8 +36,12 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 <link href="lib/slick/slick-theme.css" rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/front-end/member/css/style.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/member/css/woody.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
@@ -81,7 +87,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<a href="login.jsp" class="nav-link">登入/註冊</a>
+						<a href="${pageContext.request.contextPath}/front-end/member/login.jsp" class="nav-link">登入/註冊</a>
 					</div>
 				</div>
 			</nav>
@@ -95,7 +101,9 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="${pageContext.request.contextPath}/front-end/member/img/logo.png" alt="Logo" />
+						<a href="index.html"> <img
+							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
+							alt="Logo" />
 						</a>
 					</div>
 				</div>
@@ -140,7 +148,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-6">
-					<FORM METHOD="post"
+					<FORM id="loginForm" METHOD="post"
 						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 						name="form1">
 						<div class="register-form">
@@ -155,32 +163,35 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 							</c:if>
 							<div class="row">
 								<div class="col-md-6">
-									<label>姓名</label> <input class="form-control" type="text" name="userName"
-										placeholder="姓名" value="<%= (memVO==null)? "" : memVO.getUserName()%>" />
+									<label>姓名</label> <input class="form-control" type="text"
+										name="userName" placeholder="姓名"
+										value="<%=(memVO == null) ? "" : memVO.getUserName()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>帳號</label> <input class="form-control" type="text" name="userAccount"
-										placeholder="帳號" value="<%= (memVO==null)? "" : memVO.getUserAccount()%>" />
+									<label>帳號</label> <input class="form-control" type="text"
+										name="userAccount" placeholder="帳號"
+										value="<%=(memVO == null) ? "" : memVO.getUserAccount()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>電子信箱</label> <input class="form-control" type="text" name="mail"
-										placeholder="電子信箱" value="<%= (memVO==null)? "" : memVO.getMail()%>"/>
+									<label>電子信箱</label> <input class="form-control" type="text"
+										name="mail" placeholder="電子信箱"
+										value="<%=(memVO == null) ? "" : memVO.getMail()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>行動電話</label> <input class="form-control" type="text" name="phone"
-										placeholder="行動電話" value="<%= (memVO==null)? "" : memVO.getPhone()%>"/>
+									<label>行動電話</label> <input class="form-control" type="text"
+										name="phone" placeholder="行動電話"
+										value="<%=(memVO == null) ? "" : memVO.getPhone()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>密碼</label> <input class="form-control" type="password" name="userPassword"
-										placeholder="密碼" />
+									<label>密碼</label> <input id="password" class="form-control"
+										type="password" name="userPassword" placeholder="密碼" />
 								</div>
 								<div class="col-md-6">
-									<label>再輸入一次密碼</label> <input class="form-control" type="password"
-										placeholder="密碼" />
+									<label>再輸入一次密碼</label> <input id="retype-password"
+										class="form-control" type="password" placeholder="密碼" />
 								</div>
 								<div class="col-md-12">
-									<input type="hidden" name="action" value="insert">
-									<input type="hidden" name="memberId" value="${memVO.memberId}">
+									<input type="hidden" name="action" value="insert"> 
 									<input class="btn" type="submit" value="註冊">
 								</div>
 							</div>
@@ -192,7 +203,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 						name="form2">
 						<div class="login-form">
-						<%-- 錯誤表列 --%>
+							<%-- 錯誤表列 --%>
 							<c:if test="${not empty errorMsgs1}">
 								<font style="color: red">請修正以下錯誤:</font>
 								<ul>
@@ -203,12 +214,13 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 							</c:if>
 							<div class="row">
 								<div class="col-md-6">
-									<label>電子信箱</label> <input class="form-control" type="text" name="mail"
-										placeholder="電子信箱" value="<%= (memVO2==null)? "" : memVO2.getMail()%>" />
+									<label>電子信箱</label> <input class="form-control" type="text"
+										name="mail" placeholder="電子信箱"
+										value="<%=(memVO2 == null) ? "" : memVO2.getMail()%>" />
 								</div>
 								<div class="col-md-6">
-									<label>密碼</label> <input class="form-control" type="password" name="userPassword"
-										placeholder="密碼" />
+									<label>密碼</label> <input class="form-control" type="password"
+										name="userPassword" placeholder="密碼" />
 								</div>
 								<div class="col-md-12">
 									<div class="custom-control custom-checkbox">
@@ -217,10 +229,15 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 											for="newaccount">保持登入</label>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<input type="hidden" name="action" value="getOne_For_Login">
 									<input type="hidden" name="mail" value="${memVO2.mail}">
 									<input class="btn" type="submit" value="登入">
+								</div>
+								<div class="col-md-6">
+									<a href="${pageContext.request.contextPath}/front-end/member/forgetPassword.jsp" class="navbar-brand"><input class="btn"
+										type="button" value="忘記密碼"></a>
+
 								</div>
 								<div class="col-md-12">
 									<hr />
@@ -356,6 +373,9 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 	<script src="lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
 </body>
 </html>

@@ -60,7 +60,7 @@ public class PicServlet extends HttpServlet {
 	public void init() throws ServletException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db06_sym", "root", "123456");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db06_sym", "root", "password");
 		} catch (ClassNotFoundException e) {
 			throw new UnavailableException("Couldn't load JdbcOdbcDriver");
 		} catch (SQLException e) {

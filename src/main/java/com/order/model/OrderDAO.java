@@ -7,10 +7,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.orderlist.model.OrderlistDAO;
 import com.orderlist.model.OrderlistVO;
+import com.product.model.ProductVO;
 
 
 
@@ -26,10 +30,10 @@ public class OrderDAO implements OrderDAO_interface {
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
 			+ "address, payType, couponID, originalTotal, useShoppingGold, useCouponGold, finalTotal) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
-	private static final String GET_ONE_STMT = "SELECT orderID, storeID, memberID, orderDate ,orderStatus,receiver, phone,"
+	private static final String GET_ONE_STMT = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order` where orderID = ?";
-	private static final String GET_ALL = "SELECT orderID, storeID, memberID, orderDate ,orderStatus,receiver, phone,"
+	private static final String GET_ALL = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order`";
 	@Override
@@ -233,6 +237,81 @@ public class OrderDAO implements OrderDAO_interface {
 			// Clean up JDBC resources
 		} finally {
 
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+
+
+
+	@Override
+	public List<OrderVO> getAllByComposite(Map<String, String> queryString ) {
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		OrderVO orderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(GET_ALL + queryString);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 嚙稽嚙誶穿蕭 Domain objects
+				orderVO = new OrderVO();
+				orderVO.setOrderID(rs.getInt("orderID"));
+				orderVO.setStoreID(rs.getInt("storeID"));
+				orderVO.setStoreName(rs.getString("storeName"));
+				orderVO.setMemberID(rs.getInt("memberID"));
+				orderVO.setOrderDate(rs.getTimestamp("orderDate"));
+				orderVO.setOrderStatus(rs.getInt("orderStatus"));
+				orderVO.setReceiver(rs.getString("receiver"));
+				orderVO.setPhone(rs.getString("phone"));
+				orderVO.setCreditcardNumber(rs.getString("creditcardNumber"));
+				orderVO.setAddress(rs.getString("address"));
+				orderVO.setPayType(rs.getString("payType"));
+				orderVO.setCouponID(rs.getInt("couponID"));
+				orderVO.setOriginalTotal(rs.getInt("originalTotal"));
+				orderVO.setUseShoppingGold(rs.getInt("useShoppingGold"));
+				orderVO.setUseCouponGold(rs.getInt("useCouponGold"));
+				orderVO.setFinalTotal(rs.getInt("finalTotal"));
+				list.add(orderVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (con != null) {
 				try {
 					con.close();

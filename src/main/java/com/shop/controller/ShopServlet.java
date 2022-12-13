@@ -124,7 +124,8 @@ public class ShopServlet extends HttpServlet {
 				Product order = buylist.get(i);
 				String name = order.getName();
 				Integer price = order.getPrice();
-				Integer quantity = order.getQuantity();
+				String str = req.getParameter("product"+order.getStoreID()+i);
+				Integer quantity = Integer.parseInt(str);
 				Integer productID = order.getProductID();
 				
 				total += (price * quantity);
@@ -236,7 +237,7 @@ public class ShopServlet extends HttpServlet {
 		product.setPrice(new Integer(price));
 		product.setQuantity((new Integer(quantity)).intValue());
 		product.setStoreID(Integer.parseInt(storeID));
-		product.setStoreName(storeName);
+		product.setStoreName(storeName+"號賣場");
 		return product;
 	}
 	

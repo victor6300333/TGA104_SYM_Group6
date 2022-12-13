@@ -3,12 +3,18 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.creditCard.model.*"%>
+<%@ page import="com.memberBlockList.model.*"%>
+<%@ page import="com.store.model.*"%>
 <%
 MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
 CreditCardService cardSvc = new CreditCardService();
-List<CreditCardVO> list = cardSvc.getAll(memVO.getMemberId());
-pageContext.setAttribute("list", list);
+List<CreditCardVO> cdlist = cardSvc.getAll(memVO.getMemberId());
+pageContext.setAttribute("cdlist", cdlist);
+
+MemberBlockListService mbSvc = new MemberBlockListService();
+List<ViewMemberBlockListVO> mblist = mbSvc.getAll(memVO.getMemberId());
+pageContext.setAttribute("mblist", mblist);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +68,7 @@ pageContext.setAttribute("list", list);
 	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -96,8 +103,9 @@ pageContext.setAttribute("list", list);
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="index.html" class="nav-item nav-link">首頁</a> <a
-							href="product-list.html" class="nav-item nav-link">我的賣場</a>
+						<a href="" class="nav-item nav-link">首頁</a> <a
+							href="${pageContext.request.contextPath}/front-end/store/myStore.jsp"
+							class="nav-item nav-link">我的賣場</a>
 
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
@@ -115,10 +123,14 @@ pageContext.setAttribute("list", list);
 							alt="" style="width: 40px; height: 40px" /> <%=memVO.getUserName()%>
 						</a>
 						<div class="dropdown-menu">
-							<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="dropdown-item">我的帳號</a>	
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemberServlet"> 
-							<input type="hidden" name="action" value="getOne_For_LogOut">
-							<input class="dropdown-item" type="submit" name="action" value="登出"></a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/member/MemberServlet">
+								<input type="hidden" name="action" value="getOne_For_LogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
 							</FORM>
 
 						</div>
@@ -143,8 +155,7 @@ pageContext.setAttribute("list", list);
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<input type="text" placeholder="商品搜尋
-              " />
+						<input type="text" placeholder="商品搜尋" />
 						<button>
 							<i class="fa fa-search"></i>
 						</button>
@@ -192,8 +203,6 @@ pageContext.setAttribute("list", list);
 							class="fa-solid fa-lock-open"></i>修改密碼</a> <a class="nav-link"
 							id="cards-nav" data-toggle="pill" href="#cards-tab" role="tab"><i
 							class="fa-solid fa-credit-card"></i>信用卡管理</a> <a class="nav-link"
-							id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i
-							class="fa fa-shopping-bag"></i>訂單管理</a> <a class="nav-link"
 							id="payment-nav" data-toggle="pill" href="#payment-tab"
 							role="tab"><i class="fa-solid fa-coins"></i>我的購物金</a> <a
 							class="nav-link" id="address-nav" data-toggle="pill"
@@ -343,7 +352,7 @@ pageContext.setAttribute("list", list);
 										</thead>
 										<tbody>
 
-											<c:forEach var="cardVO" items="${list}">
+											<c:forEach var="cardVO" items="${cdlist}">
 												<tr>
 
 													<td>${cardVO.creditCardNumber}</td>
@@ -357,7 +366,7 @@ pageContext.setAttribute("list", list);
 															<input type="hidden" name="creditCardId"
 																value="${cardVO.creditCardId}"> <input
 																type="hidden" name="memberId"
-																value="${memVO.getMemberId()}"> <input
+																value="${memVO.getMemberId() }"> <input
 																type="hidden" name="action" value="delete"> <input
 																class="btn" type="submit" value="刪除">
 														</FORM>
@@ -370,6 +379,7 @@ pageContext.setAttribute("list", list);
 
 							</div>
 						</div>
+
 						<div class="tab-pane fade" id="payment-tab" role="tabpanel"
 							aria-labelledby="payment-nav">
 							<div
@@ -443,30 +453,30 @@ pageContext.setAttribute("list", list);
 								<table class="table table-bordered">
 									<thead class="thead-dark">
 										<tr>
-											<th>No</th>
+											<!-- <th>No</th> -->
 											<th>賣場名稱</th>
 
 											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>賣場名稱</td>
-											<td><button class="btn">解除封鎖</button></td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>賣場名稱</td>
+										<c:forEach var="memblVO" items="${mblist}">
+											<tr>
+												<%-- <td>${memblVO.blockListID}</td> --%>
+												<td>${memblVO.storeName}</td>
 
-											<td><button class="btn">解除封鎖</button></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>賣場名稱</td>
-
-											<td><button class="btn">解除封鎖</button></td>
-										</tr>
+												<td>
+													<FORM METHOD="post"
+														ACTION="<%=request.getContextPath()%>/member/MemberBlockListServlet"
+														style="margin-bottom: 0px;">
+														<input type="hidden" name="blockListID"
+															value="${memblVO.blockListID}"> <input
+															type="hidden" name="action" value="delete"> <input
+															class="btn" type="submit" value="刪除">
+													</FORM>
+												</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -562,10 +572,10 @@ pageContext.setAttribute("list", list);
 								enctype="multipart/form-data" name="form1">
 								<h4>帳戶明細</h4>
 								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
+								<c:if test="${not empty errorMsgsForupdate}">
 									<font style="color: red">請修正以下錯誤:</font>
 									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
+										<c:forEach var="message" items="${errorMsgsForupdate}">
 											<li style="color: red">${message}</li>
 										</c:forEach>
 									</ul>
@@ -574,32 +584,45 @@ pageContext.setAttribute("list", list);
 									<div class="col">
 										<div class="row">
 											<div class="col-md py-1">
-												<input class="form-control" type="text" name="userName"
-													placeholder="姓名"
+												<label>姓名</label> <input class="form-control" type="text"
+													name="userName" placeholder="姓名"
 													value="<%=(memVO.getUserName() == null) ? "" : memVO.getUserName()%>" />
 											</div>
 											<div class="col-md py-1">
-												<input class="form-control" type="text" name="userAccount"
-													placeholder="帳號"
+												<label>帳號</label> <input class="form-control" type="text"
+													name="userAccount" placeholder="帳號"
 													value="<%=(memVO.getUserAccount() == null) ? "" : memVO.getUserAccount()%>" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
-												<input class="form-control" type="text" name="phone"
-													placeholder="手機號碼"
+												<label>手機號碼</label> <input class="form-control" type="text"
+													name="phone" placeholder="手機號碼"
 													value="<%=(memVO.getPhone() == null) ? "" : memVO.getPhone()%>" />
 											</div>
 											<div class="col-md py-1">
-												<input class="form-control" type="text" name="mail"
-													placeholder="電子信箱"
+												<label>電子信箱</label> <input class="form-control" type="text"
+													name="mail" placeholder="電子信箱"
 													value="<%=(memVO.getMail() == null) ? "" : memVO.getMail()%>" />
 											</div>
 										</div>
+										<div class="row">
+											<div class="col-md py-1">
+												<label>身分證號</label> <input class="form-control" type="text"
+													name="idNumber" placeholder="身分證號"
+													value="<%=(memVO.getIdNumber() == null) ? "" : memVO.getIdNumber()%>" />
+											</div>
+											<div class="col-md py-1">
+												<label>地址</label> <input class="form-control" type="text"
+													name="address" placeholder="地址"
+													value="<%=(memVO.getAddress() == null) ? "" : memVO.getAddress()%>" />
+											</div>
+										</div>
 
-										<br> <br> <br>
 
 
+
+										<br> <br> <br> <br> <br>
 										<div class="row">
 											<div class="col-md py-1">
 												<input type="hidden" name="action" value="updateOne">
@@ -635,66 +658,37 @@ pageContext.setAttribute("list", list);
 								</div>
 							</FORM>
 
-
-
-
-
-
-
-							<hr>
-							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
-								name="form1">
-								<h4>賣場資訊</h4>
-								<div class="row">
-									<div class="col-md-6">
-										<input class="form-control" type="text" placeholder="身分證號" />
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" placeholder="賣場名稱" />
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" placeholder="銀行帳號" />
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" placeholder="賣場地址" />
-									</div>
-									<div class="col-md-12">
-										<button class="btn">送出</button>
-									</div>
-								</div>
-							</FORM>
 						</div>
 						<div class="tab-pane fade" id="password-tab" role="tabpanel"
 							aria-labelledby="password-nav">
 
 
 							<h4>變更密碼</h4>
-							<FORM METHOD="post"
+							<FORM id="loginForm" METHOD="post"
 								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 								style="margin-bottom: 0px;">
-								
+
 								<div class="row">
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
+									<%-- 錯誤表列 --%>
+									<c:if test="${not empty errorMsgs}">
+										<font style="color: red">請修正以下錯誤:</font>
+										<ul>
+											<c:forEach var="message" items="${errorMsgs}">
+												<li style="color: red">${message}</li>
+											</c:forEach>
+										</ul>
+									</c:if>
 									<div class="col-md-12">
-										<input class="form-control" type="password"
-											placeholder="請輸入舊密碼" />
+										<input id="oldpassword" class="form-control" type="password"
+											name="oldPassword" placeholder="請輸入舊密碼" />
 									</div>
 									<div class="col-md-6">
-										<input class="form-control" type="password"
+										<input id="password" class="form-control" type="password"
 											name="userPassword" placeholder="請輸入新密碼" />
 									</div>
 									<div class="col-md-6">
-										<input class="form-control" type="password"
-											placeholder="請再輸入一次新密碼" />
+										<input id="retype-password" class="form-control"
+											type="password" placeholder="請再輸入一次新密碼" />
 									</div>
 									<div class="col-md-12">
 										<input type="hidden" name="action" value="updateOnePassword">
@@ -813,8 +807,10 @@ pageContext.setAttribute("list", list);
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/slick/slick.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
