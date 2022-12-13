@@ -29,17 +29,14 @@ public class AdJDBCDAO implements AdDAO_interface {
 
 		@Override
 		public void insert(AdVO adVO) {
-
+			
 			Connection con = null;
 			PreparedStatement pstmt = null;
 
 			try {
-
 				Class.forName(driver);
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(INSERT_STMT);
-
-				
 				pstmt.setInt(1, adVO.getAdministratorID());
 				pstmt.setInt(2, adVO.getGroupBuyID());
 				pstmt.setString(3, adVO.getAdTitle());
@@ -81,7 +78,7 @@ public class AdJDBCDAO implements AdDAO_interface {
 
 		@Override
 		public void update(AdVO adVO) {
-
+			
 			Connection con = null;
 			PreparedStatement pstmt = null;
 
@@ -91,17 +88,17 @@ public class AdJDBCDAO implements AdDAO_interface {
 				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(UPDATE);
 
-//				pstmt.setInt(1, advVO.getAdSerialID());
 				pstmt.setString(1, adVO.getAdTitle());
 				pstmt.setString(2, adVO.getAdType());
 				pstmt.setString(3, adVO.getAdDescribe());
 				pstmt.setBytes(4, adVO.getAdPhoto());
 				pstmt.setDate(5, adVO.getAdStartDate());
 				pstmt.setDate(6, adVO.getAdEndDate());
-				pstmt.setTimestamp(7, adVO.getUpdateTime());
+				pstmt.setInt(7, adVO.getAdSerialID());
+//				pstmt.setTimestamp(7, adVO.getUpdateTime());
 
 				pstmt.executeUpdate();
-
+				
 				// Handle any driver errors
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException("Couldn't load database driver. "
@@ -194,7 +191,6 @@ public class AdJDBCDAO implements AdDAO_interface {
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
-					// advVO 也稱為 Domain objects
 					adVO = new AdVO();
 					adVO.setAdSerialID(rs.getInt("adSerialID"));
 					adVO.setAdministratorID(rs.getInt("administratorID"));
@@ -318,56 +314,56 @@ public class AdJDBCDAO implements AdDAO_interface {
 
 			AdJDBCDAO dao = new AdJDBCDAO();
 			// 圖片上傳
-			byte[] data = null;
-			FileImageInputStream input = null;
-			try {
-				input = new FileImageInputStream(new File("C:\\Users\\Tibame_T14\\Desktop\\001.jpg"));
-				ByteArrayOutputStream output = new ByteArrayOutputStream();
-				byte[] buf = new byte[1024];
-				int numBytesRead = 0;
-				while ((numBytesRead = input.read(buf)) != -1) {
-					output.write(buf, 0, numBytesRead);
-				}
-				data = output.toByteArray();
-				output.close();
-				input.close();
-			} catch (Exception ex1) {
-				ex1.printStackTrace();
-			}
+//			byte[] data = null;
+//			FileImageInputStream input = null;
+//			try {
+//				input = new FileImageInputStream(new File("C:\\Users\\Tibame_T14\\Desktop\\001.jpg"));
+//				ByteArrayOutputStream output = new ByteArrayOutputStream();
+//				byte[] buf = new byte[1024];
+//				int numBytesRead = 0;
+//				while ((numBytesRead = input.read(buf)) != -1) {
+//					output.write(buf, 0, numBytesRead);
+//				}
+//				data = output.toByteArray();
+//				output.close();
+//				input.close();
+//			} catch (Exception ex1) {
+//				ex1.printStackTrace();
+//			}
 
 			
 			// 新增
-			 AdVO AdVO1 = new AdVO();
-			 AdVO1.setAdSerialID(1);
-			 AdVO1.setAdministratorID(2);
-			 AdVO1.setGroupBuyID(1);
-			 AdVO1.setAdTitle("最新消息");
-			 AdVO1.setAdType("團購相關");
-			 AdVO1.setAdDescribe("雙11團購優惠開跑");
-			 AdVO1.setAdPhoto(data);
-			 AdVO1.setAdStartDate(java.sql.Date.valueOf("2005-01-01"));
-			 AdVO1.setAdEndDate(java.sql.Date.valueOf("2005-01-20"));
-			 AdVO1.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
-			  
-			 dao.insert(AdVO1);
+//			 AdVO AdVO1 = new AdVO();
+//			 AdVO1.setAdSerialID(1);
+//			 AdVO1.setAdministratorID(2);
+//			 AdVO1.setGroupBuyID(1);
+//			 AdVO1.setAdTitle("最新消息");
+//			 AdVO1.setAdType("團購相關");
+//			 AdVO1.setAdDescribe("雙11團購優惠開跑");
+////			 AdVO1.setAdPhoto(data);
+//			 AdVO1.setAdStartDate(java.sql.Date.valueOf("2005-01-01"));
+//			 AdVO1.setAdEndDate(java.sql.Date.valueOf("2005-01-20"));
+//			 AdVO1.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+//			  
+//			 dao.insert(AdVO1);
 			 
 			 
 			
 						
 //			// 修改
-			 AdVO AdVO2 = new  AdVO();
-			 AdVO2.setAdSerialID(1);
-			 AdVO2.setAdTitle("最新消息");
-			 AdVO2.setAdType("團購相關");
-			 AdVO2.setAdDescribe("雙11團購優惠開跑");
-			 AdVO2.setAdPhoto(data);
-			 AdVO2.setAdStartDate(java.sql.Date.valueOf("2022-01-01"));
-			 AdVO2.setAdEndDate(java.sql.Date.valueOf("2022-11-30"));
-//			 AdVO2.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
-			 dao.update(AdVO2);
+//			 AdVO AdVO2 = new  AdVO();
+//			 AdVO2.setAdSerialID(1);
+//			 AdVO2.setAdTitle("最新消息");
+//			 AdVO2.setAdType("團購相關");
+//			 AdVO2.setAdDescribe("雙11團購優惠開跑");
+//			 AdVO2.setAdPhoto(data);
+//			 AdVO2.setAdStartDate(java.sql.Date.valueOf("2022-01-01"));
+//			 AdVO2.setAdEndDate(java.sql.Date.valueOf("2022-11-30"));
+////			 AdVO2.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+//			 dao.update(AdVO2);
 
 //			// 刪除
-			dao.delete(1);
+//			dao.delete(1);
 			
 			
 

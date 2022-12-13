@@ -328,7 +328,7 @@
 		<td>${adVO.adTitle}</td>
 <%-- 		<td>${adVO.adType}</td>		 --%>
 		<td>${adVO.adDescribe}</td> 
-		<td><img src="${pageContext.request.contextPath}/back-end/ad/adServlet?adSerialID=${adVO.adSerialID}" height="100" width="100"></td>
+		<td><img src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}" height="100" width="100"></td>
 		<td>${adVO.adStartDate}</td>
 		<td>${adVO.adEndDate}</td>
 		<td>${adVO.updateTime}</td>			

@@ -14,6 +14,7 @@ public class AdministratorService {
 		administratorVO.setAdministratorName(administratorName);
 		administratorVO.setAdministratorAccount(administratorAccount);
 		administratorVO.setAdministratorPassword(administratorPassword);
+		
 		dao.insert(administratorVO);
 		
 		return administratorVO;
@@ -34,8 +35,6 @@ public class AdministratorService {
 		return dao.findOneAdmin(administratorID);
 	}
 	
-	
-
 
 	public List<AdministratorVO> getAll() {
 		return dao.getAll();

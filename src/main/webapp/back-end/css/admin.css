@@ -58,6 +58,10 @@ th, td {
 	color: rgb(85, 19, 79);
 }
 
+.sym-pink-font {
+	color:  rgb(255, 77, 237);
+}
+
 /* FOOTER
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .page-footer {
@@ -92,6 +96,11 @@ th, td {
 	justify-content: space-around;
 }
 
+.d-flex-space-between {
+	display: flex;
+	justify-content:space-between;
+}
+
 .text-align-items {
 	align-items: flex-end;	
 }
@@ -119,8 +128,16 @@ th, td {
 	margin-left: 1rem;
 }
 
+.margin-left-2 {
+	margin-left: 2rem;
+}
+
 .margin-righh-1 {
 	margin-left: 1rem;
+}
+
+.padding-bottom-1 {
+	padding-bottom: 1rem;
 }
 
 .padding-2 {
@@ -215,8 +232,8 @@ th, td {
 #preview {
 	border: 1px solid lightgray;
 	display: inline-block;
-	width: 150px;
-	min-height: 100px;
+	width: 400px;
+	min-height: 150px;
 	position: relative;
 }
 

@@ -3,17 +3,23 @@ package com.administrator.model;
 import java.sql.*;
 import java.util.*;
 
+import com.ad.model.AdVO;
+
 public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "password";
 
-	private static final String INSERT_STMT = "INSERT INTO administrator(administratorID, administratorName, administratorAccount,administratorPassword) VALUES (?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO administrator(administratorName, administratorAccount, administratorPassword) VALUES (?, ?, ?)";
 	private static final String GET_ALL_MEMBER = "SELECT administratorID, administratorName, administratorAccount, administratorPassword FROM administrator order by administratorID";
 	private static final String GET_ONE_STMT = "SELECT administratorID, administratorName, administratorAccount, administratorPassword FROM administrator where administratorID = ?";
 	private static final String UPDATE = "UPDATE administrator set administratorName=?, administratorAccount=?,  administratorPassword=? where administratorID = ?";
 	private static final String DELETE = "DELETE FROM administrator where administratorID = ?";
+
+	
+	
+	
 
 	@Override
 	public void insert(AdministratorVO administratorVO) {
@@ -24,11 +30,9 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setInt(1, administratorVO.getAdministratorID());
-			pstmt.setString(2, administratorVO.getAdministratorName());
-			pstmt.setString(3, administratorVO.getAdministratorAccount());
-			pstmt.setString(4, administratorVO.getAdministratorPassword());
+			pstmt.setString(1, administratorVO.getAdministratorName());
+			pstmt.setString(2, administratorVO.getAdministratorAccount());
+			pstmt.setString(3, administratorVO.getAdministratorPassword());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -206,6 +210,7 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 
 			while (rs.next()) {
 				administratorVO = new AdministratorVO();
+				administratorVO.setAdministratorID(rs.getInt("administratorID"));
 				administratorVO.setAdministratorName(rs.getString("administratorName"));
 				administratorVO.setAdministratorAccount(rs.getString("administratorAccount"));
 				administratorVO.setAdministratorPassword(rs.getString("administratorPassword"));

@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.administrator.model.*"%>
+<%@ page import="com.ad.model.*"%>
 
 <%
-	AdministratorVO administratorVO = (AdministratorVO) request.getAttribute("administratorVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
+	AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
 %>
 
 <html>
 <head>
-<title>新增廣告 - listOneAd2.jsp</title>
+<title>廣告單筆新增資料 - listOneAd2.jsp</title>
 
 <!-- Favicon -->
     <link href="../img/favicon.ico" rel="icon" />
