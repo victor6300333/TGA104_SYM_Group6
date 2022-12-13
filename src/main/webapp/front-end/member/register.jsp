@@ -4,7 +4,6 @@
 <%@ page import="com.member.model.*"%>
 <%
 MemberVO memVO = (MemberVO) request.getAttribute("memVO");
-MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +40,9 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 	rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/register.css"
 	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
@@ -87,7 +89,9 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<a href="${pageContext.request.contextPath}/front-end/member/login.jsp" class="nav-link">登入/註冊</a>
+						<a
+							href="${pageContext.request.contextPath}/front-end/member/login.jsp"
+							class="nav-link">登入/註冊</a>
 					</div>
 				</div>
 			</nav>
@@ -131,142 +135,63 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 	</div>
 	<!-- Bottom Bar End -->
 
-	<!-- Breadcrumb Start -->
-	<!-- <div class="breadcrumb-wrap">
-      <div class="container-fluid">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">Products</a></li>
-          <li class="breadcrumb-item active">Login & Register</li>
-        </ul>
-      </div>
-    </div> -->
-	<!-- Breadcrumb End -->
 
-	<!-- Login Start -->
-	<div class="login">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-6">
-					<FORM id="loginForm" METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
-						name="form1">
-						<div class="register-form">
-							<%-- 錯誤表列 --%>
-							<c:if test="${not empty errorMsgs}">
-								<font style="color: red">請修正以下錯誤:</font>
-								<ul>
-									<c:forEach var="message" items="${errorMsgs}">
-										<li style="color: red">${message}</li>
-									</c:forEach>
-								</ul>
-							</c:if>
-							<div class="row">
-								<div class="col-md-6">
-									<label>姓名</label> <input class="form-control" type="text"
-										name="userName" placeholder="姓名"
-										value="<%=(memVO == null) ? "" : memVO.getUserName()%>" />
-								</div>
-								<div class="col-md-6">
-									<label>帳號</label> <input class="form-control" type="text"
-										name="userAccount" placeholder="帳號"
-										value="<%=(memVO == null) ? "" : memVO.getUserAccount()%>" />
-								</div>
-								<div class="col-md-6">
-									<label>電子信箱</label> <input class="form-control" type="text"
-										name="mail" placeholder="電子信箱"
-										value="<%=(memVO == null) ? "" : memVO.getMail()%>" />
-								</div>
-								<div class="col-md-6">
-									<label>行動電話</label> <input class="form-control" type="text"
-										name="phone" placeholder="行動電話"
-										value="<%=(memVO == null) ? "" : memVO.getPhone()%>" />
-								</div>
-								<div class="col-md-6">
-									<label>密碼</label> <input id="password" class="form-control"
-										type="password" name="userPassword" placeholder="密碼" />
-								</div>
-								<div class="col-md-6">
-									<label>再輸入一次密碼</label> <input id="retype-password"
-										class="form-control" type="password" placeholder="密碼" />
-								</div>
-								<div class="col-md-12">
-									<input type="hidden" name="action" value="insert"> 
-									<input class="btn" type="submit" value="註冊">
-								</div>
-							</div>
-						</div>
-					</FORM>
-				</div>
-				<div class="col-lg-6">
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
-						name="form2">
-						<div class="login-form">
-							<%-- 錯誤表列 --%>
-							<c:if test="${not empty errorMsgs1}">
-								<font style="color: red">請修正以下錯誤:</font>
-								<ul>
-									<c:forEach var="message" items="${errorMsgs1}">
-										<li style="color: red">${message}</li>
-									</c:forEach>
-								</ul>
-							</c:if>
-							<div class="row">
-								<div class="col-md-6">
-									<label>電子信箱</label> <input class="form-control" type="text"
-										name="mail" placeholder="電子信箱"
-										value="<%=(memVO2 == null) ? "" : memVO2.getMail()%>" />
-								</div>
-								<div class="col-md-6">
-									<label>密碼</label> <input class="form-control" type="password"
-										name="userPassword" placeholder="密碼" />
-								</div>
-								<div class="col-md-12">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input"
-											id="newaccount" /> <label class="custom-control-label"
-											for="newaccount">保持登入</label>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<input type="hidden" name="action" value="getOne_For_Login">
-									<input type="hidden" name="mail" value="${memVO2.mail}">
-									<input class="btn" type="submit" value="登入">
-								</div>
-								<div class="col-md-6">
-									<a href="${pageContext.request.contextPath}/front-end/member/forgetPassword.jsp" class="navbar-brand"><input class="btn"
-										type="button" value="忘記密碼"></a>
 
-								</div>
-								<div class="col-md-12">
-									<hr />
-								</div>
-								<div class="col-md-12">
-									<label>或是使用</label>
-								</div>
-								<div class="col-md-6 login_btn">
-									<a href="register_fbgo.html">
-										<button class="btn login_btn">
-											<i class="fa-brands fa-facebook-f"></i> Facebook
-										</button>
-									</a>
-								</div>
-								<div class="col-md-6 login_btn">
-									<a href="register_fbgo.html">
-										<button class="btn login_btn2">
-											<i class="fa-brands fa-google"></i> Google
-										</button>
-									</a>
-								</div>
-							</div>
-						</div>
-					</FORM>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Login End -->
+	<!-- register Start -->
+	<form id="msform" METHOD="post"
+		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+		name="form1">
+		<!-- progressbar -->
+		<ul id="progressbar">
+			<li class="active">信箱驗證</li>
+
+			<li>完成</li>
+		</ul>
+		<!-- fieldsets -->
+		<fieldset>
+			<h1 class="fs-title">請輸入信箱驗證碼</h1>
+			<br />
+			<h3 class="fs-subtitle">您的驗證碼已透過E-mail傳送至</h3>
+			<h4 class="fs-subtitle">${memVO.mail}</h4>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+			<input type="text" name="vCode" placeholder="輸入驗證碼" />
+			<h3 class="fs-subtitle">沒有收到驗證碼嗎？</h3>
+			<h3 class="fs-subtitle">重新傳送</h3>
+
+			<input type="hidden" name="action" value="mailVerification">
+			<input class="next action-button" name="next" type="submit"
+				value="驗證">
+
+		</fieldset>
+		<fieldset>
+			<h2 class="fs-title">驗證完成</h2>
+			<h2 class="fs-title circle-check">
+				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
+				<br />
+			</h2>
+			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
+			<h3 class="fs-subtitle">驗證註冊成功</h3>
+			<h3 class="fs-subtitle">請點選完成繼續註冊流程</h3>
+			<a
+				href="${pageContext.request.contextPath}/front-end/member/register2.jsp">
+				<input type="button" class="action-button" value="完成" />
+			</a>
+		</fieldset>
+	</form>
+	<br />
+	<br />
+	<br />
+	<br />
+
+	<!-- register End -->
 
 	<!-- Footer Start -->
 	<div class="footer">

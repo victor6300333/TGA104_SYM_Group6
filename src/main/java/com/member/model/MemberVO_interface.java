@@ -13,9 +13,9 @@ public interface MemberVO_interface {
 
 	public void delete(Integer memberId);
 
-	public MemberVO findByPrimaryKey(Integer memberId);
+	public MemberVO getByPrimaryKey(Integer memberId);
 
-	public MemberVO findOneMemberByMail(String mail);
+	public MemberVO getOneMemberByMail(String mail);
 
 	public Integer selectLastMemberID();
 
@@ -24,5 +24,7 @@ public interface MemberVO_interface {
 //  public List<EmpVO> getAll(Map<String, String[]> map); 
 
 	public Boolean findOneMemberForLogin(String mail, String userPassword);
+
+	public Boolean findMemberByMail(String mail);
 
 }

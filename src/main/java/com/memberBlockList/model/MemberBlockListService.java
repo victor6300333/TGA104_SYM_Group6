@@ -3,6 +3,8 @@ package com.memberBlockList.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.store.model.StoreVO;
+
 public class MemberBlockListService {
 	private MemberBlockListVO_interface dao;
 
@@ -25,7 +27,7 @@ public class MemberBlockListService {
 		dao.delete(blockListID);
 	}
 
-	public List<MemberBlockListVO> getAll(Integer memberId) {
+	public List<ViewMemberBlockListVO> getAll(Integer memberId) {
 		return dao.getAll(memberId);
 	}
 
