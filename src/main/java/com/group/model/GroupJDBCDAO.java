@@ -12,7 +12,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
 	String userid = "root";
-	String passwd = "lucky777";
+	String passwd = "password";
 
 	private static final String INSERT_STMT = "INSERT INTO groupBuying (groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime) VALUES(?,?,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE groupBuying set groupBuyProductID=?,administratorID=?,groupBuyProductOrderTotal=?,groupBuyingState=?,groupBuyingOnLoadDate=?,groupBuyingOffLoadDate=?,updateTime= ? WHERE groupBuyID = ?";
