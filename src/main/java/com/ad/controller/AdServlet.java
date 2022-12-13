@@ -122,9 +122,11 @@ Integer adSerialID = Integer.valueOf(req.getParameter("adSerialID").trim());
 			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (adTitle == null || adTitle.trim().length() == 0) {
 				errorMsgs.add("廣告標題: 請勿空白");
-			} else if (!adTitle.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 			}
+//			else if (!adTitle.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
+//				System.out.println(enameReg);
+//				errorMsgs.add("只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+//			}
 
 String adType = req.getParameter("adType");
 
@@ -191,6 +193,7 @@ java.sql.Date adEndDate = null;
 				req.setAttribute("adVO", adVO); // 含有輸入格式錯誤的advVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/ad/update_ad_input2.jsp");
 				failureView.forward(req, res);
+				System.out.println(errorMsgs);
 				return; // 程式中斷
 			}
 
@@ -200,7 +203,7 @@ java.sql.Date adEndDate = null;
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("adVO", adVO); // 資料庫update成功後,正確的的advVO物件,存入req
-			String url = "/back-end/ad/listOneAd2.jsp";
+			String url = "/back-end/ad/listAllAd2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 		}
@@ -218,17 +221,17 @@ Integer administratorID = Integer.valueOf(req.getParameter("administratorID"));
 Integer groupBuyID = Integer.valueOf(req.getParameter("groupBuyID"));
 			
 String adTitle = req.getParameter("adTitle");
-			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-			if (adTitle == null || adTitle.trim().length() == 0) {
-				errorMsgs.add("廣告標題: 請勿空白");
-			} else if (!adTitle.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
-				errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-			}
+//			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+//			if (adTitle == null || adTitle.trim().length() == 0) {
+//				errorMsgs.add("廣告標題: 請勿空白");
+//			} else if (!adTitle.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
+//				errorMsgs.add("只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+//			}
 
 String adType = req.getParameter("adType");
-			if (adType == null || adType.trim().length() == 0) {
-				errorMsgs.add("請勿空白類別");
-			}
+//			if (adType == null || adType.trim().length() == 0) {
+//				errorMsgs.add("請勿空白類別");
+//			}
 			
 String adDescribe = req.getParameter("adDescribe");
 			if (adDescribe == null || adDescribe.trim().length() == 0) {
@@ -263,7 +266,9 @@ java.sql.Date adEndDate = null;
 
 			byte[] imgAdd= null;
 			for (Part part : parts) {
+				System.out.println(part.getName());
 				String filename = part.getSubmittedFileName();
+				System.out.println("filename = " + filename);
 				if (filename != null && filename.length() != 0 && part.getContentType() != null) {
 					InputStream inputStream = part.getInputStream();
 					imgAdd = inputStream.readAllBytes();

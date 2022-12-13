@@ -66,45 +66,22 @@
 <!--       </a> -->
 
       <div class="navbar-nav align-items-center ms-auto">
-        <div class="nav-item dropdown"></div>
         <div class="nav-item dropdown">
-          <a
-            href="#"
-            class="nav-link dropdown-toggle"
-            data-bs-toggle="dropdown"
-          >
-            <i class="fa fa-bell me-lg-2 sym-dark-font"></i>
-            <span class="d-none d-lg-inline-flex sym-dark-font">通知</span>
-          </a>
-          <div
-            class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"
-          >
-            <a href="#" class="dropdown-item">
-              <h6 class="fw-normal mb-0">會員賣場申請</h6>
-              
-            </a>
-            <hr class="dropdown-divider" />
-<!--             <small>15 筆</small> -->
-<!--             <a href="#" class="dropdown-item text-center">所有通知</a> -->
+<!--           <a -->
+<!--             href="#" -->
+<!--             class="nav-link dropdown-toggle" -->
+<!--             data-bs-toggle="dropdown" -->
+<!--           > -->
+<!--             <img -->
+<!--               class="rounded-circle me-lg-2" -->
+<!--               src="../img/logoSYM3.jpg" -->
+<!--               alt="" -->
+<!--               style="width: 40px; height: 40px" -->
+<!--             /> -->
+<!--             <span class="d-none d-lg-inline-flex sym-dark-font ">請登入</span> -->
+<!--           </a> -->
           </div>
         </div>
-        <div class="nav-item dropdown">
-          <a
-            href="#"
-            class="nav-link dropdown-toggle"
-            data-bs-toggle="dropdown"
-          >
-            <img
-              class="rounded-circle me-lg-2"
-              src="../img/logoSYM3.jpg"
-              alt=""
-              style="width: 40px; height: 40px"
-            />
-            <span class="d-none d-lg-inline-flex sym-dark-font">請登入</span>
-          </a>
-          </div>
-        </div>
-      </div>
     </nav>
     <!-- Navbar End -->
 
@@ -160,13 +137,17 @@
             required=""
             pattern="^[A-Za-z]{1}[1-2]{1}[0-9]{8}$"
           />
+<!-- <!-- 在网页中添加一个 canvas 元素，用于显示验证码图片 -->
+<!-- <canvas id="captchaCanvas" width="200" height="60"></canvas> -->
 
-          <br />
-          <div id="remember" class="checkbox"></div>
-          <br />
+<!-- <!-- 登录表单 --> 
+<!--   <label>验证码：<input type="text" name="captcha"></label> -->
+<!--           <br /> -->
+<!--           <div id="remember" class="checkbox"></div> -->
+<br />
           
           <button
-            class="btn btn-lg btn-primary btn-block btn-signin"
+            class="btn btn-lg btn-primary btn-block btn-signin "
             type="button"
             name="loginButton"
             onclick="loginVer();"
@@ -200,6 +181,16 @@
    	function loginVer() {
    		var username = document.getElementById("username").value;
    		var password = document.getElementById("password").value;
+   		
+   		
+   	//驗證規格
+		var id = new RegExp(/[0-9]{18}/);//匹配数字18次，用於身分證匹配
+		var password = new RegExp(/\w{6,16}/);//字母6到16次，用於密碼匹配
+		var chinese = new RegExp(/[^\u4e00-\u9fa5]|^$/);//匹配中文以外的字符，用于真实姓名验证
+		var email = new RegExp(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/);//用于邮箱格式验证
+   		
+   		
+   		
    		if (username == '') {
    			alert('編號不能為空，請重新輸入!');
    			return;

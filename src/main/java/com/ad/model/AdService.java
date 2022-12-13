@@ -18,25 +18,7 @@ public class AdService {
 	public AdVO addAd(Integer administratorID, Integer groupBuyID, String adTitle, String adType, String adDescribe,
 			Date adStartDate, Date adEndDate, byte[] adPhoto) {
 
-		AdVO adVO = new AdVO();
-
-		// 本地圖片上傳
-		byte[] data = null;
-		FileImageInputStream input = null;
-		try {
-			input = new FileImageInputStream(new File("C:\\Users\\Tibame_T14\\Desktop\\001.jpg"));
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			int numBytesRead = 0;
-			while ((numBytesRead = input.read(buf)) != -1) {
-				output.write(buf, 0, numBytesRead);
-			}
-			data = output.toByteArray();
-			output.close();
-			input.close();
-		} catch (Exception ex1) {
-			ex1.printStackTrace();
-		}
+		AdVO adVO = new AdVO();	
 
 		adVO.setAdministratorID(administratorID);
 		adVO.setGroupBuyID(groupBuyID);
@@ -45,7 +27,7 @@ public class AdService {
 		adVO.setAdDescribe(adDescribe);
 		adVO.setAdStartDate(adStartDate);
 		adVO.setAdEndDate(adEndDate);
-		adVO.setAdPhoto(data);
+		adVO.setAdPhoto(adPhoto);
 //		adVO.setUpdateTime(updateTime);
 
 		dao.insert(adVO);
@@ -58,29 +40,14 @@ public class AdService {
 		AdVO adVO = new AdVO();
 
 		// 圖片上傳
-		byte[] data = null;
-		FileImageInputStream input = null;
-		try {
-			input = new FileImageInputStream(new File("C:\\Users\\Tibame_T14\\Desktop\\001.jpg"));
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			int numBytesRead = 0;
-			while ((numBytesRead = input.read(buf)) != -1) {
-				output.write(buf, 0, numBytesRead);
-			}
-			data = output.toByteArray();
-			output.close();
-			input.close();
-		} catch (Exception ex1) {
-			ex1.printStackTrace();
-		}
+		
 
 		adVO.setAdSerialID(adSerialID);
 //		adVO.setGroupBuyID(groupBuyID);
 		adVO.setAdTitle(adTitle);
 		adVO.setAdType(adType);
 		adVO.setAdDescribe(adDescribe);
-		adVO.setAdPhoto(data);
+		adVO.setAdPhoto(adPhoto);
 		adVO.setAdStartDate(adStartDate);
 		adVO.setAdEndDate(adEndDate);
 //		adVO.setUpdateTime(updateTime);
