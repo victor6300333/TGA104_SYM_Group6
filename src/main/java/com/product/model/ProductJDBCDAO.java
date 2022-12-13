@@ -413,6 +413,7 @@ public class ProductJDBCDAO implements ProductDAO_interface {
 
 			pstmt = con.prepareStatement(GET_ALL_STMT + quryString);
 			rs = pstmt.executeQuery();
+			System.out.println(GET_ALL_STMT + quryString);
 
 			while (rs.next()) {
 				// empVO 嚙稽嚙誶穿蕭 Domain objects
