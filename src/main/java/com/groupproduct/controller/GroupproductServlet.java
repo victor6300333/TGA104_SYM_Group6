@@ -18,7 +18,7 @@ import javax.servlet.http.Part;
 import com.groupproduct.model.GroupproductService;
 import com.groupproduct.model.GroupproductVO;
 @WebServlet("/front-end/groupproduct/Groupproduct.do")
-@MultipartConfig
+
 public class GroupproductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
