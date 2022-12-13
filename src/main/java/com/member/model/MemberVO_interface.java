@@ -11,9 +11,9 @@ public interface MemberVO_interface {
 
 	public void updateOnePasswoed(MemberVO memberVO);
 
-	public void delete(Integer memberId);
+	public void delete(Integer memberID);
 
-	public MemberVO getByPrimaryKey(Integer memberId);
+	public MemberVO getByPrimaryKey(Integer memberID);
 
 	public MemberVO getOneMemberByMail(String mail);
 

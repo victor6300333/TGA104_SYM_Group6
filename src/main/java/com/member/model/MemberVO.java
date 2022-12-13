@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 public class MemberVO implements Serializable {
 
-	private Integer memberId;
+	private Integer memberID;
 	private String userAccount;
 	private String userPassword;
 	private String userName;
@@ -22,12 +22,12 @@ public class MemberVO implements Serializable {
 	private Boolean sellerAuditApprovalState;
 	private Integer currentShoppingCoin;
 
-	public Integer getMemberId() {
-		return memberId;
+	public Integer getMemberID() {
+		return memberID;
 	}
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
+	public void setMemberID(Integer memberID) {
+		this.memberID = memberID;
 	}
 
 	public String getUserAccount() {

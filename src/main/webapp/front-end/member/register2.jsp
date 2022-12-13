@@ -226,7 +226,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<br /> <br />
 									<div class="col-md">
 										<input type="hidden" name="action" value="update"> <input
-											type="hidden" name="memberId" value="${memVO.getMemberId()}">
+											type="hidden" name="memberID" value="${memVO.getMemberID()}">
 										<input type="hidden" name="mail" value="${memVO.getMail()}">
 										<input class="btn" type="submit" value="註冊">
 
