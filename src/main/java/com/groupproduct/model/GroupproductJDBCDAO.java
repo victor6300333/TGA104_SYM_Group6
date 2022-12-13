@@ -15,7 +15,7 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
 	String userid = "root";
-	String passwd = "lucky777";
+	String passwd = "password";
 
 	private static final String INSERT_STMT = "INSERT INTO groupBuyProduct(groupBuyProductPrice,groupBuyProductPicture,groupBuyProductDescrip) VALUES (?, ?, ?)";
 	private static final String UPDATE = "UPDATE groupBuyProduct set groupBuyProductPrice=?,groupBuyProductPicture = Coalesce (?,groupBuyProductPicture),groupBuyProductDescrip= ? WHERE groupBuyProductID=?";

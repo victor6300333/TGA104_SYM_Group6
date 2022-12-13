@@ -13,7 +13,7 @@ public class GrouporderJDBCDAO implements GrouporderDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
 	String userid = "root";
-	String passwd = "lucky777";
+	String passwd = "password";
 
 	private static final String INSERT_STMT = "INSERT INTO groupBuyOrder (groupBuyID,memberID,groupBuyProductID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT groupBuyOrderID,groupBuyID,memberID,groupBuyProductID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation FROM groupBuyOrder";
