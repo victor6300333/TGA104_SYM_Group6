@@ -9,11 +9,11 @@
 MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
 CreditCardService cardSvc = new CreditCardService();
-List<CreditCardVO> cdlist = cardSvc.getAll(memVO.getMemberId());
+List<CreditCardVO> cdlist = cardSvc.getAll(memVO.getMemberID());
 pageContext.setAttribute("cdlist", cdlist);
 
 MemberBlockListService mbSvc = new MemberBlockListService();
-List<ViewMemberBlockListVO> mblist = mbSvc.getAll(memVO.getMemberId());
+List<ViewMemberBlockListVO> mblist = mbSvc.getAll(memVO.getMemberID());
 pageContext.setAttribute("mblist", mblist);
 %>
 <!DOCTYPE html>
@@ -119,7 +119,7 @@ pageContext.setAttribute("mblist", mblist);
 
 						<a href="my-account.html" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO.memberId}"
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
 							alt="" style="width: 40px; height: 40px" /> <%=memVO.getUserName()%>
 						</a>
 						<div class="dropdown-menu">
@@ -335,8 +335,8 @@ pageContext.setAttribute("mblist", mblist);
 												</div>
 											</div>
 
-											<input type="hidden" name="memberId"
-												value="${memVO.getMemberId() }"> <input
+											<input type="hidden" name="memberID"
+												value="${memVO.getMemberID() }"> <input
 												type="hidden" name="action" value="insert"> <input
 												class="btn" type="submit" value="新增信用卡"> <br /> <br />
 										</FORM>
@@ -363,10 +363,10 @@ pageContext.setAttribute("mblist", mblist);
 														<FORM METHOD="post"
 															ACTION="<%=request.getContextPath()%>/member/CreditCardServlet"
 															style="margin-bottom: 0px;">
-															<input type="hidden" name="creditCardId"
-																value="${cardVO.creditCardId}"> <input
-																type="hidden" name="memberId"
-																value="${memVO.getMemberId() }"> <input
+															<input type="hidden" name="creditCardID"
+																value="${cardVO.creditCardID}"> <input
+																type="hidden" name="memberID"
+																value="${memVO.getMemberID() }"> <input
 																type="hidden" name="action" value="delete"> <input
 																class="btn" type="submit" value="刪除">
 														</FORM>
@@ -626,8 +626,8 @@ pageContext.setAttribute("mblist", mblist);
 										<div class="row">
 											<div class="col-md py-1">
 												<input type="hidden" name="action" value="updateOne">
-												<input type="hidden" name="memberId"
-													value="<%=(memVO == null) ? "" : memVO.getMemberId()%>">
+												<input type="hidden" name="memberID"
+													value="<%=(memVO == null) ? "" : memVO.getMemberID()%>">
 												<input class="btn" type="submit" value="更新資料"> <br />
 												<br />
 											</div>
@@ -641,7 +641,7 @@ pageContext.setAttribute("mblist", mblist);
 											<div
 												class="col-6 p-1 align-self-center d-flex justify-content-center">
 												<img class="rounded-circle user_img"
-													src="${pageContext.request.contextPath}/member/DBGifReader?memberId=${memVO.memberId}"
+													src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
 													alt="" style="width: 160px; height: 160px" />
 											</div>
 											<div class="w-100"></div>
@@ -692,8 +692,8 @@ pageContext.setAttribute("mblist", mblist);
 									</div>
 									<div class="col-md-12">
 										<input type="hidden" name="action" value="updateOnePassword">
-										<input type="hidden" name="memberId"
-											value="<%=memVO.getMemberId()%>"> <input class="btn"
+										<input type="hidden" name="memberID"
+											value="<%=memVO.getMemberID()%>"> <input class="btn"
 											type="submit" value="送出">
 									</div>
 								</div>

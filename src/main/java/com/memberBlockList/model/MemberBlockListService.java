@@ -12,11 +12,11 @@ public class MemberBlockListService {
 		dao = new MemberBlockListJDBCDAO();
 	}
 
-	public MemberBlockListVO addBlock(Integer memberId, Integer storeID) {
+	public MemberBlockListVO addBlock(Integer memberID, Integer storeID) {
 
 		MemberBlockListVO memberBlockListVO = new MemberBlockListVO();
 
-		memberBlockListVO.setMemberID(memberId);
+		memberBlockListVO.setMemberID(memberID);
 		memberBlockListVO.setStoreID(storeID);
 		dao.insert(memberBlockListVO);
 
@@ -27,8 +27,8 @@ public class MemberBlockListService {
 		dao.delete(blockListID);
 	}
 
-	public List<ViewMemberBlockListVO> getAll(Integer memberId) {
-		return dao.getAll(memberId);
+	public List<ViewMemberBlockListVO> getAll(Integer memberID) {
+		return dao.getAll(memberID);
 	}
 
 //	public static void main(String[] args) {

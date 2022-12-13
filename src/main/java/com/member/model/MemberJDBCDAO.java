@@ -117,7 +117,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setString(6, memberVO.getAddress());
 			pstmt.setBoolean(7, memberVO.getSellerAuditApprovalState());
 			pstmt.setInt(8, memberVO.getCurrentShoppingCoin());
-			pstmt.setInt(9, memberVO.getMemberId());
+			pstmt.setInt(9, memberVO.getMemberID());
 
 			pstmt.executeUpdate();
 
@@ -166,7 +166,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setBytes(5, memberVO.getUserPhoto());
 			pstmt.setString(6, memberVO.getIdNumber());
 			pstmt.setString(7, memberVO.getAddress());
-			pstmt.setInt(8, memberVO.getMemberId());
+			pstmt.setInt(8, memberVO.getMemberID());
 
 			pstmt.executeUpdate();
 
@@ -209,7 +209,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt = con.prepareStatement(UPDATEONE_PASSWOED);
 
 			pstmt.setString(1, memberVO.getUserPassword());
-			pstmt.setInt(2, memberVO.getMemberId());
+			pstmt.setInt(2, memberVO.getMemberID());
 
 			pstmt.executeUpdate();
 
@@ -240,7 +240,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 	}
 
 	@Override
-	public void delete(Integer memberId) {
+	public void delete(Integer memberID) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -250,7 +250,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, memberId);
+			pstmt.setInt(1, memberID);
 
 			pstmt.executeUpdate();
 
@@ -280,7 +280,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 	}
 
 	@Override
-	public MemberVO getByPrimaryKey(Integer memberId) {
+	public MemberVO getByPrimaryKey(Integer memberID) {
 		MemberVO memberVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -292,14 +292,14 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_MEMBER);
 
-			pstmt.setInt(1, memberId);
+			pstmt.setInt(1, memberID);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// memberVO 也稱為 Domain objects
 				memberVO = new MemberVO();
-				memberVO.setMemberId(rs.getInt("memberId"));
+				memberVO.setMemberID(rs.getInt("memberID"));
 				memberVO.setUserAccount(rs.getString("userAccount"));
 				memberVO.setUserPassword(rs.getString("userPassword"));
 				memberVO.setUserName(rs.getString("userName"));
@@ -370,7 +370,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			while (rs.next()) {
 				// memberVO 也稱為 Domain objects
 				memberVO = new MemberVO();
-				memberVO.setMemberId(rs.getInt("memberId"));
+				memberVO.setMemberID(rs.getInt("memberID"));
 				memberVO.setUserAccount(rs.getString("userAccount"));
 				memberVO.setUserPassword(rs.getString("userPassword"));
 				memberVO.setUserName(rs.getString("userName"));
@@ -441,7 +441,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			while (rs.next()) {
 				// memberVO 也稱為 Domain objects
 				memberVO = new MemberVO();
-				memberVO.setMemberId(rs.getInt("memberId"));
+				memberVO.setMemberID(rs.getInt("memberID"));
 				memberVO.setUserAccount(rs.getString("userAccount"));
 				memberVO.setUserPassword(rs.getString("userPassword"));
 				memberVO.setUserName(rs.getString("userName"));

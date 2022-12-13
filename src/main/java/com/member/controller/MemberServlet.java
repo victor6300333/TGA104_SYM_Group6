@@ -49,14 +49,14 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			String str = req.getParameter("memberId");
+			String str = req.getParameter("memberID");
 
-			Integer memberId = null;
-			memberId = Integer.valueOf(str);
+			Integer memberID = null;
+			memberID = Integer.valueOf(str);
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			MemberService memSvc = new MemberService();
-			MemberVO memVO = memSvc.getOneMem(memberId);
+			MemberVO memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 			HttpSession session = req.getSession();
@@ -74,11 +74,11 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ****************************************/
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			MemberService memSvc = new MemberService();
-			MemberVO memVO = memSvc.getOneMem(memberId);
+			MemberVO memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
@@ -153,7 +153,7 @@ public class MemberServlet extends HttpServlet {
 
 			String address = req.getParameter("address").trim();
 
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			MemberVO memVO = new MemberVO();
 			memVO.setUserName(userName);
@@ -163,7 +163,7 @@ public class MemberServlet extends HttpServlet {
 			memVO.setUserPhoto(userPhoto);
 			memVO.setIdNumber(idNumber);
 			memVO.setAddress(address);
-			memVO.setMemberId(memberId);
+			memVO.setMemberID(memberID);
 
 			HttpSession session = req.getSession();
 
@@ -177,7 +177,7 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			memVO = memSvc.updateOneMember(memberId, userName, userAccount, phone, mail, userPhoto, idNumber, address);
+			memVO = memSvc.updateOneMember(memberID, userName, userAccount, phone, mail, userPhoto, idNumber, address);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 			String url = "/front-end/member/my-account.jsp";
@@ -194,12 +194,12 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			MemberService memSvc = new MemberService();
 
 			MemberVO memVO = new MemberVO();
-			memVO = memSvc.getOneMem(memberId);
+			memVO = memSvc.getOneMem(memberID);
 
 			String userPassword = req.getParameter("userPassword").trim();
 //			System.out.println("userPassword = " + userPassword);
@@ -210,10 +210,8 @@ public class MemberServlet extends HttpServlet {
 				errorMsgs.add("使用者密碼: 只能是英文字母和數字 , 且長度必需在2到10之間");
 			}
 
-			String olduserPassword = req.getParameter("oldPassword").trim();
-//			System.out.println("userPassword = " + userPassword);
-			String olduserPasswordRg = "^[(a-zA-Z0-9)]{2,10}$";
-			if (!(memVO.getUserPassword()).equals(olduserPasswordRg)) {
+			String oldPassword = req.getParameter("oldPassword").trim();
+			if (!(memVO.getUserPassword()).equals(oldPassword)) {
 				errorMsgs.add("舊密碼輸入錯誤!!!!");
 			}
 
@@ -226,7 +224,7 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			memSvc.updateMemberPassword(memberId, userPassword);
+			memSvc.updateMemberPassword(memberID, userPassword);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 //			session.setAttribute("memVO2", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 			String url = "/front-end/member/my-account.jsp";
@@ -309,13 +307,13 @@ public class MemberServlet extends HttpServlet {
 			if ((memSvcPass.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
 				errorMsgs.add("此信箱已有人使用");
 
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
-				}
-
+			}
+			
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
 			}
 
 			// 產生亂數密碼
@@ -471,7 +469,7 @@ public class MemberServlet extends HttpServlet {
 
 			Integer currentShoppingCoin = 0;
 
-			Integer memberId = memSvc.getOne();
+			Integer memberID = memSvc.getOne();
 
 			String mail = req.getParameter("mail");
 
@@ -484,7 +482,7 @@ public class MemberServlet extends HttpServlet {
 			memVO.setAddress(address);
 			memVO.setSellerAuditApprovalState(sellerAuditApprovalState);
 			memVO.setCurrentShoppingCoin(currentShoppingCoin);
-			memVO.setMemberId(memberId);
+			memVO.setMemberID(memberID);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -496,7 +494,7 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			memSvc.updateMember(memberId, gender, birthday, userPhoto, mailCertification, idNumber, address,
+			memSvc.updateMember(memberID, gender, birthday, userPhoto, mailCertification, idNumber, address,
 					sellerAuditApprovalState, currentShoppingCoin);
 
 			memVO = memSvc.loginOneMem(mail);
@@ -518,11 +516,11 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			MemberService memSvc = new MemberService();
-			memSvc.deleteMember(memberId);
+			memSvc.deleteMember(memberID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			String url = "/member/listAllMember.jsp";
@@ -596,7 +594,7 @@ public class MemberServlet extends HttpServlet {
 				MemberService memSvc = new MemberService();
 				memVO = memSvc.loginOneMem(mail);
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
-				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberId());
+				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
@@ -672,7 +670,7 @@ public class MemberServlet extends HttpServlet {
 			memVO = memSvc.loginOneMem(tomail);
 
 			// 把該會員的亂數密碼在資料庫做更新
-			Integer memberID = memVO.getMemberId();
+			Integer memberID = memVO.getMemberID();
 			memSvc.updateMemberPassword(memberID, passRandom);
 
 			// 傳送訊息通知使用者

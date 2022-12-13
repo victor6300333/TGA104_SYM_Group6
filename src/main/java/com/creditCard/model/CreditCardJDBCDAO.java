@@ -37,7 +37,7 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, creditCardVO.getMemberId());
+			pstmt.setInt(1, creditCardVO.getMemberID());
 			pstmt.setString(2, creditCardVO.getCreditCardNumber());
 			pstmt.setString(3, creditCardVO.getSecurityCode());
 			pstmt.setDate(4, creditCardVO.getExDate());
@@ -83,7 +83,7 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 			pstmt.setString(1, creditCardVO.getCreditCardNumber());
 			pstmt.setString(2, creditCardVO.getSecurityCode());
 			pstmt.setDate(3, creditCardVO.getExDate());
-			pstmt.setInt(4, creditCardVO.getCreditCardId());
+			pstmt.setInt(4, creditCardVO.getCreditCardID());
 
 			pstmt.executeUpdate();
 
@@ -113,7 +113,7 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 	}
 
 	@Override
-	public void delete(Integer creditCardId) {
+	public void delete(Integer creditCardID) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -123,7 +123,7 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, creditCardId);
+			pstmt.setInt(1, creditCardID);
 
 			pstmt.executeUpdate();
 
@@ -153,13 +153,13 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 	}
 
 	@Override
-	public CreditCardVO findByPrimaryKey(Integer memberId) {
+	public CreditCardVO findByPrimaryKey(Integer memberID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CreditCardVO> getAll(Integer memberId) {
+	public List<CreditCardVO> getAll(Integer memberID) {
 		List<CreditCardVO> list = new ArrayList<CreditCardVO>();
 		CreditCardVO ceditCardVO = null;
 
@@ -172,14 +172,14 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_STMT);
-			pstmt.setInt(1, memberId);
+			pstmt.setInt(1, memberID);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// memberVO 也稱為 Domain objects
 				ceditCardVO = new CreditCardVO();
-				ceditCardVO.setMemberId(rs.getInt("memberId"));
-				ceditCardVO.setCreditCardId(rs.getInt("creditCardId"));
+				ceditCardVO.setMemberID(rs.getInt("memberID"));
+				ceditCardVO.setCreditCardID(rs.getInt("creditCardID"));
 				ceditCardVO.setCreditCardNumber(rs.getString("creditCardNumber"));
 				ceditCardVO.setSecurityCode(rs.getString("securityCode"));
 				ceditCardVO.setExDate(rs.getDate("exDate"));

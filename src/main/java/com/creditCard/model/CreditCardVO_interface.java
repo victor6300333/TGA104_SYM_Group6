@@ -9,9 +9,9 @@ public interface CreditCardVO_interface {
 
 	public void delete(Integer creditCardNumber);
 
-	public CreditCardVO findByPrimaryKey(Integer creditCardId);
+	public CreditCardVO findByPrimaryKey(Integer creditCardID);
 
-	public List<CreditCardVO> getAll(Integer memberId);
+	public List<CreditCardVO> getAll(Integer memberID);
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<EmpVO> getAll(Map<String, String[]> map); 
 

@@ -41,13 +41,13 @@ public class CreditCardServlet extends HttpServlet {
 			String securityCode = req.getParameter("securityCode").trim();
 			java.sql.Date exDate = null;
 			exDate = java.sql.Date.valueOf(req.getParameter("exDate"));
-			Integer creditCardId = Integer.valueOf(req.getParameter("creditCardId"));
+			Integer creditCardID = Integer.valueOf(req.getParameter("creditCardID"));
 
 			CreditCardVO cardVO = new CreditCardVO();
 			cardVO.setCreditCardNumber(creditCardNumber);
 			cardVO.setSecurityCode(securityCode);
 			cardVO.setExDate(exDate);
-			cardVO.setCreditCardId(creditCardId);
+			cardVO.setCreditCardID(creditCardID);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -59,7 +59,7 @@ public class CreditCardServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			cardVO = cardSvc.updateCreditCard(creditCardNumber, securityCode, exDate, creditCardId);
+			cardVO = cardSvc.updateCreditCard(creditCardNumber, securityCode, exDate, creditCardID);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("cardVO", cardVO); // 資料庫update成功後,正確的的memVO物件,存入req
@@ -78,7 +78,7 @@ public class CreditCardServlet extends HttpServlet {
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 			String creditCardNumber = req.getParameter("creditCardNumber").trim();
 			String securityCode = req.getParameter("securityCode").trim();
 
@@ -88,7 +88,7 @@ public class CreditCardServlet extends HttpServlet {
 
 			MemberVO memVO = new MemberVO();
 			CreditCardVO cardVO = new CreditCardVO();
-			cardVO.setMemberId(memberId);
+			cardVO.setMemberID(memberID);
 			cardVO.setCreditCardNumber(creditCardNumber);
 			cardVO.setSecurityCode(securityCode);
 			cardVO.setExDate(exDate);
@@ -105,10 +105,10 @@ public class CreditCardServlet extends HttpServlet {
 			/*************************** 2.開始新增資料 ***************************************/
 			CreditCardService cardSvc = new CreditCardService();
 //			System.out.println("memberID = " + memberID);
-			cardVO = cardSvc.addCreditCard(memberId, creditCardNumber, securityCode, exDate);
+			cardVO = cardSvc.addCreditCard(memberID, creditCardNumber, securityCode, exDate);
 
 			MemberService memSvc = new MemberService();
-			memVO = memSvc.getOneMem(memberId);
+			memVO = memSvc.getOneMem(memberID);
 
 			req.setAttribute("memVO2", memVO);
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -125,17 +125,17 @@ public class CreditCardServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
-			Integer creditCardId = Integer.valueOf(req.getParameter("creditCardId"));
-			Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+			Integer creditCardID = Integer.valueOf(req.getParameter("creditCardID"));
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			MemberVO memVO = new MemberVO();
-			memVO.setMemberId(memberId);
+			memVO.setMemberID(memberID);
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			CreditCardService cardSvc = new CreditCardService();
-			cardSvc.deletecreditCard(creditCardId);
+			cardSvc.deletecreditCard(creditCardID);
 			MemberService memSvc = new MemberService();
-			memVO = memSvc.getOneMem(memberId);
+			memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			req.setAttribute("memVO2", memVO);

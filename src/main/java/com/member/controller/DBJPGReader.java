@@ -17,7 +17,7 @@ public class DBJPGReader extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 
-		String parameter = req.getParameter("memberId");
+		String parameter = req.getParameter("memberID");
 
 		try {
 			Statement stmt = con.createStatement();
