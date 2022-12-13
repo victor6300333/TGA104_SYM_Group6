@@ -83,6 +83,35 @@ public class ProductService implements ProductService_interface {
 
 		return dao.getAllByCond(sb.toString());
 	}
+	
+	@Override
+	public List<ProductVO> getAllByCondFront(Map<String, String> queryString) {
+		StringBuilder sb = new StringBuilder();
+		Iterator<Entry<String, String>> it = queryString.entrySet().iterator();
+		int i = 0;
+		if (it.hasNext()) {
+			sb.append(" where ");
+		}
+		while (it.hasNext()) {
+			Entry<String, String> next = it.next();
+			if (i > 0) {
+				sb.append(" and ");
+			}
+			if ("storeID".equals(next.getKey())) {
+				sb.append(next.getKey() + " = " + next.getValue());
+			} else if ("productID".equals(next.getKey())) {
+				sb.append(next.getKey() + " = " + next.getValue());
+			} else if ("productSecID".equals(next.getKey())) {
+				sb.append("productSecID" + " = " + next.getValue());
+			} else if ("productStatus".equals(next.getKey())) {
+				sb.append("productStatus" + " = " + next.getValue());
+			}
+			i++;
+		}
+		System.out.println(sb);
+
+		return dao.getAllByCond(sb.toString());
+	}
 
 	@Override
 	public String putOn(Integer productID) {

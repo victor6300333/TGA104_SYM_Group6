@@ -28,6 +28,9 @@ public interface ProductService_interface {
 	/* 多條件找到所有product */
 	public List<ProductVO> getAllByCond(Map<String, String> queryString);
 	
+	/*多條件找到所有某賣家的product*/
+	public List<ProductVO> getAllByCondFront(Map<String, String> queryString);
+	
 	/*上架*/
 	public String putOn(Integer productID);
 	
