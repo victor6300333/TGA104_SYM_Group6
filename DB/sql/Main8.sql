@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS coupon;
 DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS groupBuyProduct;
 DROP TABLE IF EXISTS administrator;
+DROP VIEW IF EXISTS v_memberblocklist;
 
 
 
@@ -214,12 +215,6 @@ INSERT INTO member (userAccount,userPassword,userName,mail,gender,registrationTi
 VALUES('F123456','aaaaaa','彥和','wqdwqew@gmail.com','M',now(),0,0,0);
 INSERT INTO member (userAccount,userPassword,userName,mail,registrationTime,mailCertification,sellerAuditApprovalState,currentShoppingCoin) 
 VALUES('F123456','aaaaaa','彥和','wqdwqew@gmail.com',now(),0,0,0);
-
-create view v_memberBlockList as
-	select 
-    s.storeName, 
-    mb.blockListID
-    from store s join memberBlockList mb on mb.storeID = s.storeID;
 
 
 
@@ -774,6 +769,15 @@ values
 ('2', '1', '雙11團購優惠開跑', '團購達15人享有8折優惠', '', '2022-11-11', '2022-11-20', now()),
 ('1', '2', '雙11團購優惠開跑', '團購達20人享有75折優惠', '', '2022-11-11', '2022-11-20', now()),
 ('3', '1', '雙11團購優惠開跑', '團購達25人享有7折優惠', '', '2022-11-11', '2022-11-20', now());
+
+-- 新建VIEW
+create view v_memberBlockList as
+	select 
+    s.storeName, 
+    mb.blockListID,
+    mb.memberID
+    from store s join memberBlockList mb on mb.storeID = s.storeID ;
+
 
 /*==========================================================================*/
 -- 以上2張表  累計26張表
