@@ -52,7 +52,7 @@ public class MemberService {
 	}
 
 	public MemberVO updateOneMember(Integer memberId, String userName, String userAccount, String phone, String mail,
-			byte[] userPhoto) {
+			byte[] userPhoto, String idNumber, String address) {
 		MemberVO memberVO = new MemberVO();
 
 		memberVO.setMemberId(memberId);
@@ -61,6 +61,8 @@ public class MemberService {
 		memberVO.setPhone(phone);
 		memberVO.setMail(mail);
 		memberVO.setUserPhoto(userPhoto);
+		memberVO.setIdNumber(idNumber);
+		memberVO.setAddress(address);
 		dao.updateOne(memberVO);
 
 		return memberVO;
@@ -81,11 +83,11 @@ public class MemberService {
 	}
 
 	public MemberVO getOneMem(Integer memberId) {
-		return dao.findByPrimaryKey(memberId);
+		return dao.getByPrimaryKey(memberId);
 	}
 
 	public MemberVO loginOneMem(String mail) {
-		return dao.findOneMemberByMail(mail);
+		return dao.getOneMemberByMail(mail);
 	}
 
 	public Integer getOne() {
@@ -98,6 +100,10 @@ public class MemberService {
 
 	public List<MemberVO> getAll() {
 		return dao.getAll();
+	}
+
+	public boolean findMemberByMail(String mail) {
+		return dao.findMemberByMail(mail);
 	}
 
 //	public static void main(String[] args) {

@@ -29,12 +29,20 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css"
+	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/front-end/member/css/style.css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/member/css/woody.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
@@ -94,7 +102,9 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="${pageContext.request.contextPath}/front-end/member/img/logo.png" alt="Logo" />
+						<a href="index.html"> <img
+							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
+							alt="Logo" />
 						</a>
 					</div>
 				</div>
@@ -175,6 +185,12 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									</div>
 								</div>
 								<div class="col-12">
+									<div class="col">
+										<label>地址</label> <input class="form-control shop_text"
+											type="text" name="address" placeholder="地址" />
+									</div>
+								</div>
+								<div class="col-12">
 									<hr />
 								</div>
 
@@ -194,7 +210,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<div id="shop_input_text">
 										<div class="col">
 											<label>身分證號</label> <input class="form-control shop_text"
-												type="text" name="idNumber" placeholder="身分證號"/>
+												type="text" name="idNumber" placeholder="身分證號" />
 										</div>
 										<div class="col">
 											<label>賣場名稱</label> <input class="form-control shop_text"
@@ -204,18 +220,15 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 											<label>銀行帳號</label> <input class="form-control shop_text"
 												type="text" placeholder="銀行帳號" />
 										</div>
-										<div class="col">
-											<label>地址</label> <input class="form-control shop_text"
-												type="text" name="address" placeholder="地址"/>
-										</div>
+
 									</div>
 
 									<br /> <br />
 									<div class="col-md">
 										<input type="hidden" name="action" value="update"> <input
-											type="hidden" name="memberId" value="${memVO.getMemberId()}"> 
-											<input type="hidden" name="mail" value="${memVO.getMail()}">
-											<input class="btn" type="submit" value="註冊">
+											type="hidden" name="memberId" value="${memVO.getMemberId()}">
+										<input type="hidden" name="mail" value="${memVO.getMail()}">
+										<input class="btn" type="submit" value="註冊">
 
 
 									</div>
@@ -227,7 +240,8 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<div class="row justify-content-center">
 										<div
 											class="col-6 p-1 align-self-center d-flex justify-content-center">
-											<img class="rounded-circle user_img" src="${pageContext.request.contextPath}/front-end/member/img/account.jpg"
+											<img class="rounded-circle user_img"
+												src="${pageContext.request.contextPath}/front-end/member/img/account.jpg"
 												alt="" style="width: 200px; height: 200px" />
 										</div>
 										<div class="w-100"></div>
@@ -353,7 +367,9 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 	<script src="lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
 </body>
 </html>
