@@ -616,8 +616,8 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 				session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
-				res.sendRedirect(req.getContextPath() + "/front-end/member/index.jsp"); // *工作3:
-																						// (-->如無來源網頁:則重導至login_success.jsp)
+				res.sendRedirect(req.getContextPath() + "/index.jsp"); // *工作3:
+																		// (-->如無來源網頁:則重導至login_success.jsp)
 			}
 
 		}
