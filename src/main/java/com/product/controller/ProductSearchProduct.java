@@ -55,7 +55,7 @@ public class ProductSearchProduct extends HttpServlet {
 			productID = Integer.valueOf(req.getParameter("productID").trim());
 			queryString.put("productID", productID+"");
 		} catch (Exception e) {
-			
+			System.out.println("錯誤");
 		}
 
 
@@ -64,7 +64,7 @@ public class ProductSearchProduct extends HttpServlet {
 			productSecID = Integer.valueOf(req.getParameter("productSecID").trim());
 			queryString.put("productSecID", productSecID+"");
 		} catch (Exception e) {
-
+			System.out.println("錯誤");
 		}
 
 		

@@ -664,7 +664,7 @@ pageContext.setAttribute("mblist", mblist);
 
 
 							<h4>變更密碼</h4>
-							<FORM id="loginForm" METHOD="post"
+							<FORM id="passwordForm" METHOD="post"
 								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 								style="margin-bottom: 0px;">
 
@@ -683,11 +683,11 @@ pageContext.setAttribute("mblist", mblist);
 											name="oldPassword" placeholder="請輸入舊密碼" />
 									</div>
 									<div class="col-md-6">
-										<input id="password" class="form-control" type="password"
+										<input id="newpassword" class="form-control" type="password"
 											name="userPassword" placeholder="請輸入新密碼" />
 									</div>
 									<div class="col-md-6">
-										<input id="retype-password" class="form-control"
+										<input id="repassword" class="form-control"
 											type="password" placeholder="請再輸入一次新密碼" />
 									</div>
 									<div class="col-md-12">
@@ -817,6 +817,34 @@ pageContext.setAttribute("mblist", mblist);
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+		
+		<script>
+		let cpasswordInput = document.getElementById('newpassword');
+		let cretypeInput = document.getElementById('repassword');
+		let coldpasswordInput = document.getElementById('oldpassword');//oldpassword
+		// 添加事件侦听器，在用戶點擊提交按鈕時檢查密碼是否一致
+		let passwordForm = document.getElementById('passwordForm');
+		passwordForm.addEventListener('submit', function(event) {
+		  let password = cpasswordInput.value;
+		  let retype = cretypeInput.value;
+		  let oldpassword = coldpasswordInput.value;
+		  
+		 if(oldpassword === ""){
+			alert('請輸入舊密碼');
+		}
+		   
+
+		  // 檢查密碼是否一致
+		  if (password !== retype) {
+		    // 顯示錯誤消息
+		    alert('兩次輸入的密碼不一致，請重新輸入');
+
+		    // 阻止表單提交
+		    event.preventDefault();
+		  }
+		});
+		</script>
+		
 </body>
 
 </html>

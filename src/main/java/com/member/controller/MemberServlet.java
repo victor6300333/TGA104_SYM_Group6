@@ -3,6 +3,7 @@ package com.member.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -226,7 +227,11 @@ public class MemberServlet extends HttpServlet {
 
 			memSvc.updateMemberPassword(memberID, userPassword);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-//			session.setAttribute("memVO2", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
+			
+//			PrintWriter out = res.getWriter();
+//			out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
+//		      + "/front-end/member/my-account.jsp'>");
+//		    out.println("<script> alert('註冊成功!');</script>");
 			String url = "/front-end/member/my-account.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -399,19 +404,27 @@ public class MemberServlet extends HttpServlet {
 			Integer currentShoppingCoin = memVO.getCurrentShoppingCoin();
 
 			if (!errorMsgs.isEmpty()) {
-				session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/register.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
+			
+			mailCertification = true;//驗證成功
 
 			/*************************** 2.開始新增資料 ***************************************/
 			MemberService memSvc = new MemberService();
 			memVO = memSvc.addMember(userAccount, userPassword, userName, phone, mail, registrationTime,
 					mailCertification, sellerAuditApprovalState, currentShoppingCoin);
+			
+			memVO = memSvc.loginOneMem(mail);
 
 			session.setAttribute("memVO", memVO);
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+//			PrintWriter out = res.getWriter();
+//			out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
+//		      + "/front-end/member/register2.jsp'>");
+//		    out.println("<script> alert('註冊成功!');</script>");
 			String url = "/front-end/member/register2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交register2.jsp
 			successView.forward(req, res);
@@ -453,7 +466,7 @@ public class MemberServlet extends HttpServlet {
 				in.close();
 			}
 
-			Boolean mailCertification = false;
+			Boolean mailCertification = true;
 
 			String idNumber = req.getParameter("idNumber").trim(); // ^[A-Z]\d{9}$
 			String idNumberReg = "^[A-Z]\\d{9}$";
@@ -595,11 +608,16 @@ public class MemberServlet extends HttpServlet {
 				memVO = memSvc.loginOneMem(mail);
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-
+				
+				//有賣場名稱才執行
+				if(storeVO2 != null && storeVO2.getStoreName() != null) {
+				String storeName = storeVO2.getStoreName();
+				session.setAttribute("storeName", storeName);
+				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 				session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
-				res.sendRedirect(req.getContextPath() + "/front-end/member/my-account.jsp"); // *工作3:
+				res.sendRedirect(req.getContextPath() + "/front-end/member/index.jsp"); // *工作3:
 																								// (-->如無來源網頁:則重導至login_success.jsp)
 			}
 
@@ -683,6 +701,55 @@ public class MemberServlet extends HttpServlet {
 
 			MailService mailService = new MailService();
 			mailService.sendMail(tomail, subject, messageText);
+		}
+		
+		if ("registerForShop".equals(action)) { // 註冊賣場資格
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			StoreVO storeVO = new StoreVO();
+			StoreJDBCDAO dao = new StoreJDBCDAO();
+
+			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
+			String storeDelBankCode = req.getParameter("storeDelBankCode");
+			String taxID = req.getParameter("taxID");
+			String phoneNumber = req.getParameter("phoneNumber");
+			String storeBankAccount = req.getParameter("storeBankAccount");
+			String storeName = req.getParameter("storeName");
+			String storeAddress = req.getParameter("storeAddress");
+			
+			storeVO.setMemberID(memberID);
+			storeVO.setStoreDelBankCode(storeDelBankCode);
+			storeVO.setTaxID(taxID);
+			storeVO.setPhoneNumber(phoneNumber);
+			storeVO.setStoreBankAccount(storeBankAccount);
+			storeVO.setStoreName(storeName);
+			storeVO.setStoreAddress(storeAddress);
+
+			
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/registerForShop.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
+			}
+
+			/*************************** 2.開始修改資料 *****************************************/
+
+			dao.insert(storeVO);
+
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			HttpSession session = req.getSession();
+			session.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的memVO物件,存入req
+			String url = "/front-end/store/myStore.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+			successView.forward(req, res);
+
 		}
 
 	}

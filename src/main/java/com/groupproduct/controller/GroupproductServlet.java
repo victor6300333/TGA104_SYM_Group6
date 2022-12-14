@@ -18,7 +18,7 @@ import javax.servlet.http.Part;
 import com.groupproduct.model.GroupproductService;
 import com.groupproduct.model.GroupproductVO;
 @WebServlet("/front-end/groupproduct/Groupproduct.do")
-
+@MultipartConfig
 public class GroupproductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -101,8 +101,7 @@ public class GroupproductServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 		}
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-
+		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.

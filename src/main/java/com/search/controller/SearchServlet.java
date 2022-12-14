@@ -70,7 +70,7 @@ public class SearchServlet extends HttpServlet {
 			 * 轉去 listAllProduct 頁面
 			 */
 			req.setAttribute("productVOall", productVOall);
-			String url = "/front-end/product/listAllProduct.jsp";
+			String url = "/front-end/product_detail/listAllProduct.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
