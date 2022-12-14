@@ -112,8 +112,8 @@
                 ><i class="fa fa-laptop me-2"></i>商家管理</a
               >
               <div class="dropdown-menu bg-transparent border-0">
-                <a href="button.html" class="dropdown-item">商家審核</a>
-                <a href="typography.html" class="dropdown-item">商家查詢</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/sellerVerify.jsp" class="dropdown-item">商家審核</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/sellerVerify.jsp" class="dropdown-item">商家查詢</a>
               </div>
             </div>
 
@@ -125,8 +125,8 @@
                 ><i class="fa fa-th me-2"></i>活動管理</a
               >
               <div class="dropdown-menu bg-transparent border-0">
-                <a href="button.html" class="dropdown-item">廣告設定</a>
-                <a href="typography.html" class="dropdown-item">優惠券設定</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp" class="dropdown-item">廣告設定</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp" class="dropdown-item">優惠券設定</a>
               </div>
             </div>
 

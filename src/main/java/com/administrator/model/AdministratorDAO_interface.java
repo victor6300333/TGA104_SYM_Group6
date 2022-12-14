@@ -2,6 +2,8 @@ package com.administrator.model;
 
 import java.util.List;
 
+import com.store.model.StoreVO;
+
 
 public interface AdministratorDAO_interface {
 

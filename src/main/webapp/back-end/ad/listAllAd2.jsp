@@ -18,20 +18,6 @@
 <body>
 <%@ include file="styles.jsp" %>
 <div class="container-fluid position-relative bg-white d-flex p-0">
-      <!-- Spinner Start -->
-      <div
-        id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-      >
-        <div
-          class="spinner-border text-primary"
-          style="width: 3rem; height: 3rem"
-          role="status"
-        >
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-      <!-- Spinner End -->
 
       <!-- Sidebar Start -->
       <div class="sidebar pe-4 pb-3 sym-skin">
@@ -79,9 +65,9 @@
                 data-bs-toggle="dropdown"
                 ><i class="fa fa-laptop me-2"></i>商家管理</a
               >
-              <div class="dropdown-menu bg-transparent border-0">
-                <a href="button.html" class="dropdown-item">商家審核</a>
-                <a href="typography.html" class="dropdown-item">商家查詢</a>
+               <div class="dropdown-menu bg-transparent border-0">
+                <a href="<%=request.getContextPath()%>/back-end/ad/sellerVerify.jsp" class="dropdown-item">商家審核</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/sellerVerify.jsp" class="dropdown-item">商家查詢</a>
               </div>
             </div>
 
@@ -93,8 +79,8 @@
                 ><i class="fa fa-th me-2"></i>活動管理</a
               >
               <div class="dropdown-menu bg-transparent border-0">
-                <a href="button.html" class="dropdown-item">廣告設定</a>
-                <a href="typography.html" class="dropdown-item">優惠券設定</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp" class="dropdown-item">廣告設定</a>
+                <a href="<%=request.getContextPath()%>/back-end/ad/select_page2.jsp" class="dropdown-item">優惠券設定</a>
               </div>
             </div>
 

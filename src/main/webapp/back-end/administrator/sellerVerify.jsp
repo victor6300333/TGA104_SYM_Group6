@@ -208,13 +208,13 @@
 						<div class="container-fluid">
 							<div class="row mb-2">
 								<div class="col-sm-6">
-									<h1 class="m-0 sym-dark-font">會員管理</h1>
+									<h1 class="m-0 sym-dark-font">賣場申請</h1>
 								</div>
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
 										<li class="breadcrumb-item"><a href="#">Home</a></li>
-										<li class="breadcrumb-item active">會員管理</li>
+										<li class="breadcrumb-item active">會員賣場申請</li>
 									</ol>
 								</div>
 							</div>
@@ -241,7 +241,7 @@
 
 										<!-- form start -->
 										<form id="memberSearch" METHOD="post"
-											ACTION="<%=request.getContextPath()%>/back-end/administrator/administratorServlet">
+											ACTION="${pageContext.request.contextPath}/back-end/administrator/administratorServlet">
 											<div class="card-body">
 												<div class="row">
 													<div class="col-sm-12">
