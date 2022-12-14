@@ -7,6 +7,7 @@
 <%@ page import="com.store.model.*"%>
 <%
 MemberVO memVO = (MemberVO) session.getAttribute("memVO");
+StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +94,7 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 						<a href="my-account.html" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
 							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
-							alt="" style="width: 40px; height: 40px" /> 
+							alt="" style="width: 40px; height: 40px" />
 						</a>
 						<div class="dropdown-menu">
 							<a
@@ -164,53 +165,73 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
 	<!-- Login Start -->
 	<div class="login">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg">
-					<div class="register-form">
-						<h4>請填寫以下資料</h4>
-						<br />
-						<div class="row">
-							<div class="col-6">
-								<div class="col">
-									<label>身分證號</label> <input class="form-control" type="text"
-										placeholder="身分證號" />
-								</div>
-								<div class="col">
-									<label>賣場銀行代碼</label> <input class="form-control" type="text"
-										placeholder="賣場銀行代碼" />
-								</div>
-								<div class="col">
-									<label>賣場電話</label> <input class="form-control" type="password"
-										placeholder="賣場電話" />
-								</div>
-							</div>
+		<FORM METHOD="post"
+			ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+			name="form2">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg">
+						<div class="register-form">
+							<h4>請填寫以下資料</h4>
+							<br />
+							<div class="row">
+								<%-- 錯誤表列 --%>
+								<c:if test="${not empty errorMsgs}">
+									<font style="color: red">請修正以下錯誤:</font>
+									<ul>
+										<c:forEach var="message" items="${errorMsgs}">
+											<li style="color: red">${message}</li>
+										</c:forEach>
+									</ul>
+								</c:if>
+								<div class="col-6">
 
-							<div class="col-6">
-								<div class="col">
-									<label>賣場名稱</label> <input class="form-control" type="text"
-										placeholder="賣場名稱" />
+									<div class="col">
+										<label>賣場銀行代碼</label> <input class="form-control" type="text"
+											name="storeDelBankCode" placeholder="賣場銀行代碼" value="<%=(storeVO == null) ? "" : storeVO.getStoreDelBankCode()%>" />
+									</div>
+									<div class="col">
+										<label>統一編號</label> <input class="form-control"
+											name="taxID" type="text" placeholder="統一編號" value="<%=(storeVO == null) ? "" : storeVO.getTaxID()%>" />
+									</div>
+									<div class="col">
+										<label>賣場電話</label> <input class="form-control"
+											name="phoneNumber" type="text" placeholder="賣場電話" value="<%=(storeVO == null) ? "" : storeVO.getPhoneNumber()%>" />
+									</div>
 								</div>
-								<div class="col">
-									<label>賣場銀行帳號</label> <input class="form-control" type="text"
-										placeholder="賣場銀行帳號" />
+
+								<div class="col-6">
+
+									<div class="col">
+										<label>賣場銀行帳號</label> <input class="form-control" type="text"
+											name="storeBankAccount" placeholder="賣場銀行帳號" value="<%=(storeVO == null) ? "" : storeVO.getStoreBankAccount()%>" />
+									</div>
+									<div class="col">
+										<label>賣場名稱</label> <input class="form-control" type="text"
+											name="storeName" placeholder="賣場名稱" value="<%=(storeVO == null) ? "" : storeVO.getStoreName()%>" />
+									</div>
+
+									<div class="col">
+										<label>賣場地址</label> <input class="form-control"
+											name="storeAddress" type="text" placeholder="賣場地址" value="<%=(storeVO == null) ? "" : storeVO.getStoreAddress()%>" />
+									</div>
+
 								</div>
-								<div class="col">
-									<label>賣場地址</label> <input class="form-control" type="password"
-										placeholder="賣場地址" />
+
+
+
+								<br /> <br /> <br /> <br />
+								<div class="col-md-6">
+									<input type="hidden" name="action" value="registerForShop">
+									<input type="hidden" name="mail" value="${memVO.memberID}">
+									<input class="btn" type="submit" value="送出">
 								</div>
-							</div>
-							<br /> <br />
-							<div class="col-md">
-								<a href="my-account.html">
-									<button class="btn">送出</button>
-								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</FORM>
 	</div>
 	<!-- Login End -->
 

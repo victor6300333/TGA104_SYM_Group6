@@ -377,5 +377,33 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+		
+		<script
+		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+		
+		<script>
+		// 獲取輸入框的引用
+		let passwordInput = document.getElementById('password');
+		let retypeInput = document.getElementById('retype-password');
+
+		// 添加事件侦听器，在用戶點擊提交按鈕時檢查密碼是否一致
+		let form = document.getElementById('loginForm');
+		form.addEventListener('submit', function(event) {
+		  let password = passwordInput.value;
+		  let retype = retypeInput.value;
+
+		   
+
+		  // 檢查密碼是否一致
+		  if (password !== retype) {
+		    // 顯示錯誤消息
+		    alert('兩次輸入的密碼不一致，請重新輸入');
+
+		    // 阻止表單提交
+		    event.preventDefault();
+		  }
+		});
+
+		</script>
 </body>
 </html>
