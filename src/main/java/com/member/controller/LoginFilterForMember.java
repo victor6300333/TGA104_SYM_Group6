@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.*;
 
 @WebFilter(urlPatterns = "/front-end/member/my-account.jsp")
-public class LoginFilter extends HttpFilter implements Filter {
+public class LoginFilterForMember extends HttpFilter implements Filter {
 
 	private FilterConfig config;
 
