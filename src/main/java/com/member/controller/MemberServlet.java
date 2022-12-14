@@ -3,7 +3,6 @@ package com.member.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -227,7 +226,7 @@ public class MemberServlet extends HttpServlet {
 
 			memSvc.updateMemberPassword(memberID, userPassword);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			
+
 //			PrintWriter out = res.getWriter();
 //			out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
 //		      + "/front-end/member/my-account.jsp'>");
@@ -313,7 +312,7 @@ public class MemberServlet extends HttpServlet {
 				errorMsgs.add("此信箱已有人使用");
 
 			}
-			
+
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
@@ -409,14 +408,14 @@ public class MemberServlet extends HttpServlet {
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
-			
-			mailCertification = true;//驗證成功
+
+			mailCertification = true;// 驗證成功
 
 			/*************************** 2.開始新增資料 ***************************************/
 			MemberService memSvc = new MemberService();
 			memVO = memSvc.addMember(userAccount, userPassword, userName, phone, mail, registrationTime,
 					mailCertification, sellerAuditApprovalState, currentShoppingCoin);
-			
+
 			memVO = memSvc.loginOneMem(mail);
 
 			session.setAttribute("memVO", memVO);
@@ -608,17 +607,17 @@ public class MemberServlet extends HttpServlet {
 				memVO = memSvc.loginOneMem(mail);
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-				
-				//有賣場名稱才執行
-				if(storeVO2 != null && storeVO2.getStoreName() != null) {
-				String storeName = storeVO2.getStoreName();
-				session.setAttribute("storeName", storeName);
+
+				// 有賣場名稱才執行
+				if (storeVO2 != null && storeVO2.getStoreName() != null) {
+					String storeName = storeVO2.getStoreName();
+					session.setAttribute("storeName", storeName);
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 				session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 				res.sendRedirect(req.getContextPath() + "/front-end/member/index.jsp"); // *工作3:
-																								// (-->如無來源網頁:則重導至login_success.jsp)
+																						// (-->如無來源網頁:則重導至login_success.jsp)
 			}
 
 		}
@@ -659,7 +658,7 @@ public class MemberServlet extends HttpServlet {
 
 				if (!errorMsgs1.isEmpty()) {
 					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/login.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -702,7 +701,7 @@ public class MemberServlet extends HttpServlet {
 			MailService mailService = new MailService();
 			mailService.sendMail(tomail, subject, messageText);
 		}
-		
+
 		if ("registerForShop".equals(action)) { // 註冊賣場資格
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -721,7 +720,7 @@ public class MemberServlet extends HttpServlet {
 			String storeBankAccount = req.getParameter("storeBankAccount");
 			String storeName = req.getParameter("storeName");
 			String storeAddress = req.getParameter("storeAddress");
-			
+
 			storeVO.setMemberID(memberID);
 			storeVO.setStoreDelBankCode(storeDelBankCode);
 			storeVO.setTaxID(taxID);
@@ -730,7 +729,6 @@ public class MemberServlet extends HttpServlet {
 			storeVO.setStoreName(storeName);
 			storeVO.setStoreAddress(storeAddress);
 
-			
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
