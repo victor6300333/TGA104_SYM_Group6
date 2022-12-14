@@ -223,7 +223,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 								<br /> <br /> <br /> <br />
 								<div class="col-md-6">
 									<input type="hidden" name="action" value="registerForShop">
-									<input type="hidden" name="mail" value="${memVO.memberID}">
+									<input type="hidden" name="memberID" value="${memVO.memberID}">
 									<input class="btn" type="submit" value="送出">
 								</div>
 							</div>

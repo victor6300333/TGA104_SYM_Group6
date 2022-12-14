@@ -69,7 +69,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 	</tr>
 	<tr>
 		
-		<td><%=memVO.getMemberId()%></td>
+		<td><%=memVO.getMemberID()%></td>
 		<td><%=memVO.getUserAccount()%></td>
 		<td><%=memVO.getUserPassword()%></td>
 		<td><%=memVO.getUserName()%></td>

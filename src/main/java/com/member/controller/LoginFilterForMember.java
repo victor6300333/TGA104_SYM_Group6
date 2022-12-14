@@ -30,9 +30,14 @@ public class LoginFilterForMember extends HttpFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object account = session.getAttribute("mail");
+		Object accountStore = session.getAttribute("storeName");
 		if (account == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
+			return;
+		} else if (account != null && accountStore == null) {
+			
+			res.sendRedirect(req.getContextPath() + "/front-end/member/registerForShop.jsp");
 			return;
 		} else {
 			chain.doFilter(req, res);

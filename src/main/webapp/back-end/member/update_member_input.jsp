@@ -68,7 +68,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java (Co
 <table>
 	<tr>
 		<td>會員編號:<font color=red><b>*</b></font></td>
-		<td><%=memVO.getMemberId()%></td>
+		<td><%=memVO.getMemberID()%></td>
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
@@ -125,7 +125,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java (Co
 </table>
 <br>
 <input type="hidden" name="action" value="updateOne">
-<input type="hidden" name="memberId" value="<%=memVO.getMemberId()%>">
+<input type="hidden" name="memberId" value="<%=memVO.getMemberID()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 

@@ -608,11 +608,16 @@ public class MemberServlet extends HttpServlet {
 				memVO = memSvc.loginOneMem(mail);
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-
+				
+				//有賣場名稱才執行
+				if(storeVO2 != null && storeVO2.getStoreName() != null) {
+				String storeName = storeVO2.getStoreName();
+				session.setAttribute("storeName", storeName);
+				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 				session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
-				res.sendRedirect(req.getContextPath() + "/front-end/member/my-account.jsp"); // *工作3:
+				res.sendRedirect(req.getContextPath() + "/front-end/member/index.jsp"); // *工作3:
 																								// (-->如無來源網頁:則重導至login_success.jsp)
 			}
 
@@ -741,7 +746,7 @@ public class MemberServlet extends HttpServlet {
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			HttpSession session = req.getSession();
 			session.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的memVO物件,存入req
-			String url = "/front-end/member/myStore.jsp";
+			String url = "/front-end/store/myStore.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 
