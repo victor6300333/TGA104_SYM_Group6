@@ -50,18 +50,18 @@ public class OrderServlet extends HttpServlet {
 				Map<String, String> queryString = new LinkedHashMap<String, String>();
 				
 				Date orderfromdate = java.sql.Date.valueOf(req.getParameter("fromdate").trim());
-				if (orderfromdate != null) {
+		
 					queryString.put("orderDate", "" + orderfromdate);
-				}
+			
 				Date ordertodate = java.sql.Date.valueOf(req.getParameter("todate").trim()); 
-				if (ordertodate != null) {
+				
 					queryString.put("orderDate", "" + ordertodate);
-				}
+			
 			
 				Integer status =Integer.parseInt(req.getParameter("status")) ;
-				if (status != null) {
+			
 					queryString.put("orderStatus", "" + status);
-				}
+				
 				
 				
 

@@ -98,7 +98,11 @@ th, td {
 				<td>${productVO.source}</td>
 				<th><c:if test="${productVO.productStatus==true}">已上架</c:if> <c:if
 						test="${productVO.productStatus==false}">未上架</c:if></th>
-				<th><input type="button" value="查看"></th>
+				<form name="shoppingForm" action="${pageContext.request.contextPath}/product/productServlet" method="POST">
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="hidden" name="productID" value="${productVO.productID}">
+					<th><input type="submit" value="查看"></th>
+				</form>
 			</tr>
 		</c:forEach>
 	</table>
