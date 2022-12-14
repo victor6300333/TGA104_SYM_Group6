@@ -120,7 +120,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/product/productServlet">
+						<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/SearchServlet">
 							<input type="hidden" name="action"  value="getAll_For_Display" />
 							<input type="text" placeholder="商品搜尋" name="productName" />
 							<button>
