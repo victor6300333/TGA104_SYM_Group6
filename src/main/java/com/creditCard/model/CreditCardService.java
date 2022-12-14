@@ -11,11 +11,11 @@ public class CreditCardService {
 		dao = new CreditCardJDBCDAO();
 	}
 
-	public CreditCardVO addCreditCard(Integer memberId, String creditCardNumber, String securityCode, Date exDate) {
+	public CreditCardVO addCreditCard(Integer memberID, String creditCardNumber, String securityCode, Date exDate) {
 
 		CreditCardVO creditCardVO = new CreditCardVO();
 
-		creditCardVO.setMemberId(memberId);
+		creditCardVO.setMemberID(memberID);
 		creditCardVO.setCreditCardNumber(creditCardNumber);
 		creditCardVO.setSecurityCode(securityCode);
 		creditCardVO.setExDate(exDate);
@@ -25,25 +25,25 @@ public class CreditCardService {
 	}
 
 	public CreditCardVO updateCreditCard(String creditCardNumber, String securityCode, Date exDate,
-			Integer creditCardId) {
+			Integer creditCardID) {
 		CreditCardVO creditCardVO = new CreditCardVO();
 
 		creditCardVO.setCreditCardNumber(creditCardNumber);
 		creditCardVO.setSecurityCode(securityCode);
 		creditCardVO.setExDate(exDate);
-		creditCardVO.setMemberId(creditCardId);
+		creditCardVO.setMemberID(creditCardID);
 
 		dao.update(creditCardVO);
 
 		return creditCardVO;
 	}
 
-	public void deletecreditCard(Integer creditCardId) {
-		dao.delete(creditCardId);
+	public void deletecreditCard(Integer creditCardID) {
+		dao.delete(creditCardID);
 	}
 
-	public List<CreditCardVO> getAll(Integer memberId) {
-		return dao.getAll(memberId);
+	public List<CreditCardVO> getAll(Integer memberID) {
+		return dao.getAll(memberID);
 	}
 
 //	public static void main(String[] args) {

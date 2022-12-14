@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -184,7 +184,13 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 											name="birthday" type="date" />
 									</div>
 								</div>
-								<div class="col-12">
+								<div class="col-6">
+									<div class="col">
+										<label>身分證號</label> <input class="form-control shop_text"
+											type="text" name="idNumber" placeholder="身分證號" />
+									</div>
+								</div>
+								<div class="col-6">
 									<div class="col">
 										<label>地址</label> <input class="form-control shop_text"
 											type="text" name="address" placeholder="地址" />
@@ -208,10 +214,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<br />
 
 									<div id="shop_input_text">
-										<div class="col">
-											<label>身分證號</label> <input class="form-control shop_text"
-												type="text" name="idNumber" placeholder="身分證號" />
-										</div>
+
 										<div class="col">
 											<label>賣場名稱</label> <input class="form-control shop_text"
 												type="text" placeholder="賣場名稱" />
@@ -226,7 +229,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO"); //EmpServlet.java(Con
 									<br /> <br />
 									<div class="col-md">
 										<input type="hidden" name="action" value="update"> <input
-											type="hidden" name="memberId" value="${memVO.getMemberId()}">
+											type="hidden" name="memberID" value="${memVO.getMemberID()}">
 										<input type="hidden" name="mail" value="${memVO.getMail()}">
 										<input class="btn" type="submit" value="註冊">
 

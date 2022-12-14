@@ -5,26 +5,26 @@ import java.sql.Date;
 
 public class CreditCardVO implements Serializable {
 
-	private Integer creditCardId;
-	private Integer memberId;
+	private Integer creditCardID;
+	private Integer memberID;
 	private String creditCardNumber;
 	private String securityCode;
 	private Date exDate;
 
-	public Integer getCreditCardId() {
-		return creditCardId;
+	public Integer getCreditCardID() {
+		return creditCardID;
 	}
 
-	public void setCreditCardId(Integer creditCardId) {
-		this.creditCardId = creditCardId;
+	public void setCreditCardID(Integer creditCardID) {
+		this.creditCardID = creditCardID;
 	}
 
-	public Integer getMemberId() {
-		return memberId;
+	public Integer getMemberID() {
+		return memberID;
 	}
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
+	public void setMemberID(Integer memberID) {
+		this.memberID = memberID;
 	}
 
 	public String getCreditCardNumber() {

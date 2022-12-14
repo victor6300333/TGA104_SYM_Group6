@@ -129,6 +129,10 @@ public class ShopServlet extends HttpServlet {
 				Integer productID = order.getProductID();
 				
 				total += (price * quantity);
+				
+//				double total1 = buylist.stream()
+//								      .mapToDouble(b -> b.getPrice()*b.getQuantity())
+//								      .sum();
 
 				
 				OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
