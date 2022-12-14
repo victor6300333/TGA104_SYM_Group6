@@ -101,8 +101,7 @@ public class GroupproductServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
 		}
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-			System.out.println("123");
+		if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
