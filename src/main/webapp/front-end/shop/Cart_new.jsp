@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.* ,com.orderlist.model.Product"%>
+<%@ page import="java.util.* ,com.orderlist.model.Product, com.member.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-
+<%
+MemberVO memVO = (MemberVO)session.getAttribute("memVO");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -280,20 +282,20 @@ function add<%=storeID%>(){
 		
 		add<%=storeID%>();
 		
-		const checkbox = document.getElementById('member<%=storeID%>');
-		const receiver = document.getElementById('receiver<%=storeID%>');
-		const phone = document.getElementById('phone<%=storeID%>');
-		const address = document.getElementById('address<%=storeID%>');
+		var checkbox<%=storeID%> = document.getElementById('member<%=storeID%>');
+		var receiver<%=storeID%> = document.getElementById('receiver<%=storeID%>');
+		var phone<%=storeID%> = document.getElementById('phone<%=storeID%>');
+		var address<%=storeID%> = document.getElementById('address<%=storeID%>');
 
-		checkbox.addEventListener('change', (event) => {
+		checkbox<%=storeID%>.addEventListener('change', (event) => {
 		  if (event.currentTarget.checked) {			
-			  receiver.value = "Eric";
-			  phone.value = "0912345678";
-			  address.value = "台北市內湖區";
+			  receiver<%=storeID%>.value ="${memVO.userName}";
+			  phone<%=storeID%>.value = "${memVO.phone}";
+			  address<%=storeID%>.value = "${memVO.address}";
 		  } else {
-			  receiver.value = "";
-			  phone.value = "";
-			  address.value = "";
+			  receiver<%=storeID%>.value = "";
+			  phone<%=storeID%>.value = "";
+			  address<%=storeID%>.value = "";
 		  }
 		})
 
