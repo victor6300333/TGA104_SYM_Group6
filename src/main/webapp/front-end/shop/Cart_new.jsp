@@ -2,9 +2,7 @@
 <%@ page import="java.util.* ,com.orderlist.model.Product, com.member.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<%
-MemberVO memVO = (MemberVO)session.getAttribute("memVO");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 
