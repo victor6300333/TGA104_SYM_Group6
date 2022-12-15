@@ -22,7 +22,7 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 
 <!-- Favicon -->
 <link
-	href="${pageContext.request.contextPath}/back-end/order/img/logoSYM.jpg"
+	href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg"
 	rel="icon" />
 
 <!-- Google Fonts -->
@@ -38,19 +38,28 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/back-end/order/lib/slick/slick.css"
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/back-end/order/lib/slick/slick-theme.css"
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/back-end/order/css/style.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/back-end/order/css/woody.css" />
-
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
+	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
@@ -123,7 +132,7 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 				<div class="col-md-3">
 					<div class="logo">
 						<a href="index.html"> <img
-							src="${pageContext.request.contextPath}/back-end/order/img/logo.png"
+							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
 					</div>

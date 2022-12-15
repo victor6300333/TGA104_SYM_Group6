@@ -310,6 +310,7 @@ function add<%=storeID%>(){
 
 
 <input type="hidden" name="action" value="CHECKOUT">
+<input type="hidden" name="memberID" value="${memVO.memberID}">
 <input type="submit" value="送出" class="button">
 	</form>
 	

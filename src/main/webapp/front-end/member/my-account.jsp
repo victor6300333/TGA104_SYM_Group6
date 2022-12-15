@@ -28,7 +28,7 @@ pageContext.setAttribute("mblist", mblist);
 
 <!-- Favicon -->
 <link
-	href="${pageContext.request.contextPath}/front-end/img/logoSYM.jpg"
+	href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg"
 	rel="icon" />
 
 <!-- Google Fonts -->
@@ -232,31 +232,33 @@ pageContext.setAttribute("mblist", mblist);
 									<thead class="thead-dark">
 										<ul>
 											<li>
-												<FORM METHOD="post" ACTION="OrderServlet">
-													<b>輸入訂單編號: </b> <input type="text" name="orderID"
-														style="width: 100px; height: 25px"> <input
-														type="hidden" name="action" value="select_by_OrderID">
-													<input type="submit" value="送出">
-												</FORM>
-												<FORM METHOD="post" ACTION="OrderServlet">
-
-													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
-														type="text" style="width: 100px; height: 25px"> <b>至</b>
-													<input name="todate" id="f_date2" type="text"
-														style="width: 100px; height: 25px"> <br>
-													<br> <b>選擇訂單狀態:</b> <select name="status"
-														style="width: 80px; height: 25px">
-
-														<option value="0">全部</option>
-														<option value="1">待付款</option>
-														<option value="2">待出貨</option>
-														<option value="3">已出貨</option>
-														<option value="4">已取貨</option>
-
-													</select> <br> <br> <input type="hidden" name="action"
-														value="select_Order"> <input type="submit"
-														value="送出">
-												</FORM>
+											<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+												<b>輸入訂單編號: </b> <input type="text" name="orderID" style="width: 100px; height: 25px">
+												<input type="hidden" name="action" value="select_by_OrderID"> 
+												<input type="submit" value="送出">
+											</FORM>
+											<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+												 
+												<b>輸入訂單日期:</b> 
+													<input name="fromdate" id="f_date1" type="text" style="width: 100px; height: 25px">
+												<b>至</b> 
+												    <input name="todate" id="f_date2" type="text" style="width: 100px; height: 25px"> <br><br>
+												<b>選擇訂單狀態:</b> 
+												    <select name="status" style="width: 80px; height: 25px">
+													
+													<option value="0">全部</option>
+													<option value="1">待付款</option>
+													<option value="2">待出貨</option>
+													<option value="3">已出貨</option>
+													<option value="4">已取貨</option>
+											
+													</select> 
+												
+												<br> <br>
+												<input type="hidden" name="memberID" value="${memVO.memberID}"> 
+												<input type="hidden" name="action" value="select_Order"> 
+												<input type="submit" value="送出">
+											</FORM>
 
 
 											</li>
@@ -803,6 +805,38 @@ pageContext.setAttribute("mblist", mblist);
 				// 阻止表單提交
 				event.preventDefault();
 			}
+		});
+	</script>
+	
+	<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.css" />
+	<script
+		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script>
+		$.datetimepicker.setLocale('zh');
+		$('#f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+		$('#f_date2').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 		});
 	</script>
 

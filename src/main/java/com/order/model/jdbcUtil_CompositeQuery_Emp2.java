@@ -23,6 +23,8 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 					whereCondition.append(" and '" + value + " 23:59:59' ");
 				else if("status".equals(key)  )
 					whereCondition.append(" && orderStatus = " + value);
+				else if("memberID".equals(key)  )
+					whereCondition.append(" && memberID = " + value);
 				System.out.println("key:"+ key + ", value:" + value + ", 次數: " + count);
 			}
 		}
