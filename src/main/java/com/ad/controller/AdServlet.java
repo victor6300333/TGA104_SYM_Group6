@@ -193,7 +193,7 @@ java.sql.Date adEndDate = null;
 				req.setAttribute("adVO", adVO); // 含有輸入格式錯誤的advVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/ad/update_ad_input2.jsp");
 				failureView.forward(req, res);
-				System.out.println(errorMsgs);
+//				System.out.println(errorMsgs);
 				return; // 程式中斷
 			}
 
