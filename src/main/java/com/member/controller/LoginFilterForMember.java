@@ -1,9 +1,18 @@
 package com.member.controller;
 
-import java.io.*;
-import javax.servlet.*;
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = "/front-end/member/my-account.jsp")
 public class LoginFilterForMember extends HttpFilter implements Filter {
@@ -30,18 +39,14 @@ public class LoginFilterForMember extends HttpFilter implements Filter {
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object account = session.getAttribute("mail");
-		Object accountStore = session.getAttribute("storeName");
 		if (account == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
 			return;
-		} else if (account != null && accountStore == null) {
-			
-			res.sendRedirect(req.getContextPath() + "/front-end/member/registerForShop.jsp");
-			return;
 		} else {
 			chain.doFilter(req, res);
 		}
+
 	}
 
 }

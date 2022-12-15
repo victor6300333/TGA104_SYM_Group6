@@ -78,7 +78,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
 						<a href="index.html" class="nav-item nav-link">首頁</a> <a
-							href="product-list.html" class="nav-item nav-link">我的賣場</a>
+							href="${pageContext.request.contextPath}/front-end/store/myStore.jsp" class="nav-item nav-link">我的賣場</a>
 
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link" data-toggle="dropdown">客服中心</a>
@@ -101,7 +101,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img
+						<a href="index.jsp"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
@@ -391,8 +391,6 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 		form.addEventListener('submit', function(event) {
 		  let password = passwordInput.value;
 		  let retype = retypeInput.value;
-
-		   
 
 		  // 檢查密碼是否一致
 		  if (password !== retype) {
