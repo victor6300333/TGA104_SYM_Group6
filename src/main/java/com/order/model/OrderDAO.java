@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 import com.orderlist.model.OrderlistDAO;
 import com.orderlist.model.OrderlistVO;
 import com.product.model.ProductVO;
+
+
 
 
 
@@ -252,24 +255,23 @@ public class OrderDAO implements OrderDAO_interface {
 
 
 	@Override
-	public List<OrderVO> getAllByComposite(Map<String, String> queryString ) {
+	public List<OrderVO> getAllByComposite(Map<String, String[]> map ) {
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		OrderVO orderVO = null;
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
 		try {
-
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-
-			pstmt = con.prepareStatement(GET_ALL + queryString);
+		
+			String finalSQL = "select * from `order` "
+		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map);
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println(finalSQL);
 			rs = pstmt.executeQuery();
-
+	
 			while (rs.next()) {
-				// empVO 嚙稽嚙誶穿蕭 Domain objects
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
 				orderVO.setStoreID(rs.getInt("storeID"));
@@ -289,29 +291,18 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO.setFinalTotal(rs.getInt("finalTotal"));
 				list.add(orderVO);
 			}
-
-			// Handle any driver errors
+	
+			// Handle any SQL errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
+
 			if (con != null) {
 				try {
 					con.close();
@@ -321,9 +312,6 @@ public class OrderDAO implements OrderDAO_interface {
 			}
 		}
 		return list;
+
 	}
-
-
-
-
 }
