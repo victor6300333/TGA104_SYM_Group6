@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.* ,com.orderlist.model.Product"%>
+	
+<%
+	Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
+	Integer count = (Integer)session.getAttribute("count");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,7 +142,7 @@
                   <span>(0)</span>
                 </a> -->
 						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+							class="fa fa-shopping-cart"></i> <span>(<%=count %>)</span>
 						</a>
 					</div>
 				</div>
@@ -207,7 +213,7 @@
 									<div class="price">
 										<h4>價格:</h4>
 										<p>
-											${productVO.productPrice} <span>$149</span>
+											${productVO.productPrice} 
 										</p>
 									</div>
 
@@ -233,10 +239,10 @@
 										</div>
 									</div>
 									<div class="action">
-									</td>
+									
 									
 						
-				<td>
+			
 										
 										<input type="hidden" name="name"  value="${productVO.productName}" />
 										<input type="hidden" name="storeName"  value="${productVO.storeID}" />
@@ -247,19 +253,29 @@
 										<input type="hidden" name="storeID"  value="${productVO.storeID}" />
 						
 										<input type="hidden" name="action"  value="ADD" />
+										<input type="hidden" id="method" name="method"  value="" />
 										
-										<button class="btn" href="#"><i class="fa fa-shopping-bag" ></i>直接購買</button>
-										<button class="btn" href="#"><i class="fa fa-shopping-cart"></i>加入購物車</button>
+										<button  class="btn" id="bag" href="#"><i class="fa fa-shopping-bag" ></i>直接購買</button>
+										<button   class="btn" id="cart" href="#"><i class="fa fa-shopping-cart"></i>加入購物車</button>
 								
 									</FORM>		
 									</div>
-					<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/SearchServlet">
-							<input type="hidden" name="action"  value="getAll_For_Display" />
-							<input type="text" placeholder="商品搜尋" name="productName" />
-							<button>
-								<i class="fa fa-search"></i>
-							</button>
-						</FORM>
+<script>
+var bag = document.getElementById('bag');
+var cart = document.getElementById('cart');
+var method = document.getElementById('method');
+
+
+bag.addEventListener('click', (event) => {	
+	  method.value ="bag";
+  }
+)
+cart.addEventListener('click', (event) => {	
+	  method.value ="cart";
+  }
+)
+</script>
+				
 								</div>
 							</div>
 						</div>
