@@ -7,15 +7,23 @@
 <%@ page import="com.groupproduct.model.*"%>
 <%@ page import="com.grouporder.model.*"%>
 <%@ page import="com.groupdiscount.model.*"%>
-<%-- <%@ page import="com.member.model.*"%> --%>
+<%@ page import="com.member.model.*"%>
+
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
-GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); // 資料庫取出的empVO物件,存入req
-GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupproductVO");
-Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
-// MemberVO memberVO = (MemberVO) request.getAttribute("memVO");
+GroupVO groupVO = (GroupVO) session.getAttribute("groupVO"); // 資料庫取出的empVO物件,存入req
+GroupproductVO groupproductVO = (GroupproductVO) session.getAttribute("groupproductVO");
+Double groupBuyCount = (Double) session.getAttribute("groupBuyCount");
+MemberVO memVO = (MemberVO) session.getAttribute("memVO");
+
+Object account = session.getAttribute("mail");                  // 從 session內取出 (key) account的值
+if (account == null) {                                             // 如為 null, 代表此user未登入過 , 才做以下工作
+  session.setAttribute("location", request.getRequestURI());       //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+  response.sendRedirect(request.getContextPath()+"/front-end/member/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+  return;
+}
 %>
 
 
@@ -103,7 +111,21 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<a href="login.html" class="nav-link">登入/註冊</a>
+						<a href="my-account.html" class="nav-link dropdown-toggle"
+							data-toggle="dropdown"> <img class="rounded-circle "
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px" /> ${memVO.userName}
+						</a>
+						<div class="dropdown-menu">
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/member/MemberServlet">
+								<input type="hidden" name="action" value="getOne_For_LogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
 					</div>
 				</div>
 			</nav>
@@ -184,7 +206,13 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 											placeholder="團購編號" readonly />
 									</div>
 									<div class="col">
-										<label>聯絡電話</label> <input class="form-control" type="text"
+										<label>聯絡電話</label>
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input"
+												id="newaccount"> <label class="custom-control-label"
+												for="newaccount">同會員資料</label>
+										</div>
+										<input class="form-control" type="text" id="contactNumber"
 											name="contactNumber"
 											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getPhone() : ""%>" --%>
 										value="假資料"
@@ -205,6 +233,7 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 											<option value="信用卡">信用卡</option>
 										</select>
 									</div>
+									<br>
 									<div class="col">
 										<label>寄送地址</label> <select id="city" name="city">
 											<option value="">請選擇</option>
@@ -223,7 +252,7 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 								<div class="col-3">
 									<label>總金額</label> <input id="total" class="form-control"
 										name="groupBuyTotal"
-										value="<%=groupproductVO.getGroupBuyProductPrice()*groupBuyCount%>"
+										value="<%=Math.ceil(groupproductVO.getGroupBuyProductPrice() * groupBuyCount)%>"
 										type="text" placeholder="總金額" readonly /> <input
 										type="hidden" name="action" value="insert"> <input
 										type="hidden" name="groupBuyID"
@@ -232,10 +261,8 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 										type="hidden" name="groupBuyProductID"
 										value="<%=groupVO.getGroupBuyProductID()%>"> <input
 										type="hidden" name="administratorID"
-										value="<%=groupVO.getAdministratorID()%>">
-										<input
-										type="hidden" name="paymentState"
-										value="1"> <input
+										value="<%=groupVO.getAdministratorID()%>"> <input
+										type="hidden" name="paymentState" value="1"> <input
 										type="hidden" name="memberID" value="2"> <a href="#">
 										<button class="btn">送出訂單</button>
 									</a>
@@ -367,10 +394,26 @@ Double groupBuyCount = (Double) request.getAttribute("groupBuyCount");
 			function() {
 				// console.log("123")
 				//console.log($("#qua").val())
+				Math.ceil()
 				$("#total").val(
-<%=groupproductVO.getGroupBuyProductPrice()%>
-	* $("#qua").val()*<%=groupBuyCount%>);
+						Math.ceil(<%=groupproductVO.getGroupBuyProductPrice()%>	* $("#qua").val() *<%=groupBuyCount%>));
+
 			})
+	$("#newaccount").click(function(){
+		
+// 		console.log(this)
+		$("#newaccount").toggleClass("-on");
+		
+		if($("#newaccount").hasClass("-on")){
+// 			console.log("123")
+			$("#contactNumber").val("${memVO.phone}");
+			$("#shippingLocation").val("${memVO.address}");
+			
+		}else{
+			$("#contactNumber").val("");
+			$("#shippingLocation").val("");
+		}
+	})
 </script>
 
 </html>
