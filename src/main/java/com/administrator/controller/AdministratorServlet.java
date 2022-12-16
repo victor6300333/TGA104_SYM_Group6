@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.administrator.model.AdministratorJDBCDAO;
 import com.administrator.model.AdministratorService;
 import com.administrator.model.AdministratorVO;
 import com.google.gson.Gson;
@@ -27,11 +28,10 @@ public class AdministratorServlet extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer = res.getWriter();
 		
-		
 		/*GSON*/
 		Gson gson = new Gson();
 		
-		/*搜尋資料*/
+		/*搜尋資料  待審核*/
 		 List<StoreVO> findAllByAudit0 = new  StoreJDBCDAO().findAllByAudit0();
 		 String json = gson.toJson(findAllByAudit0);
 		 writer.write(json);

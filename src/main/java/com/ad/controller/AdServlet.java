@@ -121,8 +121,11 @@ Integer adSerialID = Integer.valueOf(req.getParameter("adSerialID").trim());
 			String adTitle = req.getParameter("adTitle");
 			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (adTitle == null || adTitle.trim().length() == 0) {
-				errorMsgs.add("廣告標題: 請勿空白");
+				errorMsgs.add("adSerialID廣告標題: 請勿空白");
 			}
+			
+			
+			/*測試*/
 //			else if (!adTitle.trim().matches(enameReg)) { // 以下練習正則(規)表示式(regular-expression)
 //				System.out.println(enameReg);
 //				errorMsgs.add("只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
@@ -152,7 +155,6 @@ java.sql.Date adEndDate = null;
 				errorMsgs.add("請輸入下架日期!");
 			}
 
-
 			
 //			圖片上傳
 			String realPath = getServletContext().getRealPath(saveDirectory);
@@ -161,7 +163,6 @@ java.sql.Date adEndDate = null;
 				fsaveDirectory.mkdirs(); // �� ContextPath ���U,�۰ʫإߥئa�ؿ�
 
 			Collection<Part> parts = req.getParts(); // Servlet3.0�s�W�FPart�����A���ڭ̤�K���i���ɮפW�ǳB�z
-
 			byte[] imgAdd= null;
 			for (Part part : parts) {
 				String filename = part.getSubmittedFileName();
@@ -292,6 +293,7 @@ java.sql.Date adEndDate = null;
 				return;
 			}
 
+			
 			/*************************** 2.開始新增資料 ***************************************/
 			AdService adSvc = new AdService();
 			adVO = adSvc.addAd(administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, imgAdd);

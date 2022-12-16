@@ -268,16 +268,17 @@
 															<div class="text-align-center ">
 																<img class="mg-bottom-1" src="../img/logoBlue.jpg"
 																	alt="logo" width="85%" />
-																<h4 class="sym-dark-font">管理員設定</h4>
+																<h4 class="sym-dark-font">管理員</h4>
 															</div>
 													</a></li>
+
 
 													<li><a
 														href="${pageContext.request.contextPath}/back-end/administrator/memberI.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoGreen.jpg"
 																	alt="logo" width="70%" />
-																<h4 class="sym-dark-font">會員數 : 15 人</h4>
+																<h4 class="sym-dark-font">會員</h4>
 															</div>
 													</a></li>
 													<li><a
@@ -285,7 +286,7 @@
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoPink.jpg"
 																	alt="logo" width="80%" />
-																<h4 class="sym-dark-font">商家數 : 6 家</h4>
+																<h4 class="sym-dark-font">商家</h4>
 															</div>
 													</a></li>
 													<li><a
@@ -293,7 +294,7 @@
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoYellow.jpg"
 																	alt="logo" width="80%" />
-																<h4 style="color: red">待審核 : 2 家</h4>
+																<h4 style="color: red">待審核</h4>
 															</div>
 													</a></li>
 													<li><a
@@ -301,7 +302,7 @@
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoPurple.jpg"
 																	alt="logo" width="85%" />
-																<h4 class="sym-dark-font">廣告設定</h4>
+																<h4 class="sym-dark-font">廣告</h4>
 															</div>
 													</a></li>
 												</ul>
@@ -353,5 +354,9 @@
 		});
 
 		 </script>
+
+
+
+
 </body>
 </html>

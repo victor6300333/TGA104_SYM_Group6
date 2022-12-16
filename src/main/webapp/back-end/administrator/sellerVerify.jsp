@@ -63,11 +63,12 @@
 													<div class="form-group">
 														<div class="col-6 mb-2rem">
 															<h5 class="sym-dark-font">帳號狀態 :</h5>
-															<br> <select id="cars" name="cars"
-																class="form-control mb-2rem">
+															<br> 
+															<select id="selectSearch" name="cars" class="form-control mb-2rem">
 																<option value="volvo">待審核</option>
 																<option value="saab">審核</option>
-															</select> <input id="btnSearchSeller"
+															</select> 
+															<input id="btnSearchSeller"
 																class="btn sym-darkpurple sym-yellow-font btn_style"
 																value="送出">
 
@@ -103,15 +104,15 @@
 													</thead>
 													<tr>
 
-														<td>
-															<!-- 																<FORM METHOD="post" enctype="multipart/form-data" -->
-															<%-- 																	ACTION="<%=request.getContextPath()%>/member/MemberServlet" --%>
-															<!-- 																	style="margin-bottom: 0px;"> -->
-															<button onclick="popupWindow()"
-																class="btn sym-darkpurple sym-yellow-font btn_style">審核</button>
+														<!-- 														<td> -->
+														<!-- 																															<FORM METHOD="post" enctype="multipart/form-data" -->
+														<%-- 																																ACTION="<%=request.getContextPath()%>/member/MemberServlet" --%>
+														<!-- 																																style="margin-bottom: 0px;"> -->
+														<!-- 															<button onclick="popupWindow()" -->
+														<!-- 																class="btn sym-darkpurple sym-yellow-font btn_style">審核</button> -->
 
-															<!-- 																</FORM> -->
-														</td>
+														<!-- 																															</FORM> -->
+														<!-- 														</td> -->
 													</tr>
 												</table>
 											</div>
@@ -142,12 +143,12 @@
 	<script src="../js/app.js"></script>
 	<script type="text/javascript" src="script.js"></script>
 	<script src="${pageContext.request.contextPath}/JQ/jquery-3.6.1.min.js"></script>
-	<script>
-		function popupWindow() {
-		    window.open("popup.jsp", "Popup Window", "width=500,height=500,modal=yes");
-		}
+<!-- 	<script> -->
+// 		function popupWindow() {
+// 		    window.open("popup.jsp", "Popup Window", "width=500,height=500,modal=yes");
+// 		}
 
-		</script>
+<!-- 		</script> -->
 
 	<script>
 	$(function() {
@@ -170,7 +171,13 @@
 		function bbb(data){
 			str=``;
 			let status ='';
+			let status2 = '';
 			for(let i=0;i<data.length;i++){
+				if(data[i].storeAuditStatus == 0){
+					status2 = '待審核';
+				}else{
+					status2 = '通過';
+				}
 				let templateList =   `
 					<tr>
 						<td>`+data[i].memberID+`</td>
@@ -180,22 +187,27 @@
 						<th>`+data[i].createDate+`</th>
 						<td>`+data[i].updateDate+`</td>
 						<td>`+data[i].taxID+`</td>
-						<td>待審核</td>
-						<th><a href="${pageContext.request.contextPath}/back-end/administrator/AdminMailServlet?memberID=`+data[i].memberID+`"><button class="btn sym-darkpurple sym-yellow-font btn_style mg-bottom-2 margin-left-2">送出</button></a></th>
+						<td>`+status2+`</td>
+						<th><a href="${pageContext.request.contextPath}/back-end/administrator/AdminMailServlet?memberID=`+data[i].memberID+`"><button class="btn sym-darkpurple sym-yellow-font btn_style">送出</button></a></th>
 					</tr>
 				`;
 				str = str + templateList;
 			}
 		}
 		var str2=`</table>`;
-		
-		
+		// **待審核**/
 		$("#btnSearchSeller")
 				.click(
 						function() {
+							let variable1 ='';
+							if($("#selectSearch option:selected").val()=='volvo'){
+								variable1 = '${pageContext.request.contextPath}/back-end/administrator/administratorServlet';
+							}else{
+								variable1 = '${pageContext.request.contextPath}/back-end/administrator/StorePassServlet';
+							}
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath}/back-end/administrator/administratorServlet",
+										url : variable1,
 										// 資料請求的網址
 										type : "GET", // GET | POST | PUT | DELETE | PATCH
 										dataType : "json", // 預期會接收到回傳資料的格式： json | xml | html

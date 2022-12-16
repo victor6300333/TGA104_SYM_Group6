@@ -3,7 +3,8 @@ package com.administrator.model;
 import java.sql.*;
 import java.util.*;
 
-import com.ad.model.AdVO;
+import com.member.model.MemberVO;
+import com.store.model.StoreVO;
 
 public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -16,11 +17,14 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT administratorID, administratorName, administratorAccount, administratorPassword FROM administrator where administratorID = ?";
 	private static final String UPDATE = "UPDATE administrator set administratorName=?, administratorAccount=?,  administratorPassword=? where administratorID = ?";
 	private static final String DELETE = "DELETE FROM administrator where administratorID = ?";
-
+	private static final String GET_TOTAL_MEMBER = "select count(*) as memberTotal from member";
+	private static final String GET_TOTAL_STORE = "select count(*) as storeTotal from store";
+	private static final String GET_TOTAL_STORE_STMT_0 = "select count(*) as storeTotalN from store where storeAuditStatus = 0";
+	private static final String GET_TOTAL_STORE_STMT_1 = "select count(*) as storeTotalY from store where storeAuditStatus = 1";
+	private static final String GET_All_STMT_BY_AUDI_1 = "SELECT memberID,storeName,storeAddress,phoneNumber,createDate,updateDate,taxID,storeAuditStatus FROM store where storeAuditStatus = 1";
 	
 	
 	
-
 	@Override
 	public void insert(AdministratorVO administratorVO) {
 		Connection con = null;
@@ -244,4 +248,149 @@ public class AdministratorJDBCDAO implements AdministratorDAO_interface {
 		}
 		return administratorVO;
 	}
+
+	@Override
+	public Integer countMember() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Integer memberTotal = 0;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TOTAL_MEMBER);
+			rs = pstmt.executeQuery();
+			rs.next();
+			memberTotal = rs.getInt("memberTotal");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return memberTotal;
+	}
+
+	@Override
+	public Integer countStore() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int storeTotal = 0;
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TOTAL_STORE);
+			rs = pstmt.executeQuery();
+			rs.next();
+			storeTotal = rs.getInt("storeTotal");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return storeTotal;
+	}
+
+	@Override
+	public Integer countStatusN() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int statusTotalN = 0;
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TOTAL_STORE_STMT_0);
+			rs = pstmt.executeQuery();
+			rs.next();
+			statusTotalN = rs.getInt("storeTotalN");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return statusTotalN;
+	}
+
+	@Override
+	public Integer countStatusY() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int statusTotalY = 0;
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_TOTAL_STORE_STMT_1);
+			rs = pstmt.executeQuery();
+			rs.next();
+			statusTotalY = rs.getInt("storeTotalY");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return statusTotalY;
+	}
+	
+	
+	@Override
+	public List<StoreVO> findAllByAudit1() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		List<StoreVO> all2 = new ArrayList<StoreVO>();;
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_All_STMT_BY_AUDI_1);
+
+			ResultSet rs = pstmt.executeQuery();
+			StoreVO storeVO=null;
+			
+			while (rs.next()) {
+				storeVO = new StoreVO();
+				storeVO.setMemberID(rs.getInt("memberID"));
+				storeVO.setStoreName(rs.getString("storeName"));
+				storeVO.setStoreAddress(rs.getString("storeAddress"));
+				storeVO.setPhoneNumber(rs.getString("phoneNumber"));
+				storeVO.setCreateDate(rs.getTimestamp("createDate"));
+				storeVO.setUpdateDate(rs.getTimestamp("updateDate"));
+				storeVO.setTaxID(rs.getString("taxID"));
+				storeVO.setStoreAuditStatus(rs.getInt("storeAuditStatus"));
+				all2.add(storeVO);
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return all2;
+
+	}
+
 }

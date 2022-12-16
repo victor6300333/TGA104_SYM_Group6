@@ -25,8 +25,7 @@ public class AdJDBCDAO implements AdDAO_interface {
 		private static final String DELETE = 
 			"DELETE FROM advertise where adSerialID = ?";
 		private static final String UPDATE = 
-			"UPDATE advertise set adTitle=?,  adType=?, adDescribe=?, adStartDate=?, adEndDate=?, adPhoto=?, updateTime=now() where adSerialID= ?";
-
+			"UPDATE advertise set adTitle=?,  adType=?, adDescribe=?, adPhoto=?, adStartDate=?, adEndDate=?, updateTime=now() where adSerialID= ?";
 		@Override
 		public void insert(AdVO adVO) {
 			
@@ -95,7 +94,7 @@ public class AdJDBCDAO implements AdDAO_interface {
 				pstmt.setDate(5, adVO.getAdStartDate());
 				pstmt.setDate(6, adVO.getAdEndDate());
 				pstmt.setInt(7, adVO.getAdSerialID());
-//				pstmt.setTimestamp(7, adVO.getUpdateTime());
+//				pstmt.setTimestamp(8, adVO.getUpdateTime());
 
 				pstmt.executeUpdate();
 				
