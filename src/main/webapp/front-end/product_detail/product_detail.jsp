@@ -4,7 +4,7 @@
 	
 <%
 	Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
-	Integer count = (Integer)session.getAttribute("count");
+	Integer count_num = (Integer)session.getAttribute("count_num");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -142,7 +142,7 @@
                   <span>(0)</span>
                 </a> -->
 						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(<%=count %>)</span>
+							class="fa fa-shopping-cart"></i> <span>(<%=count_num %>)</span>
 						</a>
 					</div>
 				</div>

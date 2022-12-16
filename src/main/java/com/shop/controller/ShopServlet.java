@@ -54,11 +54,15 @@ public class ShopServlet extends HttpServlet {
 		Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
 		
 		String action = req.getParameter("action");
-		
-		
+		Integer count_string = (Integer) session.getAttribute("count_num");
+		int count_num;
+		if(count_string == null)
+			count_num = 0;
+		else
+			count_num = count_string;
 
 		if (!action.equals("CHECKOUT")) {
-			int count = 0;
+			
 			// 新增書籍至購物車中
 			 if (action.equals("ADD")) {
 
@@ -75,14 +79,14 @@ public class ShopServlet extends HttpServlet {
 					
 					check = new HashMap<Integer, List<Product>>();
 					check.put(storeID, list);
-					count++;
+					count_num++;
 
 				} else {
 					if(check.get(storeID)==null) {
 						List<Product> buylist = new ArrayList<Product>();
 						buylist.add(product);
 						check.put(storeID, buylist);
-						count++;
+						count_num++;
 					} else {
 						
 					List<Product> buylist = check.get(storeID);
@@ -95,7 +99,7 @@ public class ShopServlet extends HttpServlet {
 					} else {
 						buylist.add(product);
 						check.put(storeID, buylist);
-						count++;
+						count_num++;
 				
 					}
 				  }
@@ -105,7 +109,7 @@ public class ShopServlet extends HttpServlet {
 			}
 	
 			session.setAttribute("check", check);
-			session.setAttribute("count", count);
+			session.setAttribute("count_num", count_num);
 			if(req.getParameter("method").equals("bag")) {
 				String url = "/front-end/shop/Cart_new.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
