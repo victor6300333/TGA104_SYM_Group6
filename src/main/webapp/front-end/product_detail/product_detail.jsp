@@ -141,8 +141,9 @@
                   <i class="fa fa-heart"></i>
                   <span>(0)</span>
                 </a> -->
+                 
 						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(<%=count_num %>)</span>
+							class="fa fa-shopping-cart"></i> <span>(<%= (count_num==null)? "0" : count_num%>)</span>
 						</a>
 					</div>
 				</div>
