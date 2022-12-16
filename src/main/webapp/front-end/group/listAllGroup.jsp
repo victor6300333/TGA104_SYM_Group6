@@ -529,7 +529,7 @@ pageContext.setAttribute("list3", list3);
 // 						console.log("123");
 						countTable.val("1");
 					} else {
-					countTable.val(currentDiscount)
+					countTable.val(currentDiscount*0.1)
 					};
 // 					console.log(currentDiscount);
 				})
