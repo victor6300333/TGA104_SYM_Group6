@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,8 @@ import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.orderlist.model.OrderlistVO;
 import com.orderlist.model.Product;
+import com.product.model.ProductVO;
+import com.product.service.ProductService;
 
 //import redis.clients.jedis.Jedis;
 
@@ -51,9 +54,11 @@ public class ShopServlet extends HttpServlet {
 		Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
 		
 		String action = req.getParameter("action");
+		
+		
 
 		if (!action.equals("CHECKOUT")) {
-
+			int count = 0;
 			// 新增書籍至購物車中
 			 if (action.equals("ADD")) {
 
@@ -70,12 +75,14 @@ public class ShopServlet extends HttpServlet {
 					
 					check = new HashMap<Integer, List<Product>>();
 					check.put(storeID, list);
+					count++;
 
 				} else {
 					if(check.get(storeID)==null) {
 						List<Product> buylist = new ArrayList<Product>();
 						buylist.add(product);
 						check.put(storeID, buylist);
+						count++;
 					} else {
 						
 					List<Product> buylist = check.get(storeID);
@@ -88,6 +95,7 @@ public class ShopServlet extends HttpServlet {
 					} else {
 						buylist.add(product);
 						check.put(storeID, buylist);
+						count++;
 				
 					}
 				  }
@@ -97,10 +105,23 @@ public class ShopServlet extends HttpServlet {
 			}
 	
 			session.setAttribute("check", check);
+			session.setAttribute("count", count);
+			if(req.getParameter("method").equals("bag")) {
+				String url = "/front-end/shop/Cart_new.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			if(req.getParameter("method").equals("cart")) {
 
-			String url = "/front-end/shop/Cart_new.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+				ProductVO productVO = new ProductService().findByPrimaryKey(Integer.parseInt(req.getParameter("productID")));
+
+				req.setAttribute("productVO", productVO);
+				
+				String url = "/front-end/product_detail/product_detail.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			
 		}
 		
 
@@ -200,7 +221,7 @@ public class ShopServlet extends HttpServlet {
 //			OrderlistService orderlistService = new OrderlistService();
 //			orderlistService.addOrderlist(orderlist);
 		
-
+			
 			
 
 			String url = "/front-end/shop/Checkout.jsp";
