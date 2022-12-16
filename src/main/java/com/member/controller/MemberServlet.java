@@ -36,6 +36,12 @@ public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		doPost(req, res);
+	}
+
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
@@ -594,6 +600,9 @@ public class MemberServlet extends HttpServlet {
 				session.setAttribute("mail", mail); // *工作1: 才在session內做已經登入過的標識
 
 				try {
+					MemberService memSvc = new MemberService();
+					memVO = memSvc.loginOneMem(mail);
+					session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 					String location = (String) session.getAttribute("location");
 					if (location != null) {
 						session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
@@ -603,8 +612,6 @@ public class MemberServlet extends HttpServlet {
 				} catch (Exception ignored) {
 				}
 
-				MemberService memSvc = new MemberService();
-				memVO = memSvc.loginOneMem(mail);
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
 
@@ -614,7 +621,7 @@ public class MemberServlet extends HttpServlet {
 					session.setAttribute("storeName", storeName);
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+
 				session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 				res.sendRedirect(req.getContextPath() + "/index.jsp"); // *工作3:
 																		// (-->如無來源網頁:則重導至login_success.jsp)
