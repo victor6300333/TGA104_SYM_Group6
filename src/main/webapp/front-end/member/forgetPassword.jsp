@@ -49,6 +49,32 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 </head>
 
 <body>
+
+<script>
+$("#forgetPassword")
+.click(
+		function() {
+			$
+					.ajax({
+						url : "${pageContext.request.contextPath}/member/MemberServlet?mail=" +$("#mail").val(), // 資料請求的網址
+						type : "GET", // GET | POST | PUT | DELETE | PATCH
+						dataType : "json", // 預期會接收到回傳資料的格式： json | xml | html
+						success : function(data) {
+							// request 成功取得回應後執行
+							
+							$("fieldset")
+
+							
+						},
+						error : function(XMLHttpRequest) {
+							if (XMLHttpRequest.status >= 400) {
+								$("#msg").html("請重新輸入信箱");
+								alert("查無信箱");
+							}
+						}
+					});
+		});
+</script>
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
             <div class="container-fluid">
@@ -152,15 +178,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	<form id="msform" METHOD="post"
 		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 		name="form1">
-		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs1}">
-			<font style="color: red">請修正以下錯誤:</font>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs1}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
+		
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
 
@@ -169,9 +187,10 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 		<!-- fieldsets -->
 		<fieldset>
 			<h1 class="fs-title">請輸入註冊的信箱</h1>
-			<br /> <input type="text" name="mail" placeholder="請輸入信箱" /> 
+			<div id="msg"></div>
+			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" /> 
 			<input type="hidden" name="action" value="forgetPassword"><input
-				type="submit" name="next" class="next action-button" value="驗證" />
+				id= "forgetPassword" type="button" name="next" class="next action-button" value="驗證" />
 		</fieldset>
 		<fieldset>
 			<h2 class="fs-title">修改完成</h2>
