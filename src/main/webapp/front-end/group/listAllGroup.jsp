@@ -240,7 +240,7 @@ pageContext.setAttribute("list3", list3);
 														<a>團購編號 : ${groupVO.groupBuyID}</a>
 													</div>
 													<div class="product-image">
-														<a href="product-detail.html"> <img
+														<a> <img
 															src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVO.groupBuyProductID}"
 															style="width: 100%" alt="product-image">
 															</td>
