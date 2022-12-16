@@ -656,13 +656,13 @@ public class MemberServlet extends HttpServlet {
 			if (!(memSvcPass.findMemberByMail(tomail))) { // 【帳號 , 密碼無效時】
 				errorMsgs1.add("使用者信箱錯誤或查無此信箱");
 
-				if (!errorMsgs1.isEmpty()) {
-					req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/login.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
-				}
+			}
 
+			if (!errorMsgs1.isEmpty()) {
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+				failureView.forward(req, res);
+				return; // 程式中斷
 			}
 
 			// 產生亂數密碼

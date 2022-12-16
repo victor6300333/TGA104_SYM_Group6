@@ -43,7 +43,7 @@ public class LoginFilterForStore extends HttpFilter implements Filter {
 
 		if (account == null) {
 			session.setAttribute("location", req.getRequestURI());
-			res.sendRedirect(req.getContextPath() + "/front-end/member/registerForShop.jsp");
+			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
 			return;
 		} else if (account != null && accountStore == null) {
 

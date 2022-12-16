@@ -179,7 +179,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
 				<br />
 			</h2>
-			<h3 class="fs-subtitle text_t1">已使用電子信箱XXXXX@XXXX.XXX</h3>
+			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
 			<h3 class="fs-subtitle">寄送新的密碼</h3>
 			<h3 class="fs-subtitle">請點選完成回到登入頁重新登入</h3>
 			<a
