@@ -13,11 +13,53 @@ CouponUsageHistoryService couponUsageHistorySvc = new CouponUsageHistoryService(
 
 <html>
 <head>
-<title>優惠券紀錄資料All - listAllEmp.jsp</title>
+<title>優惠券紀錄資料</title>
+<!-- Favicon -->
+<link
+	href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg"
+	rel="icon" />
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+	rel="stylesheet" />
+
+<!-- CSS Libraries -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/lib/slick/slick-theme.css"
+	rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/woody.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
+	rel="stylesheet" />
+<script src="https://kit.fontawesome.com/bc79e44e11.js"
+	crossorigin="anonymous"></script>
 
 <style>
   table#table-1 {
-	background-color: #CCCCFF;
+	background-color: #FFA9A9;
     border: 2px solid black;
     text-align: center;
   }
@@ -51,11 +93,10 @@ CouponUsageHistoryService couponUsageHistorySvc = new CouponUsageHistoryService(
 </head>
 <body bgcolor='white'>
 
-<h4>此頁練習採用 EL 的寫法取值:</h4>
+
 <table id="table-1">
 	<tr><td>
-		 <h3>優惠券紀錄資料All - listAllEmp.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/front-end/couponUsageHistory/select_page.jsp"><img src="images/tomcat.png" width="100" height="32" border="0">回首頁</a></h4>
+		 <h3>優惠券紀錄資料</h3>
 	</td></tr>
 </table>
 

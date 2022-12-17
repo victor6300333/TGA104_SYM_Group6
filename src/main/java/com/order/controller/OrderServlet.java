@@ -48,45 +48,14 @@ public class OrderServlet extends HttpServlet {
 			OrderService orderSvc = new OrderService();
 			List<OrderVO> list  = orderSvc.getAllOrderByComposite(map);
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				
-//				Integer orderID = Integer.valueOf(req.getParameter("orderID"));
-//				Map<String, String> queryString = new LinkedHashMap<String, String>();
-//				
-//				Date orderfromdate = Date.valueOf(req.getParameter("fromdate").trim());
-//				Timestamp fromdate = new Timestamp(orderfromdate.getTime());
-//		
-//					queryString.put("orderDate", "" + fromdate);
-//			
-//				Date ordertodate = Date.valueOf(req.getParameter("todate").trim()); 
-//				Timestamp todate = new Timestamp(ordertodate.getTime());
-//					queryString.put("orderDate", "" + todate);
-//			
-//			
-//				Integer status =Integer.parseInt(req.getParameter("status")) ;
-//			
-//					queryString.put("orderStatus", "" + status);
-//				
-//				
-//				
-						
-			
-			
 					
-					req.setAttribute("list", list);
-					String url = "/front-end/order/listOrder.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-					successView.forward(req, res);
-					System.out.println("哈哈");
+			req.setAttribute("list", list);
+			String url = "/front-end/order/listOrder.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+			System.out.println("哈哈");
 				
-//				OrderVO orderVO = orderSvc.getOrder(orderID,orderfromdate,ordertodate,todate,status);
 
-				
-				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-			// 資料庫取出的empVO物件,存入req
-//				req.setAttribute("orderID", orderID); // 資料庫取出的empVO物件,存入req
-//				String url = "/front-end/order/listOrder.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-//				successView.forward(req, res);
 		}
 		if ("select_by_OrderID".equals(action)) {
 			Integer orderID = Integer.parseInt(req.getParameter("orderID"));

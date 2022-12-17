@@ -207,21 +207,10 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<thead class="thead-dark">
-	<!-- 
-									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet.do">
-										
-										<input type="hidden" name="action" value="do_buyercomment" />
-										<input type="hidden" name="action" value="do_buyercomment" />
-										<input type="submit" value="給予評價" />
-									</form>
-
-									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet.do">
-										<input type="hidden" name="action" value="check_buyercomment" />
-										<input type="submit" value="查看評價" />
-									</form>
+	
+									
 									<br><br>
 
- -->
 									<FORM METHOD="post" ACTION="OrderServlet">
 										<b>輸入訂單編號: </b> <input type="text" name="order"> <input
 											type="hidden" name="action" value="getOne_For_Display">
@@ -229,6 +218,27 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 									</FORM>
 									<br>
 									<br>
+							<% for(OrderVO orderVO : list){	%>
+							<tr>
+								<td >
+									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
+										
+										
+										<input type="hidden" name="orderID" value="<%=orderVO.getOrderID()%>" />
+										<input type="hidden" name="action" value="do_buyercomment" />
+										<input type="submit" value="給予評價" />
+									</form>
+								</td>
+							
+								<td>
+									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
+										<input type="hidden" name="orderID" value="<%=orderVO.getOrderID()%>" />
+										<input type="hidden" name="action" value="check_buyercomment" />
+										<input type="submit" value="查看評價" />
+									</form>
+								</td>
+							</tr>
+									
 									<tr>
 										<th>訂單編號</th>
 										<th>賣場編號</th>
@@ -247,7 +257,7 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 										<th>最終總金額</th>
 									</tr>
 								
-									<% for(OrderVO orderVO : list){	%>
+									
 									<tr>
 
 										<td><%=orderVO.getOrderID()%></td>

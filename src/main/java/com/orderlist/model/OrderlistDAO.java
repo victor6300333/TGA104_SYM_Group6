@@ -8,39 +8,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
 public class OrderlistDAO implements OrderlistDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "password";
-
-	Integer orderDetailID;
-	Integer orderID;
-    Integer productID;
-    Integer quantity;
-    Integer price;
-    Integer subTotal;
-    String shopReview;
-    String shopComment;
-    String buyerReview;
-    String buyerComment;
 	
 	private static final String INSERT_STMT = "INSERT INTO orderDetail (orderID, productID, productName,"
 			+ "			quantity ,price ,subTotal, shopReview,shopComment, buyerReview, buyerComment)"
 			+ "			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
-//	private static final String GET_ALL_STMT = 
-//		"SELECT empno,ename,job,hiredate,sal,comm,deptno FROM emp2 order by empno";
-	private static final String GET_ONE_STMT = "SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
+	private static final String GET_ONE_STMT = 
+		"SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
+		     + "subTotal, shopReview,shopComment, buyerReview, buyerComment"
+		     + " FROM orderDetail where orderDetailID = ?";
+	private static final String GET_ALL_STMT = "SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
 			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment "
 			+ "				FROM orderDetail where orderID = ?";
 //	private static final String DELETE = 
 //		"DELETE FROM emp2 where empno = ?";
 	private static final String UPDATE = 
-		"UPDATE Project_test.orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
+		"UPDATE orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
 		List<OrderlistVO> list = new ArrayList<OrderlistVO>();
@@ -53,7 +40,7 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_ALL_STMT);
 
 			pstmt.setInt(1, orderID);
 
@@ -158,7 +145,7 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	}
 
 	@Override
-	public void update(OrderlistVO orderlistVO) {
+	public void update(Integer orderDetailID, String buyerReview, String buyerComment) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -168,9 +155,9 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, orderlistVO.getBuyerReview());
-			pstmt.setString(2, orderlistVO.getBuyerComment());
-			pstmt.setInt(3, orderlistVO.getOrderDetailID());
+			pstmt.setString(1, buyerReview);
+			pstmt.setString(2, buyerComment);
+			pstmt.setInt(3, orderDetailID);
 	
 
 			pstmt.executeUpdate();
@@ -202,6 +189,68 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 		}
 		
 		
+	}
+
+	@Override
+	public OrderlistVO findByOrderlistID(Integer orderlistID) {
+		
+		OrderlistVO orderlistVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setInt(1, orderlistID);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// orderlistVo 也稱為 Domain objects
+				orderlistVO = new OrderlistVO();
+				orderlistVO.setOrderDetailID(rs.getInt("orderDetailID"));
+				orderlistVO.setOrderID(rs.getInt("orderID"));			
+				orderlistVO.setProductName(rs.getString("productName"));			
+				orderlistVO.setProductID(rs.getInt("productID"));
+				orderlistVO.setQuantity(rs.getInt("quantity"));
+				orderlistVO.setPrice(rs.getInt("price"));
+				orderlistVO.setSubTotal(rs.getInt("subTotal"));
+				orderlistVO.setShopReview(rs.getString("shopReview"));
+				orderlistVO.setShopComment(rs.getString("shopComment"));
+				orderlistVO.setBuyerReview(rs.getString("buyerReview"));
+				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
+			}
+			
+
+			
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+		
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return orderlistVO;
+				
+
+				
 	}
 
 

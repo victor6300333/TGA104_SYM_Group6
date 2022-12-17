@@ -75,7 +75,7 @@ public class CouponServlet extends HttpServlet {
 
 			/*************************** 3.�d�ߧ���,�ǳ����(Send the Success view) *************/
 			req.setAttribute("couponVO", couponVO); // ��Ʈw���X��empVO����,�s�Jreq
-			String url = "/back-end/coupon/listOneCoupon.jsp";
+			String url = "/back-end/coupon/listOneCoupon2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp
 			successView.forward(req, res);
 		}
@@ -166,7 +166,8 @@ public class CouponServlet extends HttpServlet {
 
 			/*************************** 3.�ק粒��,�ǳ����(Send the Success view) *************/
 			req.setAttribute("couponVO", couponVO); // ��Ʈwupdate���\��,���T����empVO����,�s�Jreq
-			String url = "/back-end/coupon/listOneCoupon.jsp";
+			System.out.println("couponVO = "+couponVO.getCouponName());
+			String url = "/back-end/coupon/listOneCoupon2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // �ק令�\��,���listOneEmp.jsp
 			successView.forward(req, res);
 		}

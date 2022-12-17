@@ -24,6 +24,16 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 
 	private static final String UPDATE = "UPDATE coupon set couponName=?,startDate=?,endDate=?,discount=?,discountAmount=?,fullCondition=?,couponTimeBegins=?,couponTimeEnd=?,exchangeAmount=?,couponDescription=? where couponID=?;";
 
+	private static final String GET_ALL_STMT_BY_CouponUsage ="select m.memberID,m.userAccount,m.userName,\r\n"
+			+ "cuh.couponID,cuh.usageRecord,\r\n"
+			+ "c.couponName,c.discount,c.discountAmount,c.fullCondition,c.couponDescription\r\n"
+			+ "from member m \r\n"
+			+ "left join couponUsageHistory cuh\r\n"
+			+ "on m.memberID = cuh.memberID\r\n"
+			+ "left join coupon c\r\n"
+			+ "on cuh.couponID = c.couponID\r\n"
+			+ "where cuh.usageRecord=1;";
+	
 	@Override
 	public void insert(CouponVO couponVO) {
 
@@ -326,10 +336,79 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 		return list;
 	}
 	
+	@Override
+	public List<CouponVO2> getAllByCouponUsage() {
+		List<CouponVO2> list = new ArrayList<CouponVO2>();
+		CouponVO2 couponVO2 = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT_BY_CouponUsage);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				couponVO2 = new CouponVO2();
+				couponVO2.setMemberID(rs.getInt("memberID"));
+				couponVO2.setUserAccount(rs.getString("userAccount"));
+				couponVO2.setUserName(rs.getString("userName"));
+				couponVO2.setCouponID(rs.getInt("couponID"));
+				couponVO2.setUsageRecord(rs.getInt("usageRecord"));
+				couponVO2.setCouponName(rs.getString("couponName"));
+				couponVO2.setDiscount(rs.getDouble("discount"));
+				couponVO2.setDiscountAmount(rs.getInt("discountAmount"));
+				couponVO2.setFullCondition(rs.getInt("fullCondition"));
+				couponVO2.setCouponDescription(rs.getString("couponDescription"));
+				list.add(couponVO2); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 
 		CouponJDBCDAO dao = new CouponJDBCDAO();
-
+		List<CouponVO2> allByCouponUsage = dao.getAllByCouponUsage();
+		for(CouponVO2 s:allByCouponUsage) {
+			System.out.println(s);
+		}
+/*
 		// �s�W
 		CouponVO couponVO1 = new CouponVO();
 		couponVO1.setCouponName("nick");
@@ -401,9 +480,10 @@ public class CouponJDBCDAO implements CouponDAO_interface {
 			System.out.println("---------------------");
 
 				}
-		
+*/		
 				
 
 	}
+
 
 }
