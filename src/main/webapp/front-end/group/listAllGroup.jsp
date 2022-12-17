@@ -5,21 +5,6 @@
 <%@ page import="com.group.model.*"%>
 <%@ page import="com.groupproduct.model.*"%>
 <%@ page import="com.groupdiscount.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
-
-<%
-GroupService groupSvc = new GroupService();
-List<GroupVO> list = groupSvc.getAll();
-pageContext.setAttribute("list", list);
-
-GroupproductService groupProductSvc = new GroupproductService();
-List<GroupproductVO> list2 = groupProductSvc.getAll();
-pageContext.setAttribute("list2", list2);
-
-GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-List<GroupdiscountVO> list3 = groupdiscountSvc.getAll();
-pageContext.setAttribute("list3", list3);
-%>
 
 
 
@@ -227,8 +212,11 @@ pageContext.setAttribute("list3", list3);
 								</div>
 							</div>
 						</div>
-						<c:forEach var="groupVO" items="${list}">
-							<c:forEach var="groupproductVO" items="${list2}">
+						<jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService" />
+						<jsp:useBean id="groupProductSvc" scope="page" class="com.groupproduct.model.GroupproductService" />
+						<jsp:useBean id="groupdiscountSvc" scope="page" class="com.groupdiscount.model.GroupdiscountService" />
+						<c:forEach var="groupVO" items="${groupSvc.all}">
+							<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
 								<c:if
 									test="${(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID)}"
 									var="cc">
@@ -285,7 +273,7 @@ pageContext.setAttribute("list3", list3);
 
 												<ul id="progressbar" class="progressbar" >
 													<!-- progressbar -->
-													<c:forEach var="groupdiscountVO" items="${list3}">
+													<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
 														<c:if
 															test="${(groupVO.groupBuyID == groupdiscountVO.groupBuyID)}"
 															var="cc">

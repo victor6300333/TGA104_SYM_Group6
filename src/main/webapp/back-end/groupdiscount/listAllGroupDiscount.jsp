@@ -4,11 +4,7 @@
 <%@ page import="com.groupdiscount.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-List<GroupdiscountVO> list = groupdiscountSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
+
 
 
 <!DOCTYPE html>
@@ -311,7 +307,8 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="groupdiscountVO" items="${list}">
+								<jsp:useBean id="groupdiscountSvc" scope="page" class="com.groupdiscount.model.GroupdiscountService"></jsp:useBean>
+									<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
 
 										<tr>
 											<td>${groupdiscountVO.countTableID}</td>

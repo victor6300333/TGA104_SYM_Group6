@@ -4,14 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<%
-GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupproductVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-Integer countNow = (Integer) request.getAttribute("countNow");
 
-GroupproductService groupProductSvc = new GroupproductService();
-List<GroupproductVO> list = groupProductSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -177,15 +170,11 @@ pageContext.setAttribute("list", list);
 							<div class="col-md-7">
 								<div class="product-content" style="padding-left: 200px">
 									<div class="title">
-										<h2>
-											團購商品編號 :
-											<%=groupproductVO.getGroupBuyProductID()%></h2>
+										<h2>團購商品編號 : ${groupproductVO.groupBuyProductID}</h2>
 									</div>
 									<div class="price">
 										<h4>價格:</h4>
-										<p><%=groupproductVO.getGroupBuyProductPrice()%>$
-
-										</p>
+										<p>${groupproductVO.groupBuyProductPrice}$</p>
 									</div>
 									<div class="title">
 										<h2>商品瀏覽次數 : ${countNow}</h2>
@@ -210,7 +199,7 @@ pageContext.setAttribute("list", list);
 							<div class="tab-content">
 								<div id="description" class="container tab-pane active">
 									<h4>商品描述</h4>
-									<p><%=groupproductVO.getGroupBuyProductDescrip()%></p>
+									<p>${groupproductVO.groupBuyProductDescrip}</p>
 								</div>
 								<div id="specification" class="container tab-pane fade">
 									<h4>Product specification</h4>
@@ -267,63 +256,62 @@ pageContext.setAttribute("list", list);
 						<div class="section-header">
 							<h1>熱門團購商品 TOP3</h1>
 						</div>
-							<div
-								class="row align-items-center">
-
-								<c:forEach var="add" items="${popProducts}">
-								<c:forEach var="groupproductVO" items="${list}">
-								<c:if
-									test="${(add == groupproductVO.groupBuyProductID)}"
-									var="cc">
-									<div class="col-md-4">
-										<form id="msform" METHOD="post" class="col-md-12"
-											style="border: 0px"
-											ACTION="<%=request.getContextPath()%>/front-end/groupproduct/Groupproduct.do">
-											<div class="col-md-4">
-												<div class="product-item">
-													<div class="product-title">
-														<a>商品編號 : ${add}</a>
-													</div>
-													<div class="product-image">
-														<a> <img
-															src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${add}"
-															style="width: 100%" alt="product-image">
-															</td>
-														</a>
-													</div>
-													<div class="product-price">
-														<h3>
-															<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
-														<input type="hidden" name="groupBuyProductID"
-															value="${add}"> <input
-															type="hidden" name="action" value="getOne_For_Display">
-														<button class="btn fa fa-search" type="submit">查看商品
-														</button>
+						<div class="row align-items-center">
+							<jsp:useBean id="groupproductSvc" scope="page"
+								class="com.groupproduct.model.GroupproductService"></jsp:useBean>
+							<c:forEach var="add" items="${popProducts}">
+								<c:forEach var="groupproductVO" items="${groupproductSvc.all}">
+									<c:if test="${(add == groupproductVO.groupBuyProductID)}"
+										var="cc">
+										<div class="col-md-4">
+											<form id="msform" METHOD="post" class="col-md-12"
+												style="border: 0px"
+												ACTION="<%=request.getContextPath()%>/front-end/groupproduct/Groupproduct.do">
+												<div class="col-md-4">
+													<div class="product-item">
+														<div class="product-title">
+															<a>商品編號 : ${add}</a>
+														</div>
+														<div class="product-image">
+															<a> <img
+																src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${add}"
+																style="width: 100%" alt="product-image">
+																</td>
+															</a>
+														</div>
+														<div class="product-price">
+															<h3>
+																<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
+															<input type="hidden" name="groupBuyProductID"
+																value="${add}"> <input type="hidden"
+																name="action" value="getOne_For_Display">
+															<button class="btn fa fa-search" type="submit">查看商品
+															</button>
+														</div>
 													</div>
 												</div>
-											</div>
-										</form>
-									</div>
+											</form>
+										</div>
 									</c:if>
 								</c:forEach>
-								</c:forEach>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
-					<div class="row align-items-center product-slider product-slider-3">
+				</div>
+				<div class="row align-items-center product-slider product-slider-3">
 
 
 
 
 
-					</div>
 				</div>
 			</div>
-
-			<!-- Side Bar Start -->
-
-			<!-- Side Bar End -->
 		</div>
+
+		<!-- Side Bar Start -->
+
+		<!-- Side Bar End -->
+	</div>
 	</div>
 	</div>
 	<!-- Product Detail End -->

@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.groupproduct.model.*"%>
 
-<%
-GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupproductVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -311,7 +309,7 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 															<label class="sym-dark-font">
 																<h5>團購商品編號</h5>
 															</label> <input type="text" class="form-control"
-																value="<%=groupproductVO.getGroupBuyProductID()%>"
+																value="${groupproductVO.groupBuyProductID}"
 																readonly />
 														</div>
 														<br>
@@ -320,7 +318,7 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 																<h5>商品定價</h5>
 															</label> <input type="text" class="form-control" id="proPrice"
 																name="groupBuyProductPrice" placeholder="請輸入商品售價"
-																value="<%=groupproductVO.getGroupBuyProductPrice()%>" />
+																value="${groupproductVO.groupBuyProductPrice}" />
 														</div>
 													</div>
 													<div class="row">
@@ -356,7 +354,7 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 															<textarea class="form-control"
 																placeholder="Leave a comment here" id="floatingTextarea"
 																name="groupBuyProductDescrip" style="height: 150px;"
-																value="<%=groupproductVO.getGroupBuyProductDescrip()%>" /><%=groupproductVO.getGroupBuyProductDescrip()%></textarea>
+																value="${groupproductVO.groupBuyProductDescrip}" />${groupproductVO.groupBuyProductDescrip}</textarea>
 															<label for="floatingTextarea">商品描述</label>
 														</div>
 													</div>
@@ -369,7 +367,7 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 													<div class="col-sm-3">
 														<input type="hidden" name="action" value="update">
 														<input type="hidden" name="groupBuyProductID"
-															value="<%=groupproductVO.getGroupBuyProductID()%>">
+															value="${groupproductVO.groupBuyProductID}">
 														<button
 															class="btn sym-darkpurple sym-yellow-font btn_style"
 															id="addProduct">送出編輯</button>

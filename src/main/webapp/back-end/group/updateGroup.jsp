@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group.model.*"%>
 
-<%
-GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -323,7 +321,7 @@ GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); //EmpServlet.java (
 															<label class="sym-dark-font">
 																<h5>管理員編號</h5>
 															</label> <input type="text"
-																value="<%=groupVO.getAdministratorID()%>"
+																value="${groupVO.administratorID}"
 																class="form-control" id="administratorID" readonly />
 														</div>
 													</div>
@@ -354,7 +352,7 @@ GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); //EmpServlet.java (
 													<div class="col-sm-4">
 														<label class="sym-dark-font">
 															<h5>團購編號</h5>
-														</label> <input type="text" value="<%=groupVO.getGroupBuyID()%>"
+														</label> <input type="text" value="${groupVO.groupBuyID}"
 															class="form-control" id="groupBuyID" readonly />
 													</div>
 												</div>
@@ -433,11 +431,11 @@ GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); //EmpServlet.java (
 														<div class="col-sm-3">
 															<input type="hidden" name="action" value="update">
 															<input type="hidden" name="groupBuyID"
-																value="<%=groupVO.getGroupBuyID()%>"> <input
+																value="${groupVO.groupBuyID}"> <input
 																type="hidden" name="groupBuyProductOrderTotal"
-																value="<%=groupVO.getGroupBuyProductOrderTotal()%>">
+																value="${groupVO.groupBuyProductOrderTotal}">
 															<input	type="hidden" name="administratorID"
-																value="<%=groupVO.getAdministratorID()%>"> 
+																value="${groupVO.administratorID}"> 
 
 															<button
 																class="btn sym-darkpurple sym-yellow-font btn_style"
@@ -539,7 +537,7 @@ GroupVO groupVO = (GroupVO) request.getAttribute("groupVO"); //EmpServlet.java (
 </style>
 
 <script>
-if(<%=groupVO.getGroupBuyingState()%>){
+if(${groupVO.groupBuyingState}){
 	document.querySelector('input[ID="Choice1"]').checked = true;
 }else{
 	document.querySelector('input[ID="Choice2"]').checked = true;
@@ -553,7 +551,7 @@ $('#f_date1').datetimepicker({
     timepicker:false,       //timepicker:true,
     step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
     format:'Y-m-d H:i:s',        //format:'Y-m-d H:i:s',
-	   value:'<%=groupVO.getGroupBuyingOnLoadDate()%>',
+	   value:'${groupVO.groupBuyingOnLoadDate}',
 // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日
@@ -566,7 +564,7 @@ $('#f_date2').datetimepicker({
     timepicker:false,       //timepicker:true,
     step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
     format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-	   value: '<%=groupVO.getGroupBuyingOffLoadDate()%>',
+	   value: '${groupVO.groupBuyingOffLoadDate}',
 // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日
@@ -579,7 +577,7 @@ $('#f_date3').datetimepicker({
     timepicker:false,       //timepicker:true,
     step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
     format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-	   value: '<%=groupVO.getUpdateTime()%>	',
+	   value: '${groupVO.updateTime}	',
 	// value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日

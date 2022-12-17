@@ -107,17 +107,16 @@ public class GroupproductServlet extends HttpServlet {
 
 			jedis.zadd("groupViews", groupViews);
 //			由多到少排序 前五
-//			System.out.println(jedis.zrevrangeByScore("groupViews", "+inf", "0", 0, 5)); 
 			
 			Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "200", "0", 0, 3);
 			
 			req.setAttribute("popProducts", popProducts);
 			
-			session.setAttribute("count_num" + req.getParameter("groupBuyProductID"), count_num);
+			req.setAttribute("count_num" + req.getParameter("groupBuyProductID"), count_num);
 			
 			Integer countNow = jedis.zscore("groupViews", req.getParameter("groupBuyProductID")).intValue();
 			
-			session.setAttribute("countNow", countNow);
+			req.setAttribute("countNow", countNow);
 			
 			jedis.close();
 			

@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.grouporder.model.*"%>
 
-<%
-GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
 
 <html>
 
@@ -335,7 +332,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 															<label class="sym-dark-font sym-dark-font font-m"></label>
 															<h5>團購訂單編號</h5>
 															</label>
-															<td><%=grouporderVO.getGroupBuyOrderID()%></td>
+															<td>${grouporderVO.groupBuyOrderID}</td>
 														</div>
 														<div class="row" style="padding-bottom: 20px;">
 															<div class="col-sm-4">
@@ -354,7 +351,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																			<h5>會員編號</h5>
 																		</label> <input type="text" class="form-control"
 																			name="memberID" id="memberID" placeholder="會員編號"
-																			value="<%=grouporderVO.getMemberID()%>" /> <br>
+																			value="${grouporderVO.memberID}" /> <br>
 																	</div>
 																</div>
 															</div>
@@ -364,7 +361,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																		<h5>團購編號</h5>
 																	</label> <input type="text" class="form-control mb-2rem"
 																		id="groupBuyID" name="groupBuyID" placeholder="團購編號"
-																		value="<%=grouporderVO.getGroupBuyID()%>" />
+																		value="${grouporderVO.groupBuyID}" />
 																</div>
 																<div class="col-sm-4">
 																	<label for="groupBuyProductID" class="sym-dark-font">
@@ -372,7 +369,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																	</label> <input type="text" class="form-control mb-2rem"
 																		id="groupBuyProductID" name="groupBuyProductID"
 																		placeholder="團購商品ID"
-																		value="<%=grouporderVO.getGroupBuyProductID()%>" />
+																		value="${grouporderVO.groupBuyProductID}" />
 																</div>
 															</div>
 															<div class="row">
@@ -383,7 +380,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																		</label> <input type="text" class="form-control"
 																			id="groupBuyQuantity" name="groupBuyQuantity"
 																			placeholder="請輸入團購數量"
-																			value="<%=grouporderVO.getGroupBuyQuantity()%>" />
+																			value="${grouporderVO.groupBuyQuantity}" />
 																	</div>
 																</div>
 																<div class="col-sm-4">
@@ -393,7 +390,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																		</label> <input type="text" class="form-control"
 																			id="groupBuyTotal" name="groupBuyTotal"
 																			placeholder="請輸入總金額"
-																			value="<%=grouporderVO.getGroupBuyTotal()%>" />
+																			value="${grouporderVO.groupBuyTotal}" />
 																	</div>
 																</div>
 																<div class="row">
@@ -405,7 +402,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																			</label> <input type="text" class="form-control"
 																				id="paymentTerm" name="paymentTerm"
 																				placeholder="請輸入付款方式"
-																				value="<%=grouporderVO.getPaymentTerm()%>" />
+																				value="${grouporderVO.paymentTerm}" />
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
@@ -416,7 +413,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																			</label> <input type="text" class="form-control"
 																				id="paymentState" name="paymentState"
 																				placeholder="請輸入付款狀態"
-																				value="<%=grouporderVO.getPaymentState()%>" />
+																				value="${grouporderVO.paymentState}" />
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
@@ -427,7 +424,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																			</label> <input type="text" class="form-control"
 																				id="giftVoucher" name="giftVoucher"
 																				placeholder="購物金"
-																				value="<%=grouporderVO.getGiftVoucher()%>" />
+																				value="${grouporderVO.giftVoucher}" />
 																		</div>
 																	</div>
 																</div>
@@ -441,7 +438,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																		</label> <input type="text" class="form-control"
 																			id="contactNumber" name="contactNumber"
 																			placeholder="請輸入連絡電話"
-																			value="<%=grouporderVO.getContactNumber()%>" />
+																			value="${grouporderVO.contactNumber}" />
 																	</div>
 																</div>
 																<div class="col-sm-4">
@@ -460,7 +457,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																		<input type="text" class="form-control"
 																			id="shippingLocation" name="shippingLocation"
 																			placeholder="寄送地址"
-																			value="<%=grouporderVO.getShippingLocation()%>" /> <br>
+																			value="${grouporderVO.shippingLocation}" /> <br>
 																	</div>
 																</div>
 															</div>
@@ -474,7 +471,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
 																	<div class="col-sm-3">
 																		<input type="hidden" name="action" value="update">
 																		<input type="hidden" name="groupBuyOrderID"
-																			value="<%=grouporderVO.getGroupBuyOrderID()%>">
+																			value="${grouporderVO.groupBuyOrderID}">
 
 																		<button
 																			class="btn sym-darkpurple sym-yellow-font btn_style">送出編輯</button>
@@ -582,7 +579,7 @@ GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
  	       timepicker:true,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
- 		   value: '<%=grouporderVO.getOrderTime()%>',
+ 		   value: '${grouporderVO.orderTime}',
 						// value:   new Date(),
 						//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 						//startDate:	            '2017/07/10',  // 起始日

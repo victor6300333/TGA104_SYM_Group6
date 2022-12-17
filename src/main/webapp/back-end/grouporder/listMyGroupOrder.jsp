@@ -3,13 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.grouporder.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
-
-<%
- List<GrouporderVO> list = (List<GrouporderVO>) request.getAttribute("grouporderVO");
-pageContext.setAttribute("list", list);
-
-%>
 
 
 <!DOCTYPE html>
@@ -142,14 +135,15 @@ pageContext.setAttribute("list", list);
 						<a href="#" class="nav-link dropdown-toggle active"
 							data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
 						<div class="dropdown-menu bg-transparent border-0 show">
-						<a
+							<a
 								href="<%=request.getContextPath()%>/back-end/grouporder/listAllGroupOrder.jsp"
-								class="dropdown-item">團購訂單管理</a>
-								<a
+								class="dropdown-item">團購訂單管理</a> <a
 								href="<%=request.getContextPath()%>/back-end/group/listAllGroup.jsp"
-								class="dropdown-item">團購管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								class="dropdown-item">團購管理</a> <a
+								href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp"
+								class="dropdown-item">商品管理</a> <a
+								href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp"
+								class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -338,9 +332,10 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</thead>
 								<tbody>
-									<%@ include file="page1.file"%>
-									<c:forEach var="grouporderVO" items="${list}"
-										begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+									<jsp:useBean id="grouporderSvc" scope="page"
+										class="com.grouporder.model.GrouporderService"></jsp:useBean>
+
+									<c:forEach var="grouporderVO" items="${grouporderSvc.all}">
 
 										<tr>
 											<td>${grouporderVO.groupBuyOrderID}</td>
@@ -349,7 +344,8 @@ pageContext.setAttribute("list", list);
 											<td>${grouporderVO.groupBuyProductID}</td>
 											<td>${grouporderVO.groupBuyQuantity}</td>
 											<td>${grouporderVO.groupBuyTotal}</td>
-											<td><fmt:formatDate value="${grouporderVO.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+											<td><fmt:formatDate value="${grouporderVO.orderTime}"
+													pattern="yyyy-MM-dd HH:mm:ss" /></td>
 											<td>${grouporderVO.paymentTerm}</td>
 											<td>${grouporderVO.paymentState}</td>
 											<td>${grouporderVO.giftVoucher}</td>
@@ -381,7 +377,7 @@ pageContext.setAttribute("list", list);
 									</c:forEach>
 								</tbody>
 							</table>
-							<%@ include file="page2.file"%>
+
 						</div>
 					</div>
 				</div>

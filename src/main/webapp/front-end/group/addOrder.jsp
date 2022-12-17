@@ -12,11 +12,6 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-GrouporderVO grouporderVO = (GrouporderVO) request.getAttribute("grouporderVO");
-GroupVO groupVO = (GroupVO) session.getAttribute("groupVO"); // 資料庫取出的empVO物件,存入req
-GroupproductVO groupproductVO = (GroupproductVO) session.getAttribute("groupproductVO");
-Double groupBuyCount = (Double) session.getAttribute("groupBuyCount");
-MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
 Object account = session.getAttribute("mail");                  // 從 session內取出 (key) account的值
 if (account == null) {                                             // 如為 null, 代表此user未登入過 , 才做以下工作
@@ -197,12 +192,12 @@ if (account == null) {                                             // 如為 nul
 										<label>會員名稱</label> <input class="form-control" type="text"
 											placeholder="會員名稱"
 											<%--                   value="<%= (grouporderVO==null)? "1" : MemberVO.getUserName()%>" --%>
-										 value="<%=memVO.getUserName()%>"
+										 value="${memVO.userName}"
 											readonly />
 									</div>
 									<div class="col">
 										<label>團購編號</label> <input class="form-control" type="text"
-											name="groupBuyID" value="<%=groupVO.getGroupBuyID()%>"
+											name="groupBuyID" value="${groupVO.groupBuyID}"
 											placeholder="團購編號" readonly />
 									</div>
 									<div class="col">
@@ -224,13 +219,15 @@ if (account == null) {                                             // 如為 nul
 									<div class="col">
 										<label>購買數量</label> <input id="qua" class="form-control"
 											name="groupBuyQuantity"
-											value="<%=(grouporderVO == null) ? "1" : grouporderVO.getGroupBuyQuantity()%>"
+											value="1"
 											type="text" placeholder="購買數量" />
 									</div>
 									<div class="col">
 										<label>付款方式</label> <select name="paymentTerm"
 											class="form-control">
 											<option value="信用卡">信用卡</option>
+											<option value="貨到付款">貨到付款</option>
+											<option value="ATM轉帳">ATM轉帳</option>
 										</select>
 									</div>
 									<br>
@@ -252,18 +249,18 @@ if (account == null) {                                             // 如為 nul
 								<div class="col-3">
 									<label>總金額</label> <input id="total" class="form-control"
 										name="groupBuyTotal"
-										value="<%=Math.ceil(groupproductVO.getGroupBuyProductPrice() * groupBuyCount)%>"
+										value="${Math.ceil(groupproductVO.groupBuyProductPrice* groupBuyCount)}"
 										type="text" placeholder="總金額" readonly /> <input
 										type="hidden" name="action" value="insert"> <input
 										type="hidden" name="groupBuyID"
-										value="<%=groupVO.getGroupBuyID()%>"> <input
+										value="${groupVO.groupBuyID}"> <input
 										type="hidden" name="giftVoucher" value=0> <input
 										type="hidden" name="groupBuyProductID"
-										value="<%=groupVO.getGroupBuyProductID()%>"> <input
+										value="${groupVO.groupBuyProductID}"> <input
 										type="hidden" name="administratorID"
-										value="<%=groupVO.getAdministratorID()%>"> <input
+										value="${groupVO.administratorID}"> <input
 										type="hidden" name="paymentState" value="1"> <input
-										type="hidden" name="memberID" value="<%=memVO.getMemberID()%>"> <a href="#">
+										type="hidden" name="memberID" value="${memVO.memberID}"> <a href="#">
 										<button class="btn">送出訂單</button>
 									</a>
 	</form>
@@ -396,7 +393,7 @@ if (account == null) {                                             // 如為 nul
 				//console.log($("#qua").val())
 				Math.ceil()
 				$("#total").val(
-						Math.ceil(<%=groupproductVO.getGroupBuyProductPrice()%>	* $("#qua").val() *<%=groupBuyCount%>));
+						Math.ceil(${groupproductVO.groupBuyProductPrice} * $("#qua").val() *${groupBuyCount}));
 
 			})
 	$("#newaccount").click(function(){
