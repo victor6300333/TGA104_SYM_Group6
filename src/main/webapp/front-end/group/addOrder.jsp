@@ -197,7 +197,7 @@ if (account == null) {                                             // 如為 nul
 										<label>會員名稱</label> <input class="form-control" type="text"
 											placeholder="會員名稱"
 											<%--                   value="<%= (grouporderVO==null)? "1" : MemberVO.getUserName()%>" --%>
-										 value="假資料"
+										 value="<%=memVO.getUserName()%>"
 											readonly />
 									</div>
 									<div class="col">
@@ -215,7 +215,7 @@ if (account == null) {                                             // 如為 nul
 										<input class="form-control" type="text" id="contactNumber"
 											name="contactNumber"
 											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getPhone() : ""%>" --%>
-										value="假資料"
+										value=""
 											placeholder="聯絡電話" />
 									</div>
 								</div>
@@ -243,7 +243,7 @@ if (account == null) {                                             // 如為 nul
 											<option value="">請選擇</option>
 										</select> <input id="shippingLocation" name="shippingLocation"
 											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getAddress() : ""%>" --%>
-										value="假資料"
+										value=""
 											class="form-control" type="text" placeholder="寄送地址" />
 									</div>
 								</div>
@@ -263,7 +263,7 @@ if (account == null) {                                             // 如為 nul
 										type="hidden" name="administratorID"
 										value="<%=groupVO.getAdministratorID()%>"> <input
 										type="hidden" name="paymentState" value="1"> <input
-										type="hidden" name="memberID" value="2"> <a href="#">
+										type="hidden" name="memberID" value="<%=memVO.getMemberID()%>"> <a href="#">
 										<button class="btn">送出訂單</button>
 									</a>
 	</form>

@@ -183,7 +183,7 @@ pageContext.setAttribute("list", list);
 									</div>
 									<div class="price">
 										<h4>價格:</h4>
-										<p><%=groupproductVO.getGroupBuyProductPrice()%>
+										<p><%=groupproductVO.getGroupBuyProductPrice()%>$
 
 										</p>
 									</div>
@@ -265,7 +265,7 @@ pageContext.setAttribute("list", list);
 
 					<div class="product">
 						<div class="section-header">
-							<h1>熱門團購商品</h1>
+							<h1>熱門團購商品 TOP3</h1>
 						</div>
 							<div
 								class="row align-items-center">

@@ -61,7 +61,9 @@ pageContext.setAttribute("list3", list3);
 	rel="stylesheet">
 <link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
 	rel="stylesheet" />
+<style type="text/css">
 
+</style>
 
 </head>
 
@@ -260,27 +262,28 @@ pageContext.setAttribute("list3", list3);
 										</form>
 									</div>
 									<form id="msform" METHOD="post"
-										ACTION="<%=request.getContextPath()%>/front-end/group/Group.do">
-										<div>
-											<div class="col-md-12">
+										ACTION="<%=request.getContextPath()%>/front-end/group/Group.do" style="border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px;
+										border: 0.1px solid #cdcdcd; margin-bottom: 10px">
+										<div class="product-content">
+											<div class="col-md-12" >
 
-												<br> <br>
-												<p>
-													目前團購數 : <span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
-												</p>
+												<br>
+												<div>
+													<h3>目前團購數 : </h3><span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
+												</div>
 
-												<td>團購開始時間 : <fmt:formatDate
+												<td><h3>團購開始時間 : </h3><fmt:formatDate
 														value="${groupVO.groupBuyingOnLoadDate}"
 														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
-												<td>團購結束時間 : <fmt:formatDate
+												<td><h3>團購結束時間 : </h3><fmt:formatDate
 														value="${groupVO.groupBuyingOffLoadDate}"
-														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br> <br>
-												<td>團購狀態 : <span class="groupBuyingState">${groupVO.groupBuyingState}</span></td>
-												<br> <br>
-												<td>商品描述 :</td> <br> <br>
-												<td>${groupproductVO.groupBuyProductDescrip}</td> <br>
-												<br>
-												<ul id="progressbar" class="progressbar">
+														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
+												<td><h3>團購狀態 : </h3><span class="groupBuyingState">${groupVO.groupBuyingState}</span></td>
+
+												<td><h3>商品描述 :</h3></td>
+												<td>${groupproductVO.groupBuyProductDescrip}</td> <br><br>
+
+												<ul id="progressbar" class="progressbar" >
 													<!-- progressbar -->
 													<c:forEach var="groupdiscountVO" items="${list3}">
 														<c:if
@@ -289,14 +292,14 @@ pageContext.setAttribute("list3", list3);
 															<c:choose>
 																<c:when
 																	test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
-																	<li class="active"><i>${groupdiscountVO.groupBuyCount * 10}</i>折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a>人</li>
+																	<li class="active" ><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 人</li>
 
 																</c:when>
 
 																<c:otherwise>
-																	<li class=""><i>${groupdiscountVO.groupBuyCount * 10}</i>折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a>人</li>
+																	<li class=""><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >人</li>
 																</c:otherwise>
 															</c:choose>
 														</c:if>
@@ -314,6 +317,7 @@ pageContext.setAttribute("list3", list3);
 									</FORM>
 					</div>
 				</div>
+				<br>
 				</c:if>
 				</c:forEach>
 				</c:forEach>
