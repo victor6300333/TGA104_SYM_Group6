@@ -183,7 +183,8 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 2.開始修改資料 *****************************************/
 
-			memVO = memSvc.updateOneMember(memberID, userName, userAccount, phone, mail, userPhoto, idNumber, address);
+			memSvc.updateOneMember(memberID, userName, userAccount, phone, mail, userPhoto, idNumber, address);
+			memVO = memSvc.loginOneMem(mail);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 			String url = "/front-end/member/my-account.jsp";

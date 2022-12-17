@@ -50,31 +50,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 
 <body>
 
-<script>
-$("#forgetPassword")
-.click(
-		function() {
-			$
-					.ajax({
-						url : "${pageContext.request.contextPath}/member/MemberServlet?mail=" +$("#mail").val(), // 資料請求的網址
-						type : "GET", // GET | POST | PUT | DELETE | PATCH
-						dataType : "json", // 預期會接收到回傳資料的格式： json | xml | html
-						success : function(data) {
-							// request 成功取得回應後執行
-							
-							$("fieldset")
-
-							
-						},
-						error : function(XMLHttpRequest) {
-							if (XMLHttpRequest.status >= 400) {
-								$("#msg").html("請重新輸入信箱");
-								alert("查無信箱");
-							}
-						}
-					});
-		});
-</script>
+	
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
             <div class="container-fluid">
@@ -178,21 +154,31 @@ $("#forgetPassword")
 	<form id="msform" METHOD="post"
 		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 		name="form1">
-		
+
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
 
 			<li>完成</li>
 		</ul>
 		<!-- fieldsets -->
-		<fieldset>
+		<fieldset id="forgetpass1">
+			
 			<h1 class="fs-title">請輸入註冊的信箱</h1>
-			<div id="msg"></div>
-			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" /> 
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" />
 			<input type="hidden" name="action" value="forgetPassword"><input
-				id= "forgetPassword" type="button" name="next" class="next action-button" value="驗證" />
+				id="forgetPass"  name="next" type="submit"
+				class="next action-button" value="驗證" />
 		</fieldset>
-		<fieldset>
+		<fieldset id="forgetpass2">
 			<h2 class="fs-title">修改完成</h2>
 			<h2 class="fs-title circle-check">
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
@@ -312,14 +298,14 @@ $("#forgetPassword")
 	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
 	<!-- JavaScript Libraries -->
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="js/register.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/slick/slick.min.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
