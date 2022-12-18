@@ -4,13 +4,15 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
 public class MemberService {
-
+	@Autowired
 	private MemberVO_interface dao;
-
-	public MemberService() {
-		dao = new MemberJDBCDAO();
-	}
 
 	public MemberVO addMember(String userAccount, String userPassword, String userName, String phone, String mail,
 			Timestamp registrationTime, Boolean mailCertification, Boolean sellerAuditApprovalState,
