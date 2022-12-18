@@ -1,11 +1,8 @@
 package com.ad.model;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.sql.Date;
 import java.util.List;
 
-import javax.imageio.stream.FileImageInputStream;
 
 public class AdService {
 

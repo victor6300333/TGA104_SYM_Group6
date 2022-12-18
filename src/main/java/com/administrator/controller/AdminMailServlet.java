@@ -29,7 +29,7 @@ public class AdminMailServlet extends HttpServlet {
 			memberID =Integer.valueOf(req.getParameter("memberID"));
 			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 			storeJDBCDAO.pass(memberID);
-			MemberVO memberVO = new MemberJDBCDAO().findByPrimaryKey(memberID);
+			MemberVO memberVO = new MemberJDBCDAO().getByPrimaryKey(memberID);
 			MailService mailService = new MailService();
 			
 			String to = memberVO.getMail();
