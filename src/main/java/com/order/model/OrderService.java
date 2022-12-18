@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.orderlist.model.OrderlistVO;
 import com.orderlist.model.Product;
@@ -26,27 +27,10 @@ public class OrderService {
 	
 		return dao.getbyOrderID(orderID);
 	}
-	public List<OrderVO> getAllOrderByComposite(Map<String, String> queryString ) {
-		StringBuilder sb = new StringBuilder();
-		Iterator<Entry<String, String>> it = queryString.entrySet().iterator();
-		int i = 0;
+	public List<OrderVO> getAllOrderByComposite(Map<String, String[]> map ) {
 		
-		while (it.hasNext()) {
-			Entry<String, String> next = it.next();
 
-			if ("orderDate".equals(next.getKey())) {
-				if(i==0)
-					sb.append(" where " + next.getKey() + " between " + next.getValue());
-				else
-					sb.append(" and" + next.getValue());
-				
-			} else if ("orderStatus".equals(next.getKey())) {
-				sb.append(" && "+ next.getKey() + " = " + next.getValue());
-		
-			}
-			i++;
-		}
-		return dao.getAllByComposite(queryString);
+		return  dao.getAllByComposite( map );
 	}
 	
 

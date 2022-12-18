@@ -6,15 +6,7 @@
 <%@ page import="com.groupproduct.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-GroupService groupSvc = new GroupService();
-List<GroupVO> list = groupSvc.getAll();
-pageContext.setAttribute("list", list);
 
-GroupproductService groupProductSvc = new GroupproductService();
-List<GroupproductVO> list2 = groupProductSvc.getAll();
-pageContext.setAttribute("list2", list2);
-%>
 
 
 <!DOCTYPE html>
@@ -319,8 +311,10 @@ pageContext.setAttribute("list2", list2);
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="groupVO" items="${list}" varStatus="s">
-										<c:forEach var="groupproductVO" items="${list2}">
+								<jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService"></jsp:useBean>
+								<jsp:useBean id="groupProductSvc" scope="page" class="com.groupproduct.model.GroupproductService"></jsp:useBean>
+									<c:forEach var="groupVO" items="${groupSvc.all}" varStatus="s">
+										<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
 											<tr>
 												<c:if
 													test="${groupVO.groupBuyProductID == groupproductVO.groupBuyProductID}"

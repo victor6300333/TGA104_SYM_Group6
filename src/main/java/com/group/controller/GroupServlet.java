@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.group.model.GroupService;
 import com.group.model.GroupVO;
@@ -165,9 +166,10 @@ public class GroupServlet extends HttpServlet {
 			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
-			req.setAttribute("groupBuyCount", groupBuyCount);
-			req.setAttribute("groupproductVO", groupproductVO);
+			HttpSession session = req.getSession();
+			session.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
+			session.setAttribute("groupBuyCount", groupBuyCount);
+			session.setAttribute("groupproductVO", groupproductVO);
 
 			
 			String url = "/front-end/group/addOrder.jsp";

@@ -31,23 +31,15 @@ public class OrderlistServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-
 	
-		if ("update".equals(action)) {
-			String buyerReview = req.getParameter("buyerReview");
-			String buyerComment = req.getParameter("buyerComment");
-			
-		}
-		
-		
 		
 		if ("do_buyercomment".equals(action)) {
 
-			String orderID = req.getParameter("orderID");
+			Integer orderID = Integer.parseInt(req.getParameter("orderID"));
 			OrderlistService orderlistService = new OrderlistService();	
 			
 
-			List<OrderlistVO> list = orderlistService.searchOrderlist(Integer.parseInt(orderID));
+			List<OrderlistVO> list = orderlistService.searchOrderlist(orderID);
 			req.setAttribute("list", list);
 			String url = "/front-end/comment/addComment.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
@@ -58,32 +50,18 @@ public class OrderlistServlet extends HttpServlet {
 			String index = req.getParameter("comment");
 			String buyerReview = req.getParameter("buyerReview");
 			String buyerComment = req.getParameter("buyerComment");
-			String orderDetailID = req.getParameter("orderDetailID");
-			String orderID = req.getParameter("orderID");
-			String productID = req.getParameter("productID");
-			String quantity = req.getParameter("quantity");
-			String price = req.getParameter("price");
-			String subTotal = req.getParameter("subTotal");
-	
+			Integer orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
+			
 		
 			
-			OrderlistVO orderlistVO = new OrderlistVO();
-			orderlistVO.setBuyerReview(buyerReview);
-			orderlistVO.setBuyerComment(buyerComment);
-//			orderlistVO.setShopComment("null");
-//			orderlistVO.setShopComment("null");
 			
-			orderlistVO.setOrderDetailID(Integer.parseInt(orderDetailID));
-			orderlistVO.setOrderID(Integer.parseInt(orderID));
-			orderlistVO.setProductID(Integer.parseInt(productID));
-			orderlistVO.setQuantity(Integer.parseInt(quantity));
-			orderlistVO.setPrice(Integer.parseInt(price));
-			orderlistVO.setSubTotal(Integer.parseInt(subTotal));
-			
-			
-			
+		
 			OrderlistService orderlistService = new OrderlistService();
-			orderlistService.updateOrderlist(orderlistVO);
+			orderlistService.updateOrderlist(orderDetailID, buyerReview, buyerComment);
+			
+			OrderlistVO orderlistVO = orderlistService.findByOrderlistID(orderDetailID);
+		
+			
 			req.setAttribute("orderlistVO", orderlistVO);
 			
 			String url = "/front-end/comment/listComment.jsp";

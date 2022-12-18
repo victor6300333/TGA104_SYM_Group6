@@ -13,15 +13,15 @@ public class GrouporderService {
 	}
 
 //新增
-	public GrouporderVO addGrouporder(Integer groupBuyID, Integer memberID, Integer groupBuyProductID,
+	public GrouporderVO addGrouporder(Integer groupBuyID, Integer groupBuyProductID,Integer memberID,
 			Integer groupBuyQuantity, Integer groupBuyTotal, Timestamp orderTime, String paymentTerm,
 			Integer paymentState, Integer giftVoucher, String contactNumber, String shippingLocation) {
 
 		GrouporderVO grouporderVO = new GrouporderVO();
 
 		grouporderVO.setGroupBuyID(groupBuyID);
+		grouporderVO.setGroupBuyProductID(groupBuyProductID);
 		grouporderVO.setMemberID(memberID);
-		grouporderVO.setGroupBuyProductID(memberID);
 		grouporderVO.setGroupBuyQuantity(groupBuyQuantity);
 		grouporderVO.setGroupBuyTotal(groupBuyTotal);
 		grouporderVO.setOrderTime(orderTime);
@@ -45,7 +45,7 @@ public class GrouporderService {
 		grouporderVO.setGroupBuyOrderID(groupBuyOrderID);
 		grouporderVO.setGroupBuyID(groupBuyID);
 		grouporderVO.setMemberID(memberID);
-		grouporderVO.setGroupBuyProductID(memberID);
+		grouporderVO.setGroupBuyProductID(groupBuyProductID);
 		grouporderVO.setGroupBuyQuantity(groupBuyQuantity);
 		grouporderVO.setGroupBuyTotal(groupBuyTotal);
 		grouporderVO.setOrderTime(orderTime);

@@ -32,12 +32,12 @@ public class MemberService {
 		return memberVO;
 	}
 
-	public MemberVO updateMember(Integer memberId, String gender, Date birthday, byte[] userPhoto,
+	public MemberVO updateMember(Integer memberID, String gender, Date birthday, byte[] userPhoto,
 			Boolean mailCertification, String idNumber, String address, Boolean sellerAuditApprovalState,
 			Integer currentShoppingCoin) {
 		MemberVO memberVO = new MemberVO();
 
-		memberVO.setMemberId(memberId);
+		memberVO.setMemberID(memberID);
 		memberVO.setGender(gender);
 		memberVO.setBirthday(birthday);
 		memberVO.setUserPhoto(userPhoto);
@@ -51,11 +51,11 @@ public class MemberService {
 		return memberVO;
 	}
 
-	public MemberVO updateOneMember(Integer memberId, String userName, String userAccount, String phone, String mail,
+	public MemberVO updateOneMember(Integer memberID, String userName, String userAccount, String phone, String mail,
 			byte[] userPhoto, String idNumber, String address) {
 		MemberVO memberVO = new MemberVO();
 
-		memberVO.setMemberId(memberId);
+		memberVO.setMemberID(memberID);
 		memberVO.setUserName(userName);
 		memberVO.setUserAccount(userAccount);
 		memberVO.setPhone(phone);
@@ -68,22 +68,22 @@ public class MemberService {
 		return memberVO;
 	}
 
-	public MemberVO updateMemberPassword(Integer memberId, String userPassword) {
+	public MemberVO updateMemberPassword(Integer memberID, String userPassword) {
 		MemberVO memberVO = new MemberVO();
 
-		memberVO.setMemberId(memberId);
+		memberVO.setMemberID(memberID);
 		memberVO.setUserPassword(userPassword);
 		dao.updateOnePasswoed(memberVO);
 
 		return memberVO;
 	}
 
-	public void deleteMember(Integer memberId) {
-		dao.delete(memberId);
+	public void deleteMember(Integer memberID) {
+		dao.delete(memberID);
 	}
 
-	public MemberVO getOneMem(Integer memberId) {
-		return dao.getByPrimaryKey(memberId);
+	public MemberVO getOneMem(Integer memberID) {
+		return dao.getByPrimaryKey(memberID);
 	}
 
 	public MemberVO loginOneMem(String mail) {

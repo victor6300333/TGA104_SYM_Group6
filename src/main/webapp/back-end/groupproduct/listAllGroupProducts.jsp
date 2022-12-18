@@ -2,13 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.groupproduct.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-//     GroupproductService groupproductSvc = new GroupproductService();
-//     List<GroupproductVO> list = groupproductSvc.getAll();
-//     pageContext.setAttribute("list",list);
-%>
 
 
 <!DOCTYPE html>

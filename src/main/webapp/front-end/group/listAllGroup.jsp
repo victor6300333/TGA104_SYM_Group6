@@ -5,21 +5,6 @@
 <%@ page import="com.group.model.*"%>
 <%@ page import="com.groupproduct.model.*"%>
 <%@ page import="com.groupdiscount.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
-
-<%
-GroupService groupSvc = new GroupService();
-List<GroupVO> list = groupSvc.getAll();
-pageContext.setAttribute("list", list);
-
-GroupproductService groupProductSvc = new GroupproductService();
-List<GroupproductVO> list2 = groupProductSvc.getAll();
-pageContext.setAttribute("list2", list2);
-
-GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-List<GroupdiscountVO> list3 = groupdiscountSvc.getAll();
-pageContext.setAttribute("list3", list3);
-%>
 
 
 
@@ -61,7 +46,9 @@ pageContext.setAttribute("list3", list3);
 	rel="stylesheet">
 <link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
 	rel="stylesheet" />
+<style type="text/css">
 
+</style>
 
 </head>
 
@@ -225,8 +212,11 @@ pageContext.setAttribute("list3", list3);
 								</div>
 							</div>
 						</div>
-						<c:forEach var="groupVO" items="${list}">
-							<c:forEach var="groupproductVO" items="${list2}">
+						<jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService" />
+						<jsp:useBean id="groupProductSvc" scope="page" class="com.groupproduct.model.GroupproductService" />
+						<jsp:useBean id="groupdiscountSvc" scope="page" class="com.groupdiscount.model.GroupdiscountService" />
+						<c:forEach var="groupVO" items="${groupSvc.all}">
+							<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
 								<c:if
 									test="${(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID)}"
 									var="cc">
@@ -240,7 +230,7 @@ pageContext.setAttribute("list3", list3);
 														<a>團購編號 : ${groupVO.groupBuyID}</a>
 													</div>
 													<div class="product-image">
-														<a href="product-detail.html"> <img
+														<a> <img
 															src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVO.groupBuyProductID}"
 															style="width: 100%" alt="product-image">
 															</td>
@@ -260,43 +250,44 @@ pageContext.setAttribute("list3", list3);
 										</form>
 									</div>
 									<form id="msform" METHOD="post"
-										ACTION="<%=request.getContextPath()%>/front-end/group/Group.do">
-										<div>
-											<div class="col-md-12">
+										ACTION="<%=request.getContextPath()%>/front-end/group/Group.do" style="border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px;
+										border: 0.1px solid #cdcdcd; margin-bottom: 10px">
+										<div class="product-content">
+											<div class="col-md-12" >
 
-												<br> <br>
-												<p>
-													目前團購數 : <span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
-												</p>
+												<br>
+												<div>
+													<h3>目前團購數 : </h3><span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
+												</div>
 
-												<td>團購開始時間 : <fmt:formatDate
+												<td><h3>團購開始時間 : </h3><fmt:formatDate
 														value="${groupVO.groupBuyingOnLoadDate}"
 														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
-												<td>團購結束時間 : <fmt:formatDate
+												<td><h3>團購結束時間 : </h3><fmt:formatDate
 														value="${groupVO.groupBuyingOffLoadDate}"
-														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br> <br>
-												<td>團購狀態 : <span class="groupBuyingState">${groupVO.groupBuyingState}</span></td>
-												<br> <br>
-												<td>商品描述 :</td> <br> <br>
-												<td>${groupproductVO.groupBuyProductDescrip}</td> <br>
-												<br>
-												<ul id="progressbar" class="progressbar">
+														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
+												<td><h3>團購狀態 : </h3><span class="groupBuyingState">${groupVO.groupBuyingState}</span></td>
+
+												<td><h3>商品描述 :</h3></td>
+												<td>${groupproductVO.groupBuyProductDescrip}</td> <br><br>
+
+												<ul id="progressbar" class="progressbar" >
 													<!-- progressbar -->
-													<c:forEach var="groupdiscountVO" items="${list3}">
+													<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
 														<c:if
 															test="${(groupVO.groupBuyID == groupdiscountVO.groupBuyID)}"
 															var="cc">
 															<c:choose>
 																<c:when
 																	test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
-																	<li class="active"><i>${groupdiscountVO.groupBuyCount * 10}</i>折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a>人</li>
+																	<li class="active" ><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 人</li>
 
 																</c:when>
 
 																<c:otherwise>
-																	<li class=""><i>${groupdiscountVO.groupBuyCount * 10}</i>折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a>人</li>
+																	<li class=""><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >人</li>
 																</c:otherwise>
 															</c:choose>
 														</c:if>
@@ -314,6 +305,7 @@ pageContext.setAttribute("list3", list3);
 									</FORM>
 					</div>
 				</div>
+				<br>
 				</c:if>
 				</c:forEach>
 				</c:forEach>
@@ -529,7 +521,7 @@ pageContext.setAttribute("list3", list3);
 // 						console.log("123");
 						countTable.val("1");
 					} else {
-					countTable.val(currentDiscount)
+					countTable.val(currentDiscount*0.1)
 					};
 // 					console.log(currentDiscount);
 				})

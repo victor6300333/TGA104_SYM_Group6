@@ -43,7 +43,7 @@ public class StoreServlet extends HttpServlet {
 			Integer memberID = null;
 			try {
 				MemberVO attribute = (MemberVO)session.getAttribute("memVO");
-				memberID = attribute.getMemberId();
+				memberID = attribute.getMemberID();
 			} catch (NumberFormatException e) {
 				memberID = 0;
 				errorMsgs.add("memberID不正確");

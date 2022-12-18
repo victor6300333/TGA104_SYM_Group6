@@ -15,7 +15,7 @@ public class GrouporderJDBCDAO implements GrouporderDAO_interface {
 	String userid = "root";
 	String passwd = "password";
 
-	private static final String INSERT_STMT = "INSERT INTO groupBuyOrder (groupBuyID,memberID,groupBuyProductID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO groupBuyOrder (groupBuyID,groupBuyProductID,memberID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT groupBuyOrderID,groupBuyID,memberID,groupBuyProductID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation FROM groupBuyOrder";
 	private static final String GET_ONE_STMT = 
 			"SELECT groupBuyOrderID,groupBuyID,memberID,groupBuyProductID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation FROM groupBuyOrder where groupBuyOrderID = ?";
@@ -37,8 +37,8 @@ public class GrouporderJDBCDAO implements GrouporderDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			System.out.println();
 			pstmt.setInt(1, grouporderVO.getGroupBuyID());
-			pstmt.setInt(2, grouporderVO.getMemberID());
-			pstmt.setInt(3, grouporderVO.getGroupBuyProductID());
+			pstmt.setInt(2, grouporderVO.getGroupBuyProductID());
+			pstmt.setInt(3, grouporderVO.getMemberID());
 			pstmt.setInt(4, grouporderVO.getGroupBuyQuantity());
 			pstmt.setInt(5, grouporderVO.getGroupBuyTotal());
 			pstmt.setTimestamp(6, grouporderVO.getOrderTime());

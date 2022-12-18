@@ -11,7 +11,7 @@
 	<br>
 	<%
 	@SuppressWarnings("unchecked")
-
+	
 	Map<Integer, List<Product>> check = (Map<Integer, List<Product>>) session.getAttribute("check");
 	%>
 

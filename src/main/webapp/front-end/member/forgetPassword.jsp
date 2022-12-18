@@ -49,6 +49,8 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 </head>
 
 <body>
+
+	
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
             <div class="container-fluid">
@@ -152,34 +154,37 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	<form id="msform" METHOD="post"
 		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
 		name="form1">
-		<%-- 錯誤表列 --%>
-		<c:if test="${not empty errorMsgs1}">
-			<font style="color: red">請修正以下錯誤:</font>
-			<ul>
-				<c:forEach var="message" items="${errorMsgs1}">
-					<li style="color: red">${message}</li>
-				</c:forEach>
-			</ul>
-		</c:if>
+
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
 
 			<li>完成</li>
 		</ul>
 		<!-- fieldsets -->
-		<fieldset>
+		<fieldset id="forgetpass1">
+			
 			<h1 class="fs-title">請輸入註冊的信箱</h1>
-			<br /> <input type="text" name="mail" placeholder="請輸入信箱" /> 
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" />
 			<input type="hidden" name="action" value="forgetPassword"><input
-				type="submit" name="next" class="next action-button" value="驗證" />
+				id="forgetPass"  name="next" type="submit"
+				class="next action-button" value="驗證" />
 		</fieldset>
-		<fieldset>
+		<fieldset id="forgetpass2">
 			<h2 class="fs-title">修改完成</h2>
 			<h2 class="fs-title circle-check">
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
 				<br />
 			</h2>
-			<h3 class="fs-subtitle text_t1">已使用電子信箱XXXXX@XXXX.XXX</h3>
+			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
 			<h3 class="fs-subtitle">寄送新的密碼</h3>
 			<h3 class="fs-subtitle">請點選完成回到登入頁重新登入</h3>
 			<a
@@ -293,14 +298,14 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
 	<!-- JavaScript Libraries -->
-	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="js/register.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="lib/easing/easing.min.js"></script>
-	<script src="lib/slick/slick.min.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,8 @@ import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.orderlist.model.OrderlistVO;
 import com.orderlist.model.Product;
+import com.product.model.ProductVO;
+import com.product.service.ProductService;
 
 //import redis.clients.jedis.Jedis;
 
@@ -51,9 +54,15 @@ public class ShopServlet extends HttpServlet {
 		Map<Integer, List<Product>> check = (Map<Integer, List<Product>>)session.getAttribute("check");
 		
 		String action = req.getParameter("action");
+		Integer count_string = (Integer) session.getAttribute("count_num");
+		int count_num;
+		if(count_string == null)
+			count_num = 0;
+		else
+			count_num = count_string;
 
 		if (!action.equals("CHECKOUT")) {
-
+			
 			// 新增書籍至購物車中
 			 if (action.equals("ADD")) {
 
@@ -70,12 +79,14 @@ public class ShopServlet extends HttpServlet {
 					
 					check = new HashMap<Integer, List<Product>>();
 					check.put(storeID, list);
+					count_num++;
 
 				} else {
 					if(check.get(storeID)==null) {
 						List<Product> buylist = new ArrayList<Product>();
 						buylist.add(product);
 						check.put(storeID, buylist);
+						count_num++;
 					} else {
 						
 					List<Product> buylist = check.get(storeID);
@@ -88,6 +99,7 @@ public class ShopServlet extends HttpServlet {
 					} else {
 						buylist.add(product);
 						check.put(storeID, buylist);
+						count_num++;
 				
 					}
 				  }
@@ -97,10 +109,23 @@ public class ShopServlet extends HttpServlet {
 			}
 	
 			session.setAttribute("check", check);
+			session.setAttribute("count_num", count_num);
+			if(req.getParameter("method").equals("bag")) {
+				String url = "/front-end/shop/Cart_new.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			if(req.getParameter("method").equals("cart")) {
 
-			String url = "/front-end/shop/Cart_new.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+				ProductVO productVO = new ProductService().findByPrimaryKey(Integer.parseInt(req.getParameter("productID")));
+
+				req.setAttribute("productVO", productVO);
+				
+				String url = "/front-end/product_detail/product_detail.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+			}
+			
 		}
 		
 
@@ -129,6 +154,10 @@ public class ShopServlet extends HttpServlet {
 				Integer productID = order.getProductID();
 				
 				total += (price * quantity);
+				
+//				double total1 = buylist.stream()
+//								      .mapToDouble(b -> b.getPrice()*b.getQuantity())
+//								      .sum();
 
 				
 				OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
@@ -149,6 +178,7 @@ public class ShopServlet extends HttpServlet {
 
 			OrderVO ordervo = new OrderVO(); //產生訂單物件
 			
+			Integer memberID = Integer.parseInt( req.getParameter("memberID") );
 			String str = req.getParameter("storeID"+storeID.toString());
 			Integer storeid = Integer.parseInt(str);
 			String storeName = req.getParameter("storeName"+str);
@@ -160,7 +190,7 @@ public class ShopServlet extends HttpServlet {
 			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"+str));
 			Double count = Double.valueOf(req.getParameter("couponID"+str));
 
-			ordervo.setMemberID(1);
+			ordervo.setMemberID(memberID);
 			ordervo.setStoreID(storeid);
 			ordervo.setStoreName(storeName);
 			ordervo.setCreditcardNumber("10");
@@ -195,7 +225,7 @@ public class ShopServlet extends HttpServlet {
 //			OrderlistService orderlistService = new OrderlistService();
 //			orderlistService.addOrderlist(orderlist);
 		
-
+			
 			
 
 			String url = "/front-end/shop/Checkout.jsp";

@@ -21,9 +21,15 @@ public class OrderlistService {
 
 	}
 	
-	public void updateOrderlist(OrderlistVO orderlistVO) {
+	public void updateOrderlist(Integer orderDetailID, String buyerReview, String buyerComment) {
 
-		dao.update(orderlistVO);
+		dao.update(orderDetailID, buyerReview, buyerComment);
 
+	}
+	
+	public OrderlistVO findByOrderlistID(Integer OrderlistID) {
+		
+		return dao.findByOrderlistID(OrderlistID);
+		
 	}
 }

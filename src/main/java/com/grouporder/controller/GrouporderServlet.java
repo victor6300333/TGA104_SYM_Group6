@@ -352,9 +352,9 @@ public class GrouporderServlet extends HttpServlet {
 					}
 					/***************************2.開始新增資料***************************************/
 					GrouporderService grouporderSvc = new GrouporderService();
-					grouporderVO = grouporderSvc.addGrouporder(groupBuyID, memberID,
-							 groupBuyProductID, groupBuyQuantity,  groupBuyTotal, orderTime, paymentTerm,
+					grouporderVO = grouporderSvc.addGrouporder(groupBuyID, groupBuyProductID, memberID, groupBuyQuantity,  groupBuyTotal, orderTime, paymentTerm,
 							 paymentState,  giftVoucher,  contactNumber, shippingLocation);
+					/**更新團購總數**/
 					GroupService GroupSvc = new GroupService();
 					groupVO = GroupSvc.updateGroupQua(currentQua+groupBuyQuantity,groupBuyID);
 					
