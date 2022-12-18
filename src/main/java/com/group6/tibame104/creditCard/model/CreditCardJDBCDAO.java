@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CreditCardJDBCDAO implements CreditCardVO_interface {
+public class CreditCardJDBCDAO implements CreditCardDAO_interface {
 
 	@Autowired
 	private DataSource dataSource;

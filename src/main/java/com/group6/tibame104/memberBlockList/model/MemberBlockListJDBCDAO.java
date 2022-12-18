@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
+public class MemberBlockListJDBCDAO implements MemberBlockListDAO_interface {
 
 	@Autowired
 	private DataSource dataSource;

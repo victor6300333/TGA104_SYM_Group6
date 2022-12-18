@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CreditCardService {
 
-	private CreditCardVO_interface dao;
+	private CreditCardDAO_interface dao;
 
 	public CreditCardService() {
 		dao = new CreditCardJDBCDAO();

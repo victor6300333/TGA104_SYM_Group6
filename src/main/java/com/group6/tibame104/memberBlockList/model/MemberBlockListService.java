@@ -3,7 +3,7 @@ package com.group6.tibame104.memberBlockList.model;
 import java.util.List;
 
 public class MemberBlockListService {
-	private MemberBlockListVO_interface dao;
+	private MemberBlockListDAO_interface dao;
 
 	public MemberBlockListService() {
 		dao = new MemberBlockListJDBCDAO();
