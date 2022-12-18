@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
@@ -19,6 +25,8 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 	private static final String DELETE = "DELETE FROM groupBuyProduct where groupbuyProductID = ?;";
 	private static final String GET_ONE_STMT = "SELECT groupBuyProductID ,groupBuyProductPrice ,groupBuyProductPicture ,groupBuyProductDescrip FROM groupBuyProduct WHERE groupBuyProductID = ?;";
 	private static final String GET_ALL_STMT = "SELECT groupBuyProductID ,groupBuyProductPrice ,groupBuyProductPicture ,groupBuyProductDescrip FROM groupBuyProduct";
+	@Autowired
+	private DataSource dataSource;
 
 	@Override
 	public void insert(GroupproductVO groupproductVO) {
@@ -241,7 +249,6 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 				groupproductVO.setGroupBuyProductPrice(rs.getInt("groupBuyProductPrice"));
 				groupproductVO.setGroupBuyProductPicture(rs.getBytes("groupBuyProductPicture"));
 				groupproductVO.setGroupBuyProductDescrip(rs.getString("groupBuyProductDescrip"));
-				
 
 				list.add(groupproductVO); // Store the row in the list
 			}
@@ -295,12 +302,12 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 //		
 //    修改		
 		GroupproductVO groupproductVO2 = new GroupproductVO();
-	
+
 		groupproductVO2.setGroupBuyProductID(1);
 		groupproductVO2.setGroupBuyProductPrice(1);
 		groupproductVO2.setGroupBuyProductPicture(null);
 		groupproductVO2.setGroupBuyProductDescrip("ggg");
-		
+
 		dao.update(groupproductVO2);
 
 ////	刪除

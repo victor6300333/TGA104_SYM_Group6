@@ -28,7 +28,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Override
 	public void insert(GroupVO groupVO) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		try (Connection con = dataSource.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductID());
 			pstmt.setInt(2, groupVO.getAdministratorID());
@@ -49,7 +50,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Override
 	public void update(GroupVO groupVO) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
+		try (Connection con = dataSource.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductID());
 			pstmt.setInt(2, groupVO.getAdministratorID());
@@ -72,7 +74,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	public void updateGroupQua(GroupVO groupVO) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(UPDATE_ONE_QUA)) {
+			 PreparedStatement pstmt = con.prepareStatement(UPDATE_ONE_QUA)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductOrderTotal());
 			pstmt.setInt(2, groupVO.getGroupBuyID());
@@ -88,7 +90,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Override
 	public void delete(Integer grouporderID) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);) {
+		try (Connection con = dataSource.getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(DELETE);) {
 
 			pstmt.setInt(1, grouporderID);
 
@@ -104,7 +107,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	public GroupVO findByPrimaryKey(Integer groupBuyID) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
+			 PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
 
 			pstmt.setInt(1, groupBuyID);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -135,7 +138,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 		List<GroupVO> list = new ArrayList<GroupVO>();
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+			 PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -160,10 +163,10 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 		}
 		return null;
 	}
-
-	public static void main(String[] args) {
-
-		GroupJDBCDAO dao = new GroupJDBCDAO();
+//
+//	public static void main(String[] args) {
+//
+//		GroupJDBCDAO dao = new GroupJDBCDAO();
 
 ////新增
 //		GroupVO groupVO = new GroupVO();
@@ -222,6 +225,6 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 //
 //			System.out.println();
 //		}
-
-	}
+//
+//	}
 }
