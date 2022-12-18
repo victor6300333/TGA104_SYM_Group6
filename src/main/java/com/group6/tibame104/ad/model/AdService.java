@@ -3,7 +3,9 @@ package com.group6.tibame104.ad.model;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdService {
 
 	private AdDAO_interface dao;
