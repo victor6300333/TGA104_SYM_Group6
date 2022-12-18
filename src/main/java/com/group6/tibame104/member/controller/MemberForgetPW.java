@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.google.gson.Gson;
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
@@ -18,6 +21,17 @@ import com.group6.tibame104.member.model.MemberVO;
 @WebServlet("/member/MemberForgetPW")
 public class MemberForgetPW extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MemberService memSvc;
+	private MailService mailService;
+
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(getServletContext());
+		memSvc = applicationContext.getBean(MemberService.class);
+		mailService = applicationContext.getBean(MailService.class);
+
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -30,11 +44,9 @@ public class MemberForgetPW extends HttpServlet {
 
 		MemberVO memVO = new MemberVO();
 
-		MemberService memSvcPass = new MemberService();
-
 		String tomail = req.getParameter("mail").trim();
 
-		System.out.println(tomail);
+//		System.out.println(tomail);
 		try {
 			memVO.setMail(tomail);
 
@@ -60,7 +72,6 @@ public class MemberForgetPW extends HttpServlet {
 		}
 
 		// 取得該會員所有資料
-		MemberService memSvc = new MemberService();
 		memVO = memSvc.loginOneMem(tomail);
 
 		// 把該會員的亂數密碼在資料庫做更新
@@ -75,7 +86,6 @@ public class MemberForgetPW extends HttpServlet {
 		String messageText = "Hello! " + username + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
 				+ "請使用此密碼進行登入及修改密碼";
 
-		MailService mailService = new MailService();
 		mailService.sendMail(tomail, subject, messageText);
 
 		String json = gson.toJson(tomail);

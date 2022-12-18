@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.group6.tibame104.creditCard.model.CreditCardService;
 import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MemberService;
@@ -20,6 +23,17 @@ import com.group6.tibame104.member.model.MemberVO;
 public class CreditCardServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private CreditCardService cardSvc;
+	private MemberService memSvc;
+
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(getServletContext());
+		cardSvc = applicationContext.getBean(CreditCardService.class);
+		memSvc = applicationContext.getBean(MemberService.class);
+
+	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -35,7 +49,6 @@ public class CreditCardServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			CreditCardService cardSvc = new CreditCardService();
 
 			String creditCardNumber = req.getParameter("creditCardNumber");
 			String securityCode = req.getParameter("securityCode").trim();
@@ -103,11 +116,8 @@ public class CreditCardServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
-			CreditCardService cardSvc = new CreditCardService();
-//			System.out.println("memberID = " + memberID);
 			cardVO = cardSvc.addCreditCard(memberID, creditCardNumber, securityCode, exDate);
 
-			MemberService memSvc = new MemberService();
 			memVO = memSvc.getOneMem(memberID);
 
 			req.setAttribute("memVO2", memVO);
@@ -132,9 +142,7 @@ public class CreditCardServlet extends HttpServlet {
 			memVO.setMemberID(memberID);
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			CreditCardService cardSvc = new CreditCardService();
 			cardSvc.deletecreditCard(creditCardID);
-			MemberService memSvc = new MemberService();
 			memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/

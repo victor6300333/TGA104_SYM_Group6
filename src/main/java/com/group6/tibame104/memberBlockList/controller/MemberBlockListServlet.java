@@ -11,18 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.group6.tibame104.memberBlockList.model.MemberBlockListService;
 import com.group6.tibame104.memberBlockList.model.MemberBlockListVO;
 
 @WebServlet("/member/MemberBlockListServlet")
 public class MemberBlockListServlet extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	private MemberBlockListService mblSvc;
 
-		doPost(req, res);
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(getServletContext());
+		mblSvc = applicationContext.getBean(MemberBlockListService.class);
+
 	}
 
 	@Override
@@ -57,7 +63,6 @@ public class MemberBlockListServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
-			MemberBlockListService mblSvc = new MemberBlockListService();
 //			System.out.println("memberID = " + memberID);
 			mblVO = mblSvc.addBlock(memberID, storeID);
 
@@ -79,7 +84,6 @@ public class MemberBlockListServlet extends HttpServlet {
 			Integer blockListID = Integer.valueOf(req.getParameter("blockListID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			MemberBlockListService mblSvc = new MemberBlockListService();
 			mblSvc.delete(blockListID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
