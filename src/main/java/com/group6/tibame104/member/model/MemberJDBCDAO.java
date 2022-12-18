@@ -44,10 +44,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public void insert(MemberVO memberVO) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);) {
 			pstmt.setString(1, memberVO.getUserAccount());
 			pstmt.setString(2, memberVO.getUserPassword());
 			pstmt.setString(3, memberVO.getUserName());
@@ -70,10 +68,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public void update(MemberVO memberVO) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(CONTINUE_UPDATE);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(CONTINUE_UPDATE);) {
 			pstmt.setString(1, memberVO.getGender());
 			pstmt.setDate(2, memberVO.getBirthday());
 			pstmt.setBytes(3, memberVO.getUserPhoto());
@@ -91,10 +87,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public void updateOne(MemberVO memberVO) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(UPDATEONE);
-		) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATEONE);) {
 			pstmt.setString(1, memberVO.getUserName());
 			pstmt.setString(2, memberVO.getUserAccount());
 			pstmt.setString(3, memberVO.getPhone());
@@ -106,15 +99,13 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	@Override
 	public void updateOnePasswoed(MemberVO memberVO) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(UPDATEONE_PASSWOED);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATEONE_PASSWOED);) {
 			pstmt.setString(1, memberVO.getUserPassword());
 			pstmt.setInt(2, memberVO.getMemberID());
 			pstmt.executeUpdate();
@@ -125,10 +116,7 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public void delete(Integer memberID) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(DELETE);
-		) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);) {
 			pstmt.setInt(1, memberID);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -138,10 +126,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public MemberVO getByPrimaryKey(Integer memberID) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(GET_ONE_MEMBER);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_MEMBER);) {
 			pstmt.setInt(1, memberID);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				if (rs.next()) {
@@ -172,10 +158,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public MemberVO getOneMemberByMail(String mail) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
 			pstmt.setString(1, mail);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				if (rs.next()) {
@@ -206,10 +190,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public List<MemberVO> getAll() {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);	
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<MemberVO> list = new ArrayList<MemberVO>();
 				while (rs.next()) {
@@ -241,10 +223,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public Boolean findOneMemberForLogin(String mail, String userPassword) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(MEMBER_LOGIN);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(MEMBER_LOGIN);) {
 			pstmt.setString(1, mail);
 			pstmt.setString(2, userPassword);
 			try (ResultSet rs = pstmt.executeQuery();) {
@@ -258,10 +238,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public Integer selectLastMemberID() {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(GET_LASTONE_MEMBER);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_LASTONE_MEMBER);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
 				while (rs.next()) {
 					return rs.getInt(1);
@@ -275,10 +253,8 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public Boolean findMemberByMail(String mail) {
-		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(FORGET_PASSWORD);
-		) {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(FORGET_PASSWORD);) {
 			pstmt.setString(1, mail);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				return rs.next() && rs.getInt(1) > 0;
