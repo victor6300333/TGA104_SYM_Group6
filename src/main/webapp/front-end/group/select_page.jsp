@@ -64,7 +64,7 @@ width="100" height="32" border="0">回首頁</a>
     </FORM>
   </li>
 
-  <jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService" />
+  <jsp:useBean id="groupSvc" scope="page" class="com.group6.tibame104.group.model.GroupService" />
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/group/Group.do" >

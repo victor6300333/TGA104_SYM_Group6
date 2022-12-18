@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.groupproduct.model.*"%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
@@ -258,7 +258,7 @@
 						</div>
 						<div class="row align-items-center">
 							<jsp:useBean id="groupproductSvc" scope="page"
-								class="com.groupproduct.model.GroupproductService"></jsp:useBean>
+								class="com.group6.tibame104.groupproduct.model.GroupproductService"></jsp:useBean>
 							<c:forEach var="add" items="${popProducts}">
 								<c:forEach var="groupproductVO" items="${groupproductSvc.all}">
 									<c:if test="${(add == groupproductVO.groupBuyProductID)}"

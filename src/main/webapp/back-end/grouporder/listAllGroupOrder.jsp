@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.grouporder.model.*"%>
+<%@ page import="com.group6.tibame104.grouporder.model.*"%>
 
 
 
@@ -334,7 +334,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<jsp:useBean id="grouporderSvc" scope="page" class="com.grouporder.model.GrouporderService"></jsp:useBean>
+									<jsp:useBean id="grouporderSvc" scope="page" class="com.group6.tibame104.grouporder.model.GrouporderService"></jsp:useBean>
 									<c:forEach var="grouporderVO" items="${grouporderSvc.all}">
 
 										<tr>

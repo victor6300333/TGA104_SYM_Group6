@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
-<%@ page import="java.util.* ,com.orderlist.model.*, com.order.model.*"%>
+<%@ page import="java.util.* ,com.group6.tibame104.orderlist.model.*, com.group6.tibame104.order.model.*"%>
 <html>
 <head>
  <title>Mode II ฝdจาต{ฆก - Checkout.jsp</title>

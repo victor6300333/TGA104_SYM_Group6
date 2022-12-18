@@ -52,10 +52,10 @@
 								</div>
 
 								<jsp:useBean id="adSvc" scope="page"
-									class="com.ad.model.AdService" />
+									class="com.group6.tibame104.ad.model.AdService" />
 
 								<%
-								com.ad.model.AdJDBCDAO dao = new com.ad.model.AdJDBCDAO();
+								com.group6.tibame104.ad.model.AdJDBCDAO dao = new com.group6.tibame104.ad.model.AdJDBCDAO();
 								pageContext.setAttribute("dao", dao);
 								%>
 

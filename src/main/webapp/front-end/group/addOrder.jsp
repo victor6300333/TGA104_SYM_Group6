@@ -3,11 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group.model.*"%>
-<%@ page import="com.groupproduct.model.*"%>
-<%@ page import="com.grouporder.model.*"%>
-<%@ page import="com.groupdiscount.model.*"%>
-<%@ page import="com.member.model.*"%>
+<%@ page import="com.group6.tibame104.group.model.*"%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
+<%@ page import="com.group6.tibame104.grouporder.model.*"%>
+<%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
+<%@ page import="com.group6.tibame104.member.model.*"%>
 
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 

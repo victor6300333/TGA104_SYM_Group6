@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.member.model.*"%>
-<%@ page import="com.creditCard.model.*"%>
-<%@ page import="com.memberBlockList.model.*"%>
-<%@ page import="com.store.model.*"%>
-<%@ page import="com.shoppingGoldRecord.model.*"%>
-<%@ page import="com.couponUsageHistory.model.*"%>
+<%@ page import="com.group6.tibame104.member.model.*"%>
+<%@ page import="com.group6.tibame104.creditCard.model.*"%>
+<%@ page import="com.group6.tibame104.memberBlockList.model.*"%>
+<%@ page import="com.group6.tibame104.store.model.*"%>
+<%@ page import="com.group6.tibame104.shoppingGoldRecord.model.*"%>
+<%@ page import="com.group6.tibame104.couponUsageHistory.model.*"%>
 <%
 MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 

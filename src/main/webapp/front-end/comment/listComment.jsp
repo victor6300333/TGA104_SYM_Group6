@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 
 <%@ page import="java.util.*"%>
-<%@ page import="com.orderlist.model.*"%>
+<%@ page import="com.group6.tibame104.orderlist.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 
