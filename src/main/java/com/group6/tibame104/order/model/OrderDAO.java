@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.group6.tibame104.orderlist.model.OrderlistDAO;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
@@ -17,13 +22,12 @@ import com.group6.tibame104.orderlist.model.OrderlistVO;
 
 
 
-
+@Repository
 public class OrderDAO implements OrderDAO_interface {
+	
+	@Autowired
+	private DataSource dataSource;
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
 
 	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, "
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
@@ -35,20 +39,16 @@ public class OrderDAO implements OrderDAO_interface {
 	private static final String GET_ALL = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order`";
+	
 	@Override
 	public void insert(OrderVO orderVO, List<OrderlistVO> buylist) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
+		try(
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);
+				) {
 
-//			con.setAutoCommit(false);
-			
-//			pstmt.setInt(1, orderVO.getOrderID());
 			pstmt.setInt(1,orderVO.getStoreID());
 			pstmt.setString(2,orderVO.getStoreName());
 			pstmt.setInt(3, orderVO.getMemberID());
@@ -64,7 +64,6 @@ public class OrderDAO implements OrderDAO_interface {
 			pstmt.setInt(13, orderVO.getUseShoppingGold());
 			pstmt.setInt(14, orderVO.getUseCouponGold());
 			pstmt.setInt(15, orderVO.getFinalTotal());
-//			Statement stmt=	con.createStatement();
 			pstmt.executeUpdate();
 			
 			//掘取對應的自增主鍵值
@@ -92,30 +91,9 @@ public class OrderDAO implements OrderDAO_interface {
 
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 
 
@@ -124,22 +102,17 @@ public class OrderDAO implements OrderDAO_interface {
 	@Override
 	public OrderVO getbyOrderID(Integer orderID) {
 		OrderVO orderVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		
 
-		try {
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);
+				){
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, orderID);
 
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+			  try(ResultSet rs = pstmt.executeQuery();){
+				  while (rs.next()) {
 			
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
@@ -159,27 +132,13 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO.setUseCouponGold(rs.getInt("useCouponGold"));
 				orderVO.setFinalTotal(rs.getInt("finalTotal"));
 			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return orderVO;
+			  }
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+	return null;
+		
+		
 	}
 
 
@@ -189,21 +148,13 @@ public class OrderDAO implements OrderDAO_interface {
 	public List<OrderVO> getAll() {
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		OrderVO orderVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL);
+		try(Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL);) {
 
 	
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+			try(ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
 			
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
@@ -224,26 +175,15 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO.setFinalTotal(rs.getInt("finalTotal"));
 				list.add(orderVO);
 			}
+			}
+			
+
+			
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 		return list;
 	}
 
@@ -254,19 +194,17 @@ public class OrderDAO implements OrderDAO_interface {
 	public List<OrderVO> getAllByComposite(Map<String, String[]> map ) {
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		OrderVO orderVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-		
-			String finalSQL = "select * from `order` "
+		String finalSQL = "select * from `order` "
 		          + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map);
-			pstmt = con.prepareStatement(finalSQL);
+		
+		try(Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(finalSQL);)  {
+		
+			
 			System.out.println(finalSQL);
-			rs = pstmt.executeQuery();
-	
+			
+			
+			try(ResultSet rs = pstmt.executeQuery();){
 			while (rs.next()) {
 				orderVO = new OrderVO();
 				orderVO.setOrderID(rs.getInt("orderID"));
@@ -287,25 +225,11 @@ public class OrderDAO implements OrderDAO_interface {
 				orderVO.setFinalTotal(rs.getInt("finalTotal"));
 				list.add(orderVO);
 			}
+			}
 	
 			// Handle any SQL errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return list;
 
