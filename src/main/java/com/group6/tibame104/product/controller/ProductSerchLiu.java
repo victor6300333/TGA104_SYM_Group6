@@ -1,17 +1,22 @@
-package com.product.controller;
+package com.group6.tibame104.product.controller;
 
-import java.io.*;
-import java.sql.Timestamp;
-import java.util.*;
-import javax.servlet.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.product.model.ProductVO;
-import com.product.service.ProductService;
-import com.product.service.ProductService_interface;
+import com.group6.tibame104.product.model.ProductVO;
+import com.group6.tibame104.product.service.ProductService;
 
 @WebServlet("/product/productSearchLiu")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
