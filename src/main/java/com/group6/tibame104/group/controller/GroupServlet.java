@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.group6.tibame104.group.model.GroupService;
 import com.group6.tibame104.group.model.GroupVO;
 import com.group6.tibame104.groupproduct.model.GroupproductService;
@@ -22,10 +24,8 @@ import com.group6.tibame104.groupproduct.model.GroupproductVO;
 @WebServlet("/front-end/group/Group.do")
 public class GroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public GroupServlet() {
-		super();
-	}
+	@Autowired
+	private GroupService groupsvc;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -153,8 +153,6 @@ public class GroupServlet extends HttpServlet {
 			GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
 			GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
 
-			
-
 			if (groupVO == null) {
 				errorMsgs.add("查無資料");
 			}
@@ -171,7 +169,6 @@ public class GroupServlet extends HttpServlet {
 			session.setAttribute("groupBuyCount", groupBuyCount);
 			session.setAttribute("groupproductVO", groupproductVO);
 
-			
 			String url = "/front-end/group/addOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
@@ -211,13 +208,12 @@ public class GroupServlet extends HttpServlet {
 			Integer groupBuyProductOrderTotal = Integer.valueOf(req.getParameter("groupBuyProductOrderTotal").trim());
 			Boolean groupBuyingState = Boolean.valueOf(req.getParameter("groupBuyingState").trim());
 			// 獲得時間戳記
-			   Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
-			   SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			   String timeStr = df.format(updateTime);
-			   updateTime = Timestamp.valueOf(timeStr);
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String timeStr = df.format(updateTime);
+			updateTime = Timestamp.valueOf(timeStr);
 			Timestamp groupBuyingOnLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOnLoadDate").trim());
 			Timestamp groupBuyingOffLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOffLoadDate").trim());
-			
 
 			GroupVO groupVO = new GroupVO();
 
@@ -241,7 +237,7 @@ public class GroupServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			GroupService groupSvc = new GroupService();
 			groupVO = groupSvc.updateGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal,
-					groupBuyingState, groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime,groupBuyID);
+					groupBuyingState, groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime, groupBuyID);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("groupVO", groupVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -259,21 +255,19 @@ public class GroupServlet extends HttpServlet {
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
-		
 			Integer groupBuyProductID = Integer.valueOf(req.getParameter("groupBuyProductID").trim());
 			Integer administratorID = Integer.valueOf(req.getParameter("administratorID").trim());
 			Integer groupBuyProductOrderTotal = Integer.valueOf(req.getParameter("groupBuyProductOrderTotal").trim());
 			Boolean groupBuyingState = Boolean.valueOf(req.getParameter("groupBuyingState").trim());
-		
+
 			// 獲得時間戳記
-			   Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
-			   SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			   String timeStr = df.format(updateTime);
-			   updateTime = Timestamp.valueOf(timeStr);
-			   
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String timeStr = df.format(updateTime);
+			updateTime = Timestamp.valueOf(timeStr);
+
 			Timestamp groupBuyingOnLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOnLoadDate").trim());
 			Timestamp groupBuyingOffLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOffLoadDate").trim());
-			
 
 			GroupVO groupVO = new GroupVO();
 
@@ -284,9 +278,7 @@ public class GroupServlet extends HttpServlet {
 			groupVO.setGroupBuyingOnLoadDate(groupBuyingOnLoadDate);
 			groupVO.setGroupBuyingOffLoadDate(groupBuyingOffLoadDate);
 			groupVO.setUpdateTime(updateTime);
-			
-			
-			
+
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("groupVO", groupVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -297,8 +289,8 @@ public class GroupServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			GroupService groupSvc = new GroupService();
-			groupVO = groupSvc.addGroup(groupBuyProductID,administratorID,groupBuyProductOrderTotal,
-					groupBuyingState, groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime);
+			groupVO = groupSvc.addGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal, groupBuyingState,
+					groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/back-end/group/listAllGroup.jsp";
