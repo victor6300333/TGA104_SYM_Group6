@@ -134,7 +134,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 
 															<div>
 																<label>圖片：</label> <input type="file" id="p_file" name="pho">
-																<div id="preview">
+																<div id="preview" style="width: 300px">
 																	<span class="text">預覽圖</span>
 																</div>
 															</div>

@@ -13,6 +13,10 @@
     height: 300px;
 }
 
+img {
+	width: 100%;
+}
+
 
 /**color**/
 .sym-purple {
@@ -235,28 +239,6 @@ th, td {
 	cursor: pointer;
 }
 
-/* img */
-#preview {
-	border: 1px solid lightgray;
-	display: inline-block;
-	width: 400px;
-	min-height: 150px;
-	position: relative;
-}
-
-#preview span.text {
-	position: absolute;
-	display: inline-block;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	z-index: -1;
-	color: lightgray;
-}
-
-#preview img.preview_img {
-	width: 100%;
-}
 
 /* 公告 */
 /* 重點實現樣式 */
@@ -440,7 +422,7 @@ svg {
   #preview{
         border: 1px solid lightgray;
         display: inline-block;
-        width: 100px;
+        width: 400px;
         min-height: 150px;
         position: relative;
       }
@@ -456,6 +438,7 @@ svg {
       #preview img.preview_img{
         width: 100%;
       }
+      
       
       
 /*home*/

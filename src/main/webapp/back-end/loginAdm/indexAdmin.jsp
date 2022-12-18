@@ -277,7 +277,7 @@
 														href="${pageContext.request.contextPath}/back-end/administrator/memberI.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoGreen.jpg"
-																	alt="logo" width="70%" />
+																	alt="logo" width="85%" />
 																<h4 class="sym-dark-font">會員</h4>
 															</div>
 													</a></li>
@@ -290,6 +290,14 @@
 															</div>
 													</a></li>
 													<li><a
+														href="${pageContext.request.contextPath}/back-end/ad/select_page2.jsp">
+															<div class="text-align-center">
+																<img class="mg-bottom-1" src="../img/logoPurple.jpg"
+																	alt="logo" width="85%" />
+																<h4 class="sym-dark-font">廣告</h4>
+															</div>
+													</a>
+													<li><a
 														href="${pageContext.request.contextPath}/back-end/administrator/sellerVerify.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoYellow.jpg"
@@ -297,14 +305,7 @@
 																<h4 style="color: red">待審核</h4>
 															</div>
 													</a></li>
-													<li><a
-														href="${pageContext.request.contextPath}/back-end/ad/select_page2.jsp">
-															<div class="text-align-center">
-																<img class="mg-bottom-1" src="../img/logoPurple.jpg"
-																	alt="logo" width="85%" />
-																<h4 class="sym-dark-font">廣告</h4>
-															</div>
-													</a></li>
+													</li>
 												</ul>
 
 												<!-- /.card-body -->
@@ -354,9 +355,5 @@
 		});
 
 		 </script>
-
-
-
-
 </body>
 </html>

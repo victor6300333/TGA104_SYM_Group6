@@ -7,7 +7,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 
 <html>
 <head>
-<title>廣告單筆新增資料 - listOneAd2.jsp</title>
+<title>廣告單筆資料 - listOneAd2.jsp</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="keywords" />
 <meta content="" name="description" />
@@ -32,7 +32,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 					<div class="container-fluid">
 						<div class="row mb-2">
 							<div class="col-sm-6">
-								<h2 class="m-0 sym-dark-font">廣告單筆新增</h2>
+								<h2 class="m-0 sym-dark-font">廣告單筆資料</h2>
 							</div>
 							<div class="col-sm-6 flex-direction">
 								<ol class="breadcrumb float-sm-right">
@@ -81,7 +81,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 														<td>${adVO.adDescribe}</td>
 														<td><img
 															src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}"
-															height="100" width="100"></td>
+															height="150" width="300"></td>
 														<td>${adVO.adStartDate}</td>
 														<td>${adVO.adEndDate}</td>
 														<td>${adVO.updateTime}</td>

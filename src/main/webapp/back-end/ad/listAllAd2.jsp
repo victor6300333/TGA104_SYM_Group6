@@ -55,7 +55,7 @@ pageContext.setAttribute("list", list);
 					<!-- general form elements -->
 					<div class="card card-primary">
 						<div class="card-header sym-darkpurple">
-							<h3 class="card-title sym-yellow-font">搜尋結果</h3>
+							<h3 class="card-title sym-yellow-font">搜尋結果 	 <%@ include file="page1.file"%></h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="col-md-12">
@@ -65,7 +65,7 @@ pageContext.setAttribute("list", list);
 								<div class="card-body">
 									<table id="memberTable"
 										class="table table-bordered table-hover">
-										<%@ include file="page1.file"%>
+									
 										<thead>
 											<tr>
 												<th>廣告編號</th>
@@ -94,7 +94,7 @@ pageContext.setAttribute("list", list);
 												<td>${adVO.adDescribe}</td>
 												<td class="imgTable"><img
 													src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}"
-													height="100" width="100"></td>
+													height="150" width="300"></td>
 												<td>${adVO.adStartDate}</td>
 												<td>${adVO.adEndDate}</td>
 												<td>${adVO.updateTime}</td>

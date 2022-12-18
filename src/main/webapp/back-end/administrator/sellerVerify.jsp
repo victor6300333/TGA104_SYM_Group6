@@ -188,7 +188,7 @@
 						<td>`+data[i].updateDate+`</td>
 						<td>`+data[i].taxID+`</td>
 						<td>`+status2+`</td>
-						<th><a href="${pageContext.request.contextPath}/back-end/administrator/AdminMailServlet?memberID=`+data[i].memberID+`"><button class="btn sym-darkpurple sym-yellow-font btn_style">送出</button></a></th>
+						<th><a href="${pageContext.request.contextPath}/back-end/administrator/AdminMailServlet?memberID=`+data[i].memberID+`"><button class="btn sym-darkpurple sym-yellow-font btn_style">√</button></a></th>
 					</tr>
 				`;
 				str = str + templateList;

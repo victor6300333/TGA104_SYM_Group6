@@ -72,7 +72,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 												<!-- 												</div> -->
 												<jsp:useBean id="adSvc" scope="page"
 													class="com.ad.model.AdService" />
-												<select size="1" name="administratorID">
+												<select  size="1" name="administratorID">
 													<c:forEach var="adVO" items="${adSvc.all}">
 														<option value="${adVO.administratorID}"
 															${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID}
@@ -84,7 +84,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 												<h5>
 													廣告類別:<font color=red><b>*</b></font>
 												</h5>
-												<select size="1" name="adType">
+												<select  size="1" name="adType">
 													<c:forEach var="adVO" items="${adSvc.all}">
 														<option value="${adVO.adType}"
 															${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType}
@@ -147,7 +147,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 
 							<div class="mg-bottom-2">
 								<label>圖片：</label> <input type="file" name="pho" id="p_file">
-								<div id="preview">
+								<div id="preview" style="width: 300px">
 									<span class="text">預覽圖</span>
 								</div>
 							</div>
