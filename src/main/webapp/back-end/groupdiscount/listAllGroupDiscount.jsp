@@ -1,14 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.groupdiscount.model.*"%>
+<%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-List<GroupdiscountVO> list = groupdiscountSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
+
 
 
 <!DOCTYPE html>
@@ -311,7 +307,8 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="groupdiscountVO" items="${list}">
+								<jsp:useBean id="groupdiscountSvc" scope="page" class="com.group6.tibame104.groupdiscount.model.GroupdiscountService"></jsp:useBean>
+									<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
 
 										<tr>
 											<td>${groupdiscountVO.countTableID}</td>

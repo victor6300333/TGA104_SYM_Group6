@@ -122,7 +122,7 @@
             name="username"
             id="username"
             class="form-control"
-            placeholder="請輸入員工編號"
+            placeholder="請輸入帳號"
             value="${username}"
             required=""
             pattern="^[t]{1}[i]{1}[b]{1}[a]{1}[0-9]{3}$"
@@ -133,7 +133,7 @@
             name="password"
             id="password"
             class="form-control"
-            placeholder="請輸入身分證字號"
+            placeholder="請輸入密碼"
             required=""
             pattern="^[A-Za-z]{1}[1-2]{1}[0-9]{8}$"
           />

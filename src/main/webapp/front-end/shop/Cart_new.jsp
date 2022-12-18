@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.* ,com.orderlist.model.Product, com.member.model.*"%>
+<%@ page import="java.util.* ,com.group6.tibame104.orderlist.model.Product, com.group6.tibame104.member.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<%
-MemberVO memVO = (MemberVO)session.getAttribute("memVO");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,7 +119,7 @@ MemberVO memVO = (MemberVO)session.getAttribute("memVO");
 	List<Product> buylist = check.get(storeID);
 	%>
 	
-<table id="table-1" border="1" >
+<table id="table-1" class="table<%=storeID%>" border="1" >
 	    <tr>
 			<td width="140" colspan="5"  >賣場: <%=buylist.get(0).getStoreName()%></td>
 	
@@ -137,13 +135,13 @@ MemberVO memVO = (MemberVO)session.getAttribute("memVO");
 		</tr>
 </table>
 
-<table >
+<table class="table<%=storeID%>" >
 	<%
 	for (int index = 0; index < buylist.size(); index++) {
 		Product order = buylist.get(index);
 	%>
 	
-		<tr id="my-car-tr"   >
+		<tr id="my-car-tr<%=index + 1 + count%>"   >
 			<td width="140"><%=order.getName()%></td>
 			<td width="140"></td>
 			<td width="135"><%=order.getPrice()%></td>
@@ -184,49 +182,33 @@ MemberVO memVO = (MemberVO)session.getAttribute("memVO");
 			
 			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
 				
-				quantity.value = $("#<%=index + 1 + count%>").html();
+			quantity.value = $("#<%=index + 1 + count%>").html();
+			
 			
 		}
 		function minuser<%=index + 1 + count%>() {
 			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
 			var sum = document.getElementById("<%=-index - 1 - count%>").innerHTML;
-			if (count <= 0) {
-				count = 0;
-				sum = 0;
-			} else {
+			if (count <= 1 && confirm("確認要刪除此商品嗎?")==true) {
+				
+					document.getElementById("my-car-tr<%=index + 1 + count%>").remove();
+		
+			} else if(count>1) {
 				count = parseInt(count) - 1;
 				sum = <%=order.getPrice()%> * count;
+				document.getElementById("<%=index + 1 + count%>").innerHTML = count;
+			    document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
+				
 			}
-
-			
-			document.getElementById("<%=index + 1 + count%>").innerHTML = count;
-			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
-			
+		
 			add<%=storeID%>();
 			
 			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
 			
 			quantity.value = $("#<%=index + 1 + count%>").html();
-			
+
 		}
-		
-		function add<%=storeID%>(){
-			var count = document.querySelector('#count<%=storeID%>');
-			let total = 0;
-			var mount = document.querySelectorAll('.my-car-td<%=storeID%>').length;
-			for(var i=0 ; i<mount ; i++){ 
-				total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
-				count.innerHTML = total;
-			}
-		};
-		
-		document.getElementById("total").innerHTML = total;
-		
-		if (document.getElementById("<%=index + 1 + count%>").innerHTML == 0){
-			 $("tr").remove();
-		}
-		
-		
+	
 	</script>
 
 
@@ -243,7 +225,7 @@ MemberVO memVO = (MemberVO)session.getAttribute("memVO");
   <td colspan="5" style=" text-align:right " >總金額:<b id="count<%=storeID%>"></b></td> 
 </table>	
   
-
+<div class="table<%=storeID%>">
 		<br>
 		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>" > 
 		<input type="hidden" name="storeName<%=storeID%>" value="<%=buylist.get(0).getStoreName()%>">
@@ -265,7 +247,7 @@ MemberVO memVO = (MemberVO)session.getAttribute("memVO");
 			<option value="0.75">75折</option>
 		   </select>
 		    <br> <br>
-		
+</div>		
 		
 
 
@@ -278,6 +260,7 @@ function add<%=storeID%>(){
 				total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
 				count.innerHTML =  total;
 			}
+				
 		};
 		
 		add<%=storeID%>();
@@ -312,6 +295,7 @@ function add<%=storeID%>(){
 
 
 <input type="hidden" name="action" value="CHECKOUT">
+<input type="hidden" name="memberID" value="${memVO.memberID}">
 <input type="submit" value="送出" class="button">
 	</form>
 	

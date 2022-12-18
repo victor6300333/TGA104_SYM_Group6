@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 
-<%@ page import="com.orderlist.model.*, java.util.*"%>
+<%@ page import="com.group6.tibame104.orderlist.model.*, java.util.*"%>
 
 
 <%
@@ -91,7 +91,7 @@ th, td {
 
 
 
-	<FORM METHOD="post" ACTION="OrderlistServlet.do" >
+	<FORM METHOD="post" ACTION="OrderlistServlet" >
 		<table>
 
 			<tr>
@@ -107,12 +107,10 @@ th, td {
 	
 
 	<input type="hidden" name="orderDetailID" value="<%=order.getOrderDetailID()%>" size="45" />
-	<input type="hidden" name="orderID" value="<%=order.getOrderID()%>" size="45" />
-	<input type="hidden" name="productID" value="<%=order.getProductID()%>" size="45" />
-	<input type="hidden" name="quantity" value="<%=order.getQuantity()%>" size="45" />
-	<input type="hidden" name="price" value="<%=order.getPrice()%>" size="45" />
-	<input type="hidden" name="subTotal" value="<%=order.getSubTotal()%>" size="45" />
 	<input type="hidden" name="comment" value="<%=index%>" size="45" />
+	
+	
+	
 	<input type="hidden" name="action" value="update"> 
 	<input type="submit" value="°e¥X·s¼W">
 	</FORM>

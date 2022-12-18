@@ -2,14 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.grouporder.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%@ page import="com.group6.tibame104.grouporder.model.*"%>
 
-<%
-GrouporderService grouporderSvc = new GrouporderService();
-List<GrouporderVO> list = grouporderSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
 
 
 <!DOCTYPE html>
@@ -311,14 +305,16 @@ pageContext.setAttribute("list", list);
 				<div class="sym-yellow-bk text-center rounded p-4">
 					<div class="d-flex align-items-center justify-content-between mb-4">
 					</div>
-					<div class="table-responsive">
-						<div class="card card-primary">
 							<input class="form-control border-1" id="reserve_search"
 								type="search" placeholder="輸入欲查詢的會員編號"
 								onkeyup="searchFunction()">
+					<div class="table-responsive"style="background: white">
+					<div class="col-sm-12 col-xl-12" style="border: 0px">
+						<div class="card card-primary"style="border: 0px">
+								
 							<table
-								class="table text-start align-middle table-bordered table-hover mb-0"
-								id="reserver_detail">
+								class="table table-bordered"
+								id="reserver_detail" >
 								<thead>
 									<tr class="text-dark">
 										<th scope="col">團購訂單編號</th>
@@ -338,11 +334,11 @@ pageContext.setAttribute("list", list);
 									</tr>
 								</thead>
 								<tbody>
-									
-									<c:forEach var="grouporderVO" items="${list}"										>
+									<jsp:useBean id="grouporderSvc" scope="page" class="com.group6.tibame104.grouporder.model.GrouporderService"></jsp:useBean>
+									<c:forEach var="grouporderVO" items="${grouporderSvc.all}">
 
 										<tr>
-											<td>${grouporderVO.groupBuyOrderID}</td>
+											<th scope="row">${grouporderVO.groupBuyOrderID}</th>
 											<td>${grouporderVO.groupBuyID}</td>
 											<td>${grouporderVO.memberID}</td>
 											<td>${grouporderVO.groupBuyProductID}</td>
@@ -381,6 +377,7 @@ pageContext.setAttribute("list", list);
 								</tbody>
 							</table>
 						
+						</div>
 						</div>
 					</div>
 				</div>

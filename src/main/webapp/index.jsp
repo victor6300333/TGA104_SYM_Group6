@@ -79,8 +79,8 @@
 						<a href="#" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> 登入/註冊</a>
 						<div class="dropdown-menu">
-							<a href="#" class="dropdown-item">登入</a> <a href="#"
-								class="dropdown-item">註冊</a>
+							<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="dropdown-item">會員中心</a> <a href="#"
+								class="dropdown-item">登出</a>
 						</div>
 						<!-- 登入後 -->
 						<!-- <a

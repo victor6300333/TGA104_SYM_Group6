@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.order.model.*"%>
+<%@ page import="com.group6.tibame104.order.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
@@ -345,7 +345,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //EmpServlet.java(C
 		$.datetimepicker.setLocale('zh');
 		$('#f_date1').datetimepicker({
 			theme : '', //theme: 'dark',
-			timepicker : true, //timepicker:true,
+			timepicker : false, //timepicker:true,
 			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d', //format:'Y-m-d H:i:s',
 			value : '', // value:   new Date(),
@@ -356,7 +356,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //EmpServlet.java(C
 		});
 		$('#f_date2').datetimepicker({
 			theme : '', //theme: 'dark',
-			timepicker : true, //timepicker:true,
+			timepicker : false, //timepicker:true,
 			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
 			format : 'Y-m-d', //format:'Y-m-d H:i:s',
 			value : '', // value:   new Date(),

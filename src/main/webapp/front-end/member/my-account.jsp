@@ -1,10 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.member.model.*"%>
-<%@ page import="com.creditCard.model.*"%>
-<%@ page import="com.memberBlockList.model.*"%>
-<%@ page import="com.store.model.*"%>
+<%@ page import="com.group6.tibame104.member.model.*"%>
+<%@ page import="com.group6.tibame104.creditCard.model.*"%>
+<%@ page import="com.group6.tibame104.memberBlockList.model.*"%>
+<%@ page import="com.group6.tibame104.store.model.*"%>
+<%@ page import="com.group6.tibame104.shoppingGoldRecord.model.*"%>
+<%@ page import="com.group6.tibame104.couponUsageHistory.model.*"%>
 <%
 MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
@@ -15,6 +17,14 @@ pageContext.setAttribute("cdlist", cdlist);
 MemberBlockListService mbSvc = new MemberBlockListService();
 List<ViewMemberBlockListVO> mblist = mbSvc.getAll(memVO.getMemberID());
 pageContext.setAttribute("mblist", mblist);
+
+ShoppingGoldRecordService shoppingGoldRecordSvc = new ShoppingGoldRecordService();
+List<ShoppingGoldRecordVO> sgrlist = shoppingGoldRecordSvc.getOneShoppingGoldRecord(memVO.getMemberID());
+pageContext.setAttribute("sgrlist", sgrlist);
+
+CouponUsageHistoryService couponUsageHistorySvc = new CouponUsageHistoryService();
+List<CouponUsageHistoryVO> cuhlist = couponUsageHistorySvc.getAll(memVO.getMemberID());
+pageContext.setAttribute("cuhlist", cuhlist);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +38,7 @@ pageContext.setAttribute("mblist", mblist);
 
 <!-- Favicon -->
 <link
-	href="${pageContext.request.contextPath}/front-end/img/logoSYM.jpg"
+	href="${pageContext.request.contextPath}/front-end/member/img/logoSYM.jpg"
 	rel="icon" />
 
 <!-- Google Fonts -->
@@ -103,7 +113,8 @@ pageContext.setAttribute("mblist", mblist);
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="" class="nav-item nav-link">首頁</a> <a
+						<a href="${pageContext.request.contextPath}/index.jsp"
+							class="nav-item nav-link">首頁</a> <a
 							href="${pageContext.request.contextPath}/front-end/store/myStore.jsp"
 							class="nav-item nav-link">我的賣場</a>
 
@@ -147,7 +158,7 @@ pageContext.setAttribute("mblist", mblist);
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img
+						<a href="${pageContext.request.contextPath}/index.jsp"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
@@ -201,12 +212,17 @@ pageContext.setAttribute("mblist", mblist);
 							class="fa fa-user"></i>我的帳戶</a> <a class="nav-link" id="password-nav"
 							data-toggle="pill" href="#password-tab" role="tab"><i
 							class="fa-solid fa-lock-open"></i>修改密碼</a> <a class="nav-link"
-							id="cards-nav" data-toggle="pill" href="#cards-tab" role="tab"><i
+							id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"
+							aria-selected="true"><i class="fa fa-shopping-bag"></i>訂單管理</a> <a
+							class="nav-link" id="cards-nav" data-toggle="pill"
+							href="#cards-tab" role="tab"><i
 							class="fa-solid fa-credit-card"></i>信用卡管理</a> <a class="nav-link"
 							id="payment-nav" data-toggle="pill" href="#payment-tab"
 							role="tab"><i class="fa-solid fa-coins"></i>我的購物金</a> <a
 							class="nav-link" id="address-nav" data-toggle="pill"
 							href="#coupon-tab" role="tab"><i class="fa-solid fa-ticket"></i></i>我的優惠券</a>
+
+
 						<a class="nav-link" id="blocklist-nav" data-toggle="pill"
 							href="#blocklist-tab" role="tab"><i
 							class="fa-solid fa-user-xmark"></i>封鎖名單</a>
@@ -217,89 +233,49 @@ pageContext.setAttribute("mblist", mblist);
 				</div>
 				<div class="col-md-9">
 					<div class="tab-content">
-						<div class="tab-pane fade" id="dashboard-tab" role="tabpanel"
-							aria-labelledby="orders-nav">
-							<div class="table-responsive">
-								<table class="table table-bordered">
-									<thead class="thead-dark">
-										<tr>
-											<th>No</th>
-											<th>Product</th>
-											<th>Date</th>
-											<th>Price</th>
-											<th>Status</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+
+
+
 						<div class="tab-pane fade" id="orders-tab" role="tabpanel"
 							aria-labelledby="orders-nav">
 							<div class="table-responsive">
 								<table class="table table-bordered">
 									<thead class="thead-dark">
-										<tr>
-											<th>No</th>
-											<th>商品名稱</th>
-											<th>日期</th>
-											<th>價格</th>
-											<th>出貨狀態</th>
-											<th>查看明細</th>
-										</tr>
+										<ul>
+											<li>
+												<FORM METHOD="post"
+													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+													<b>輸入訂單編號: </b> <input type="text" name="orderID"
+														style="width: 100px; height: 25px"> <input
+														type="hidden" name="action" value="select_by_OrderID">
+													<input type="submit" value="送出">
+												</FORM>
+												<FORM METHOD="post"
+													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+
+													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
+														type="text" style="width: 100px; height: 25px"> <b>至</b>
+													<input name="todate" id="f_date2" type="text"
+														style="width: 100px; height: 25px"> <br> <br>
+													<b>選擇訂單狀態:</b> <select name="status"
+														style="width: 80px; height: 25px">
+
+														<option value="0">全部</option>
+														<option value="1">待付款</option>
+														<option value="2">待出貨</option>
+														<option value="3">已出貨</option>
+														<option value="4">已取貨</option>
+
+													</select> <br> <br> <input type="hidden" name="memberID"
+														value="${memVO.memberID}"> <input type="hidden"
+														name="action" value="select_Order"> <input
+														type="submit" value="送出">
+												</FORM>
+
+
+											</li>
+										</ul>
 									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>Product Name</td>
-											<td>01 Jan 2020</td>
-											<td>$99</td>
-											<td>Approved</td>
-											<td><button class="btn">View</button></td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>
@@ -408,41 +384,25 @@ pageContext.setAttribute("mblist", mblist);
 								<table>
 									<thead>
 										<tr>
-											<th>日期</th>
+											<th>購物金歷程ID</th>
 											<th>會員ID</th>
+											<th>日期</th>
 											<th>購物金異動金額</th>
 											<th>使用/獲得</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>test-1</td>
-											<td>test-1</td>
-											<td>test-1</td>
-											<td>test-1</td>
-										</tr>
+										<c:forEach var="ShoppingGoldRecordVO" items="${sgrlist}">
+											<tr>
 
-										<tr>
-											<td>test-2</td>
-											<td>test-2</td>
-											<td>test-2</td>
-											<td>test-2</td>
-										</tr>
+												<td>${ShoppingGoldRecordVO.shoppingGoldRecordID}</td>
+												<td>${ShoppingGoldRecordVO.memberID}</td>
+												<td>${ShoppingGoldRecordVO.useDate}</td>
+												<td>${ShoppingGoldRecordVO.obtainShoppingCoin}</td>
+												<td>${ShoppingGoldRecordVO.plusOrMinus}</td>
 
-										<tr>
-											<td>test-3</td>
-											<td>test-3</td>
-											<td>test-3</td>
-											<td>test-3</td>
-										</tr>
-
-										<tr>
-											<td>test-4</td>
-											<td>test-4</td>
-											<td>test-4</td>
-											<td>test-4</td>
-										</tr>
-
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -526,41 +486,23 @@ pageContext.setAttribute("mblist", mblist);
 								<table>
 									<thead>
 										<tr>
-											<th>使用日期</th>
 											<th>會員ID</th>
 											<th>優惠券ID</th>
 											<th>使用紀錄</th>
+											<th>使用日期</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>test-1</td>
-											<td>test-1</td>
-											<td>test-1</td>
-											<td>test-1</td>
-										</tr>
+										<c:forEach var="couponUsageHistoryVO" items="${cuhlist}">
+											<tr>
 
-										<tr>
-											<td>test-2</td>
-											<td>test-2</td>
-											<td>test-2</td>
-											<td>test-2</td>
-										</tr>
+												<td>${couponUsageHistoryVO.memberID}</td>
+												<td>${couponUsageHistoryVO.couponID}</td>
+												<td>${couponUsageHistoryVO.usageRecord}</td>
+												<td>${couponUsageHistoryVO.useDate}</td>
 
-										<tr>
-											<td>test-3</td>
-											<td>test-3</td>
-											<td>test-3</td>
-											<td>test-3</td>
-										</tr>
-
-										<tr>
-											<td>test-4</td>
-											<td>test-4</td>
-											<td>test-4</td>
-											<td>test-4</td>
-										</tr>
-
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -687,8 +629,8 @@ pageContext.setAttribute("mblist", mblist);
 											name="userPassword" placeholder="請輸入新密碼" />
 									</div>
 									<div class="col-md-6">
-										<input id="repassword" class="form-control"
-											type="password" placeholder="請再輸入一次新密碼" />
+										<input id="repassword" class="form-control" type="password"
+											placeholder="請再輸入一次新密碼" />
 									</div>
 									<div class="col-md-12">
 										<input type="hidden" name="action" value="updateOnePassword">
@@ -817,34 +759,65 @@ pageContext.setAttribute("mblist", mblist);
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
-		
-		<script>
+
+	<script>
 		let cpasswordInput = document.getElementById('newpassword');
 		let cretypeInput = document.getElementById('repassword');
 		let coldpasswordInput = document.getElementById('oldpassword');//oldpassword
 		// 添加事件侦听器，在用戶點擊提交按鈕時檢查密碼是否一致
 		let passwordForm = document.getElementById('passwordForm');
 		passwordForm.addEventListener('submit', function(event) {
-		  let password = cpasswordInput.value;
-		  let retype = cretypeInput.value;
-		  let oldpassword = coldpasswordInput.value;
-		  
-		 if(oldpassword === ""){
-			alert('請輸入舊密碼');
-		}
-		   
+			let password = cpasswordInput.value;
+			let retype = cretypeInput.value;
+			let oldpassword = coldpasswordInput.value;
 
-		  // 檢查密碼是否一致
-		  if (password !== retype) {
-		    // 顯示錯誤消息
-		    alert('兩次輸入的密碼不一致，請重新輸入');
+			if (oldpassword === "") {
+				alert('請輸入舊密碼');
+			}
 
-		    // 阻止表單提交
-		    event.preventDefault();
-		  }
+			// 檢查密碼是否一致
+			if (password !== retype) {
+				// 顯示錯誤消息
+				alert('兩次輸入的密碼不一致，請重新輸入');
+
+				// 阻止表單提交
+				event.preventDefault();
+			}
 		});
-		</script>
-		
+	</script>
+
+	<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.css" />
+	<script
+		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script>
+		$.datetimepicker.setLocale('zh');
+		$('#f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+		$('#f_date2').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+	</script>
+
 </body>
 
 </html>

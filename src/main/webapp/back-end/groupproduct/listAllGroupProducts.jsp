@@ -1,14 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.groupproduct.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
 
-<%
-//     GroupproductService groupproductSvc = new GroupproductService();
-//     List<GroupproductVO> list = groupproductSvc.getAll();
-//     pageContext.setAttribute("list",list);
-%>
 
 
 <!DOCTYPE html>
@@ -276,7 +270,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                <jsp:useBean id="groupproductSvc" scope="page" class="com.groupproduct.model.GroupproductService" />
+                <jsp:useBean id="groupproductSvc" scope="page" class="com.group6.tibame104.groupproduct.model.GroupproductService" />
                  <c:forEach var="groupproductVO" items="${groupproductSvc.all}" >
 		
 		<tr>

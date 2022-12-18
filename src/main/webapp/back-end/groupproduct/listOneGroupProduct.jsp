@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.groupproduct.model.*"%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
+<%@ page import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<%
-GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupproductVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,9 +35,13 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 <link href="lib/slick/slick-theme.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/front-end/group/css/style.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/front-end/group/css/stylenew.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/front-end/group/css/woody.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/front-end/group/css/style.css"
+	rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/front-end/group/css/stylenew.css"
+	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
+	rel="stylesheet">
 
 </head>
 
@@ -106,7 +110,9 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="<%=request.getContextPath()%>/front-end/group/img/logoSYM.jpg" alt="Logo" />
+						<a href="index.html"> <img
+							src="<%=request.getContextPath()%>/front-end/group/img/logoSYM.jpg"
+							alt="Logo" />
 						</a>
 					</div>
 				</div>
@@ -137,8 +143,10 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 	<div class="breadcrumb-wrap">
 		<div class="container-fluid">
 			<ul class="breadcrumb">
-				<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">首頁</a></li>
-				<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">團購</a></li>
+				<li class="breadcrumb-item"><a
+					href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">首頁</a></li>
+				<li class="breadcrumb-item"><a
+					href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">團購</a></li>
 				<li class="breadcrumb-item active">團購商品</li>
 			</ul>
 		</div>
@@ -162,17 +170,16 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 							<div class="col-md-7">
 								<div class="product-content" style="padding-left: 200px">
 									<div class="title">
-										<h2>
-											團購商品編號 :
-											<%=groupproductVO.getGroupBuyProductID()%></h2>
+										<h2>團購商品編號 : ${groupproductVO.groupBuyProductID}</h2>
 									</div>
 									<div class="price">
 										<h4>價格:</h4>
-										<p><%=groupproductVO.getGroupBuyProductPrice()%>
-											
-										</p>
+										<p>${groupproductVO.groupBuyProductPrice}$</p>
 									</div>
-									
+									<div class="title">
+										<h2>商品瀏覽次數 : ${countNow}</h2>
+									</div>
+
 								</div>
 							</div>
 						</div>
@@ -192,7 +199,7 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 							<div class="tab-content">
 								<div id="description" class="container tab-pane active">
 									<h4>商品描述</h4>
-									<p><%=groupproductVO.getGroupBuyProductDescrip()%></p>
+									<p>${groupproductVO.groupBuyProductDescrip}</p>
 								</div>
 								<div id="specification" class="container tab-pane fade">
 									<h4>Product specification</h4>
@@ -247,34 +254,72 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 
 					<div class="product">
 						<div class="section-header">
-							<h1>其他團購</h1>
+							<h1>熱門團購商品 TOP3</h1>
 						</div>
-
-						<div
-							class="row align-items-center product-slider product-slider-3">
-							
-							
-							
-							
-							
+						<div class="row align-items-center">
+							<jsp:useBean id="groupproductSvc" scope="page"
+								class="com.group6.tibame104.groupproduct.model.GroupproductService"></jsp:useBean>
+							<c:forEach var="add" items="${popProducts}">
+								<c:forEach var="groupproductVO" items="${groupproductSvc.all}">
+									<c:if test="${(add == groupproductVO.groupBuyProductID)}"
+										var="cc">
+										<div class="col-md-4">
+											<form id="msform" METHOD="post" class="col-md-12"
+												style="border: 0px"
+												ACTION="<%=request.getContextPath()%>/front-end/groupproduct/Groupproduct.do">
+												<div class="col-md-4">
+													<div class="product-item">
+														<div class="product-title">
+															<a>商品編號 : ${add}</a>
+														</div>
+														<div class="product-image">
+															<a> <img
+																src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${add}"
+																style="width: 100%" alt="product-image">
+																</td>
+															</a>
+														</div>
+														<div class="product-price">
+															<h3>
+																<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
+															<input type="hidden" name="groupBuyProductID"
+																value="${add}"> <input type="hidden"
+																name="action" value="getOne_For_Display">
+															<button class="btn fa fa-search" type="submit">查看商品
+															</button>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
+				<div class="row align-items-center product-slider product-slider-3">
 
-				<!-- Side Bar Start -->
 
-				<!-- Side Bar End -->
+
+
+
+				</div>
 			</div>
 		</div>
+
+		<!-- Side Bar Start -->
+
+		<!-- Side Bar End -->
+	</div>
+	</div>
 	</div>
 	<!-- Product Detail End -->
 
 	<!-- Brand Start -->
 	<div class="brand">
 		<div class="container-fluid">
-			<div class="brand-slider">
-				
-			</div>
+			<div class="brand-slider"></div>
 		</div>
 	</div>
 	<!-- Brand End -->
@@ -401,8 +446,10 @@ GroupproductVO groupproductVO = (GroupproductVO) request.getAttribute("groupprod
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/group/lib/easing/easing.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/front-end/group/lib/easing/easing.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script src="<%=request.getContextPath()%>/front-end/group/js/main.js"></script>

@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.groupdiscount.model.*"%>
+<%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 
-<%
-GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupdiscountVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
+
 
 <!DOCTYPE html>
 <html>
@@ -313,12 +311,12 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 																<h5>折扣表編號</h5>
 															</label> <input type="text" class="form-control"
 																id="countTableID"
-																value="<%=groupdiscountVO.getCountTableID()%>" readonly />
+																value="${groupdiscountVO.countTableID}" readonly />
 															<br> <label for="proPrice" class="sym-dark-font">
 																<h5>團購人數門檻</h5>
 															</label> <input type="text" class="form-control"
 																id="groupBuyProductOrderTotal" name="groupBuyProductOrderTotal"
-																value="<%=groupdiscountVO.getGroupBuyProductOrderTotal()%>"
+																value="${groupdiscountVO.groupBuyProductOrderTotal}"
 																placeholder="請輸入團購人數" />
 														</div>
 														<div class="col-sm-4 margin-left-1">
@@ -326,7 +324,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 																<h5>折數</h5>
 															</label> <input type="text" class="form-control"
 																id="groupBuyCount" name="groupBuyCount"
-																value="<%=groupdiscountVO.getGroupBuyCount()%>"
+																value="${groupdiscountVO.groupBuyCount}"
 																placeholder="請輸入折數" />
 														</div>
 														<div class="col-sm-3 margin-left-1"></div>
@@ -338,7 +336,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 															<label class="sym-dark-font">
 																<h5>團購編號</h5> <jsp:useBean id="groupSvc"
 																	scope="page"
-																	class="com.group.model.GroupService" />
+																	class="com.group6.tibame104.group.model.GroupService" />
 															</label> <select size="1" name="groupBuyID"
 																class="form-select mb-3">
 																<c:forEach var="groupVO"
@@ -355,7 +353,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 															<div class="col-sm-3">
 																<input type="hidden" name="action" value="update">
 																<input type="hidden" name="countTableID"
-																	value="<%=groupdiscountVO.getCountTableID()%>">
+																	value="${groupdiscountVO.countTableID}">
 																<button
 																	class="btn sym-darkpurple sym-yellow-font btn_style"
 																	id="addProduct">送出更新</button>

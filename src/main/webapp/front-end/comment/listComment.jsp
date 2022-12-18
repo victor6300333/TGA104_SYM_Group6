@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 
 <%@ page import="java.util.*"%>
-<%@ page import="com.orderlist.model.*"%>
+<%@ page import="com.group6.tibame104.orderlist.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 
@@ -59,6 +59,8 @@
 
 <table>
 	<tr>
+		<th>會員ID</th>
+		<th>會員姓名</th>
 		<th>訂單明細ID</th>
 		<th>訂單ID</th>
 		<th>商品ID</th>
@@ -70,13 +72,14 @@
 	</tr>
 		
 		<tr>
+			<td>${memVO.memberID}</td>
+			<td>${memVO.userName}</td>
 			<td>${orderlistVO.getOrderDetailID()}</td>
 			<td>${orderlistVO.getOrderID()}</td>
 			<td>${orderlistVO.getProductID()}</td>
 			<td>${orderlistVO.getQuantity()}</td>
 			<td>${orderlistVO.getPrice()}</td>
-			<td>${orderlistVO.getSubTotal()}</td> 
-		
+			<td>${orderlistVO.getSubTotal()}</td> 		
 			<td>${orderlistVO.getBuyerReview()}</td>
 			<td>${orderlistVO.getBuyerComment()}</td>
 			
