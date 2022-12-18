@@ -1,18 +1,20 @@
 package com.group6.tibame104.member.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class MemberJDBCDAO implements MemberVO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+	@Autowired
+	private DataSource dataSource;
 
 	private static final String INSERT_STMT = "INSERT INTO member (userAccount,userPassword,userName,phone,mail,gender,birthday,userPhoto,registrationTime,mailCertification,idNumber,address,sellerAuditApprovalState,currentShoppingCoin)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -42,16 +44,10 @@ public class MemberJDBCDAO implements MemberVO_interface {
 
 	@Override
 	public void insert(MemberVO memberVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);
+		) {
 			pstmt.setString(1, memberVO.getUserAccount());
 			pstmt.setString(2, memberVO.getUserPassword());
 			pstmt.setString(3, memberVO.getUserName());
@@ -66,47 +62,18 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setString(12, memberVO.getAddress());
 			pstmt.setBoolean(13, memberVO.getSellerAuditApprovalState());
 			pstmt.setInt(14, memberVO.getCurrentShoppingCoin());
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void update(MemberVO memberVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(CONTINUE_UPDATE);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(CONTINUE_UPDATE);
+		) {
 			pstmt.setString(1, memberVO.getGender());
 			pstmt.setDate(2, memberVO.getBirthday());
 			pstmt.setBytes(3, memberVO.getUserPhoto());
@@ -116,47 +83,18 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setBoolean(7, memberVO.getSellerAuditApprovalState());
 			pstmt.setInt(8, memberVO.getCurrentShoppingCoin());
 			pstmt.setInt(9, memberVO.getMemberID());
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void updateOne(MemberVO memberVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATEONE);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(UPDATEONE);
+		) {
 			pstmt.setString(1, memberVO.getUserName());
 			pstmt.setString(2, memberVO.getUserAccount());
 			pstmt.setString(3, memberVO.getPhone());
@@ -165,501 +103,190 @@ public class MemberJDBCDAO implements MemberVO_interface {
 			pstmt.setString(6, memberVO.getIdNumber());
 			pstmt.setString(7, memberVO.getAddress());
 			pstmt.setInt(8, memberVO.getMemberID());
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 
 	@Override
 	public void updateOnePasswoed(MemberVO memberVO) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATEONE_PASSWOED);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(UPDATEONE_PASSWOED);
+		) {
 			pstmt.setString(1, memberVO.getUserPassword());
 			pstmt.setInt(2, memberVO.getMemberID());
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void delete(Integer memberID) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(DELETE);
+		) {
 			pstmt.setInt(1, memberID);
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public MemberVO getByPrimaryKey(Integer memberID) {
-		MemberVO memberVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_MEMBER);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ONE_MEMBER);
+		) {
 			pstmt.setInt(1, memberID);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				memberVO = new MemberVO();
-				memberVO.setMemberID(rs.getInt("memberID"));
-				memberVO.setUserAccount(rs.getString("userAccount"));
-				memberVO.setUserPassword(rs.getString("userPassword"));
-				memberVO.setUserName(rs.getString("userName"));
-				memberVO.setPhone(rs.getString("phone"));
-				memberVO.setMail(rs.getString("mail"));
-				memberVO.setGender(rs.getString("gender"));
-				memberVO.setBirthday(rs.getDate("birthday"));
-				memberVO.setUserPhoto(rs.getBytes("userPhoto"));
-				memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
-				memberVO.setMailCertification(rs.getBoolean("mailCertification"));
-				memberVO.setIdNumber(rs.getString("idNumber"));
-				memberVO.setAddress(rs.getString("address"));
-				memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
-				memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				if (rs.next()) {
+					MemberVO memberVO = new MemberVO();
+					memberVO.setMemberID(rs.getInt("memberID"));
+					memberVO.setUserAccount(rs.getString("userAccount"));
+					memberVO.setUserPassword(rs.getString("userPassword"));
+					memberVO.setUserName(rs.getString("userName"));
+					memberVO.setPhone(rs.getString("phone"));
+					memberVO.setMail(rs.getString("mail"));
+					memberVO.setGender(rs.getString("gender"));
+					memberVO.setBirthday(rs.getDate("birthday"));
+					memberVO.setUserPhoto(rs.getBytes("userPhoto"));
+					memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
+					memberVO.setMailCertification(rs.getBoolean("mailCertification"));
+					memberVO.setIdNumber(rs.getString("idNumber"));
+					memberVO.setAddress(rs.getString("address"));
+					memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
+					memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
+					return memberVO;
 				}
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return memberVO;
-
+		return null;
 	}
 
 	@Override
 	public MemberVO getOneMemberByMail(String mail) {
-		MemberVO memberVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);
+		) {
 			pstmt.setString(1, mail);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				memberVO = new MemberVO();
-				memberVO.setMemberID(rs.getInt("memberID"));
-				memberVO.setUserAccount(rs.getString("userAccount"));
-				memberVO.setUserPassword(rs.getString("userPassword"));
-				memberVO.setUserName(rs.getString("userName"));
-				memberVO.setPhone(rs.getString("phone"));
-				memberVO.setMail(rs.getString("mail"));
-				memberVO.setGender(rs.getString("gender"));
-				memberVO.setBirthday(rs.getDate("birthday"));
-				memberVO.setUserPhoto(rs.getBytes("userPhoto"));
-				memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
-				memberVO.setMailCertification(rs.getBoolean("mailCertification"));
-				memberVO.setIdNumber(rs.getString("idNumber"));
-				memberVO.setAddress(rs.getString("address"));
-				memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
-				memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				if (rs.next()) {
+					MemberVO memberVO = new MemberVO();
+					memberVO.setMemberID(rs.getInt("memberID"));
+					memberVO.setUserAccount(rs.getString("userAccount"));
+					memberVO.setUserPassword(rs.getString("userPassword"));
+					memberVO.setUserName(rs.getString("userName"));
+					memberVO.setPhone(rs.getString("phone"));
+					memberVO.setMail(rs.getString("mail"));
+					memberVO.setGender(rs.getString("gender"));
+					memberVO.setBirthday(rs.getDate("birthday"));
+					memberVO.setUserPhoto(rs.getBytes("userPhoto"));
+					memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
+					memberVO.setMailCertification(rs.getBoolean("mailCertification"));
+					memberVO.setIdNumber(rs.getString("idNumber"));
+					memberVO.setAddress(rs.getString("address"));
+					memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
+					memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
+					return memberVO;
 				}
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return memberVO;
-
+		return null;
 	}
 
 	@Override
 	public List<MemberVO> getAll() {
-
-		List<MemberVO> list = new ArrayList<MemberVO>();
-		MemberVO memberVO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				memberVO = new MemberVO();
-				memberVO.setMemberID(rs.getInt("memberID"));
-				memberVO.setUserAccount(rs.getString("userAccount"));
-				memberVO.setUserPassword(rs.getString("userPassword"));
-				memberVO.setUserName(rs.getString("userName"));
-				memberVO.setPhone(rs.getString("phone"));
-				memberVO.setMail(rs.getString("mail"));
-				memberVO.setGender(rs.getString("gender"));
-				memberVO.setBirthday(rs.getDate("birthday"));
-				memberVO.setUserPhoto(rs.getBytes("userPhoto"));
-				memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
-				memberVO.setMailCertification(rs.getBoolean("mailCertification"));
-				memberVO.setIdNumber(rs.getString("idNumber"));
-				memberVO.setAddress(rs.getString("address"));
-				memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
-				memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
-				list.add(memberVO); // Store the row in the list
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);	
+		) {
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<MemberVO> list = new ArrayList<MemberVO>();
+				while (rs.next()) {
+					MemberVO memberVO = new MemberVO();
+					memberVO.setMemberID(rs.getInt("memberID"));
+					memberVO.setUserAccount(rs.getString("userAccount"));
+					memberVO.setUserPassword(rs.getString("userPassword"));
+					memberVO.setUserName(rs.getString("userName"));
+					memberVO.setPhone(rs.getString("phone"));
+					memberVO.setMail(rs.getString("mail"));
+					memberVO.setGender(rs.getString("gender"));
+					memberVO.setBirthday(rs.getDate("birthday"));
+					memberVO.setUserPhoto(rs.getBytes("userPhoto"));
+					memberVO.setRegistrationTime(rs.getTimestamp("registrationTime"));
+					memberVO.setMailCertification(rs.getBoolean("mailCertification"));
+					memberVO.setIdNumber(rs.getString("idNumber"));
+					memberVO.setAddress(rs.getString("address"));
+					memberVO.setSellerAuditApprovalState(rs.getBoolean("sellerAuditApprovalState"));
+					memberVO.setCurrentShoppingCoin(rs.getInt("currentShoppingCoin"));
+					list.add(memberVO); // Store the row in the list
 				}
+				return list;
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 
 	@Override
 	public Boolean findOneMemberForLogin(String mail, String userPassword) {
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Boolean login;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(MEMBER_LOGIN);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(MEMBER_LOGIN);
+		) {
 			pstmt.setString(1, mail);
 			pstmt.setString(2, userPassword);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next() && rs.getInt(1) > 0) {
-				login = true;
-			} else {
-				login = false;
+			try (ResultSet rs = pstmt.executeQuery();) {
+				return rs.next() && rs.getInt(1) > 0;
 			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return login;
-
+		return false;
 	}
 
 	@Override
 	public Integer selectLastMemberID() {
-		Integer id = null;
-		MemberVO memberVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_LASTONE_MEMBER);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				memberVO = new MemberVO();
-				id = rs.getInt(1);
-//			
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_LASTONE_MEMBER);
+		) {
+			try (ResultSet rs = pstmt.executeQuery();) {
+				while (rs.next()) {
+					return rs.getInt(1);
 				}
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return id;
-
+		return null;
 	}
 
 	@Override
 	public Boolean findMemberByMail(String mail) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Boolean haveMail;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(FORGET_PASSWORD);
-
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(FORGET_PASSWORD);
+		) {
 			pstmt.setString(1, mail);
-
-			rs = pstmt.executeQuery();
-
-			if (rs.next() && rs.getInt(1) > 0) {
-				haveMail = true;
-			} else {
-				haveMail = false;
+			try (ResultSet rs = pstmt.executeQuery();) {
+				return rs.next() && rs.getInt(1) > 0;
 			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return haveMail;
+		return false;
 	}
 
 	// test

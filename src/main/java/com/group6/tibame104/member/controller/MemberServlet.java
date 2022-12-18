@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
@@ -34,10 +37,17 @@ import redis.clients.jedis.Jedis;
 // 上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常(檔案大小限制)
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MemberService memSvc;
+
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(getServletContext());
+		memSvc = applicationContext.getBean(MemberService.class);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		doPost(req, res);
 	}
 
@@ -61,13 +71,12 @@ public class MemberServlet extends HttpServlet {
 			memberID = Integer.valueOf(str);
 
 			/*************************** 2.開始查詢資料 *****************************************/
-			MemberService memSvc = new MemberService();
 			MemberVO memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 			HttpSession session = req.getSession();
 			session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
-			String url = "/member/listAllMember.jsp";
+			String url = "/back-end/member/listAllMember.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
