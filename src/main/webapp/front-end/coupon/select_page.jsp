@@ -65,7 +65,7 @@ h4 {
 			</FORM>
 		</li>
 
-		<jsp:useBean id="couponSvc" scope="page" class="com.coupon.model.CouponService" />
+		<jsp:useBean id="couponSvc" scope="page" class="com.group6.tibame104.coupon.model.CouponService" />
 
 		
 	</ul>

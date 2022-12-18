@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.couponUsageHistory.model.*"%>
+<%@ page import="com.group6.tibame104.couponUsageHistory.model.*"%>
 
 <%
 CouponUsageHistoryVO couponUsageHistoryVO = (CouponUsageHistoryVO) request.getAttribute("couponUsageHistoryVO");
@@ -76,7 +76,7 @@ th, td {
 		</ul>
 	</c:if>
 			<jsp:useBean id="couponUsageHistorySvc" scope="page"
-				class="com.couponUsageHistory.model.CouponUsageHistoryService" />
+				class="com.group6.tibame104.couponUsageHistory.model.CouponUsageHistoryService" />
 
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/couponUsageHistory/CouponUsageHistory.do" name="form1">
 		<table>

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.shoppingGoldRecord.model.*"%>
+<%@ page import="com.group6.tibame104.shoppingGoldRecord.model.*"%>
 
 <%
 ShoppingGoldRecordVO shoppingGoldRecordVO = (ShoppingGoldRecordVO) request.getAttribute("shoppingGoldRecordVO");
@@ -88,7 +88,7 @@ ShoppingGoldRecordVO shoppingGoldRecordVO = (ShoppingGoldRecordVO) request.getAt
 			 value="<%= (shoppingGoldRecordVO==null)? "100" : shoppingGoldRecordVO.getPlusOrMinus()%>" /></td>
 	</tr>
 
-	<jsp:useBean id="shoppingGoldRecordSvc" scope="page" class="com.shoppingGoldRecord.model.ShoppingGoldRecordService" />
+	<jsp:useBean id="shoppingGoldRecordSvc" scope="page" class="com.group6.tibame104.shoppingGoldRecord.model.ShoppingGoldRecordService" />
 	
 
 </table>

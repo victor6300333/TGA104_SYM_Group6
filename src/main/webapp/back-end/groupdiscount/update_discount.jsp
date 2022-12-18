@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.groupdiscount.model.*"%>
+<%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 
 
 
@@ -336,7 +336,7 @@
 															<label class="sym-dark-font">
 																<h5>團購編號</h5> <jsp:useBean id="groupSvc"
 																	scope="page"
-																	class="com.group.model.GroupService" />
+																	class="com.group6.tibame104.group.model.GroupService" />
 															</label> <select size="1" name="groupBuyID"
 																class="form-select mb-3">
 																<c:forEach var="groupVO"

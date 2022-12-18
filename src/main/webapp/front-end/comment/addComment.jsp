@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 
-<%@ page import="com.orderlist.model.*, java.util.*"%>
+<%@ page import="com.group6.tibame104.orderlist.model.*, java.util.*"%>
 
 
 <%

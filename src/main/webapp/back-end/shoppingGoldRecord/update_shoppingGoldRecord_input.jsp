@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.coupon.model.*"%>
+<%@ page import="com.group6.tibame104.coupon.model.*"%>
 
 <%
   CouponVO couponVO = (CouponVO) request.getAttribute("couponVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
@@ -114,7 +114,7 @@
 			 value="<%= (couponVO==null)? "吳湧至" : couponVO.getCouponDescription()%>" /></td>
 	</tr>
 
-	<jsp:useBean id="couponSvc" scope="page" class="com.coupon.model.CouponService" />
+	<jsp:useBean id="couponSvc" scope="page" class="com.group6.tibame104.coupon.model.CouponService" />
 	<tr>
 		<td>部門:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="couponID">

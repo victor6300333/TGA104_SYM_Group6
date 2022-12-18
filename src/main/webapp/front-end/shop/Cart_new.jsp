@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.* ,com.orderlist.model.Product, com.member.model.*"%>
+<%@ page import="java.util.* ,com.group6.tibame104.orderlist.model.Product, com.group6.tibame104.member.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 

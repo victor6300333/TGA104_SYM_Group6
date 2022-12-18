@@ -110,7 +110,7 @@
 			 value="${couponVO.couponDescription}" /></td>
 	</tr>
 
-	<jsp:useBean id="couponSvc" scope="page" class="com.coupon.model.CouponService" />
+	<jsp:useBean id="couponSvc" scope="page" class="com.group6.tibame104.coupon.model.CouponService" />
 	
 </table>
 <br>

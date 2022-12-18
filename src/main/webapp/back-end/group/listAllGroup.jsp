@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group.model.*"%>
-<%@ page import="com.groupproduct.model.*"%>
+<%@ page import="com.group6.tibame104.group.model.*"%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 
@@ -311,8 +311,8 @@
 									</tr>
 								</thead>
 								<tbody>
-								<jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService"></jsp:useBean>
-								<jsp:useBean id="groupProductSvc" scope="page" class="com.groupproduct.model.GroupproductService"></jsp:useBean>
+								<jsp:useBean id="groupSvc" scope="page" class="com.group6.tibame104.group.model.GroupService"></jsp:useBean>
+								<jsp:useBean id="groupProductSvc" scope="page" class="com.group6.tibame104.groupproduct.model.GroupproductService"></jsp:useBean>
 									<c:forEach var="groupVO" items="${groupSvc.all}" varStatus="s">
 										<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
 											<tr>

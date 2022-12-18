@@ -65,7 +65,7 @@ h4 {
 			</FORM>
 		</li>
 
-		<jsp:useBean id="shoppingGoldRecordSvc" scope="page" class="com.shoppingGoldRecord.model.ShoppingGoldRecordService" />
+		<jsp:useBean id="shoppingGoldRecordSvc" scope="page" class="com.group6.tibame104.shoppingGoldRecord.model.ShoppingGoldRecordService" />
 
 	</ul>
 

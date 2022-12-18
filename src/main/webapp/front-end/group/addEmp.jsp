@@ -1,8 +1,8 @@
 <%@page import="java.sql.Timestamp"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.grouporder.model.*"%>
-<%@ page import="com.group.model.*"%>
+<%@ page import="com.group6.tibame104.grouporder.model.*"%>
+<%@ page import="com.group6.tibame104.group.model.*"%>
 
 
 <%

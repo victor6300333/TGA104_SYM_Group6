@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group.model.*"%>
-<%@ page import="com.groupproduct.model.*"%>
-<%@ page import="com.groupdiscount.model.*"%>
+<%@ page import="com.group6.tibame104.group.model.*"%>
+<%@ page import="com.group6.tibame104.groupproduct.model.*"%>
+<%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 
 
 
@@ -212,9 +212,9 @@
 								</div>
 							</div>
 						</div>
-						<jsp:useBean id="groupSvc" scope="page" class="com.group.model.GroupService" />
-						<jsp:useBean id="groupProductSvc" scope="page" class="com.groupproduct.model.GroupproductService" />
-						<jsp:useBean id="groupdiscountSvc" scope="page" class="com.groupdiscount.model.GroupdiscountService" />
+						<jsp:useBean id="groupSvc" scope="page" class="com.group6.tibame104.group.model.GroupService" />
+						<jsp:useBean id="groupProductSvc" scope="page" class="com.group6.tibame104.groupproduct.model.GroupproductService" />
+						<jsp:useBean id="groupdiscountSvc" scope="page" class="com.group6.tibame104.groupdiscount.model.GroupdiscountService" />
 						<c:forEach var="groupVO" items="${groupSvc.all}">
 							<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
 								<c:if

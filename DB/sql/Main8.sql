@@ -236,18 +236,14 @@ create table administrator (
 administratorID int not null auto_increment comment '管理員編號',
 administratorAccount varchar(25) not null comment '管理員帳號',
 administratorPassword varchar(25) not null comment '管理員密碼',
-buildTime timestamp not null default current_timestamp comment '創建時間',
-lastLogin timestamp not null default current_timestamp on update current_timestamp comment '上次登入',
+buildTime date not null comment '創建時間',
+lastLogin timestamp default current_timestamp on update current_timestamp comment '上次登入',
 primary key(administratorID)
 );
 
 insert into  administrator (administratorAccount, administratorPassword)
 values 
-('AD0001', '123'),
-('AD0002', '123'),
-('AD0003', '123'),
-('AD0004', '123'),
-('AD0005', '123');
+('AD0001', '123')
 
 
 
@@ -747,28 +743,26 @@ VALUES('1','2', '玩偶', '10','3000','30000');
 
 -- 首頁廣告
 create table advertise (
-advertiseSerialID int  not null auto_increment comment "廣告流水編號",
+adSerialID int  not null auto_increment comment "廣告流水編號",
 administratorID int not null comment '管理員編號',
 groupBuyID int not null comment "團購編號ID",
-advertiseTitle varchar(25) not null comment "廣告標題",
-adveritseDescribe varchar(200) comment "廣告描述",
-advertisePhoto longblob comment "廣告圖片",
-advertiseOnLoadDate date not null comment "廣告上架日期",
-advertiseOffLoadDate date not null comment "廣告下架日期",
-updateTime timestamp default current_timestamp() comment "更新時間",
-primary key(advertiseSerialID),
-constraint Fk_advertise_administratorID
-	foreign key (administratorID)
-	references administrator(administratorID)
+adTitle varchar(25) not null comment "廣告標題",
+adType varchar(25) not null comment "廣告類別",
+adDescribe varchar(200) comment "廣告描述",
+adPhoto longblob comment "廣告圖片",
+adStartDate date not null comment "廣告上架日期",
+adEndDate date not null comment "廣告下架日期",
+updateTime timestamp default current_timestamp on update current_timestamp comment "更新時間",
+primary key(adSerialID)
 );
 
-insert into advertise (administratorID, groupBuyID, advertiseTitle, adveritseDescribe, advertisePhoto, advertiseOnLoadDate, advertiseOffLoadDate, updateTime)
+insert into advertise (administratorID, groupBuyID, adTitle, adType,adDescribe, adPhoto, adStartDate, adEndDate, updateTime)
 values 
-('1', '1', '雙11團購優惠開跑', '團購達5人享有9折優惠', '', '2022-11-11', '2022-11-20', now()),
-('1', '2', '雙11團購優惠開跑', '團購達10人享有85折優惠', '', '2022-11-11', '2022-11-20', now()),
-('2', '1', '雙11團購優惠開跑', '團購達15人享有8折優惠', '', '2022-11-11', '2022-11-20', now()),
-('1', '2', '雙11團購優惠開跑', '團購達20人享有75折優惠', '', '2022-11-11', '2022-11-20', now()),
-('3', '1', '雙11團購優惠開跑', '團購達25人享有7折優惠', '', '2022-11-11', '2022-11-20', now());
+('1', '1', '團購優惠活動', '團購相關','人數達標享有9折優惠', '', '2022-11-11', '2022-11-20', now()),
+('1', '2', '團購優惠活動', '團購相關','人數達標享有9折優惠', '', '2022-11-11', '2022-11-20', now()),
+('1', '3', '團購優惠活動', '團購相關','人數達標享有9折優惠', '', '2022-11-11', '2022-11-20', now()),
+('1', '4', '團購優惠活動', '團購相關','人數達標享有9折優惠', '', '2022-11-11', '2022-11-20', now()),
+('1', '5', '團購優惠活動', '團購相關','人數達標享有9折優惠', '', '2022-11-11', '2022-11-20', now());
 
 -- 新建VIEW
 create view v_memberBlockList as

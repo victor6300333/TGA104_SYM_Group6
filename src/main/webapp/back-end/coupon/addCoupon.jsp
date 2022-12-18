@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.coupon.model.*"%>
+<%@ page import="com.group6.tibame104.coupon.model.*"%>
 
 <%
   CouponVO couponVO = (CouponVO) request.getAttribute("couponVO");
@@ -115,7 +115,7 @@
 			 value="<%= (couponVO==null)? "優惠券每筆訂單只限一個賣場一次使用" : couponVO.getCouponDescription()%>" /></td>
 	</tr>
 
-	<jsp:useBean id="couponSvc" scope="page" class="com.coupon.model.CouponService" />
+	<jsp:useBean id="couponSvc" scope="page" class="com.group6.tibame104.coupon.model.CouponService" />
 
 
 </table>
