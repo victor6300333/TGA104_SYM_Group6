@@ -149,7 +149,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row">
 				<div class="col-lg-6">
 					<FORM id="loginForm" METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+						ACTION="${pageContext.request.contextPath}/member/MemberServlet"
 						name="form1">
 						<div class="register-form">
 							<%-- 錯誤表列 --%>
@@ -165,17 +165,17 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 								<div class="col-md-6">
 									<label>姓名</label> <input class="form-control" type="text"
 										name="userName" placeholder="姓名"
-										value="<%=(memVO == null) ? "" : memVO.getUserName()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>帳號</label> <input class="form-control" type="text"
 										name="userAccount" placeholder="帳號"
-										value="<%=(memVO == null) ? "" : memVO.getUserAccount()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>電子信箱</label> <input class="form-control" type="text"
 										name="mail" placeholder="電子信箱"
-										value="<%=(memVO == null) ? "" : memVO.getMail()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>行動電話</label> <input class="form-control" type="text"

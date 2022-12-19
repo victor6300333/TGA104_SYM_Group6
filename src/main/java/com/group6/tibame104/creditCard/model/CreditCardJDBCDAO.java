@@ -86,13 +86,14 @@ public class CreditCardJDBCDAO implements CreditCardDAO_interface {
 
 	@Override
 	public List<CreditCardVO> getAll(Integer memberID) {
+		CreditCardVO ceditCardVO = null;
 		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<CreditCardVO> list = new ArrayList<CreditCardVO>();
 				pstmt.setInt(1, memberID);
 				while (rs.next()) {
-					CreditCardVO ceditCardVO = null;
+
 					ceditCardVO = new CreditCardVO();
 					ceditCardVO.setMemberID(rs.getInt("memberID"));
 					ceditCardVO.setCreditCardID(rs.getInt("creditCardID"));
