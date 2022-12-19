@@ -226,14 +226,14 @@
 										<ul>
 											<li>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_by_OrderID">
 													<b>輸入訂單編號: </b> <input type="text" name="orderID"
 														style="width: 100px; height: 25px"> <input
 														type="hidden" name="action" value="select_by_OrderID">
 													<input type="submit" value="送出">
 												</FORM>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
 													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
 														type="text" style="width: 100px; height: 25px"> <b>至</b>

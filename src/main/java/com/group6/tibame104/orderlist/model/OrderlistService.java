@@ -32,4 +32,9 @@ public class OrderlistService {
 		return dao.findByOrderlistID(OrderlistID);
 		
 	}
+	public List<OrderlistVO> findByProductID(Integer productID) {
+		
+		return dao.findByProductID(productID);
+		
+	}
 }

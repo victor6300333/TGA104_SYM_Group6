@@ -24,10 +24,11 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
 			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment "
 			+ "				FROM orderDetail where orderID = ?";
-//	private static final String DELETE = 
-//		"DELETE FROM emp2 where empno = ?";
 	private static final String UPDATE = 
 		"UPDATE orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
+	
+	private static final String GET_ONE_STMT_PRODUCT = "SELECT productID, buyerReview, buyerComment"
+		     + " FROM orderDetail where productID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
 		List<OrderlistVO> list = new ArrayList<OrderlistVO>();
@@ -251,6 +252,62 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				
 
 				
+	}
+
+	@Override
+	public List<OrderlistVO> findByProductID(Integer productID) {
+		
+		OrderlistVO orderlistVO = null;
+		List<OrderlistVO> list = new ArrayList<OrderlistVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT_PRODUCT);
+
+			pstmt.setInt(1, productID);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// orderlistVo 也稱為 Domain objects
+				orderlistVO = new OrderlistVO();
+					
+							
+				orderlistVO.setProductID(rs.getInt("productID"));
+			
+				orderlistVO.setBuyerReview(rs.getString("buyerReview"));
+				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
+				list.add(orderlistVO);
+			}
+			
+		
+			
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+		
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 
