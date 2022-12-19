@@ -42,17 +42,17 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/grouporder/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/back-end/grouporder/css/bootstrap.min.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/grouporder/css/style.css"
+	href="${pageContext.request.contextPath}/back-end/grouporder/css/style.css"
 	rel="stylesheet" />
 
 <!--Admin-->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/grouporder/css/admin.css" />
+	href="${pageContext.request.contextPath}/back-end/grouporder/css/admin.css" />
 </head>
 
 <body>
@@ -73,14 +73,14 @@
 				<a href="index.html" class="navbar-brand mx-4 mb-3">
 					<h3 class="text-primary">
 						<img
-							src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM.jpg"
+							src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM.jpg"
 							alt="logo" width="100%" />
 					</h3>
 				</a>
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
 						<img class="rounded-circle"
-							src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM3.jpg"
+							src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM3.jpg"
 							alt="" style="width: 40px; height: 40px" />
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
@@ -137,13 +137,13 @@
 							data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
 						<div class="dropdown-menu bg-transparent border-0 show">
 							<a
-								href="<%=request.getContextPath()%>/back-end/grouporder/listAllGroupOrder.jsp"
+								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
 								class="dropdown-item">團購訂單管理</a>
 								<a
-								href="<%=request.getContextPath()%>/back-end/group/listAllGroup.jsp"
+								href="${pageContext.request.contextPath}/back-end/group/listAllGroup.jsp"
 								class="dropdown-item">團購管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -183,7 +183,7 @@
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
 									<img class="rounded-circle"
-										src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM3.jpg"
+										src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM3.jpg"
 										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
@@ -195,7 +195,7 @@
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
 									<img class="rounded-circle"
-										src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM3.jpg"
+										src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM3.jpg"
 										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
@@ -207,7 +207,7 @@
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
 									<img class="rounded-circle"
-										src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM3.jpg"
+										src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM3.jpg"
 										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
@@ -248,7 +248,7 @@
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"> <img
 							class="rounded-circle me-lg-2"
-							src="<%=request.getContextPath()%>/back-end/grouporder/img/logoSYM3.jpg"
+							src="${pageContext.request.contextPath}/back-end/grouporder/img/logoSYM3.jpg"
 							alt="" style="width: 40px; height: 40px" /> <span
 							class="d-none d-lg-inline-flex">歡迎您~ Admin</span>
 						</a>
@@ -299,7 +299,7 @@
 				<div class="d-flex align-items-center justify-content-between mb-4">
 					<a
 						class="btn btn-sm card-header sym-darkpurple sym-yellow-font font-m btn_style"
-						href="<%=request.getContextPath()%>/back-end/grouporder/addEmp.jsp">新增團購訂單</a>
+						href="${pageContext.request.contextPath}/back-end/grouporder/addEmp.jsp">新增團購訂單</a>
 				</div>
 				<!-- /.content-header -->
 				<div class="sym-yellow-bk text-center rounded p-4">
@@ -354,7 +354,7 @@
 
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/front-end/grouporder/Grouporder.do"
+													ACTION="${pageContext.request.contextPath}/front-end/grouporder/Grouporder.do"
 													style="margin-bottom: 0px;">
 													<input type="submit" value="修改"> <input
 														type="hidden" name="groupBuyOrderID"
@@ -364,7 +364,7 @@
 											</td>
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/front-end/grouporder/Grouporder.do"
+													ACTION="${pageContext.request.contextPath}/front-end/grouporder/Grouporder.do"
 													style="margin-bottom: 0px;">
 													<input type="submit" value="刪除"> <input
 														type="hidden" name="groupBuyOrderID"
@@ -421,27 +421,27 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/chart/chart.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/chart/chart.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/waypoints/waypoints.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/waypoints/waypoints.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/owlcarousel/owl.carousel.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/owlcarousel/owl.carousel.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/tempusdominus/js/moment.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/tempusdominus/js/moment.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/js/main.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/js/main.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/js/admin.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/js/admin.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/js/search.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/js/search.js"></script>
 </body>
 
 </html>

@@ -21,7 +21,7 @@
 
 <!-- Favicon -->
 <link
-	href="<%=request.getContextPath()%>/back-end/group/img/favicon.ico"
+	href="${pageContext.request.contextPath}/back-end/group/img/favicon.ico"
 	rel="icon" />
 
 <!-- Google Web Fonts -->
@@ -41,24 +41,24 @@
 
 <!-- Libraries Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/group/lib/owlcarousel/assets/owl.carousel.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet" />
 <link
-	href="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/group/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/css/bootstrap.min.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/back-end/group/css/style.css"
+<link href="${pageContext.request.contextPath}/back-end/group/css/style.css"
 	rel="stylesheet" />
 
 <!--Admin-->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/group/css/admin.css" />
+	href="${pageContext.request.contextPath}/back-end/group/css/admin.css" />
 </head>
 
 <body>
@@ -84,7 +84,7 @@
 				<div class="d-flex align-items-center ms-4 mb-4">
 					<div class="position-relative">
 						<img class="rounded-circle"
-							src="<%=request.getContextPath()%>/back-end/group/img/logoSYM3.jpg"
+							src="${pageContext.request.contextPath}/back-end/group/img/logoSYM3.jpg"
 							alt="" style="width: 40px; height: 40px" />
 						<div
 							class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
@@ -138,13 +138,13 @@
 
 					<div class="nav-item dropdown">
 						<a
-								href="<%=request.getContextPath()%>/back-end/grouporder/listAllGroupOrder.jsp"
+								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
 								class="dropdown-item">團購訂單管理</a>
 								<a
-								href="<%=request.getContextPath()%>/back-end/group/listAllGroup.jsp"
+								href="${pageContext.request.contextPath}/back-end/group/listAllGroup.jsp"
 								class="dropdown-item">團購管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -288,7 +288,7 @@
 					<div class="d-flex align-items-center justify-content-between mb-4">
 						<a
 							class="btn btn-sm card-header sym-darkpurple sym-yellow-font font-m btn_style"
-							href="<%=request.getContextPath()%>/back-end/group/addGroup.jsp">新增團購</a>
+							href="${pageContext.request.contextPath}/back-end/group/addGroup.jsp">新增團購</a>
 					</div>
 					<div class="table-responsive">
 						<div class="card card-primary">
@@ -340,7 +340,7 @@
 													<td>${groupproductVO.groupBuyProductDescrip}</td>
 													<td>
 														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/front-end/group/Group.do"
+															ACTION="${pageContext.request.contextPath}/front-end/group/Group.do"
 															style="margin-bottom: 0px;">
 															<input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="修改"> <input
 																type="hidden" name="groupBuyID"
@@ -350,7 +350,7 @@
 													</td>
 													<td>
 														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/front-end/group/Group.do"
+															ACTION="${pageContext.request.contextPath}/front-end/group/Group.do"
 															style="margin-bottom: 0px;">
 															<input class="btn sym-darkpurple sym-yellow-font btn_style" type="submit" value="刪除"> <input
 																type="hidden" name="groupBuyID"
@@ -406,24 +406,24 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/chart/chart.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/chart/chart.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/waypoints/waypoints.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/waypoints/waypoints.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/owlcarousel/owl.carousel.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/owlcarousel/owl.carousel.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/moment.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="<%=request.getContextPath()%>/back-end/group/js/main.js"></script>
-	<script src="<%=request.getContextPath()%>/back-end/group/js/admin.js"></script>
-	<script src="<%=request.getContextPath()%>/back-end/group/js/search.js"></script>
+	<script src="${pageContext.request.contextPath}/back-end/group/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/back-end/group/js/admin.js"></script>
+	<script src="${pageContext.request.contextPath}/back-end/group/js/search.js"></script>
 </body>
 
 </html>

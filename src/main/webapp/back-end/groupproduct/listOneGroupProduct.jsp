@@ -257,11 +257,9 @@
 							<h1>熱門團購商品 TOP3</h1>
 						</div>
 						<div class="row align-items-center">
-							<jsp:useBean id="groupproductSvc" scope="page"
-								class="com.group6.tibame104.groupproduct.model.GroupproductService"></jsp:useBean>
 							<c:forEach var="add" items="${popProducts}">
-								<c:forEach var="groupproductVO" items="${groupproductSvc.all}">
-									<c:if test="${(add == groupproductVO.groupBuyProductID)}"
+								<c:forEach var="groupproductVOs" items="${groupproductVOs}">
+									<c:if test="${(add == groupproductVOs.groupBuyProductID)}"
 										var="cc">
 										<div class="col-md-4">
 											<form id="msform" METHOD="post" class="col-md-12"
@@ -281,7 +279,7 @@
 														</div>
 														<div class="product-price">
 															<h3>
-																<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
+																<span>原價$</span>${groupproductVOs.groupBuyProductPrice}</h3>
 															<input type="hidden" name="groupBuyProductID"
 																value="${add}"> <input type="hidden"
 																name="action" value="getOne_For_Display">

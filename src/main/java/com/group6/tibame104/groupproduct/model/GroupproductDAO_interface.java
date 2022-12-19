@@ -2,6 +2,7 @@ package com.group6.tibame104.groupproduct.model;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 public interface GroupproductDAO_interface {
 
 	public void insert(GroupproductVO groupproductVO);
