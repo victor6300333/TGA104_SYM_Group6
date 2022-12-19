@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
@@ -37,17 +36,10 @@ import redis.clients.jedis.Jedis;
 // 上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常(檔案大小限制)
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private MemberService memSvc;
+	@Autowired
 	private MailService mailSvc;
-
-	@Override
-	public void init() throws ServletException {
-		ApplicationContext applicationContext = WebApplicationContextUtils
-				.getWebApplicationContext(getServletContext());
-		memSvc = applicationContext.getBean(MemberService.class);
-		mailSvc = applicationContext.getBean(MailService.class);
-
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

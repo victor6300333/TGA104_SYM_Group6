@@ -2,10 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO");
-MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,7 +177,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 								<div class="col-md-6">
 									<label>行動電話</label> <input class="form-control" type="text"
 										name="phone" placeholder="行動電話"
-										value="<%=(memVO == null) ? "" : memVO.getPhone()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>密碼</label> <input id="password" class="form-control"
@@ -200,7 +197,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				</div>
 				<div class="col-lg-6">
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+						ACTION="${pageContext.request.contextPath}/member/MemberServlet"
 						name="form2">
 						<div class="login-form">
 							<%-- 錯誤表列 --%>
@@ -216,7 +213,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 								<div class="col-md-6">
 									<label>電子信箱</label> <input class="form-control" type="text"
 										name="mail" placeholder="電子信箱"
-										value="<%=(memVO2 == null) ? "" : memVO2.getMail()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>密碼</label> <input class="form-control" type="password"
