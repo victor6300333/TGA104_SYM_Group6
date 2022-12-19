@@ -2,7 +2,7 @@ package com.group6.tibame104.creditCard.model;
 
 import java.util.List;
 
-public interface CreditCardVO_interface {
+public interface CreditCardDAO_interface {
 	public void insert(CreditCardVO creditCardVO);
 
 	public void update(CreditCardVO creditCardVO);

@@ -1,26 +1,26 @@
 package com.group6.tibame104.creditCard.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreditCardJDBCDAO implements CreditCardVO_interface {
+import javax.sql.DataSource;
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class CreditCardJDBCDAO implements CreditCardDAO_interface {
+
+	@Autowired
+	private DataSource dataSource;
 
 	private static final String INSERT_STMT = "INSERT INTO creditCard (memberID,creditcardNumber,securityCode,exDate)"
 			+ " VALUES (?, ?, ?, ?)";
 
 	private static final String GET_ALL_STMT = "SELECT creditCardID,memberID,creditcardNumber,securityCode,exDate FROM creditCard where memberID = ?";
-
-//	private static final String GET_ONE_STMT = "SELECT creditCardID,memberID,creditcardNumber,securityCode,exDate FROM creditCard where memberID = ?";
 
 	private static final String DELETE = "DELETE FROM creditCard where creditCardID = ?";
 
@@ -28,14 +28,10 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 
 	@Override
 	public void insert(CreditCardVO creditCardVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
+		) {
 
 			pstmt.setInt(1, creditCardVO.getMemberID());
 			pstmt.setString(2, creditCardVO.getCreditCardNumber());
@@ -43,42 +39,17 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 			pstmt.setDate(4, creditCardVO.getExDate());
 
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void update(CreditCardVO creditCardVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE);
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+		) {
 
 			pstmt.setString(1, creditCardVO.getCreditCardNumber());
 			pstmt.setString(2, creditCardVO.getSecurityCode());
@@ -87,68 +58,24 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void delete(Integer creditCardID) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
+		) {
 
 			pstmt.setInt(1, creditCardID);
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -159,63 +86,27 @@ public class CreditCardJDBCDAO implements CreditCardVO_interface {
 
 	@Override
 	public List<CreditCardVO> getAll(Integer memberID) {
-		List<CreditCardVO> list = new ArrayList<CreditCardVO>();
-		CreditCardVO ceditCardVO = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			pstmt.setInt(1, memberID);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// memberVO 也稱為 Domain objects
-				ceditCardVO = new CreditCardVO();
-				ceditCardVO.setMemberID(rs.getInt("memberID"));
-				ceditCardVO.setCreditCardID(rs.getInt("creditCardID"));
-				ceditCardVO.setCreditCardNumber(rs.getString("creditCardNumber"));
-				ceditCardVO.setSecurityCode(rs.getString("securityCode"));
-				ceditCardVO.setExDate(rs.getDate("exDate"));
-				list.add(ceditCardVO); // Store the row in the list
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<CreditCardVO> list = new ArrayList<CreditCardVO>();
+				pstmt.setInt(1, memberID);
+				while (rs.next()) {
+					CreditCardVO ceditCardVO = null;
+					ceditCardVO = new CreditCardVO();
+					ceditCardVO.setMemberID(rs.getInt("memberID"));
+					ceditCardVO.setCreditCardID(rs.getInt("creditCardID"));
+					ceditCardVO.setCreditCardNumber(rs.getString("creditCardNumber"));
+					ceditCardVO.setSecurityCode(rs.getString("securityCode"));
+					ceditCardVO.setExDate(rs.getDate("exDate"));
+					list.add(ceditCardVO); // Store the row in the list
 				}
+				return list;
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 
 	// test

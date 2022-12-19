@@ -2,7 +2,7 @@ package com.group6.tibame104.memberBlockList.model;
 
 import java.util.List;
 
-public interface MemberBlockListVO_interface {
+public interface MemberBlockListDAO_interface {
 
 	public void insert(MemberBlockListVO memberBlockListVO);
 

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MemberService {
 	@Autowired
-	private MemberVO_interface dao;
+	private MemberDAO_interface dao;
 
 	public MemberVO addMember(String userAccount, String userPassword, String userName, String phone, String mail,
 			Timestamp registrationTime, Boolean mailCertification, Boolean sellerAuditApprovalState,

@@ -20,6 +20,11 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
 public class MailService {
 	private final static String HOST = "smtp.gmail.com";
 	private final static String AUTH = "true";

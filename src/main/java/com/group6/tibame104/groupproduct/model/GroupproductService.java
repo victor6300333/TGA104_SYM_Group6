@@ -2,13 +2,15 @@ package com.group6.tibame104.groupproduct.model;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
 public class GroupproductService {
-
+	@Autowired
 	private GroupproductDAO_interface dao;
-
-	public GroupproductService() {
-		dao = new GroupproductJDBCDAO();
-	}
 
 //新增
 	public GroupproductVO addGroupproduct(Integer groupBuyProductPrice, byte[] groupBuyProductPicture,

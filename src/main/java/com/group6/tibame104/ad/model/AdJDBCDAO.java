@@ -1,320 +1,153 @@
 package com.group6.tibame104.ad.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.sql.DataSource;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class AdJDBCDAO implements AdDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+	private DataSource dataSource;
 
-	
-	private static final String INSERT_STMT = 
-			"INSERT INTO advertise (administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-		private static final String GET_ALL_STMT = 
-			"SELECT adSerialID, administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto, updateTime FROM advertise order by adSerialID";
-		private static final String GET_ONE_STMT = 
-			"SELECT adSerialID, administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto, updateTime FROM advertise where adSerialID = ?";
-		private static final String DELETE = 
-			"DELETE FROM advertise where adSerialID = ?";
-		private static final String UPDATE = 
-			"UPDATE advertise set adTitle=?,  adType=?, adDescribe=?, adPhoto=?, adStartDate=?, adEndDate=?, updateTime=now() where adSerialID= ?";
-		@Override
-		public void insert(AdVO adVO) {
-			
-			Connection con = null;
-			PreparedStatement pstmt = null;
+	private static final String INSERT_STMT = "INSERT INTO advertise (administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT adSerialID, administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto, updateTime FROM advertise order by adSerialID";
+	private static final String GET_ONE_STMT = "SELECT adSerialID, administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto, updateTime FROM advertise where adSerialID = ?";
+	private static final String DELETE = "DELETE FROM advertise where adSerialID = ?";
+	private static final String UPDATE = "UPDATE advertise set adTitle=?,  adType=?, adDescribe=?, adPhoto=?, adStartDate=?, adEndDate=?, updateTime=now() where adSerialID= ?";
 
-			try {
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(INSERT_STMT);
-				pstmt.setInt(1, adVO.getAdministratorID());
-				pstmt.setInt(2, adVO.getGroupBuyID());
-				pstmt.setString(3, adVO.getAdTitle());
-				pstmt.setString(4, adVO.getAdType());
-				pstmt.setString(5, adVO.getAdDescribe());
-				pstmt.setDate(6, adVO.getAdStartDate());
-				pstmt.setDate(7, adVO.getAdEndDate());
-				pstmt.setBytes(8, adVO.getAdPhoto());
-//				pstmt.setTimestamp(6, advVO.getUpdateTime());
+	@Override
+	public void insert(AdVO adVO) {
 
-				pstmt.executeUpdate();
-
-				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);
+			) {
+			pstmt.setInt(1, adVO.getAdministratorID());
+			pstmt.setInt(2, adVO.getGroupBuyID());
+			pstmt.setString(3, adVO.getAdTitle());
+			pstmt.setString(4, adVO.getAdType());
+			pstmt.setString(5, adVO.getAdDescribe());
+			pstmt.setDate(6, adVO.getAdStartDate());
+			pstmt.setDate(7, adVO.getAdEndDate());
+			pstmt.setBytes(8, adVO.getAdPhoto());
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.getMessage();
 		}
+	}
 
-		@Override
-		public void update(AdVO adVO) {
-			
-			Connection con = null;
-			PreparedStatement pstmt = null;
+	@Override
+	public void update(AdVO adVO) {
 
-			try {
+		try (
+			Connection con = dataSource.getConnection(); 
+			PreparedStatement pstmt = con.prepareStatement(UPDATE);
+			) {
+			pstmt.setString(1, adVO.getAdTitle());
+			pstmt.setString(2, adVO.getAdType());
+			pstmt.setString(3, adVO.getAdDescribe());
+			pstmt.setBytes(4, adVO.getAdPhoto());
+			pstmt.setDate(5, adVO.getAdStartDate());
+			pstmt.setDate(6, adVO.getAdEndDate());
+			pstmt.setInt(7, adVO.getAdSerialID());
+			pstmt.executeUpdate();
 
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(UPDATE);
-
-				pstmt.setString(1, adVO.getAdTitle());
-				pstmt.setString(2, adVO.getAdType());
-				pstmt.setString(3, adVO.getAdDescribe());
-				pstmt.setBytes(4, adVO.getAdPhoto());
-				pstmt.setDate(5, adVO.getAdStartDate());
-				pstmt.setDate(6, adVO.getAdEndDate());
-				pstmt.setInt(7, adVO.getAdSerialID());
-//				pstmt.setTimestamp(8, adVO.getUpdateTime());
-
-				pstmt.executeUpdate();
-				
-				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-
+		} catch (Exception e) {
+			e.getMessage();
 		}
+	}
 
-		@Override
-		public void delete(Integer adSerialID) {
+	@Override
+	public void delete(Integer adSerialID) {
 
-			Connection con = null;
-			PreparedStatement pstmt = null;
+		try (
+			Connection con = dataSource.getConnection(); 
+			PreparedStatement pstmt = con.prepareStatement(DELETE);
+			) {
+			pstmt.setInt(1, adSerialID);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+	}
 
-			try {
+	@Override
+	public AdVO findByPrimaryKey(Integer adSerialID) {
 
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(DELETE);
+		AdVO adVO = null;
+		ResultSet rs = null;
 
-				pstmt.setInt(1, adSerialID);
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);
+			) {
+			pstmt.setInt(1, adSerialID);
+			rs = pstmt.executeQuery();
 
-				pstmt.executeUpdate();
+			while (rs.next()) {
+				adVO = new AdVO();
+				adVO.setAdSerialID(rs.getInt("adSerialID"));
+				adVO.setAdministratorID(rs.getInt("administratorID"));
+				adVO.setGroupBuyID(rs.getInt("groupBuyID"));
+				adVO.setAdTitle(rs.getString("adTitle"));
+				adVO.setAdType(rs.getString("adType"));
+				adVO.setAdDescribe(rs.getString("adDescribe"));
+				adVO.setAdPhoto(rs.getBytes("adPhoto"));
+				adVO.setAdStartDate(rs.getDate("adStartDate"));
+				adVO.setAdEndDate(rs.getDate("adEndDate"));
+				adVO.setUpdateTime(rs.getTimestamp("updateTime"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+		return adVO;
+	}
 
-				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
+	@Override
+	public List<AdVO> getAll() {
+		List<AdVO> list = new ArrayList<AdVO>();
+		AdVO adVO = null;
+
+		ResultSet rs = null;
+
+		try (
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);
+			) {
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				adVO = new AdVO();
+				adVO.setAdSerialID(rs.getInt("adSerialID"));
+				adVO.setAdministratorID(rs.getInt("administratorID"));
+				adVO.setGroupBuyID(rs.getInt("groupBuyID"));
+				adVO.setAdTitle(rs.getString("adTitle"));
+				adVO.setAdType(rs.getString("adType"));
+				adVO.setAdDescribe(rs.getString("adDescribe"));
+				adVO.setAdPhoto(rs.getBytes("adPhoto"));
+				adVO.setAdStartDate(rs.getDate("adStartDate"));
+				adVO.setAdEndDate(rs.getDate("adEndDate"));
+				adVO.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+				list.add(adVO);
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
 		}
+		return list;
+	}
 
-		
-		@Override
-		public AdVO findByPrimaryKey(Integer adSerialID) {
+	public static void main(String[] args) {
 
-			AdVO adVO = null;
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-
-			try {
-
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(GET_ONE_STMT);
-
-				pstmt.setInt(1, adSerialID);
-				
-				rs = pstmt.executeQuery();
-				
-				while (rs.next()) {
-					adVO = new AdVO();
-					adVO.setAdSerialID(rs.getInt("adSerialID"));
-					adVO.setAdministratorID(rs.getInt("administratorID"));
-					adVO.setGroupBuyID(rs.getInt("groupBuyID"));
-					adVO.setAdTitle(rs.getString("adTitle"));
-					adVO.setAdType(rs.getString("adType"));
-					adVO.setAdDescribe(rs.getString("adDescribe"));
-					adVO.setAdPhoto(rs.getBytes("adPhoto"));
-					adVO.setAdStartDate(rs.getDate("adStartDate"));
-					adVO.setAdEndDate(rs.getDate("adEndDate"));
-					adVO.setUpdateTime(rs.getTimestamp("updateTime"));
-				}
-
-				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (rs != null) {
-					try {
-						rs.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-			return adVO;
-		}
-
-		
-		
-		
-		@Override
-		public List<AdVO> getAll() {
-			List<AdVO> list = new ArrayList<AdVO>();
-			AdVO adVO = null;
-
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			
-
-			try {
-
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
-				pstmt = con.prepareStatement(GET_ALL_STMT);
-				rs = pstmt.executeQuery();
-				
-				while (rs.next()) {
-					// adVO也稱為 Domain objects
-					adVO = new AdVO();
-					adVO.setAdSerialID(rs.getInt("adSerialID"));
-					adVO.setAdministratorID(rs.getInt("administratorID"));
-					adVO.setGroupBuyID(rs.getInt("groupBuyID"));
-					adVO.setAdTitle(rs.getString("adTitle"));
-					adVO.setAdType(rs.getString("adType"));
-					adVO.setAdDescribe(rs.getString("adDescribe"));
-					adVO.setAdPhoto(rs.getBytes("adPhoto"));
-					adVO.setAdStartDate(rs.getDate("adStartDate"));
-					adVO.setAdEndDate(rs.getDate("adEndDate"));
-					adVO.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
-					list.add(adVO); // Store the row in the list
-				}
-
-				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
-				// Handle any SQL errors
-			} catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (rs != null) {
-					try {
-						rs.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-			return list;
-		}
-
-		public static void main(String[] args) {
-
-			AdJDBCDAO dao = new AdJDBCDAO();
-			// 圖片上傳
+		AdJDBCDAO dao = new AdJDBCDAO();
+		// 圖片上傳
 //			byte[] data = null;
 //			FileImageInputStream input = null;
 //			try {
@@ -332,8 +165,7 @@ public class AdJDBCDAO implements AdDAO_interface {
 //				ex1.printStackTrace();
 //			}
 
-			
-			// 新增
+		// 新增
 //			 AdVO AdVO1 = new AdVO();
 //			 AdVO1.setAdSerialID(1);
 //			 AdVO1.setAdministratorID(2);
@@ -347,10 +179,7 @@ public class AdJDBCDAO implements AdDAO_interface {
 //			 AdVO1.setUpdateTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
 //			  
 //			 dao.insert(AdVO1);
-			 
-			 
-			
-						
+
 //			// 修改
 //			 AdVO AdVO2 = new  AdVO();
 //			 AdVO2.setAdSerialID(1);
@@ -365,10 +194,8 @@ public class AdJDBCDAO implements AdDAO_interface {
 
 //			// 刪除
 //			dao.delete(1);
-			
-			
 
-			// 查詢
+		// 查詢
 //			AdVO adVO3 = dao.findByPrimaryKey("adSerialID");
 //			System.out.print(adVO3.getAdSerialID() + ",");
 //			System.out.print(adVO3.getAdministratorID() + ",");
@@ -382,7 +209,6 @@ public class AdJDBCDAO implements AdDAO_interface {
 //			System.out.print(adVO3.getUpdateTime());
 //			System.out.println("---------------------");
 
-						
 //			// 查詢
 //			List<AdVO> list = dao.getAll();
 //			for (AdVO aAdver : list) {
@@ -399,9 +225,6 @@ public class AdJDBCDAO implements AdDAO_interface {
 //				System.out.println();
 //			}
 
-			
-		}
-
-
+	}
 
 }
