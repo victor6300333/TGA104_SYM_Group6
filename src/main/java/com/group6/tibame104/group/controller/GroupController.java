@@ -29,8 +29,8 @@ public class GroupController {
     private GroupService groupSvc;
     @Autowired
     private GroupproductService groupproductSvc;
-//    @Autowired
-//    private GroupdiscountService groupdiscountSvc;
+    @Autowired
+    private GroupdiscountService groupdiscountSvc;
 
     @PostMapping("/getOne_For_Display")
     public String getOneForDisplay(Model model, @RequestParam("groupBuyID") String str) {
@@ -163,6 +163,7 @@ public class GroupController {
 		List<String> errorMsgs = new LinkedList<String>();
 		model.addAttribute("errorMsgs", errorMsgs);
 //時間處理
+		
 		updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String timeStr = df.format(updateTime);
@@ -192,7 +193,7 @@ public class GroupController {
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 		model.addAttribute("groupVO", groupVO); // 資料庫update成功後,正確的的empVO物件,存入req
-	   return "back-end/group/listAllGroup";
+	   return getAll(model);
    }
    @PostMapping("/insert")
    public String insert(
@@ -238,7 +239,7 @@ public class GroupController {
 				groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime);
 
 		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-		return "back-end/group/listAllGroup";
+		return getAll(model);
    }
 	   @PostMapping("/delete")
 	   public String delete(
@@ -253,7 +254,7 @@ public class GroupController {
 			groupSvc.deleteGroup(groupBuyID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			return "back-end/group/listAllGroup.jsp";
+			return getAll(model);
 	   }
 	   @GetMapping("/allGroup")
 	   public String allGroup(
@@ -262,11 +263,23 @@ public class GroupController {
 		   
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
-//		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
 		   
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
-//		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
+		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
+		  
 		   return "front-end/group/listAllGroup";
+	   }
+	   
+	   @GetMapping("getAll")
+	   public String getAll(
+			   Model model
+			   ) {
+		   List<GroupVO> groupVOs = groupSvc.getAll();
+		   model.addAttribute("groupVOs",groupVOs);
+		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		   model.addAttribute("groupproductVOs",groupproductVOs);
+		   return "back-end/group/listAllGroup";
 	   }
 }

@@ -152,8 +152,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 					groupVO.setUpdateTime(rs.getTimestamp("updateTime"));
 
 					list.add(groupVO);
-					return list;
 				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

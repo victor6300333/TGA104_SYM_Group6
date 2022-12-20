@@ -324,7 +324,7 @@
 											</ul>
 										</c:if>
 										<!-- form start -->
-										<form METHOD="post" ACTION="Grouporder.do" name="form1">
+										<form METHOD="post" ACTION="${pageContext.request.contextPath}/back-end/grouporder/update" name="form1">
 											<div class="card-body">
 												<div class="form-group">
 													<div class="row">

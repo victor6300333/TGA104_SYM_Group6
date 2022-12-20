@@ -152,8 +152,8 @@ public class GrouporderJDBCDAO implements GrouporderDAO_interface {
 					grouporderVO.setShippingLocation(rs.getString("shippingLocation"));
 
 					list.add(grouporderVO); // Store the row in the list
-					return list;
 				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -188,12 +188,12 @@ public class GrouporderJDBCDAO implements GrouporderDAO_interface {
 					grouporderVO.setShippingLocation(rs.getString("shippingLocation"));
 
 					list.add(grouporderVO);
-					return list;
 				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 }

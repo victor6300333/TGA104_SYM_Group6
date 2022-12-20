@@ -32,19 +32,19 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet">
 <link
-	href="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.css"
+	href="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.css"
 	rel="stylesheet">
 <link
-	href="<%=request.getContextPath()%>/front-end/group/lib/slick/slick-theme.css"
+	href="${pageContext.request.contextPath}/front-end/group/lib/slick/slick-theme.css"
 	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/front-end/group/css/style.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/style.css"
 	rel="stylesheet">
 <link
-	href="<%=request.getContextPath()%>/front-end/group/css/stylenew.css"
+	href="${pageContext.request.contextPath}/front-end/group/css/stylenew.css"
 	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
 	rel="stylesheet" />
 <style type="text/css">
 
@@ -118,7 +118,7 @@
 				<div class="col-md-3">
 					<div class="logo">
 						<a href="index.html"> <img
-							src="<%=request.getContextPath()%>/front-end/group/img/logoSYM.jpg"
+							src="${pageContext.request.contextPath}/front-end/group/img/logoSYM.jpg"
 							alt="Logo" />
 						</a>
 					</div>
@@ -151,7 +151,7 @@
 		<div class="container-fluid">
 			<ul class="breadcrumb">
 				<li class="breadcrumb-item"><a
-					href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp">首頁</a></li>
+					href="${pageContext.request.contextPath}/front-end/group/listAllGroup.jsp">首頁</a></li>
 				<li class="breadcrumb-item active">團購</a></li>
 
 			</ul>
@@ -212,18 +212,15 @@
 								</div>
 							</div>
 						</div>
-						<jsp:useBean id="groupSvc" scope="page" class="com.group6.tibame104.group.model.GroupService" />
-						<jsp:useBean id="groupProductSvc" scope="page" class="com.group6.tibame104.groupproduct.model.GroupproductService" />
-						<jsp:useBean id="groupdiscountSvc" scope="page" class="com.group6.tibame104.groupdiscount.model.GroupdiscountService" />
-						<c:forEach var="groupVO" items="${groupSvc.all}">
-							<c:forEach var="groupproductVO" items="${groupProductSvc.all}">
+						<c:forEach var="groupVO" items="${groupVOs}">
+							<c:forEach var="groupproductVO" items="${groupproductVOs}">
 								<c:if
 									test="${(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID)}"
 									var="cc">
 									<div class="col-md-4">
 										<form id="msform" METHOD="post" class="col-md-12"
 											style="border: 0px"
-											ACTION="<%=request.getContextPath()%>/front-end/groupproduct/Groupproduct.do">
+											ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
 											<div class="col-md-4">
 												<div class="product-item">
 													<div class="product-title">
@@ -240,8 +237,9 @@
 														<h3>
 															<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
 														<input type="hidden" name="groupBuyProductID"
-															value="${groupproductVO.groupBuyProductID}"> <input
-															type="hidden" name="action" value="getOne_For_Display">
+															value="${groupproductVO.groupBuyProductID}"> 
+<!-- 															<input -->
+<!-- 															type="hidden" name="action" value="getOne_For_Display"> -->
 														<button class="btn fa fa-search" type="submit">查看商品
 														</button>
 													</div>
@@ -250,7 +248,7 @@
 										</form>
 									</div>
 									<form id="msform" METHOD="post"
-										ACTION="<%=request.getContextPath()%>/front-end/group/Group.do" style="border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px;
+										ACTION="${pageContext.request.contextPath}/front-end/group/addOrder" style="border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px;
 										border: 0.1px solid #cdcdcd; margin-bottom: 10px">
 										<div class="product-content">
 											<div class="col-md-12" >
@@ -266,27 +264,26 @@
 												<td><h3>團購結束時間 : </h3><fmt:formatDate
 														value="${groupVO.groupBuyingOffLoadDate}"
 														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
-												<td><h3>團購狀態 : </h3><span class="groupBuyingState">${groupVO.groupBuyingState}</span></td>
-
+												
 												<td><h3>商品描述 :</h3></td>
 												<td>${groupproductVO.groupBuyProductDescrip}</td> <br><br>
 
 												<ul id="progressbar" class="progressbar" >
 													<!-- progressbar -->
-													<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
+													<c:forEach var="groupdiscountVO" items="${groupdiscountVOs}">
 														<c:if
 															test="${(groupVO.groupBuyID == groupdiscountVO.groupBuyID)}"
 															var="cc">
 															<c:choose>
 																<c:when
 																	test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
-																	<li class="active" ><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<li class="active" ><i>${Math.ceil(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
 																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 人</li>
 
 																</c:when>
 
 																<c:otherwise>
-																	<li class=""><i>${groupdiscountVO.groupBuyCount * 10}</i> 折<br>
+																	<li class=""><i>${Math.ceil(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
 																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >人</li>
 																</c:otherwise>
 															</c:choose>
@@ -300,8 +297,7 @@
 												<input type="hidden" name="groupBuyID"
 													value="${groupVO.groupBuyID}"> <input type="hidden"
 													name="groupBuyProductID"
-													value="${groupVO.groupBuyProductID}"> <input
-													type="hidden" name="action" value="addOrder">
+													value="${groupVO.groupBuyProductID}">
 									</FORM>
 					</div>
 				</div>
@@ -338,32 +334,32 @@
 			<div class="brand-slider">
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-1.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-1.png"
 						alt="">
 				</div>
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-2.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-2.png"
 						alt="">
 				</div>
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-3.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-3.png"
 						alt="">
 				</div>
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-4.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-4.png"
 						alt="">
 				</div>
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-5.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-5.png"
 						alt="">
 				</div>
 				<div class="brand-item">
 					<img
-						src="<%=request.getContextPath()%>/front-end/group/img/brand-6.png"
+						src="${pageContext.request.contextPath}/front-end/group/img/brand-6.png"
 						alt="">
 				</div>
 			</div>
@@ -496,12 +492,12 @@
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="<%=request.getContextPath()%>/front-end/group/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
 	<script>
 	
 		$(".btn").on(

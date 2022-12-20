@@ -135,14 +135,17 @@ GroupVO groupVO = (GroupVO) request.getAttribute("groupVO");
 					</div>
 
 					<div class="nav-item dropdown">
-						<a
-								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
+						<a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
+						<div class="dropdown-menu bg-transparent border-0">
+							<a
+								href="${pageContext.request.contextPath}/back-end/grouporder/getAll"
 								class="dropdown-item">團購訂單管理</a>
 								<a
-								href="${pageContext.request.contextPath}/back-end/group/listAllGroup.jsp"
+								href="${pageContext.request.contextPath}/front-end/group/getAll"
 								class="dropdown-item">團購管理</a>
-								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/getAll" class="dropdown-item">商品管理</a>
+								 <a href="#" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 

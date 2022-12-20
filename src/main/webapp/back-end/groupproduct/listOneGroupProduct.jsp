@@ -2,12 +2,9 @@
 <%@ page import="com.group6.tibame104.groupproduct.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
-
-
 
 <!DOCTYPE html>
-<html lang="en">
+<html >
 
 <head>
 <meta charset="utf-8">
@@ -35,12 +32,12 @@
 <link href="lib/slick/slick-theme.css" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/front-end/group/css/style.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/style.css"
 	rel="stylesheet">
 <link
-	href="<%=request.getContextPath()%>/front-end/group/css/stylenew.css"
+	href="${pageContext.request.contextPath}/front-end/group/css/stylenew.css"
 	rel="stylesheet">
-<link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
 	rel="stylesheet">
 
 </head>
@@ -111,7 +108,7 @@
 				<div class="col-md-3">
 					<div class="logo">
 						<a href="index.html"> <img
-							src="<%=request.getContextPath()%>/front-end/group/img/logoSYM.jpg"
+							src="${pageContext.request.contextPath}/front-end/group/img/logoSYM.jpg"
 							alt="Logo" />
 						</a>
 					</div>
@@ -144,9 +141,9 @@
 		<div class="container-fluid">
 			<ul class="breadcrumb">
 				<li class="breadcrumb-item"><a
-					href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">首頁</a></li>
+					href="${pageContext.request.contextPath}/front-end/group/allGroup">首頁</a></li>
 				<li class="breadcrumb-item"><a
-					href="<%=request.getContextPath()%>/front-end/group/listAllGroup.jsp"">團購</a></li>
+					href="${pageContext.request.contextPath}/front-end/group/allGroup">團購</a></li>
 				<li class="breadcrumb-item active">團購商品</li>
 			</ul>
 		</div>
@@ -264,7 +261,7 @@
 										<div class="col-md-4">
 											<form id="msform" METHOD="post" class="col-md-12"
 												style="border: 0px"
-												ACTION="<%=request.getContextPath()%>/front-end/groupproduct/Groupproduct.do">
+												ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
 												<div class="col-md-4">
 													<div class="product-item">
 														<div class="product-title">
@@ -281,8 +278,7 @@
 															<h3>
 																<span>原價$</span>${groupproductVOs.groupBuyProductPrice}</h3>
 															<input type="hidden" name="groupBuyProductID"
-																value="${add}"> <input type="hidden"
-																name="action" value="getOne_For_Display">
+																value="${add}"> 
 															<button class="btn fa fa-search" type="submit">查看商品
 															</button>
 														</div>
@@ -445,12 +441,12 @@
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="<%=request.getContextPath()%>/front-end/group/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
 </body>
 
 </html>
