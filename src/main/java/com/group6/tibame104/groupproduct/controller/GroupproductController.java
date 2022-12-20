@@ -1,6 +1,7 @@
 package com.group6.tibame104.groupproduct.controller;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -27,6 +29,7 @@ import redis.clients.jedis.Jedis;
 
 @Controller
 @RequestMapping("/back-end/groupproduct")
+@MultipartConfig
 public class GroupproductController {
 	 @Autowired
 	    private GroupproductService groupproductSvc;
@@ -120,104 +123,86 @@ public class GroupproductController {
 			model.addAttribute("groupproductVO", groupproductVO); // 資料庫取出的empVO物件,存入req
 		 return "back-end/groupproduct/update_groupProduct";
 	 }
-//	 @GetMapping("update")
-//	 public String update(
-//			 Model model,
-//			 @RequestParam("groupBuyProductID") Integer groupBuyProductID,
-//			 @RequestParam("groupBuyProductPrice") Integer groupBuyProductPrice,
-//			 @RequestParam("groupBuyProductPicture") Part part,
-//			 @RequestParam("groupBuyProductDescrip") String groupBuyProductDescrip
-//			 ) {
-//		 List<String> errorMsgs = new LinkedList<String>();
-//		 
-//			model.addAttribute("errorMsgs", errorMsgs);
-//
-//
-//			byte[] groupBuyProductPicture = null;
-//			// 圖片相關
-//			if (part.getSize() == 0) {
-//				groupBuyProductPicture = null;
-//			} else {
-//				InputStream in = part.getInputStream();
-//				BufferedInputStream bis = new BufferedInputStream(in);
-//				groupBuyProductPicture = new byte[bis.available()];
-//				bis.read(groupBuyProductPicture);
-//				bis.close();
-//				in.close();
-//			}
-//
-//			GroupproductVO groupproductVO = new GroupproductVO();
-//
-//			groupproductVO.setGroupBuyProductPrice(groupBuyProductPrice);
-//			groupproductVO.setGroupBuyProductPicture(groupBuyProductPicture);
-//			groupproductVO.setGroupBuyProductDescrip(groupBuyProductDescrip);
-//			groupproductVO.setGroupBuyProductID(groupBuyProductID);
-//
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				model.addAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
-//				return "emp/update_emp_input."; // 程式中斷
-//			}
-//
-//			/*************************** 2.開始修改資料 *****************************************/
-//			groupproductVO = groupproductSvc.updateGroupproduct(groupBuyProductPrice, groupBuyProductPicture,
-//					groupBuyProductDescrip, groupBuyProductID);
-//
-//			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-//			model.addAttribute("groupproductVO", groupproductVO); // 資料庫update成功後,正確的的empVO物件,存入req
-//			String url = "/back-end/groupproduct/listAllGroupProducts.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
-//			successView.forward(req, res);
-//		 
-//		 return "/back-end/groupproduct/listAllGroupProducts";
-//	 }
-//	 @GetMapping("insert")
-//	 public String insert(
-//			 Model model,
-//			 @RequestParam("groupBuyProductPrice") Integer groupBuyProductPrice,
-//			 @RequestParam("groupBuyProductPicture") Part part,
-//			 @RequestParam("groupBuyProductDescrip") String groupBuyProductDescrip
-//			 
-//			 ) {
-//			List<String> errorMsgs = new LinkedList<String>();
-//			model.addAttribute("errorMsgs", errorMsgs);
-//
-//			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-//
-//
-//			byte[] groupBuyProductPicture = null;
-//			// 圖片相關
-//			Part part = req.getPart("groupBuyProductPicture");
-//			if (part.getSize() == 0) {
-//				groupBuyProductPicture = null;
-//			} else {
-//				InputStream in = part.getInputStream();
-//				BufferedInputStream bis = new BufferedInputStream(in);
-//				groupBuyProductPicture = new byte[bis.available()];
-//				bis.read(groupBuyProductPicture);
-//				bis.close();
-//				in.close();
-//			}
-//
-//			GroupproductVO groupproductVO = new GroupproductVO();
-//
-//			groupproductVO.setGroupBuyProductPrice(groupBuyProductPrice);
-//			groupproductVO.setGroupBuyProductPicture(groupBuyProductPicture);
-//			groupproductVO.setGroupBuyProductDescrip(groupBuyProductDescrip);
-//
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				model.addAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
-//				return "/back-end/groupproduct/addEmp";
-//			}
-//
-//			/*************************** 2.開始新增資料 ***************************************/
-//			groupproductVO = groupproductSvc.addGroupproduct(groupBuyProductPrice, groupBuyProductPicture,
-//					groupBuyProductDescrip);
-//
-//			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//			String url = "/back-end/groupproduct/listAllGroupProducts.jsp";
-//		 
-//		 return "back-end/groupproduct/listAllGroupProducts";
-//	 }
+	 @PostMapping("update")
+	 public String update(
+			 Model model,
+			 @RequestParam("groupBuyProductID") Integer groupBuyProductID,
+			 @RequestParam("groupBuyProductPrice") Integer groupBuyProductPrice,
+			 @RequestParam("groupBuyProductPicture") Part groupBuyProductPicture,
+			 @RequestParam("groupBuyProductDescrip") String groupBuyProductDescrip
+			 ) throws IOException {
+		 List<String> errorMsgs = new LinkedList<String>();
+		 
+			model.addAttribute("errorMsgs", errorMsgs);
+			
+			byte[] groupBuyProductPicture1 = null; 
+		
+				// 圖片相關
+				InputStream in = groupBuyProductPicture.getInputStream();
+				BufferedInputStream bis = new BufferedInputStream(in);
+				groupBuyProductPicture1 = new byte[bis.available()];
+				bis.read(groupBuyProductPicture1);
+		
+			GroupproductVO groupproductVO = new GroupproductVO();
+
+			groupproductVO.setGroupBuyProductPrice(groupBuyProductPrice);
+			groupproductVO.setGroupBuyProductPicture(groupBuyProductPicture1);
+			groupproductVO.setGroupBuyProductDescrip(groupBuyProductDescrip);
+			groupproductVO.setGroupBuyProductID(groupBuyProductID);
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				model.addAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+				return "emp/update_emp_input."; // 程式中斷
+			}
+
+			/*************************** 2.開始修改資料 *****************************************/
+			groupproductVO = groupproductSvc.updateGroupproduct(groupBuyProductPrice, groupBuyProductPicture1,
+					groupBuyProductDescrip, groupBuyProductID);
+
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			model.addAttribute("groupproductVO", groupproductVO); // 資料庫update成功後,正確的的empVO物件,存入req
+		 
+		 return "/back-end/groupproduct/listAllGroupProducts";
+	 }
+	 @PostMapping("insert")
+	 public String insert(
+			 Model model,
+			 @RequestParam("groupBuyProductPrice") Integer groupBuyProductPrice,
+			 @RequestParam("groupBuyProductPicture") Part groupBuyProductPicture,
+			 @RequestParam("groupBuyProductDescrip") String groupBuyProductDescrip
+			 
+			 ) throws IOException {
+			List<String> errorMsgs = new LinkedList<String>();
+			model.addAttribute("errorMsgs", errorMsgs);
+
+			byte[] groupBuyProductPicture1 = null; 
+			
+				// 圖片相關
+				InputStream in = groupBuyProductPicture.getInputStream();
+				BufferedInputStream bis = new BufferedInputStream(in);
+				groupBuyProductPicture1 = new byte[bis.available()];
+				bis.read(groupBuyProductPicture1);
+			
+			
+			GroupproductVO groupproductVO = new GroupproductVO();
+
+			groupproductVO.setGroupBuyProductPrice(groupBuyProductPrice);
+			groupproductVO.setGroupBuyProductPicture(groupBuyProductPicture1);
+			groupproductVO.setGroupBuyProductDescrip(groupBuyProductDescrip);
+
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				model.addAttribute("errorMsgs", errorMsgs); // 含有輸入格式錯誤的empVO物件,也存入req
+				return "/back-end/groupproduct/addEmp";
+			}
+
+			/*************************** 2.開始新增資料 ***************************************/
+			groupproductVO = groupproductSvc.addGroupproduct(groupBuyProductPrice, groupBuyProductPicture1,
+					groupBuyProductDescrip);
+
+			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+		 
+		 return "back-end/groupproduct/listAllGroupProducts";
+	 }
 }

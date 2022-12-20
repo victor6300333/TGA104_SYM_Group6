@@ -1,9 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.grouporder.model.*"%>
-
+<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
 <!DOCTYPE html>
@@ -133,17 +130,14 @@
 					</div>
 
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle"
+						<a href="#" class="nav-link dropdown-toggle active"
 							data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
-						<div class="dropdown-menu bg-transparent border-0">
+						<div class="dropdown-menu bg-transparent border-0 show">
 							<a
-								href="${pageContext.request.contextPath}/back-end/grouporder/getAll"
-								class="dropdown-item">團購訂單管理</a>
-								<a
-								href="${pageContext.request.contextPath}/front-end/group/getAll"
-								class="dropdown-item">團購管理</a>
-								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/getAll" class="dropdown-item">商品管理</a>
-								 <a href="#" class="dropdown-item">折扣管理</a>
+								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
+								class="dropdown-item">團購訂單</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -286,95 +280,51 @@
 									<li class="breadcrumb-item"><a href="#">Home</a></li>
 									<li class="breadcrumb-item active">團購訂單</li>
 								</ol>
-
 							</div>
 							<!-- /.col -->
 						</div>
-
 						<!-- /.row -->
 					</div>
-
 					<!-- /.container-fluid -->
-				</div>
-				<div class="d-flex align-items-center justify-content-between mb-4">
-					<a
-						class="btn btn-sm card-header sym-darkpurple sym-yellow-font font-m btn_style"
-						href="${pageContext.request.contextPath}/back-end/grouporder/addEmp.jsp">新增團購訂單</a>
 				</div>
 				<!-- /.content-header -->
 				<div class="sym-yellow-bk text-center rounded p-4">
 					<div class="d-flex align-items-center justify-content-between mb-4">
 					</div>
-							<input class="form-control border-1" id="reserve_search"
-								type="search" placeholder="輸入欲查詢的會員編號"
-								onkeyup="searchFunction()">
-					<div class="table-responsive"style="background: white">
-					<div class="col-sm-12 col-xl-12" style="border: 0px">
-						<div class="card card-primary"style="border: 0px">
-								
-							<table
-								class="table table-bordered"
-								id="reserver_detail" >
-								<thead>
-									<tr class="text-dark">
-										<th scope="col">團購訂單編號</th>
-										<th scope="col">團購編號</th>
-										<th scope="col">會員編號</th>
-										<th scope="col">團購商品編號</th>
-										<th scope="col">團購數量</th>
-										<th scope="col">總金額</th>
-										<th scope="col">訂單時間</th>
-										<th scope="col">付款方式</th>
-										<th scope="col">狀態</th>
-										<th scope="col">購物金</th>
-										<th scope="col">連絡電話</th>
-										<th scope="col">寄送地址</th>
-										<th scope="col">編輯</th>
-										<th scope="col">刪除</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="grouporderVO" items="${grouporderVOs}">
-
-										<tr>
-											<th scope="row">${grouporderVO.groupBuyOrderID}</th>
-											<td>${grouporderVO.groupBuyID}</td>
-											<td>${grouporderVO.memberID}</td>
-											<td>${grouporderVO.groupBuyProductID}</td>
-											<td>${grouporderVO.groupBuyQuantity}</td>
-											<td>${grouporderVO.groupBuyTotal}</td>
-											<td><fmt:formatDate value="${grouporderVO.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-											<td>${grouporderVO.paymentTerm}</td>
-											<td>${grouporderVO.paymentState}</td>
-											<td>${grouporderVO.giftVoucher}</td>
-											<td>${grouporderVO.contactNumber}</td>
-											<td>${grouporderVO.shippingLocation}</td>
-
-
-											<td>
-												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/back-end/grouporder/getOneForUpdate"
-													style="margin-bottom: 0px;">
-													<input type="submit" value="修改"> <input
-														type="hidden" name="groupBuyOrderID"
-														value="${grouporderVO.groupBuyOrderID}">
-												</FORM>
-											</td>
-											<td>
-												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/back-end/grouporder/delete"
-													style="margin-bottom: 0px;">
-													<input type="submit" value="刪除"> <input
-														type="hidden" name="groupBuyOrderID"
-														value="${grouporderVO.groupBuyOrderID}">
-												</FORM>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
+					<div class="table-responsive">
+						<div class="card card-primary">
+							
+							<table>
+								<tr>
+									<th>團購訂單編號</th>
+									<th>團購編號</th>
+									<th>會員編號</th>
+									<th>團購商品編號</th>
+									<th>團購數量</th>
+									<th>總金額</th>
+									<th>訂單時間</th>
+									<th>付款方式</th>
+									<th>付款狀態</th>
+									<th>購物金</th>
+									<th>連絡電話</th>
+									<th>運送地點</th>
+								</tr>
+								<tr>
+									<td>${grouporderVO.groupBuyOrderID}</td>
+									<td>${grouporderVO.groupBuyID}</td>
+									<td>${grouporderVO.memberID}</td>
+									<td>${grouporderVO.groupBuyProductID}</td>
+									<td>${grouporderVO.groupBuyQuantity}</td>
+									<td>${grouporderVO.groupBuyTotal}</td>
+									<td>${grouporderVO.orderTime}</td>
+									<td>${grouporderVO.paymentTerm}</td>
+									<td>${grouporderVO.paymentState}</td>
+									<td>${grouporderVO.giftVoucher}</td>
+									<td>${grouporderVO.contactNumber}</td>
+									<td>${grouporderVO.shippingLocation}</td>
+								</tr>
 							</table>
-						
-						</div>
+
 						</div>
 					</div>
 				</div>
@@ -437,8 +387,7 @@
 		src="${pageContext.request.contextPath}/back-end/grouporder/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/back-end/grouporder/js/admin.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/back-end/grouporder/js/search.js"></script>
+
 </body>
 
 </html>
