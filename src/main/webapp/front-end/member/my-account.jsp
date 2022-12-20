@@ -272,7 +272,7 @@
 
 
 										<FORM METHOD="post"
-											ACTION="${pageContext.request.contextPath}/member/CreditCardServlet"
+											ACTION="${pageContext.request.contextPath}/front-end/cerditCard/insert"
 											style="margin-bottom: 0px;">
 
 											<div class="row">
@@ -295,7 +295,6 @@
 
 											<input type="hidden" name="memberID"
 												value="${memVO.memberID}"> <input
-												type="hidden" name="action" value="insert"> <input
 												class="btn" type="submit" value="新增信用卡"> <br /> <br />
 										</FORM>
 										<hr>
@@ -311,7 +310,7 @@
 										<tbody>
 
 											
-											<c:forEach var="cardVO" items="${cridSvc.all}">
+											<c:forEach var="cardVO" items="${cardVO}">
 												<tr>
 
 													<td>${cardVO.creditCardNumber}</td>
@@ -320,13 +319,12 @@
 
 													<td>
 														<FORM METHOD="post"
-															ACTION="${pageContext.request.contextPath}/member/CreditCardServlet"
+															ACTION="${pageContext.request.contextPath}/front-end/cerditCard/delete"
 															style="margin-bottom: 0px;">
 															<input type="hidden" name="creditCardID"
 																value="${cardVO.creditCardID}"> <input
 																type="hidden" name="memberID"
 																value="${memVO.memberID}"> <input
-																type="hidden" name="action" value="delete"> <input
 																class="btn" type="submit" value="刪除">
 														</FORM>
 													</td>
