@@ -19,8 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.group6.tibame104.groupproduct.model.GroupproductService;
 import com.group6.tibame104.groupproduct.model.GroupproductVO;
+import com.group6.tibame104.member.model.MailService;
+import com.group6.tibame104.member.model.MemberService;
 
 import redis.clients.jedis.Jedis;
 
@@ -28,11 +34,10 @@ import redis.clients.jedis.Jedis;
 @MultipartConfig
 public class GroupproductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	private GroupproductService groupproductSvc;
 
-	public GroupproductServlet() {
-		super();
-	}
-
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		doPost(req, res);
@@ -54,7 +59,6 @@ public class GroupproductServlet extends HttpServlet {
 
 			String str = req.getParameter("groupBuyProductID");
 
-
 			Integer groupBuyProductID = null;
 			try {
 				groupBuyProductID = Integer.valueOf(str);
@@ -69,7 +73,6 @@ public class GroupproductServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始查詢資料 *****************************************/
-			GroupproductService groupproductSvc = new GroupproductService();
 			GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
 
 			if (groupproductVO == null) {
@@ -89,7 +92,6 @@ public class GroupproductServlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			
 			double count_num = 1;
-			
 
 			Map<String, Double> groupViews = new HashMap<>();
 			String views = groupBuyProductID.toString();
@@ -101,7 +103,6 @@ public class GroupproductServlet extends HttpServlet {
 			//有資料 : 1 + 目前瀏覽數	
 				count_num += count_current;
 			}
-			
 			
 			groupViews.put(views, count_num);
 
@@ -137,7 +138,6 @@ public class GroupproductServlet extends HttpServlet {
 			Integer groupBuyProductID = Integer.valueOf(req.getParameter("groupBuyProductID"));
 
 			/*************************** 2.開始查詢資料 ****************************************/
-			GroupproductService groupproductSvc = new GroupproductService();
 			GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
@@ -188,7 +188,6 @@ public class GroupproductServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始修改資料 *****************************************/
-			GroupproductService groupproductSvc = new GroupproductService();
 			groupproductVO = groupproductSvc.updateGroupproduct(groupBuyProductPrice, groupBuyProductPicture,
 					groupBuyProductDescrip, groupBuyProductID);
 
@@ -241,7 +240,6 @@ public class GroupproductServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
-			GroupproductService groupproductSvc = new GroupproductService();
 			groupproductVO = groupproductSvc.addGroupproduct(groupBuyProductPrice, groupBuyProductPicture,
 					groupBuyProductDescrip);
 
@@ -261,7 +259,6 @@ public class GroupproductServlet extends HttpServlet {
 			Integer groupBuyProductID = Integer.valueOf(req.getParameter("groupBuyProductID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			GroupproductService groupproductSvc = new GroupproductService();
 			groupproductSvc.deleteGroupproduct(groupBuyProductID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
