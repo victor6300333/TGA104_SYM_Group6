@@ -34,24 +34,24 @@
 
 <!-- Libraries Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/group/lib/owlcarousel/assets/owl.carousel.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet" />
 <link
-	href="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/group/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/back-end/group/css/bootstrap.min.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/back-end/group/css/style.css"
+<link href="${pageContext.request.contextPath}/back-end/group/css/style.css"
 	rel="stylesheet" />
 
 <!--Admin-->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/group/css/admin.css" />
+	href="${pageContext.request.contextPath}/back-end/group/css/admin.css" />
 </head>
 
 <body>
@@ -72,7 +72,7 @@
 				<a href="index.html" class="navbar-brand mx-4 mb-3">
 					<h3 class="text-primary">
 						<img
-							src="<%=request.getContextPath()%>/back-end/group/img/logoSYM.jpg"
+							src="${pageContext.request.contextPath}/back-end/group/img/logoSYM.jpg"
 							alt="logo" width="100%" />
 					</h3>
 				</a>
@@ -132,13 +132,13 @@
 
 					<div class="nav-item dropdown">
 						<a
-								href="<%=request.getContextPath()%>/back-end/grouporder/listAllGroupOrder.jsp"
+								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
 								class="dropdown-item">團購訂單管理</a>
 								<a
-								href="<%=request.getContextPath()%>/back-end/group/listAllGroup.jsp"
+								href="${pageContext.request.contextPath}/back-end/group/listAllGroup.jsp"
 								class="dropdown-item">團購管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -200,7 +200,7 @@
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
 									<img class="rounded-circle"
-										src="<%=request.getContextPath()%>/back-end/group/img/logoSYM3.jpg"
+										src="${pageContext.request.contextPath}/back-end/group/img/logoSYM3.jpg"
 										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
@@ -495,22 +495,22 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/chart/chart.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/chart/chart.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/waypoints/waypoints.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/waypoints/waypoints.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/owlcarousel/owl.carousel.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/owlcarousel/owl.carousel.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/moment.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/group/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="<%=request.getContextPath()%>/back-end/group/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/back-end/group/js/main.js"></script>
 	<script>
 
   </script>
@@ -520,11 +520,11 @@
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/back-end/group/datetimepicker/jquery.datetimepicker.css" />
+	href="${pageContext.request.contextPath}/back-end/group/datetimepicker/jquery.datetimepicker.css" />
 <script
-	src="<%=request.getContextPath()%>/back-end/group/datetimepicker/jquery.js"></script>
+	src="${pageContext.request.contextPath}/back-end/group/datetimepicker/jquery.js"></script>
 <script
-	src="<%=request.getContextPath()%>/back-end/group/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="${pageContext.request.contextPath}/back-end/group/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {

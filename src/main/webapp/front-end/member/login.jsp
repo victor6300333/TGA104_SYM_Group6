@@ -2,10 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO");
-MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +74,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="index.html" class="nav-item nav-link">首頁</a> <a
+						<a href="index.jsp" class="nav-item nav-link">首頁</a> <a
 							href="${pageContext.request.contextPath}/front-end/store/myStore.jsp" class="nav-item nav-link">我的賣場</a>
 
 						<div class="nav-item dropdown">
@@ -101,7 +98,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.jsp"> <img
+						<a href="${pageContext.request.contextPath}/index.jsp"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
@@ -149,7 +146,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 			<div class="row">
 				<div class="col-lg-6">
 					<FORM id="loginForm" METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+						ACTION="${pageContext.request.contextPath}/front-end/member/insert"
 						name="form1">
 						<div class="register-form">
 							<%-- 錯誤表列 --%>
@@ -165,22 +162,22 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 								<div class="col-md-6">
 									<label>姓名</label> <input class="form-control" type="text"
 										name="userName" placeholder="姓名"
-										value="<%=(memVO == null) ? "" : memVO.getUserName()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>帳號</label> <input class="form-control" type="text"
 										name="userAccount" placeholder="帳號"
-										value="<%=(memVO == null) ? "" : memVO.getUserAccount()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>電子信箱</label> <input class="form-control" type="text"
 										name="mail" placeholder="電子信箱"
-										value="<%=(memVO == null) ? "" : memVO.getMail()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>行動電話</label> <input class="form-control" type="text"
 										name="phone" placeholder="行動電話"
-										value="<%=(memVO == null) ? "" : memVO.getPhone()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>密碼</label> <input id="password" class="form-control"
@@ -191,7 +188,6 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 										class="form-control" type="password" placeholder="密碼" />
 								</div>
 								<div class="col-md-12">
-									<input type="hidden" name="action" value="insert"> 
 									<input class="btn" type="submit" value="註冊">
 								</div>
 							</div>
@@ -200,7 +196,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 				</div>
 				<div class="col-lg-6">
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+						ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogin"
 						name="form2">
 						<div class="login-form">
 							<%-- 錯誤表列 --%>
@@ -216,7 +212,7 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 								<div class="col-md-6">
 									<label>電子信箱</label> <input class="form-control" type="text"
 										name="mail" placeholder="電子信箱"
-										value="<%=(memVO2 == null) ? "" : memVO2.getMail()%>" />
+										value="" />
 								</div>
 								<div class="col-md-6">
 									<label>密碼</label> <input class="form-control" type="password"
@@ -230,8 +226,6 @@ MemberVO memVO2 = (MemberVO) request.getAttribute("memVO2");
 									</div>
 								</div>
 								<div class="col-md-6">
-									<input type="hidden" name="action" value="getOne_For_Login">
-									<input type="hidden" name="mail" value="${memVO2.mail}">
 									<input class="btn" type="submit" value="登入">
 								</div>
 								<div class="col-md-6">

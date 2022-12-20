@@ -1,34 +1,36 @@
 package com.group6.tibame104.shoppingGoldRecord.model;
 
-
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
 public class ShoppingGoldRecordService {
 
+	@Autowired
 	private ShoppingGoldRecordDAO_interface dao;
 
-	public ShoppingGoldRecordService() {
-		dao = new ShoppingGoldRecordDAO();
-}
-
-	public ShoppingGoldRecordVO addShoppingGoldRecord( Integer memberID, Timestamp useDate, Integer obtainShoppingCoin, Integer plusOrMinus) {
+	public ShoppingGoldRecordVO addShoppingGoldRecord(Integer memberID, Timestamp useDate, Integer obtainShoppingCoin,
+			Integer plusOrMinus) {
 
 		ShoppingGoldRecordVO shoppingGoldRecordVO = new ShoppingGoldRecordVO();
 
-		
 		shoppingGoldRecordVO.setMemberID(memberID);
 		shoppingGoldRecordVO.setUseDate(useDate);
 		shoppingGoldRecordVO.setObtainShoppingCoin(obtainShoppingCoin);
 		shoppingGoldRecordVO.setPlusOrMinus(plusOrMinus);
-		
-		
+
 		dao.insert(shoppingGoldRecordVO);
 
 		return shoppingGoldRecordVO;
 	}
-	
-	public ShoppingGoldRecordVO updateShoppingGoldRecord(Integer shoppingGoldRecordID, Integer memberID, Timestamp useDate, Integer obtainShoppingCoin, Integer plusOrMinus) {
+
+	public ShoppingGoldRecordVO updateShoppingGoldRecord(Integer shoppingGoldRecordID, Integer memberID,
+			Timestamp useDate, Integer obtainShoppingCoin, Integer plusOrMinus) {
 
 		ShoppingGoldRecordVO shoppingGoldRecordVO = new ShoppingGoldRecordVO();
 
@@ -37,7 +39,7 @@ public class ShoppingGoldRecordService {
 		shoppingGoldRecordVO.setUseDate(useDate);
 		shoppingGoldRecordVO.setObtainShoppingCoin(obtainShoppingCoin);
 		shoppingGoldRecordVO.setPlusOrMinus(plusOrMinus);
-		
+
 		dao.update(shoppingGoldRecordVO);
 
 		return shoppingGoldRecordVO;
