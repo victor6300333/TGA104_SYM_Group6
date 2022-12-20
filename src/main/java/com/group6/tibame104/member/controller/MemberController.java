@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.group6.tibame104.creditCard.model.CreditCardService;
+import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
@@ -38,6 +40,8 @@ public class MemberController {
 	private MemberService memSvc;
 	@Autowired
 	private MailService mailSvc;
+	@Autowired
+	private CreditCardService cardSvc;
 
 	@PostMapping("/getOneForDisplay")
 	public String getOneForDisplay(Model model, @RequestParam("memberID") Integer memberID) {
@@ -479,6 +483,7 @@ public class MemberController {
 
 				memVO = memSvc.loginOneMem(mail);
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+//				System.out.println(memVO);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
 					session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
@@ -487,17 +492,20 @@ public class MemberController {
 			} catch (Exception ignored) {
 			}
 
-			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
-			StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
+//			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
+//			StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
+//
+//			// 有賣場名稱才執行
+//			if (storeVO2 != null && storeVO2.getStoreName() != null) {
+//				String storeName = storeVO2.getStoreName();
+//				session.setAttribute("storeName", storeName);
+//			}
+			List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 
-			// 有賣場名稱才執行
-			if (storeVO2 != null && storeVO2.getStoreName() != null) {
-				String storeName = storeVO2.getStoreName();
-				session.setAttribute("storeName", storeName);
-			}
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
+			session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
+//			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
 		return "/index"; // *工作3:
