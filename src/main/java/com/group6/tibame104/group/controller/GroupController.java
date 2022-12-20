@@ -142,9 +142,10 @@ public class GroupController {
     	model.addAttribute("errorMsgs", errorMsgs);
 
 		GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
-
+		 List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 		model.addAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
+		model.addAttribute("groupproductVOs",groupproductVOs);
 		return "back-end/group/updateGroup";
     }
    @PostMapping("/update")
@@ -155,7 +156,6 @@ public class GroupController {
 		   @RequestParam("administratorID") Integer administratorID,
 		   @RequestParam("groupBuyProductOrderTotal") Integer groupBuyProductOrderTotal,
 		   @RequestParam("groupBuyingState") Boolean groupBuyingState,
-		   @RequestParam("updateTime") Timestamp updateTime,
 		   @RequestParam("groupBuyingOnLoadDate") Timestamp groupBuyingOnLoadDate,
 		   @RequestParam("groupBuyingOffLoadDate") Timestamp groupBuyingOffLoadDate
 		   
@@ -164,10 +164,7 @@ public class GroupController {
 		model.addAttribute("errorMsgs", errorMsgs);
 //時間處理
 		
-		updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String timeStr = df.format(updateTime);
-		updateTime = Timestamp.valueOf(timeStr);
+		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 
 		GroupVO groupVO = new GroupVO();
 
@@ -187,7 +184,6 @@ public class GroupController {
 		}
 
 		/*************************** 2.開始修改資料 *****************************************/
-		GroupService groupSvc = new GroupService();
 		groupVO = groupSvc.updateGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal,
 				groupBuyingState, groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime, groupBuyID);
 
@@ -202,7 +198,6 @@ public class GroupController {
 		   @RequestParam("administratorID") Integer administratorID,
 		   @RequestParam("groupBuyProductOrderTotal") Integer groupBuyProductOrderTotal,
 		   @RequestParam("groupBuyingState") Boolean groupBuyingState,
-		   @RequestParam("updateTime") Timestamp updateTime,
 		   @RequestParam("groupBuyingOnLoadDate") Timestamp groupBuyingOnLoadDate,
 		   @RequestParam("groupBuyingOffLoadDate") Timestamp groupBuyingOffLoadDate
 		   ) {
@@ -213,10 +208,7 @@ public class GroupController {
 		/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
 		// 獲得時間戳記
-		updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String timeStr = df.format(updateTime);
-		updateTime = Timestamp.valueOf(timeStr);
+		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 
 		GroupVO groupVO = new GroupVO();
 
@@ -272,7 +264,8 @@ public class GroupController {
 		   return "front-end/group/listAllGroup";
 	   }
 	   
-	   @GetMapping("getAll")
+	   
+	   @GetMapping("/getAll")
 	   public String getAll(
 			   Model model
 			   ) {
@@ -281,5 +274,25 @@ public class GroupController {
 		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   return "back-end/group/listAllGroup";
+	   }
+	   //取得全部團購商品 for新增
+	   @GetMapping("/getGroupproduct")
+	   public String getGroupproduct(
+			   Model model) {
+		   
+		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		   model.addAttribute("groupproductVOs",groupproductVOs);
+		   
+		   return"back-end/group/addGroup";
+	   }
+	   //取得全部團購商品 for新增
+	   @GetMapping("/getGroupproduct2")
+	   public String getGroupproduct2(
+			   Model model) {
+		   
+		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		   model.addAttribute("groupproductVOs",groupproductVOs);
+		   
+		   return"back-end/group/updateGroup";
 	   }
 }

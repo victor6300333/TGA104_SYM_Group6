@@ -163,7 +163,7 @@ public class GroupproductController {
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			model.addAttribute("groupproductVO", groupproductVO); // 資料庫update成功後,正確的的empVO物件,存入req
 		 
-		 return "/back-end/groupproduct/listAllGroupProducts";
+		 return getAll(model);
 	 }
 	 @PostMapping("insert")
 	 public String insert(
@@ -203,6 +203,22 @@ public class GroupproductController {
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 		 
-		 return "back-end/groupproduct/listAllGroupProducts";
+		 return getAll(model);
+	 }
+	 @PostMapping("delete")
+	 public String delete(
+			 Model model,
+			 @RequestParam("groupBuyProductID") Integer groupBuyProductID
+			 ) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			model.addAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 2.開始刪除資料 ***************************************/
+			groupproductSvc.deleteGroupproduct(groupBuyProductID);
+
+			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+		 
+		 return getAll(model);
 	 }
 }

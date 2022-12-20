@@ -7,7 +7,7 @@ function searchFunction() {
     tr = document.getElementsByTagName("tr");
     //console.log(tr);
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[2];
+        td = tr[i].getElementsByTagName("td")[1];
         //console.log(td);
         if (td) {
             txtValue = td.textContent || td.innerText;
