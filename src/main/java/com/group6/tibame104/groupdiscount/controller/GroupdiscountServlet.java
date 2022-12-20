@@ -230,7 +230,7 @@ public class GroupdiscountServlet extends HttpServlet {
 					
 					/***************************2.開始新增資料***************************************/
 					GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-					groupdiscountVO = groupdiscountSvc.addGroupDiscount(groupBuyID, groupBuyProductOrderTotal,groupBuyCount);
+					groupdiscountVO = groupdiscountSvc.addGroupdiscount(groupBuyID, groupBuyProductOrderTotal,groupBuyCount);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					String url = "/back-end/groupdiscount/listAllGroupDiscount.jsp";
