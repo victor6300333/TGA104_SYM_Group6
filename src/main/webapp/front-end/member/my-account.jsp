@@ -110,7 +110,7 @@
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
 							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
 							alt="" style="width: 40px; height: 40px" /> ${memVO.userName}
@@ -494,7 +494,7 @@
 						<div class="tab-pane fade active show" id="account-tab"
 							role="tabpanel" aria-labelledby="account-nav">
 							<FORM METHOD="post"
-								ACTION="${pageContext.request.contextPath}/member/MemberServlet"
+								ACTION="${pageContext.request.contextPath}/front-end/member/updateOne"
 								enctype="multipart/form-data" name="form1">
 								<h4>帳戶明細</h4>
 								<%-- 錯誤表列 --%>
@@ -512,36 +512,36 @@
 											<div class="col-md py-1">
 												<label>姓名</label> <input class="form-control" type="text"
 													name="userName" placeholder="姓名"
-													value="" />
+													value="${(memVO.userName == null) ? '' : memVO.userName}" />
 											</div>
 											<div class="col-md py-1">
 												<label>帳號</label> <input class="form-control" type="text"
 													name="userAccount" placeholder="帳號"
-													value="" />
+													value="${(memVO.userAccount == null) ? '' : memVO.userAccount}" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
 												<label>手機號碼</label> <input class="form-control" type="text"
 													name="phone" placeholder="手機號碼"
-													value="" />
+													value="${(memVO.phone == null) ? '' : memVO.phone}" />
 											</div>
 											<div class="col-md py-1">
 												<label>電子信箱</label> <input class="form-control" type="text"
 													name="mail" placeholder="電子信箱"
-													value="" />
+													value="${(memVO.mail == null) ? '' : memVO.mail}" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
 												<label>身分證號</label> <input class="form-control" type="text"
 													name="idNumber" placeholder="身分證號"
-													value="" />
+													value="${(memVO.idNumber == null) ? '' : memVO.idNumber}" />
 											</div>
 											<div class="col-md py-1">
 												<label>地址</label> <input class="form-control" type="text"
 													name="address" placeholder="地址"
-													value="" />
+													value="${(memVO.address == null) ? '' : memVO.address}" />
 											</div>
 										</div>
 
@@ -551,7 +551,6 @@
 										<br> <br> <br> <br> <br>
 										<div class="row">
 											<div class="col-md py-1">
-												<input type="hidden" name="action" value="updateOne">
 												<input type="hidden" name="memberID"
 													value="${memVO.memberID}">
 												<input class="btn" type="submit" value="更新資料"> <br />
