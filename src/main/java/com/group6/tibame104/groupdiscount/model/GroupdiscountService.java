@@ -2,16 +2,19 @@ package com.group6.tibame104.groupdiscount.model;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
 public class GroupdiscountService {
+	@Autowired
 	private GroupdiscountDAO_interface dao;
-
-	public GroupdiscountService() {
-		dao = new GroupdiscountJDBCDAO();
-	}
-
+	
 	// 新增
-	public GroupdiscountVO addGroupDiscount(Integer groupBuyID, Integer groupBuyProductOrderTotal,
+	public GroupdiscountVO addGroupdiscount(Integer groupBuyID, Integer groupBuyProductOrderTotal,
 			Double groupBuyCount) {
 
 		GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
@@ -65,4 +68,5 @@ public class GroupdiscountService {
 	public void deleteGroupdiscount(Integer countTableID) {
 		dao.delete(countTableID);
 	}
+
 }

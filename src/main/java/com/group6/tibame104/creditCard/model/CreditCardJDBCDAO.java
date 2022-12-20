@@ -89,9 +89,10 @@ public class CreditCardJDBCDAO implements CreditCardDAO_interface {
 		CreditCardVO ceditCardVO = null;
 		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+			pstmt.setInt(1, memberID);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<CreditCardVO> list = new ArrayList<CreditCardVO>();
-				pstmt.setInt(1, memberID);
+
 				while (rs.next()) {
 
 					ceditCardVO = new CreditCardVO();

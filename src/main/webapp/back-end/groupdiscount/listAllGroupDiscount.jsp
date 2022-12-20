@@ -37,25 +37,25 @@
 
 <!-- Libraries Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/groupdiscount/lib/owlcarousel/assets/owl.carousel.min.css"
+	href="${pageContext.request.contextPath}/back-end/groupdiscount/lib/owlcarousel/assets/owl.carousel.min.css"
 	rel="stylesheet" />
 <link
-	href="<%=request.getContextPath()%>/back-end/groupdiscount/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+	href="${pageContext.request.contextPath}/back-end/groupdiscount/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
 	rel="stylesheet" />
 
 <!-- Customized Bootstrap Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/groupdiscount/css/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/back-end/groupdiscount/css/bootstrap.min.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
 <link
-	href="<%=request.getContextPath()%>/back-end/groupdiscount/css/style.css"
+	href="${pageContext.request.contextPath}/back-end/groupdiscount/css/style.css"
 	rel="stylesheet" />
 
 <!--Admin-->
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/groupdiscount//css/admin.css" />
+	href="${pageContext.request.contextPath}/back-end/groupdiscount//css/admin.css" />
 </head>
 
 <body>
@@ -137,13 +137,13 @@
 							data-bs-toggle="dropdown"><i class="fa fa-table me-2"></i>團購管理</a>
 						<div class="dropdown-menu bg-transparent border-0 show">
 						<a
-								href="<%=request.getContextPath()%>/back-end/grouporder/listAllGroupOrder.jsp"
+								href="${pageContext.request.contextPath}/back-end/grouporder/listAllGroupOrder.jsp"
 								class="dropdown-item">團購訂單管理</a>
 								<a
-								href="<%=request.getContextPath()%>/back-end/group/listAllGroup.jsp"
+								href="${pageContext.request.contextPath}/back-end/group/listAllGroup.jsp"
 								class="dropdown-item">團購管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
-								 <a href="<%=request.getContextPath()%>/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
+								 <a href="href="${pageContext.request.contextPath}/back-end/groupproduct/listAllGroupProducts.jsp" class="dropdown-item">商品管理</a>
+								 <a href="href="${pageContext.request.contextPath}/back-end/groupdiscount/listAllGroupDiscount.jsp" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -287,7 +287,7 @@
 					<div class="d-flex align-items-center justify-content-between mb-4">
 						<a
 							class="btn btn-sm card-header sym-darkpurple sym-yellow-font font-m btn_style"
-							href="<%=request.getContextPath()%>/back-end/groupdiscount/addGroupDiscount.jsp">新增折扣</a>
+							href="${pageContext.request.contextPath}/back-end/groupdiscount/addGroupDiscount.jsp">新增折扣</a>
 					</div>
 					<div class="table-responsive">
 					            <input class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()">
@@ -319,7 +319,7 @@
 
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/front-end/groupdiscount/Groupdiscount.do"
+													ACTION="${pageContext.request.contextPath}/front-end/groupdiscount/Groupdiscount.do"
 													style="margin-bottom: 0px;">
 													<input type="submit" class="btn sym-darkpurple sym-yellow-font btn_style" value="修改"> <input
 														type="hidden" name="countTableID"
@@ -329,7 +329,7 @@
 											</td>
 											<td>
 												<FORM METHOD="post"
-													ACTION="<%=request.getContextPath()%>/front-end/groupdiscount/Groupdiscount.do"
+													ACTION="${pageContext.request.contextPath}/front-end/groupdiscount/Groupdiscount.do"
 													style="margin-bottom: 0px;">
 													<input type="submit" class="btn sym-darkpurple sym-yellow-font btn_style" value="刪除" > <input
 														type="hidden" name="countTableID"
@@ -384,27 +384,27 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/chart/chart.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/chart/chart.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/waypoints/waypoints.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/waypoints/waypoints.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/owlcarousel/owl.carousel.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/owlcarousel/owl.carousel.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/tempusdominus/js/moment.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/tempusdominus/js/moment.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/tempusdominus/js/moment-timezone.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/tempusdominus/js/moment-timezone.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/js/main.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/main.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/js/admin.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/admin.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/groupdiscount/js/search.js"></script>
+		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/search.js"></script>
 </body>
 
 </html>
