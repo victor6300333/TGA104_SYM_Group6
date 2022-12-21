@@ -9,8 +9,6 @@
 <%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
 
-<%-- 此頁練習採用 EL 的寫法取值 --%>
-
 <%
 Object account = session.getAttribute("mail"); // 從 session內取出 (key) account的值
 if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下工作
@@ -65,24 +63,7 @@ if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下�
 </head>
 
 <body>
-	<!-- Top bar Start -->
-	<!-- <div class="top-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <i class="fa fa-envelope"></i>
-                        support@email.com
-                    </div>
-                    <div class="col-sm-6">
-                        <i class="fa fa-phone-alt"></i>
-                        +012-345-6789
-                    </div>
-                </div>
-            </div>
-        </div> -->
-	<!-- Top bar End -->
 
-	<!-- Nav Bar Start -->
 	<div class="nav">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -183,14 +164,13 @@ if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下�
 				<div class="row">
 					<div class="col-lg">
 						<div class="register-form">
-							<h4>請填寫以下資料</h4>
+							<h4>請填寫訂單資訊</h4>
 							<br />
 							<div class="row">
 								<div class="col-6">
 									<div class="col">
 										<label>會員名稱</label> <input class="form-control" type="text"
 											placeholder="會員名稱"
-											<%--                   value="<%= (grouporderVO==null)? "1" : MemberVO.getUserName()%>" --%>
 										 value="${memVO.userName}"
 											readonly />
 									</div>
@@ -208,8 +188,7 @@ if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下�
 										</div>
 										<input class="form-control" type="text" id="contactNumber"
 											name="contactNumber"
-											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getPhone() : ""%>" --%>
-										value=""
+											value=""
 											placeholder="聯絡電話" />
 									</div>
 								</div>
@@ -238,8 +217,7 @@ if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下�
 										<select id="area" name="area" style="display: none;">
 											<option value="">請選擇</option>
 										</select> <input id="shippingLocation" name="shippingLocation"
-											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getAddress() : ""%>" --%>
-										value=""
+											value=""
 											class="form-control" type="text" placeholder="寄送地址" />
 									</div>
 								</div>

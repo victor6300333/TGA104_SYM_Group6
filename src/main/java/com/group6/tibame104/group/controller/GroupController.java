@@ -1,7 +1,6 @@
 package com.group6.tibame104.group.controller;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -256,7 +255,6 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		   
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
@@ -264,7 +262,7 @@ public class GroupController {
 		   return "front-end/group/listAllGroup";
 	   }
 	   
-	   
+	   //後台團購主頁用
 	   @GetMapping("/getAll")
 	   public String getAll(
 			   Model model
@@ -274,6 +272,17 @@ public class GroupController {
 		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   return "back-end/group/listAllGroup";
+	   }
+	 //團購主頁用
+	   @GetMapping("/index1")
+	   public String index(
+			   Model model
+			   ) {
+		   List<GroupVO> groupVOs = groupSvc.getAll();
+		   model.addAttribute("groupVOs",groupVOs);
+		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		   model.addAttribute("groupproductVOs",groupproductVOs);
+		   return "front-end/group/index";
 	   }
 	   //取得全部團購商品 for新增
 	   @GetMapping("/getGroupproduct")

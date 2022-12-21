@@ -215,7 +215,7 @@
 						<c:forEach var="groupVO" items="${groupVOs}">
 							<c:forEach var="groupproductVO" items="${groupproductVOs}">
 								<c:if
-									test="${(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID)}"
+									test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }"
 									var="cc">
 									<div class="col-md-4">
 										<form id="msform" METHOD="post" class="col-md-12"
@@ -277,14 +277,14 @@
 															<c:choose>
 																<c:when
 																	test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
-																	<li class="active" ><i>${Math.ceil(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 人</li>
+																	<li class="active" ><i>${(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 個</li>
 
 																</c:when>
 
 																<c:otherwise>
-																	<li class=""><i>${Math.ceil(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >人</li>
+																	<li class=""><i>${(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
+																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >個</li>
 																</c:otherwise>
 															</c:choose>
 														</c:if>

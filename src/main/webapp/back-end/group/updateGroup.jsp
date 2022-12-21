@@ -226,6 +226,8 @@
 </style>
 
 <script>
+$(document).ready(function () {
+	
 if(${groupVO.groupBuyingState}){
 	document.querySelector('input[ID="Choice1"]').checked = true;
 }else{
@@ -233,7 +235,23 @@ if(${groupVO.groupBuyingState}){
 };
 
 
+// if($("#groupBuyProductID").find("option").val() == ${groupVO.groupBuyProductID}){
+// 	console.log("123")
+// }else{
+// 	console.log("333")
+// }
 
+$("option:contains('${groupVO.groupBuyProductID}')").map(function(){if($(this).text() == ${groupVO.groupBuyProductID}){
+	
+// 	console.log(this)
+	$(this).prop("selected",true);
+		
+}})
+	
+	
+})
+// console.log($('option:contains("${groupVO.groupBuyProductID}")'))
+// console.log(${groupVO.groupBuyProductID})
 $.datetimepicker.setLocale('zh');
 $('#f_date1').datetimepicker({
    theme: '',              //theme: 'dark',
