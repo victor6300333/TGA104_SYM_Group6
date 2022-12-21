@@ -23,7 +23,7 @@ OrderVO orderVO_orderID = (OrderVO)request.getAttribute("orderVO_orderID");
 
 <!-- Favicon -->
 <link
-	href="${pageContext.request.contextPath}/back-end/order/img/logoSYM.jpg"
+	href="${pageContext.request.contextPath}/front-end/order/img/logoSYM.jpg"
 	rel="icon" />
 
 <!-- Google Fonts -->
@@ -39,18 +39,18 @@ OrderVO orderVO_orderID = (OrderVO)request.getAttribute("orderVO_orderID");
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/back-end/order/lib/slick/slick.css"
+	href="${pageContext.request.contextPath}/front-end/order/lib/slick/slick.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/back-end/order/lib/slick/slick-theme.css"
+	href="${pageContext.request.contextPath}/front-end/order/lib/slick/slick-theme.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
 
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/back-end/order/css/style.css" />
+	href="${pageContext.request.contextPath}/front-end/order/css/style.css" />
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/back-end/order/css/woody.css" />
+	href="${pageContext.request.contextPath}/front-end/order/css/woody.css" />
 
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
@@ -243,7 +243,7 @@ OrderVO orderVO_orderID = (OrderVO)request.getAttribute("orderVO_orderID");
 									
 									<tr>
 
-										<td><%=orderVO_orderID.getOrderID()%></td>
+										<td>${orderID} </td>
 										<td><%=orderVO_orderID.getStoreID()%></td>
 										<td><%=orderVO_orderID.getStoreName()%></td>
 										<td><%=orderVO_orderID.getMemberID()%></td>

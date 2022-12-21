@@ -28,7 +28,7 @@ public class OrderService {
 	
 		return dao.getbyOrderID(orderID);
 	}
-	public List<OrderVO> getAllOrderByComposite(Map<String, String[]> map ) {
+	public List<OrderVO> getAllOrderByComposite(Map<String, String> map ) {
 		
 
 		return  dao.getAllByComposite( map );
