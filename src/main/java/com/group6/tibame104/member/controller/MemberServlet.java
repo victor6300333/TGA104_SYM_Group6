@@ -38,8 +38,6 @@ public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private MemberService memSvc;
-	@Autowired
-	private MailService mailSvc;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -347,6 +345,7 @@ public class MemberServlet extends HttpServlet {
 			String messageText = "Hello! " + mail + " 此次驗證碼: " + passRandom + "\n" + "請使用此驗證碼進行註冊流程" + "\n"
 					+ "此驗證碼只保留五分鐘";
 
+			MailService mailSvc = new MailService();
 			mailSvc.sendMail(mail, subject, messageText);
 
 			// 存進Redis裏
@@ -696,6 +695,7 @@ public class MemberServlet extends HttpServlet {
 			String messageText = "Hello! " + username + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
 					+ "請使用此密碼進行登入及修改密碼";
 
+			MailService mailSvc = new MailService();
 			mailSvc.sendMail(tomail, subject, messageText);
 		}
 
