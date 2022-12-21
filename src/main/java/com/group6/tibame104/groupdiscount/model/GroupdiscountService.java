@@ -28,6 +28,8 @@ public class GroupdiscountService {
 		return groupdiscountVO;
 	}
 
+	
+	
 	// 修改
 	public GroupdiscountVO updateGroupdiscount(Integer countTableID, Integer groupBuyID, Integer groupBuyProductOrderTotal,
 			Double groupBuyCount) {
@@ -42,31 +44,41 @@ public class GroupdiscountService {
 		dao.update(groupdiscountVO);
 		return groupdiscountVO;
 	}
-
-	// 單一查詢
-	public GroupdiscountVO getOneGroupdiscount(Integer countTableID) {
-		return dao.findByPrimaryKey(countTableID);
-	}
-	// 
-		public List<GroupdiscountVO> getAllCount(Integer groupBuyID) {
-			return dao.getAllCount(groupBuyID);
-		}
-
-	// 查詢全部
-	public List<GroupdiscountVO> getAll() {
-		return dao.getAll();
-	}
-	//只找groupID不重複
-	public List<GroupdiscountVO> getGroupBuyID() {
-		return dao.getGroupBuyID();
-	}
-	// 查詢全部
-	public List<GroupdiscountVO> getCountTable(Integer groupBuyID) {
-		return dao.getCountTable(groupBuyID);
-	}
 	
+	
+	
+	//刪除
 	public void deleteGroupdiscount(Integer countTableID) {
 		dao.delete(countTableID);
 	}
+
+	
+	
+	// 單一查詢
+	public GroupdiscountVO getByPK(Integer countTableID) {
+		return dao.findByPK(countTableID);
+	}
+	
+	
+	
+	// 依CountTableID查詢
+	public List<GroupdiscountVO> getAllByGroupBuyID(Integer groupBuyID) {
+		return dao.findAllByGroupBuyID(groupBuyID);
+		}
+
+	
+	
+	// 查詢全部
+	public List<GroupdiscountVO> getAll() {
+		return dao.findAll();
+	}
+//	//只找groupID不重複
+//	public List<GroupdiscountVO> getGroupBuyID() {
+//		return dao.getAllByGroupBuyID();
+//	}
+	
+//	public List<GroupdiscountVO> getAllByCountTableID(Integer groupBuyID) {
+//		return dao.getAllByCountTableID(groupBuyID);
+//	}
 
 }
