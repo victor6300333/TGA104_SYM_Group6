@@ -20,6 +20,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MailService {
 	private final static String HOST = "smtp.gmail.com";
 	private final static String AUTH = "true";
@@ -47,7 +50,7 @@ public class MailService {
 			}
 		};
 
-		Session session = Session.getDefaultInstance(props, authenticator);
+		Session session = Session.getInstance(props, authenticator);
 		Message message = new MimeMessage(session);
 
 		try {

@@ -38,6 +38,8 @@ import redis.clients.jedis.Jedis;
 public class MemberController {
 	@Autowired
 	private MemberService memSvc;
+	@Autowired
+	private MailService mailSvc;
 
 	@Autowired
 	private CreditCardService cardSvc;
@@ -294,7 +296,6 @@ public class MemberController {
 
 		String messageText = "Hello! " + mail + " 此次驗證碼: " + passRandom + "\n" + "請使用此驗證碼進行註冊流程" + "\n" + "此驗證碼只保留五分鐘";
 
-		MailService mailSvc = new MailService();
 		mailSvc.sendMail(mail, subject, messageText);
 
 		// 存進Redis裏
@@ -359,11 +360,6 @@ public class MemberController {
 		mailCertification = true;// 驗證成功
 		session.setAttribute("memVO", memVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//		PrintWriter out = res.getWriter();
-//		out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
-//	      + "/front-end/member/register2'>");
-//	    out.println("<script> alert('註冊成功!');</script>");
-		String url = "/front-end/member/register2";
 		return "/front-end/member/register2";
 
 	}
@@ -583,7 +579,6 @@ public class MemberController {
 		String messageText = "Hello! " + username + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
 				+ "請使用此密碼進行登入及修改密碼";
 
-		MailService mailSvc = new MailService();
 		mailSvc.sendMail(mail, subject, messageText);
 
 		return "front-end/member/login";
