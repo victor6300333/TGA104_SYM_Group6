@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +104,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img
+						<a href="index.jsp"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
@@ -152,7 +149,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 
 	<!-- register Start -->
 	<form id="msform" METHOD="post"
-		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+		ACTION="${pageContext.request.contextPath}/front-end/member/forgetPassword"
 		name="form1">
 
 		<ul id="progressbar">
@@ -174,8 +171,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 				</ul>
 			</c:if>
 			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" />
-			<input type="hidden" name="action" value="forgetPassword"><input
-				id="forgetPass"  name="next" type="submit"
+			<input id="forgetPass"  name="next" type="submit"
 				class="next action-button" value="驗證" />
 		</fieldset>
 		<fieldset id="forgetpass2">

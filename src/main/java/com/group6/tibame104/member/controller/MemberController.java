@@ -40,6 +40,7 @@ public class MemberController {
 	private MemberService memSvc;
 	@Autowired
 	private MailService mailSvc;
+
 	@Autowired
 	private CreditCardService cardSvc;
 
@@ -359,11 +360,6 @@ public class MemberController {
 		mailCertification = true;// 驗證成功
 		session.setAttribute("memVO", memVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//		PrintWriter out = res.getWriter();
-//		out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
-//	      + "/front-end/member/register2'>");
-//	    out.println("<script> alert('註冊成功!');</script>");
-		String url = "/front-end/member/register2";
 		return "/front-end/member/register2";
 
 	}
@@ -523,32 +519,32 @@ public class MemberController {
 	}
 
 	@PostMapping("/forgetPassword")
-	public String forgetPassword(HttpSession session, Model model, @RequestParam("mail") String mail) {
+	public String forgetPassword(Model model, @RequestParam("mail") String mail) {
 
-		List<String> errorMsgs1 = new LinkedList<String>();
+		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
-		model.addAttribute("errorMsgs1", errorMsgs1);
+		model.addAttribute("errorMsgs", errorMsgs);
 
 		/*************************** 1.接收請求參數 ****************************************/
 		String mailReg = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z]+$";
 		if (mail == null || mail.trim().length() == 0) {
-			errorMsgs1.add("使用者信箱: 請勿空白");
+			errorMsgs.add("使用者信箱: 請勿空白");
 		} else if (!mail.trim().matches(mailReg)) { // 以下練習正則(規)表示式(regular-expression)
-			errorMsgs1.add("請輸入正確的信箱格式！");
+			errorMsgs.add("請輸入正確的信箱格式！");
 		}
 
 		MemberVO memVO = new MemberVO();
 		memVO.setMail(mail);
 
 		if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
-			errorMsgs1.add("使用者信箱錯誤或查無此信箱");
+			errorMsgs.add("使用者信箱錯誤或查無此信箱");
 
 		}
 
-		if (!errorMsgs1.isEmpty()) {
+		if (!errorMsgs.isEmpty()) {
 			model.addAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/front-end/member/login"; // 程式中斷
+			return "/front-end/member/forgetPassword"; // 程式中斷
 		}
 
 		// 產生亂數密碼
@@ -569,7 +565,6 @@ public class MemberController {
 		}
 
 		// 取得該會員所有資料
-		MemberService memSvc = new MemberService();
 		memVO = memSvc.loginOneMem(mail);
 
 		// 把該會員的亂數密碼在資料庫做更新
