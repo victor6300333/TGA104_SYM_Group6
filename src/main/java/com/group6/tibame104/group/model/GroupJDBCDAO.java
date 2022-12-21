@@ -132,12 +132,13 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	}
 
 	public List<GroupVO> getAll() {
-		List<GroupVO> list = new ArrayList<GroupVO>();
 
 		try (Connection con = dataSource.getConnection();
 			 PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				List<GroupVO> list = new ArrayList<GroupVO>();
 
 				while (rs.next()) {
 					GroupVO groupVO = new GroupVO();

@@ -78,7 +78,7 @@
 										<tr>
 											<th scope="row">${grouporderVO.groupBuyOrderID}</th>
 											<td>${grouporderVO.groupBuyID}</td>
-											<td>${grouporderVO.memberID}</td>
+											<td style="color: red">${grouporderVO.memberID}</td>
 											<td>${grouporderVO.groupBuyProductID}</td>
 											<td>${grouporderVO.groupBuyQuantity}</td>
 											<td>${grouporderVO.groupBuyTotal}</td>
