@@ -8,6 +8,8 @@ public class OrderVO {
 	private Integer storeID ;
 	private String storeName ;
 	private Integer memberID ;
+	private String userAccount;
+	
 	private Timestamp orderDate ;
 	private Integer orderStatus;
 	private String receiver;
@@ -20,7 +22,14 @@ public class OrderVO {
 	private Integer useShoppingGold;
 	private Integer useCouponGold;
 	private Integer finalTotal;
-    
+	
+	
+    public String getUserAccount() {
+		return userAccount;
+	}
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
 	public String getStoreName() {
 		return storeName;
 	}

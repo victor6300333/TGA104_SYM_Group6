@@ -1,21 +1,32 @@
 package com.group6.tibame104.orderlist.model;
 
+import com.group6.tibame104.order.model.OrderService;
+import com.group6.tibame104.order.model.OrderVO;
+
 public class OrderlistVO {
-	Integer orderDetailID;
-	Integer orderID;
-    Integer productID;
-    String productName;
-	Integer quantity;
-    Integer price;
-    Integer subTotal;
-    String shopReview;
-    String shopComment;
-    String buyerReview;
-    String buyerComment;
+	private Integer orderDetailID;
+	private Integer orderID;
+	private Integer productID;
+	private String productName;
+	private Integer quantity;
+	private Integer price;
+	private Integer subTotal;
+	private String shopReview;
+	private String shopComment;
+	private String buyerReview;
+	private String buyerComment;
+	
+	
     
   
     
-    public String getProductName() {
+    public OrderVO getOrderVO() {
+    	OrderService orderSvc = new OrderService();
+    	OrderVO orderVO = orderSvc.getOrder(orderID);
+		return orderVO;
+	}
+	
+	public String getProductName() {
 		return productName;
 	}
 	public void setProductName(String productName) {

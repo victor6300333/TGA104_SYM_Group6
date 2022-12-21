@@ -69,6 +69,7 @@
 		<p>賣場編號:<%=ordervo.getStoreID()%></p>
 		<p>賣場名稱:<%=ordervo.getStoreName()%></p>
 		<p>會員編號:<%=ordervo.getMemberID()%></p>
+		<p>會員帳號:<%=ordervo.getUserAccount()%></p>
 		<p>訂單日期:<%=ordervo.getOrderDate()%></p>
 		<p>訂單狀態:<%=ordervo.getOrderStatus()%></p>
 		<p>收件者:<%=ordervo.getReceiver()%></p>

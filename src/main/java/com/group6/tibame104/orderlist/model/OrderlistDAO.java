@@ -27,7 +27,7 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	private static final String UPDATE = 
 		"UPDATE orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
 	
-	private static final String GET_ONE_STMT_PRODUCT = "SELECT productID, buyerReview, buyerComment"
+	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderID, productID, buyerReview, buyerComment"
 		     + " FROM orderDetail where productID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
@@ -278,6 +278,7 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO = new OrderlistVO();
 					
 							
+				orderlistVO.setOrderID(rs.getInt("orderID"));
 				orderlistVO.setProductID(rs.getInt("productID"));
 			
 				orderlistVO.setBuyerReview(rs.getString("buyerReview"));

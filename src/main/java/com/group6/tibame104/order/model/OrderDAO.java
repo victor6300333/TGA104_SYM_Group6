@@ -24,7 +24,7 @@ public class OrderDAO implements OrderDAO_interface {
 	@Autowired
 	private DataSource dataSource;
 
-	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, "
+	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, userAccount "
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
 			+ "address, payType, couponID, originalTotal, useShoppingGold, useCouponGold, finalTotal) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
@@ -44,18 +44,19 @@ public class OrderDAO implements OrderDAO_interface {
 			pstmt.setInt(1, orderVO.getStoreID());
 			pstmt.setString(2, orderVO.getStoreName());
 			pstmt.setInt(3, orderVO.getMemberID());
-			pstmt.setTimestamp(4, orderVO.getOrderDate());
-			pstmt.setInt(5, orderVO.getOrderStatus());
-			pstmt.setString(6, orderVO.getReceiver());
-			pstmt.setString(7, orderVO.getPhone());
-			pstmt.setString(8, orderVO.getCreditcardNumber());
-			pstmt.setString(9, orderVO.getAddress());
-			pstmt.setString(10, orderVO.getPayType());
-			pstmt.setInt(11, orderVO.getCouponID());
-			pstmt.setInt(12, orderVO.getOriginalTotal());
-			pstmt.setInt(13, orderVO.getUseShoppingGold());
-			pstmt.setInt(14, orderVO.getUseCouponGold());
-			pstmt.setInt(15, orderVO.getFinalTotal());
+			pstmt.setString(4, orderVO.getUserAccount());
+			pstmt.setTimestamp(5, orderVO.getOrderDate());
+			pstmt.setInt(6, orderVO.getOrderStatus());
+			pstmt.setString(7, orderVO.getReceiver());
+			pstmt.setString(8, orderVO.getPhone());
+			pstmt.setString(9, orderVO.getCreditcardNumber());
+			pstmt.setString(10, orderVO.getAddress());
+			pstmt.setString(11, orderVO.getPayType());
+			pstmt.setInt(12, orderVO.getCouponID());
+			pstmt.setInt(13, orderVO.getOriginalTotal());
+			pstmt.setInt(14, orderVO.getUseShoppingGold());
+			pstmt.setInt(15, orderVO.getUseCouponGold());
+			pstmt.setInt(16, orderVO.getFinalTotal());
 			pstmt.executeUpdate();
 
 			// 掘取對應的自增主鍵值
