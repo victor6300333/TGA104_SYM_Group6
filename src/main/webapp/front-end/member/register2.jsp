@@ -192,7 +192,11 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Con
 								</div>
 								<div class="col-6">
 									<div class="col">
-										<label>地址</label> <input class="form-control shop_text"
+										<select id="city" name="city">
+											<option value="">請選擇</option>
+										</select> <select id="area" name="area" style="display: none;">
+											<option value="">請選擇</option>
+										</select> <label>地址</label> <input id = "address" class="form-control shop_text"
 											type="text" name="address" placeholder="地址" />
 									</div>
 								</div>
@@ -374,5 +378,71 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Con
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+		<script>
+
+		$(document).ready(function(){
+
+			//第一層選單
+		    $.ajax({
+		        url: 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',              
+		        type: "get",
+				dataType: "json",
+		        success: function (data) {
+					console.log(data);
+					$.each(data,function(key,value){
+						console.log(key,value)
+						$('#city').append('<option value="'+key+'">'+data[key].CityName+'</option>')
+					})
+				},
+		        error: function (data) {
+		            alert("fail");
+		        }
+		    });
+				
+			//第二層選單
+			$("#city").change(function(){
+				cityvalue=$("#city").val();  //取值
+				$("#area").empty(); //清空上次的值
+				$("#area").css("display","inline"); //顯現
+				$.ajax({
+					url:'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+					type:"get",
+					dataType:"json",
+					success:function(data){
+					
+						eachval=data[cityvalue].AreaList; //鄉鎮
+						
+						$.each(eachval,function(key,value){
+							$('#area').append('<option value="'+key+'">'+eachval[key].AreaName+'</option>')
+						});
+					},
+					error:function(){
+						alert("fail");
+					}
+					
+				});
+			});
+		});
+		//選完後跳出選擇值
+			$("#area").change(function(){
+				cityvalue=$("#city").val();  //縣市
+				areavalue=$("#area").val();  //鄉鎮
+				$.ajax({
+					url:'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+					type:"get",
+					dataType:"json",
+					success:function(data){
+						$("#address").val(data[cityvalue].CityName+data[cityvalue].AreaList[areavalue].AreaName);
+					},
+					error:function(){
+						alert("fail");
+					}
+					
+				});
+				
+			})
+		
+		
+		</script>
 </body>
 </html>

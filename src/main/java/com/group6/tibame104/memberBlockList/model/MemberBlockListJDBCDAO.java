@@ -58,9 +58,9 @@ public class MemberBlockListJDBCDAO implements MemberBlockListDAO_interface {
 		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);
 
 		) {
+			pstmt.setInt(1, memberID);
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<ViewMemberBlockListVO> list = new ArrayList<ViewMemberBlockListVO>();
-				pstmt.setInt(1, memberID);
 				while (rs.next()) {
 					viewMemberBlockListVO = new ViewMemberBlockListVO();
 					viewMemberBlockListVO.setStoreName(rs.getString("storeName"));
