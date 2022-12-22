@@ -1,6 +1,7 @@
 package com.group6.tibame104.group.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -256,14 +257,23 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		 for(int i = 0; i <= groupVOs.size();i++) {
-			 for(int j = 0; j<= groupproductVOs.size(); j++ ) {
-				 
-				 if(groupVOs.get(i).getGroupBuyProductID() == groupproductVOs.get(j).getGroupBuyProductID()) {
-					 
-				 }
-			 }
-		 }
+		  
+		  
+//		  List<GroupVO> list = new ArrayList<GroupVO>();
+//		  List<GroupproductVO> list2 = new ArrayList<GroupproductVO>();
+//		  
+//		 for(int i = 0; i < groupVOs.size();i++) {
+//			 for(int j = 0; j< groupproductVOs.size(); j++ ) {
+//				 
+//				 if(groupVOs.get(i).getGroupBuyProductID() == groupproductVOs.get(j).getGroupBuyProductID()) {
+//					
+//					 System.out.println(i);
+//					 list.add(groupVOs.get(i));
+//					 System.out.println(j);
+//					 list2.add(groupproductVOs.get(j));
+//				 }
+//			 }
+//		 }
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
