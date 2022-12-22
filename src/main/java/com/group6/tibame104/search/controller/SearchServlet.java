@@ -12,15 +12,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.group6.tibame104.orderlist.model.OrderlistService;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 import com.group6.tibame104.product.model.ProductVO;
 import com.group6.tibame104.product.service.ProductService;
 
-
+@Component
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	private OrderlistService orderlistSvc;
+	
+	
     
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 			doPost(req,res);
@@ -112,7 +119,7 @@ public class SearchServlet extends HttpServlet {
 			 * 如果報錯 轉去 addProduct 頁面
 			 */
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct");
 				try {
 					failureView.forward(req, res);
 				} catch (Exception e) {
@@ -125,12 +132,13 @@ public class SearchServlet extends HttpServlet {
 			 * 
 			 */
 			ProductVO productVO = new ProductService().findByPrimaryKey(productID);
-			List<OrderlistVO> list = new OrderlistService().findByProductID(productID);
+			List<OrderlistVO> list = orderlistSvc.findByProductID(productID);
 			/*
 			 * 導向 listOneProduct頁面
 			 */
 			req.setAttribute("productVO", productVO);
 			req.setAttribute("list", list);
+
 			String url = "/front-end/product_detail/product_detail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

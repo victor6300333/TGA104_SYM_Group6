@@ -220,34 +220,34 @@ $('#f_date1').datetimepicker({
    theme: '',              //theme: 'dark',
     timepicker:false,       //timepicker:true,
     step: 60,                //step: 60 (這是timepicker的預設間隔60分鐘)
-    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+    format:'Y-m-d 00:00:00',         //format:'Y-m-d H:i:s',
 	   value: '${groupBuyingOnLoadDate}',
 // value:   new Date(),
 //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 //startDate:	            '2017/07/10',  // 起始日
-//minDate:               '-1970-01-01', // 去除今日(不含)之前
+minDate:               '-1970-01-01', // 去除今日(不含)之前
 //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 });
-$.datetimepicker.setLocale('zh');
-$('#f_date2').datetimepicker({
-   theme: '',              //theme: 'dark',
-    timepicker:false,       //timepicker:true,
-    step: 60,                //step: 60 (這是timepicker的預設間隔60分鐘)
-    format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
-	   value: '${groupBuyingOffLoadDate}',
-// value:   new Date(),
-//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-//startDate:	            '2017/07/10',  // 起始日
-//minDate:               '-1970-01-01', // 去除今日(不含)之前
-//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-});
+// $.datetimepicker.setLocale('zh');
+// $('#f_date2').datetimepicker({
+//    theme: '',              //theme: 'dark',
+//     timepicker:false,       //timepicker:true,
+//     step: 60,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//     format:'Y-m-d 00:00:00',         //format:'Y-m-d H:i:s',
+// 	   value: '${groupBuyingOffLoadDate}',
+// // value:   new Date(),
+// //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+// //startDate:	            '2017/07/10',  // 起始日
+// //minDate:               '-1970-01-01', // 去除今日(不含)之前
+// //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+// });
 
 
 // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
 // //      1.以下為某一天之前的日期無法選擇
-//      var somedate1 =  $('#f_date2')
-//      $('#f_date1').datetimepicker({
+//      var somedate1 =  new Date('${groupBuyingOnLoadDate}');
+//      $('#f_date2').datetimepicker({
 //          beforeShowDay: function(date) {
 //        	  if (  date.getYear() <  somedate1.getYear() || 
 // 		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
@@ -257,7 +257,15 @@ $('#f_date2').datetimepicker({
 //              }
 //              return [true, ""];
 //      }});
-
+  $('#f_date2').datetimepicker({
+	  format:'Y-m-d 00:00:00',
+	  onShow:function(){
+	   this.setOptions({
+	    minDate:$('#f_date1').val()?$('#f_date1').val():false
+	   })
+	  },
+	  timepicker:false
+	 });
 // //      2.以下為某一天之後的日期無法選擇
 //      var somedate2 = new Date('2017-06-15');
 //      $('#f_date1').datetimepicker({
@@ -288,7 +296,7 @@ $('#f_date2').datetimepicker({
 //              }
 //              return [true, ""];
 //      }});
-  
+ 
 </script>
 
 

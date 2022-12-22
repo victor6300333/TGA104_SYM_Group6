@@ -47,7 +47,7 @@
 
 <body>
 
-	
+
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
             <div class="container-fluid">
@@ -148,9 +148,7 @@
 	<!-- Breadcrumb End -->
 
 	<!-- register Start -->
-	<form id="msform" METHOD="post"
-		ACTION="${pageContext.request.contextPath}/front-end/member/forgetPassword"
-		name="form1">
+	<form id="msform" name="form1">
 
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
@@ -159,7 +157,7 @@
 		</ul>
 		<!-- fieldsets -->
 		<fieldset id="forgetpass1">
-			
+
 			<h1 class="fs-title">請輸入註冊的信箱</h1>
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -171,8 +169,11 @@
 				</ul>
 			</c:if>
 			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" />
-			<input id="forgetPass"  name="next" type="submit"
+
+			<input id="forgetPass" type="button" name="next"
 				class="next action-button" value="驗證" />
+
+
 		</fieldset>
 		<fieldset id="forgetpass2">
 			<h2 class="fs-title">修改完成</h2>
@@ -180,7 +181,7 @@
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
 				<br />
 			</h2>
-			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
+			<h3 class="fs-subtitle text_t1">已使用電子信箱<div id="email"></div></h3>
 			<h3 class="fs-subtitle">寄送新的密碼</h3>
 			<h3 class="fs-subtitle">請點選完成回到登入頁重新登入</h3>
 			<a
@@ -294,19 +295,47 @@
 	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
 	<!-- JavaScript Libraries -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+
+	<script>
+		$("#forgetPass")
+				.click(
+						function() {
+							$
+									.ajax({
+										url : "${pageContext.request.contextPath}/member/MemberForgetPW", // 資料請求的網址
+										type : "POST", // GET | POST | PUT | DELETE | PATCH
+										data : $("#msform").serialize(),
+										dataType : "json", // 預期會接收到回傳資料的格式： json | xml | html
+										success : function(data) {
+											$("#email").text(data);
+
+										},
+										error : function(XMLHttpRequest) {
+											if (XMLHttpRequest.status >= 400) {
+												alert("出現錯誤");
+											}
+										}
+									});
+						});
+	</script>
 </body>
 </html>

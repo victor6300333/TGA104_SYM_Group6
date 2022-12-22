@@ -56,12 +56,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="groupVO" items="${groupVOs}" varStatus="s">
+									<c:forEach var="groupVO" items="${groupVOs}" >
 										<c:forEach var="groupproductVO" items="${groupproductVOs}">
 											<tr>
 												<c:if
 													test="${groupVO.groupBuyProductID == groupproductVO.groupBuyProductID}"
-													var="cc">
+													>
 
 													<td>${groupVO.groupBuyID}</td>
 													<td>${groupVO.groupBuyProductID}</td>

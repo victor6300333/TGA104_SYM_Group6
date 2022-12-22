@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.group6.tibame104.orderlist.model.OrderlistDAO;
+import com.group6.tibame104.orderlist.model.OrderlistDAO_interface;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
 @Repository
@@ -23,8 +24,10 @@ public class OrderDAO implements OrderDAO_interface {
 
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	OrderlistDAO_interface dao;
 
-	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, "
+	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID,"
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
 			+ "address, payType, couponID, originalTotal, useShoppingGold, useCouponGold, finalTotal) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
@@ -39,11 +42,12 @@ public class OrderDAO implements OrderDAO_interface {
 	public void insert(OrderVO orderVO, List<OrderlistVO> buylist) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);) {
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);) {
 
 			pstmt.setInt(1, orderVO.getStoreID());
 			pstmt.setString(2, orderVO.getStoreName());
 			pstmt.setInt(3, orderVO.getMemberID());
+			
 			pstmt.setTimestamp(4, orderVO.getOrderDate());
 			pstmt.setInt(5, orderVO.getOrderStatus());
 			pstmt.setString(6, orderVO.getReceiver());
@@ -57,11 +61,12 @@ public class OrderDAO implements OrderDAO_interface {
 			pstmt.setInt(14, orderVO.getUseCouponGold());
 			pstmt.setInt(15, orderVO.getFinalTotal());
 			pstmt.executeUpdate();
+		
 
 			// 掘取對應的自增主鍵值
 			String next_deptno = null;
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
+			try(ResultSet rs = pstmt.getGeneratedKeys();){
+				if (rs.next()) {
 				next_deptno = rs.getString(1);
 				System.out.println("自增主鍵值= " + next_deptno + "(剛新增成功的部門編號)");
 			} else {
@@ -71,7 +76,7 @@ public class OrderDAO implements OrderDAO_interface {
 
 			orderVO.setOrderID(Integer.parseInt(next_deptno));
 
-			OrderlistDAO dao = new OrderlistDAO();
+			
 //			System.out.println("list.size()-A="+list.size());
 			for (OrderlistVO orderlist : buylist) {
 				orderlist.setOrderID(new Integer(next_deptno));
@@ -79,7 +84,10 @@ public class OrderDAO implements OrderDAO_interface {
 			}
 
 //			con.commit();
-//			con.setAutoCommit(true);
+//			con.setAutoCommit(true)
+			}
+			
+			
 
 			// Handle any driver errors
 		} catch (Exception e) {

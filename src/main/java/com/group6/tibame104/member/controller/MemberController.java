@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -26,6 +25,8 @@ import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
+import com.group6.tibame104.memberBlockList.model.MemberBlockListService;
+import com.group6.tibame104.memberBlockList.model.ViewMemberBlockListVO;
 import com.group6.tibame104.store.model.StoreJDBCDAO;
 import com.group6.tibame104.store.model.StoreVO;
 
@@ -33,16 +34,17 @@ import redis.clients.jedis.Jedis;
 
 @Controller
 @RequestMapping("/front-end/member")
-@MultipartConfig(fileSizeThreshold = 100 * 1024 * 1024, maxFileSize = 100 * 1024 * 1024, maxRequestSize = 100 * 100
+@MultipartConfig(fileSizeThreshold = 100 * 1024 * 1024, maxFileSize = 1000 * 1024 * 1024, maxRequestSize = 100 * 100
 		* 1024 * 1024)
 public class MemberController {
 	@Autowired
 	private MemberService memSvc;
 	@Autowired
 	private MailService mailSvc;
-
 	@Autowired
 	private CreditCardService cardSvc;
+	@Autowired
+	private MemberBlockListService blockSvc;
 
 	@PostMapping("/getOneForDisplay")
 	public String getOneForDisplay(Model model, @RequestParam("memberID") Integer memberID) {
@@ -61,17 +63,7 @@ public class MemberController {
 
 	@PostMapping("/getOneForUpdate")
 	public String getOneForUpdate(Model model, @RequestParam("memberID") Integer memberID) {
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs", errorMsgs);
-
-		/*************************** 1.接收請求參數 ****************************************/
-
-		/*************************** 2.開始查詢資料 ****************************************/
 		MemberVO memVO = memSvc.getOneMem(memberID);
-
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 		model.addAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 		return "/member/update_member_input";
 	}
@@ -81,7 +73,7 @@ public class MemberController {
 			@RequestParam("userAccount") String userAccount, @RequestParam("phone") String phone,
 			@RequestParam("mail") String mail, @RequestParam("userPhoto") Part userPhoto,
 			@RequestParam("idNumber") String idNumber, @RequestParam("address") String address,
-			@RequestParam("memberID") Integer memberID, HttpServletRequest req) throws IOException {
+			@RequestParam("memberID") Integer memberID) throws IOException {
 		List<String> errorMsgsForupdate = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -366,9 +358,9 @@ public class MemberController {
 
 	@PostMapping("/update")
 	public String update(HttpSession session, Model model, @RequestParam("gender") String gender,
-			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") byte[] userPhoto,
+			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") Part userPhoto,
 			@RequestParam("idNumber") String idNumber, @RequestParam("address") String address,
-			@RequestParam("mail") String mail) {
+			@RequestParam("mail") String mail) throws IOException {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
@@ -390,12 +382,25 @@ public class MemberController {
 
 		Integer currentShoppingCoin = 0;
 
+		// 圖片相關
+		byte[] userPhoto1 = null;
+		if (userPhoto.getSize() == 0) {
+			userPhoto = null;
+		} else {
+			InputStream in = userPhoto.getInputStream();
+			BufferedInputStream bis = new BufferedInputStream(in);
+			userPhoto1 = new byte[bis.available()];
+			bis.read(userPhoto1);
+			bis.close();
+			in.close();
+		}
+
 		Integer memberID = memSvc.getOne();
 
 		MemberVO memVO = new MemberVO();
 		memVO.setGender(gender);
 		memVO.setBirthday(birthday);
-		memVO.setUserPhoto(userPhoto);
+		memVO.setUserPhoto(userPhoto1);
 		memVO.setMailCertification(mailCertification);
 		memVO.setIdNumber(idNumber);
 		memVO.setAddress(address);
@@ -411,12 +416,13 @@ public class MemberController {
 
 		/*************************** 2.開始修改資料 *****************************************/
 
-		memSvc.updateMember(memberID, gender, birthday, userPhoto, mailCertification, idNumber, address,
+		memSvc.updateMember(memberID, gender, birthday, userPhoto1, mailCertification, idNumber, address,
 				sellerAuditApprovalState, currentShoppingCoin);
 
 		memVO = memSvc.loginOneMem(mail);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+		session.setAttribute("mail", mail);
 		session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 
 		return "/front-end/member/my-account";
@@ -479,6 +485,11 @@ public class MemberController {
 
 				memVO = memSvc.loginOneMem(mail);
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+
+				List<ViewMemberBlockListVO> memblVO = blockSvc.getAll(memVO.getMemberID());
+				List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
+				session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
+				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 //				System.out.println(memVO);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
@@ -496,11 +507,9 @@ public class MemberController {
 //				String storeName = storeVO2.getStoreName();
 //				session.setAttribute("storeName", storeName);
 //			}
-			List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-			session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
 //			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
@@ -508,7 +517,7 @@ public class MemberController {
 		// (-->如無來源網頁:則重導至login_success)
 	}
 
-	@PostMapping("getOneForLogOut")
+	@PostMapping("/getOneForLogOut")
 	public String getOneForLogOut(HttpSession session) {
 
 		// 登出操作，清除用戶的登入狀態

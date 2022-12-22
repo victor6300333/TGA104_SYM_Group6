@@ -120,8 +120,7 @@
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="${pageContext.request.contextPath}/member/MemberServlet">
-								<input type="hidden" name="action" value="getOne_For_LogOut">
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
 							</FORM>
@@ -402,18 +401,18 @@
 									</thead>
 									<tbody>
 									
-										<c:forEach var="memblVO" items="${mblSvc.all}">
+										<c:forEach var="memblVO" items="${memblVO}">
 											<tr>
 												
 												<td>${memblVO.storeName}</td>
 
 												<td>
 													<FORM METHOD="post"
-														ACTION="${pageContext.request.contextPath}/member/MemberBlockListServlet"
+														ACTION="${pageContext.request.contextPath}/front-end/memberBlockList/delete"
 														style="margin-bottom: 0px;">
 														<input type="hidden" name="blockListID"
-															value="${memblVO.blockListID}"> <input
-															type="hidden" name="action" value="delete"> <input
+															value="${memblVO.blockListID}"> <input type="hidden" name="memberID"
+													value="${memVO.memberID}"> <input
 															class="btn" type="submit" value="刪除">
 													</FORM>
 												</td>
@@ -588,7 +587,7 @@
 
 							<h4>變更密碼</h4>
 							<FORM id="passwordForm" METHOD="post"
-								ACTION="${pageContext.request.contextPath}/member/MemberServlet"
+								ACTION="${pageContext.request.contextPath}/front-end/member/updateOnePassword"
 								style="margin-bottom: 0px;">
 
 								<div class="row">
@@ -614,7 +613,6 @@
 											placeholder="請再輸入一次新密碼" />
 									</div>
 									<div class="col-md-12">
-										<input type="hidden" name="action" value="updateOnePassword">
 										<input type="hidden" name="memberID"
 											value="${memVO.memberID}"> <input class="btn"
 											type="submit" value="送出">

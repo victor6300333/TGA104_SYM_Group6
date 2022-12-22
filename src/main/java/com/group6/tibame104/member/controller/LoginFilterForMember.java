@@ -2,20 +2,17 @@ package com.group6.tibame104.member.controller;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = "/front-end/member/my-account.jsp")
-public class LoginFilterForMember extends HttpFilter implements Filter {
+@WebFilter(urlPatterns = { "/front-end/member/my-account.jsp", "/front-end/group/addOrder" })
+public class LoginFilterForMember extends HttpFilter {
 	private static final long serialVersionUID = 1L;
 	private FilterConfig config;
 
@@ -30,17 +27,15 @@ public class LoginFilterForMember extends HttpFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
 		// 【取得 session】
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
 		Object account = session.getAttribute("mail");
 		if (account == null) {
-			session.setAttribute("location", req.getRequestURI());
+			session.setAttribute("location", req.getServletPath());
 			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
 			return;
 		} else {

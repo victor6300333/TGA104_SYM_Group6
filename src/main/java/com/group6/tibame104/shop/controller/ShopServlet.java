@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.group6.tibame104.order.model.OrderService;
 import com.group6.tibame104.order.model.OrderVO;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
@@ -33,11 +36,13 @@ import com.group6.tibame104.product.service.ProductService;
 //import redis.clients.jedis.JedisPool;
 
 //@WebServlet("/front-end/shop/ShopServlet")
-
+@Component
 @WebServlet("/front-end/shop/ShopServlet")
 public class ShopServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	OrderService ordsvc;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -147,6 +152,7 @@ public class ShopServlet extends HttpServlet {
 				String str = req.getParameter("product"+order.getStoreID()+i);
 				Integer quantity = Integer.parseInt(str);
 				Integer productID = order.getProductID();
+				String userAccount = req.getParameter("userAccount");
 				
 				total += (price * quantity);
 				
@@ -162,6 +168,7 @@ public class ShopServlet extends HttpServlet {
 				list.setPrice(price);
 				list.setQuantity(quantity);
 				list.setSubTotal(price*quantity);
+				list.setUserAccount(userAccount);
 
 				orderlist.add(list);
 		
@@ -174,6 +181,7 @@ public class ShopServlet extends HttpServlet {
 			OrderVO ordervo = new OrderVO(); //產生訂單物件
 			
 			Integer memberID = Integer.parseInt( req.getParameter("memberID") );
+			
 			String str = req.getParameter("storeID"+storeID.toString());
 			Integer storeid = Integer.parseInt(str);
 			String storeName = req.getParameter("storeName"+str);
@@ -204,7 +212,7 @@ public class ShopServlet extends HttpServlet {
 			orderVO_list.put(ordervo, orderlist);
 
 
-			OrderService ordsvc = new OrderService();
+			
 			ordsvc.addOrder(ordervo, orderlist);
 
 			

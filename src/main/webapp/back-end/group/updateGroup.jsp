@@ -57,7 +57,7 @@
 																<label class="sym-dark-font">
 																	<h5>開始日期</h5>
 																</label> <input type="text" name="groupBuyingOnLoadDate" class="form-control" id="f_date1"
-																	placeholder="開始日期" />
+																	placeholder="開始日期" readonly />
 															</div>
 														</div>
 														<div class="col-sm-4 margin-left-1">
@@ -306,7 +306,15 @@ $('#f_date3').datetimepicker({
 	//              }
 	//              return [true, ""];
 	//      }});
-
+  $('#f_date2').datetimepicker({
+	  format:'Y-m-d 00:00:00',
+	  onShow:function(){
+	   this.setOptions({
+	    minDate:$('#f_date1').val()?$('#f_date1').val():false
+	   })
+	  },
+	  timepicker:false
+	 });
 	// //      2.以下為某一天之後的日期無法選擇
 	//      var somedate2 = new Date('2017-06-15');
 	//      $('#f_date1').datetimepicker({
