@@ -3,10 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,7 +138,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 
 	<!-- register Start -->
 	<form id="msform" METHOD="post"
-		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+		ACTION="${pageContext.request.contextPath}/front-end/member/mailVerification"
 		name="form1">
 		<!-- progressbar -->
 		<ul id="progressbar">
@@ -169,7 +166,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 			<h3 class="fs-subtitle">沒有收到驗證碼嗎？</h3>
 			<h3 class="fs-subtitle">重新傳送</h3>
 
-			<input type="hidden" name="action" value="mailVerification">
+			
 			<input class="next action-button" name="next" type="submit"
 				value="驗證">
 

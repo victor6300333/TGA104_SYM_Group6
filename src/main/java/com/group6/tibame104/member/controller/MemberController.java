@@ -358,9 +358,9 @@ public class MemberController {
 
 	@PostMapping("/update")
 	public String update(HttpSession session, Model model, @RequestParam("gender") String gender,
-			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") byte[] userPhoto,
+			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") Part userPhoto,
 			@RequestParam("idNumber") String idNumber, @RequestParam("address") String address,
-			@RequestParam("mail") String mail) {
+			@RequestParam("mail") String mail) throws IOException {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
@@ -382,12 +382,25 @@ public class MemberController {
 
 		Integer currentShoppingCoin = 0;
 
+		// 圖片相關
+		byte[] userPhoto1 = null;
+		if (userPhoto.getSize() == 0) {
+			userPhoto = null;
+		} else {
+			InputStream in = userPhoto.getInputStream();
+			BufferedInputStream bis = new BufferedInputStream(in);
+			userPhoto1 = new byte[bis.available()];
+			bis.read(userPhoto1);
+			bis.close();
+			in.close();
+		}
+
 		Integer memberID = memSvc.getOne();
 
 		MemberVO memVO = new MemberVO();
 		memVO.setGender(gender);
 		memVO.setBirthday(birthday);
-		memVO.setUserPhoto(userPhoto);
+		memVO.setUserPhoto(userPhoto1);
 		memVO.setMailCertification(mailCertification);
 		memVO.setIdNumber(idNumber);
 		memVO.setAddress(address);
@@ -403,7 +416,7 @@ public class MemberController {
 
 		/*************************** 2.開始修改資料 *****************************************/
 
-		memSvc.updateMember(memberID, gender, birthday, userPhoto, mailCertification, idNumber, address,
+		memSvc.updateMember(memberID, gender, birthday, userPhoto1, mailCertification, idNumber, address,
 				sellerAuditApprovalState, currentShoppingCoin);
 
 		memVO = memSvc.loginOneMem(mail);
