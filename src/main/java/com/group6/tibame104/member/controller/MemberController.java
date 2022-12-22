@@ -485,6 +485,11 @@ public class MemberController {
 
 				memVO = memSvc.loginOneMem(mail);
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+
+				List<ViewMemberBlockListVO> memblVO = blockSvc.getAll(memVO.getMemberID());
+				List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
+				session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
+				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 //				System.out.println(memVO);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
@@ -502,13 +507,9 @@ public class MemberController {
 //				String storeName = storeVO2.getStoreName();
 //				session.setAttribute("storeName", storeName);
 //			}
-			List<ViewMemberBlockListVO> memblVO = blockSvc.getAll(memVO.getMemberID());
-			List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-			session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
-			session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 //			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
@@ -516,7 +517,7 @@ public class MemberController {
 		// (-->如無來源網頁:則重導至login_success)
 	}
 
-	@PostMapping("getOneForLogOut")
+	@PostMapping("/getOneForLogOut")
 	public String getOneForLogOut(HttpSession session) {
 
 		// 登出操作，清除用戶的登入狀態
