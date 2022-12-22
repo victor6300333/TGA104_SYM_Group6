@@ -14,6 +14,7 @@ public interface GroupDAO_interface {
 	 public GroupVO findByPrimaryKey(Integer groupBuyID);
 
 	 public List<GroupVO> getAll();
+	 public List<GroupVO> orderBy();
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //   public List<(GroupproductVO> getAll(Map<String, String[]> map); 
 }
