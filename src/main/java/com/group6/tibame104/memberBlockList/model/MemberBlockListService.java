@@ -2,12 +2,15 @@ package com.group6.tibame104.memberBlockList.model;
 
 import java.util.List;
 
-public class MemberBlockListService {
-	private MemberBlockListVO_interface dao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-	public MemberBlockListService() {
-		dao = new MemberBlockListJDBCDAO();
-	}
+@Service
+@Transactional
+public class MemberBlockListService {
+	@Autowired
+	private MemberBlockListDAO_interface dao;
 
 	public MemberBlockListVO addBlock(Integer memberID, Integer storeID) {
 

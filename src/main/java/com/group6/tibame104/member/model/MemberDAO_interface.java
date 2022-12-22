@@ -2,7 +2,7 @@ package com.group6.tibame104.member.model;
 
 import java.util.List;
 
-public interface MemberVO_interface {
+public interface MemberDAO_interface {
 	public void insert(MemberVO memberVO);
 
 	public void update(MemberVO memberVO);

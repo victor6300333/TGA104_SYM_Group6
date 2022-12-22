@@ -9,15 +9,12 @@
 <%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
 
-<%-- 此頁練習採用 EL 的寫法取值 --%>
-
 <%
-
-Object account = session.getAttribute("mail");                  // 從 session內取出 (key) account的值
-if (account == null) {                                             // 如為 null, 代表此user未登入過 , 才做以下工作
-  session.setAttribute("location", request.getRequestURI());       //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
-  response.sendRedirect(request.getContextPath()+"/front-end/member/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
-  return;
+Object account = session.getAttribute("mail"); // 從 session內取出 (key) account的值
+if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下工作
+	session.setAttribute("location", request.getRequestURI()); //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+	response.sendRedirect(request.getContextPath() + "/front-end/member/login.jsp"); //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+	return;
 }
 %>
 
@@ -34,7 +31,7 @@ if (account == null) {                                             // 如為 nul
 
 <!-- Favicon -->
 <link
-	href="<%=request.getContextPath()%>/front-end/group/img/logoSYM.jpg"
+	href="${pageContext.request.contextPath}/front-end/group/img/logoSYM.jpg"
 	rel="icon" />
 
 <!-- Google Fonts -->
@@ -50,40 +47,23 @@ if (account == null) {                                             // 如為 nul
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
 	rel="stylesheet" />
 <link
-	href="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.css"
+	href="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.css"
 	rel="stylesheet" />
 <link
-	href="<%=request.getContextPath()%>/front-end/group/lib/slick/slick-theme.css"
+	href="${pageContext.request.contextPath}/front-end/group/lib/slick/slick-theme.css"
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="<%=request.getContextPath()%>/front-end/group/css/style.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/style.css"
 	rel="stylesheet" />
-<link href="<%=request.getContextPath()%>/front-end/group/css/woody.css"
+<link href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
 	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
 
 <body>
-	<!-- Top bar Start -->
-	<!-- <div class="top-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <i class="fa fa-envelope"></i>
-                        support@email.com
-                    </div>
-                    <div class="col-sm-6">
-                        <i class="fa fa-phone-alt"></i>
-                        +012-345-6789
-                    </div>
-                </div>
-            </div>
-        </div> -->
-	<!-- Top bar End -->
 
-	<!-- Nav Bar Start -->
 	<div class="nav">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -116,7 +96,7 @@ if (account == null) {                                             // 如為 nul
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet">
+								ACTION="${pageContext.request.contextPath}/member/MemberServlet">
 								<input type="hidden" name="action" value="getOne_For_LogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
@@ -177,21 +157,20 @@ if (account == null) {                                             // 如為 nul
 
 	<!-- Login Start -->
 	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/front-end/grouporder/Grouporder.do"
+		ACTION="${pageContext.request.contextPath}/back-end/grouporder/insert"
 		name="form1">
 		<div class="login">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg">
 						<div class="register-form">
-							<h4>請填寫以下資料</h4>
+							<h4>請填寫訂單資訊</h4>
 							<br />
 							<div class="row">
 								<div class="col-6">
 									<div class="col">
 										<label>會員名稱</label> <input class="form-control" type="text"
 											placeholder="會員名稱"
-											<%--                   value="<%= (grouporderVO==null)? "1" : MemberVO.getUserName()%>" --%>
 										 value="${memVO.userName}"
 											readonly />
 									</div>
@@ -209,8 +188,7 @@ if (account == null) {                                             // 如為 nul
 										</div>
 										<input class="form-control" type="text" id="contactNumber"
 											name="contactNumber"
-											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getPhone() : ""%>" --%>
-										value=""
+											value=""
 											placeholder="聯絡電話" />
 									</div>
 								</div>
@@ -239,8 +217,7 @@ if (account == null) {                                             // 如為 nul
 										<select id="area" name="area" style="display: none;">
 											<option value="">請選擇</option>
 										</select> <input id="shippingLocation" name="shippingLocation"
-											<%-- 									value="<%= (grouporderVO==null)? MemberVO.getAddress() : ""%>" --%>
-										value=""
+											value=""
 											class="form-control" type="text" placeholder="寄送地址" />
 									</div>
 								</div>
@@ -249,9 +226,8 @@ if (account == null) {                                             // 如為 nul
 								<div class="col-3">
 									<label>總金額</label> <input id="total" class="form-control"
 										name="groupBuyTotal"
-										value="${Math.ceil(groupproductVO.groupBuyProductPrice* groupBuyCount)}"
-										type="text" placeholder="總金額" readonly /> <input
-										type="hidden" name="action" value="insert"> <input
+										value="${Math.round(groupproductVO.groupBuyProductPrice* groupBuyCount)}"
+										type="text" placeholder="總金額" readonly /><input
 										type="hidden" name="groupBuyID"
 										value="${groupVO.groupBuyID}"> <input
 										type="hidden" name="giftVoucher" value=0> <input
@@ -260,7 +236,9 @@ if (account == null) {                                             // 如為 nul
 										type="hidden" name="administratorID"
 										value="${groupVO.administratorID}"> <input
 										type="hidden" name="paymentState" value="1"> <input
-										type="hidden" name="memberID" value="${memVO.memberID}"> <a href="#">
+										type="hidden" name="memberID" value="${memVO.memberID}">
+										<input
+										type="hidden" name="orderTime"> <a href="#">
 										<button class="btn">送出訂單</button>
 									</a>
 	</form>
@@ -375,14 +353,14 @@ if (account == null) {                                             // 如為 nul
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/easing/easing.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/easing/easing.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/group/lib/slick/slick.min.js"></script>
+		src="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="<%=request.getContextPath()%>/front-end/group/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/back-end/grouporder/js/address.js"></script>
+		src="${pageContext.request.contextPath}/back-end/grouporder/js/address.js"></script>
 
 </body>
 <script>
@@ -391,7 +369,7 @@ if (account == null) {                                             // 如為 nul
 			function() {
 				// console.log("123")
 				//console.log($("#qua").val())
-				Math.ceil()
+				
 				$("#total").val(
 						Math.ceil(${groupproductVO.groupBuyProductPrice} * $("#qua").val() *${groupBuyCount}));
 

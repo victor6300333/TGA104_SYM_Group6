@@ -16,7 +16,7 @@ public interface OrderDAO_interface {
      
      public List<OrderVO> getAll();
      
-     public List<OrderVO> getAllByComposite(Map<String, String[]> queryString );
+     public List<OrderVO> getAllByComposite(Map<String, String> queryString );
 
      
 }

@@ -3,14 +3,17 @@ package com.group6.tibame104.order.model;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
+@Service
 public class OrderService {
+	
+	@Autowired
 	private OrderDAO_interface dao;
 
-	public OrderService() {
-		dao = new OrderDAO();
-	}
 
 	public void addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
 		dao.insert(orderVO, buylist);
@@ -22,7 +25,7 @@ public class OrderService {
 	
 		return dao.getbyOrderID(orderID);
 	}
-	public List<OrderVO> getAllOrderByComposite(Map<String, String[]> map ) {
+	public List<OrderVO> getAllOrderByComposite(Map<String, String> map ) {
 		
 
 		return  dao.getAllByComposite( map );

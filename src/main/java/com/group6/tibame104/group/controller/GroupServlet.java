@@ -25,7 +25,7 @@ import com.group6.tibame104.groupproduct.model.GroupproductVO;
 public class GroupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private GroupService groupsvc;
+	private GroupService groupSvc;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -212,6 +212,8 @@ public class GroupServlet extends HttpServlet {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String timeStr = df.format(updateTime);
 			updateTime = Timestamp.valueOf(timeStr);
+			
+			
 			Timestamp groupBuyingOnLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOnLoadDate").trim());
 			Timestamp groupBuyingOffLoadDate = Timestamp.valueOf(req.getParameter("groupBuyingOffLoadDate").trim());
 

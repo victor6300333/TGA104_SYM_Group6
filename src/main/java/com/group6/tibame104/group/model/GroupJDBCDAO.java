@@ -1,10 +1,8 @@
 package com.group6.tibame104.group.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,17 +16,18 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Autowired
 	private DataSource dataSource;
 
-	private static final String INSERT_STMT = "INSERT INTO groupBuying (groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime) VALUES(?,?,?,?,?,?,?)";
 	private static final String UPDATE = "UPDATE groupBuying set groupBuyProductID=?,administratorID=?,groupBuyProductOrderTotal=?,groupBuyingState=?,groupBuyingOnLoadDate=?,groupBuyingOffLoadDate=?,updateTime= ? WHERE groupBuyID = ?";
 	private static final String DELETE = "DELETE FROM groupBuying where groupBuyID = ?";
 	private static final String GET_ONE_STMT = "SELECT groupBuyID,groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime FROM groupBuying where groupBuyID = ?";
 	private static final String GET_ALL_STMT = "SELECT groupBuyID,groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime FROM groupBuying";
 	private static final String UPDATE_ONE_QUA = "UPDATE groupBuying set groupBuyProductOrderTotal=? WHERE groupBuyID = ?";
 
+	private static final String INSERT_STMT = "INSERT INTO groupBuying (groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime) VALUES(?,?,?,?,?,?,?)";
 	@Override
 	public void insert(GroupVO groupVO) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		try (Connection con = dataSource.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductID());
 			pstmt.setInt(2, groupVO.getAdministratorID());
@@ -49,7 +48,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Override
 	public void update(GroupVO groupVO) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
+		try (Connection con = dataSource.getConnection(); 
+			 PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductID());
 			pstmt.setInt(2, groupVO.getAdministratorID());
@@ -72,7 +72,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	public void updateGroupQua(GroupVO groupVO) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(UPDATE_ONE_QUA)) {
+			 PreparedStatement pstmt = con.prepareStatement(UPDATE_ONE_QUA)) {
 
 			pstmt.setInt(1, groupVO.getGroupBuyProductOrderTotal());
 			pstmt.setInt(2, groupVO.getGroupBuyID());
@@ -88,7 +88,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	@Override
 	public void delete(Integer grouporderID) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);) {
+		try (Connection con = dataSource.getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(DELETE);) {
 
 			pstmt.setInt(1, grouporderID);
 
@@ -104,7 +105,7 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	public GroupVO findByPrimaryKey(Integer groupBuyID) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
+			 PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
 
 			pstmt.setInt(1, groupBuyID);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -123,7 +124,6 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 					groupVO.setUpdateTime(rs.getTimestamp("updateTime"));
 					return groupVO;
 				}
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,12 +132,13 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	}
 
 	public List<GroupVO> getAll() {
-		List<GroupVO> list = new ArrayList<GroupVO>();
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+			 PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				List<GroupVO> list = new ArrayList<GroupVO>();
 
 				while (rs.next()) {
 					GroupVO groupVO = new GroupVO();
@@ -152,8 +153,8 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 					groupVO.setUpdateTime(rs.getTimestamp("updateTime"));
 
 					list.add(groupVO);
-					return list;
 				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -161,67 +162,4 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 		return null;
 	}
 
-	public static void main(String[] args) {
-
-		GroupJDBCDAO dao = new GroupJDBCDAO();
-
-////新增
-//		GroupVO groupVO = new GroupVO();
-//
-//		groupVO.setGroupBuyProductID(3);
-//		groupVO.setAdministratorID(1);
-//		groupVO.setGroupBuyProductOrderTotal(100);
-//		groupVO.setGroupBuyingState(true);
-//		groupVO.setGroupBuyingOnLoadDate(java.sql.Timestamp.valueOf("1993-01-01 11:11:11"));
-//		groupVO.setGroupBuyingOffLoadDate(java.sql.Timestamp.valueOf("1993-01-01 11:11:11"));
-//
-//		
-//		dao.insert(groupVO);
-////    修改		
-//		
-//		GroupVO groupVO2 = new GroupVO();
-//	
-//		groupVO2.setGroupBuyProductID(1);
-//		groupVO2.setAdministratorID(1);
-//		groupVO2.setGroupBuyProductOrderTotal(100);
-//		groupVO2.setGroupBuyingState(false);
-//		groupVO2.setGroupBuyingOnLoadDate(java.sql.Timestamp.valueOf("1993-01-01 11:11:11"));
-//		groupVO2.setGroupBuyingOffLoadDate(java.sql.Timestamp.valueOf("1993-01-01 11:11:11"));
-//		groupVO2.setUpdateTime(java.sql.Timestamp.valueOf("1993-01-01 11:11:11"));
-//		groupVO2.setGroupBuyID(2);
-//
-//		dao.update(groupVO2);
-
-////	刪除
-//		dao.delete(4);		
-////    單一查詢
-//			GroupVO groupVO3 = dao.findByPrimaryKey(3);
-//			
-//			System.out.print(groupVO3.getGroupBuyID() + ",");
-//			System.out.print(groupVO3.getGroupBuyProductID() + ",");
-//			System.out.print(groupVO3.getAdministratorID()+ ",");
-//			System.out.print(groupVO3.getGroupBuyProductOrderTotal() + ",");
-//			System.out.print(groupVO3.getGroupBuyingState() + ",");
-//			System.out.print(groupVO3.getGroupBuyingOnLoadDate() + ",");
-//			System.out.print(groupVO3.getGroupBuyingOffLoadDate()+ ",");
-//			System.out.print(groupVO3.getUpdateTime());
-//			
-//			System.out.println("---------------------");
-////    查詢all
-//		List<GroupVO> list = dao.getAll();
-//		for (GroupVO aEmp : list) {
-//
-//			System.out.print(aEmp.getGroupBuyID() + ",");
-//			System.out.print(aEmp.getGroupBuyProductID() + ",");
-//			System.out.print(aEmp.getAdministratorID() + ",");
-//			System.out.print(aEmp.getGroupBuyProductOrderTotal() + ",");
-//			System.out.print(aEmp.getGroupBuyingState() + ",");
-//			System.out.print(aEmp.getGroupBuyingOnLoadDate() + ",");
-//			System.out.print(aEmp.getGroupBuyingOffLoadDate() + ",");
-//			System.out.print(aEmp.getUpdateTime());
-//
-//			System.out.println();
-//		}
-
-	}
 }

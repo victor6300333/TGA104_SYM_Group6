@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
@@ -37,14 +36,8 @@ import redis.clients.jedis.Jedis;
 // 上傳過程中無論是單個文件超過maxFileSize值，或者上傳的總量大於maxRequestSize 值都會拋出IllegalStateException 異常(檔案大小限制)
 public class MemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private MemberService memSvc;
-
-	@Override
-	public void init() throws ServletException {
-		ApplicationContext applicationContext = WebApplicationContextUtils
-				.getWebApplicationContext(getServletContext());
-		memSvc = applicationContext.getBean(MemberService.class);
-	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -92,7 +85,6 @@ public class MemberServlet extends HttpServlet {
 			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			/*************************** 2.開始查詢資料 ****************************************/
-			MemberService memSvc = new MemberService();
 			MemberVO memVO = memSvc.getOneMem(memberID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
@@ -110,8 +102,6 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgsForupdate);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			MemberService memSvc = new MemberService();
-
 			String userName = req.getParameter("userName");
 			String userNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (userName == null || userName.trim().length() == 0) {
@@ -211,9 +201,6 @@ public class MemberServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
-
-			MemberService memSvc = new MemberService();
-
 			MemberVO memVO = new MemberVO();
 			memVO = memSvc.getOneMem(memberID);
 
@@ -323,8 +310,7 @@ public class MemberServlet extends HttpServlet {
 			memVO.setCurrentShoppingCoin(currentShoppingCoin);
 			// Send the use back to the form, if there were errors
 
-			MemberService memSvcPass = new MemberService();
-			if ((memSvcPass.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
+			if ((memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
 				errorMsgs.add("此信箱已有人使用");
 
 			}
@@ -359,8 +345,8 @@ public class MemberServlet extends HttpServlet {
 			String messageText = "Hello! " + mail + " 此次驗證碼: " + passRandom + "\n" + "請使用此驗證碼進行註冊流程" + "\n"
 					+ "此驗證碼只保留五分鐘";
 
-			MailService mailService = new MailService();
-			mailService.sendMail(mail, subject, messageText);
+			MailService mailSvc = new MailService();
+			mailSvc.sendMail(mail, subject, messageText);
 
 			// 存進Redis裏
 			Jedis jedis = new Jedis("localhost", 6379);
@@ -428,7 +414,6 @@ public class MemberServlet extends HttpServlet {
 			mailCertification = true;// 驗證成功
 
 			/*************************** 2.開始新增資料 ***************************************/
-			MemberService memSvc = new MemberService();
 			memVO = memSvc.addMember(userAccount, userPassword, userName, phone, mail, registrationTime,
 					mailCertification, sellerAuditApprovalState, currentShoppingCoin);
 
@@ -454,7 +439,6 @@ public class MemberServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-			MemberService memSvc = new MemberService();
 
 			String gender = req.getParameter("gender");
 
@@ -547,7 +531,6 @@ public class MemberServlet extends HttpServlet {
 			Integer memberID = Integer.valueOf(req.getParameter("memberID"));
 
 			/*************************** 2.開始刪除資料 ***************************************/
-			MemberService memSvc = new MemberService();
 			memSvc.deleteMember(memberID);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
@@ -592,10 +575,8 @@ public class MemberServlet extends HttpServlet {
 				return; // 程式中斷
 			}
 
-			MemberService memSvcLogin = new MemberService();
-
-			System.out.println(memSvcLogin.getOneForLogin(mail, userPassword));
-			if (!(memSvcLogin.getOneForLogin(mail, userPassword))) { // 【帳號 , 密碼無效時】
+			System.out.println(memSvc.getOneForLogin(mail, userPassword));
+			if (!(memSvc.getOneForLogin(mail, userPassword))) { // 【帳號 , 密碼無效時】
 
 				errorMsgs1.add("使用者帳號或密碼錯誤");
 				if (!errorMsgs1.isEmpty()) {
@@ -610,7 +591,7 @@ public class MemberServlet extends HttpServlet {
 				session.setAttribute("mail", mail); // *工作1: 才在session內做已經登入過的標識
 
 				try {
-					MemberService memSvc = new MemberService();
+
 					memVO = memSvc.loginOneMem(mail);
 					session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 					String location = (String) session.getAttribute("location");
@@ -669,8 +650,7 @@ public class MemberServlet extends HttpServlet {
 			MemberVO memVO = new MemberVO();
 			memVO.setMail(tomail);
 
-			MemberService memSvcPass = new MemberService();
-			if (!(memSvcPass.findMemberByMail(tomail))) { // 【帳號 , 密碼無效時】
+			if (!(memSvc.findMemberByMail(tomail))) { // 【帳號 , 密碼無效時】
 				errorMsgs1.add("使用者信箱錯誤或查無此信箱");
 
 			}
@@ -715,8 +695,8 @@ public class MemberServlet extends HttpServlet {
 			String messageText = "Hello! " + username + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
 					+ "請使用此密碼進行登入及修改密碼";
 
-			MailService mailService = new MailService();
-			mailService.sendMail(tomail, subject, messageText);
+			MailService mailSvc = new MailService();
+			mailSvc.sendMail(tomail, subject, messageText);
 		}
 
 		if ("registerForShop".equals(action)) { // 註冊賣場資格

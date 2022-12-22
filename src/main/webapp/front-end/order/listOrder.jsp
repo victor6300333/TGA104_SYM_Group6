@@ -259,8 +259,7 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 								
 									
 									<tr>
-
-										<td><%=orderVO.getOrderID()%></td>
+	         							<td><%=orderVO.getOrderID()%></td>
 										<td><%=orderVO.getStoreID()%></td>
 										<td><%=orderVO.getMemberID()%></td>
 										<td><%=orderVO.getOrderDate()%></td>

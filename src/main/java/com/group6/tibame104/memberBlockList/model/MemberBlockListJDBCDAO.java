@@ -1,19 +1,21 @@
 package com.group6.tibame104.memberBlockList.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
+import javax.sql.DataSource;
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class MemberBlockListJDBCDAO implements MemberBlockListDAO_interface {
+
+	@Autowired
+	private DataSource dataSource;
 
 	private static final String INSERT_STMT = "INSERT INTO memberBlockList (memberID,storeID) VALUES(?, ?)";
 
@@ -23,141 +25,55 @@ public class MemberBlockListJDBCDAO implements MemberBlockListVO_interface {
 
 	@Override
 	public void insert(MemberBlockListVO MemberBlockListVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);) {
 
 			pstmt.setInt(1, MemberBlockListVO.getMemberID());
 			pstmt.setInt(2, MemberBlockListVO.getStoreID());
-
 			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	@Override
 	public void delete(Integer blockListID) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);) {
 
 			pstmt.setInt(1, blockListID);
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public List<ViewMemberBlockListVO> getAll(Integer memberID) {
-		List<ViewMemberBlockListVO> list = new ArrayList<ViewMemberBlockListVO>();
 		ViewMemberBlockListVO viewMemberBlockListVO = null;
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
+		) {
 			pstmt.setInt(1, memberID);
-			rs = pstmt.executeQuery();
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<ViewMemberBlockListVO> list = new ArrayList<ViewMemberBlockListVO>();
+				while (rs.next()) {
+					viewMemberBlockListVO = new ViewMemberBlockListVO();
+					viewMemberBlockListVO.setStoreName(rs.getString("storeName"));
+					viewMemberBlockListVO.setBlockListID(rs.getInt("blockListID"));
+					list.add(viewMemberBlockListVO); // Store the row in the list
+				}
+				return list;
+			}
 
-			while (rs.next()) {
-				// VO 也稱為 Domain objects
-				viewMemberBlockListVO = new ViewMemberBlockListVO();
-				viewMemberBlockListVO.setStoreName(rs.getString("storeName"));
-				viewMemberBlockListVO.setBlockListID(rs.getInt("blockListID"));
-				list.add(viewMemberBlockListVO); // Store the row in the list
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 
 	// test

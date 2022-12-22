@@ -1,19 +1,23 @@
 package com.group6.tibame104.coupon.model;
 
-
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
 public class CouponService {
 
+	@Autowired
 	private CouponDAO_interface dao;
 	private CouponVO couponVO;
 
-	public CouponService() {
-		dao = new CouponJDBCDAO();
-	}
-
-	public CouponVO addCoupon(String couponName, Date startDate, Date endDate, Double discount, Integer discountAmount, Integer fullCondition, Date couponTimeBegins, Date couponTimeEnd, Integer exchangeAmount, byte[] couponPicture, String couponDescription) {
+	public CouponVO addCoupon(String couponName, Date startDate, Date endDate, Double discount, Integer discountAmount,
+			Integer fullCondition, Date couponTimeBegins, Date couponTimeEnd, Integer exchangeAmount,
+			byte[] couponPicture, String couponDescription) {
 
 		CouponVO couponVO = new CouponVO();
 
@@ -28,13 +32,15 @@ public class CouponService {
 		couponVO.setExchangeAmount(exchangeAmount);
 //		couponVO.setCouponPicture(couponPicture);
 		couponVO.setCouponDescription(couponDescription);
-		
+
 		dao.insert(couponVO);
 
 		return couponVO;
 	}
 
-	public CouponVO updateCoupon(Integer couponID, String couponName, Date startDate, Date endDate, Double discount, Integer discountAmount, Integer fullCondition, Date couponTimeBegins, Date couponTimeEnd, Integer exchangeAmount,  String couponDescription) {
+	public CouponVO updateCoupon(Integer couponID, String couponName, Date startDate, Date endDate, Double discount,
+			Integer discountAmount, Integer fullCondition, Date couponTimeBegins, Date couponTimeEnd,
+			Integer exchangeAmount, String couponDescription) {
 
 		CouponVO couponVO = new CouponVO();
 		couponVO.setCouponID(couponID);
@@ -49,13 +55,11 @@ public class CouponService {
 		couponVO.setExchangeAmount(exchangeAmount);
 //		couponVO.setCouponPicture(couponPicture);
 		couponVO.setCouponDescription(couponDescription);
-		
+
 		dao.update(couponVO);
 
 		return couponVO;
 	}
-	
-
 
 	public void deleteCoupon(Integer couponID) {
 		dao.delete(couponID);
@@ -69,11 +73,6 @@ public class CouponService {
 		return dao.getAll();
 	}
 
-	
-
-	
-
-	
 //	private CouponJDBCDAO couponJDBCDAO = new CouponJDBCDAO();
 //	
 //	
@@ -83,7 +82,6 @@ public class CouponService {
 //	u
 //	
 
-		
 }
 //	public static void main(String[] args) {
 //		

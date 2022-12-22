@@ -7,25 +7,7 @@
 <%@ page import="com.group6.tibame104.store.model.*"%>
 <%@ page import="com.group6.tibame104.shoppingGoldRecord.model.*"%>
 <%@ page import="com.group6.tibame104.couponUsageHistory.model.*"%>
-<%
-MemberVO memVO = (MemberVO) session.getAttribute("memVO");
 
-CreditCardService cardSvc = new CreditCardService();
-List<CreditCardVO> cdlist = cardSvc.getAll(memVO.getMemberID());
-pageContext.setAttribute("cdlist", cdlist);
-
-MemberBlockListService mbSvc = new MemberBlockListService();
-List<ViewMemberBlockListVO> mblist = mbSvc.getAll(memVO.getMemberID());
-pageContext.setAttribute("mblist", mblist);
-
-ShoppingGoldRecordService shoppingGoldRecordSvc = new ShoppingGoldRecordService();
-List<ShoppingGoldRecordVO> sgrlist = shoppingGoldRecordSvc.getOneShoppingGoldRecord(memVO.getMemberID());
-pageContext.setAttribute("sgrlist", sgrlist);
-
-CouponUsageHistoryService couponUsageHistorySvc = new CouponUsageHistoryService();
-List<CouponUsageHistoryVO> cuhlist = couponUsageHistorySvc.getAll(memVO.getMemberID());
-pageContext.setAttribute("cuhlist", cuhlist);
-%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,17 +110,17 @@ pageContext.setAttribute("cuhlist", cuhlist);
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
 							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
-							alt="" style="width: 40px; height: 40px" /> <%=memVO.getUserName()%>
+							alt="" style="width: 40px; height: 40px" /> ${memVO.userName}
 						</a>
 						<div class="dropdown-menu">
 							<a
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet">
+								ACTION="${pageContext.request.contextPath}/member/MemberServlet">
 								<input type="hidden" name="action" value="getOne_For_LogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
@@ -244,14 +226,14 @@ pageContext.setAttribute("cuhlist", cuhlist);
 										<ul>
 											<li>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_by_OrderID">
 													<b>輸入訂單編號: </b> <input type="text" name="orderID"
 														style="width: 100px; height: 25px"> <input
 														type="hidden" name="action" value="select_by_OrderID">
 													<input type="submit" value="送出">
 												</FORM>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/OrderServlet">
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
 													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
 														type="text" style="width: 100px; height: 25px"> <b>至</b>
@@ -290,7 +272,7 @@ pageContext.setAttribute("cuhlist", cuhlist);
 
 
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/member/CreditCardServlet"
+											ACTION="${pageContext.request.contextPath}/front-end/cerditCard/insert"
 											style="margin-bottom: 0px;">
 
 											<div class="row">
@@ -312,8 +294,7 @@ pageContext.setAttribute("cuhlist", cuhlist);
 											</div>
 
 											<input type="hidden" name="memberID"
-												value="${memVO.getMemberID() }"> <input
-												type="hidden" name="action" value="insert"> <input
+												value="${memVO.memberID}"> <input
 												class="btn" type="submit" value="新增信用卡"> <br /> <br />
 										</FORM>
 										<hr>
@@ -328,7 +309,8 @@ pageContext.setAttribute("cuhlist", cuhlist);
 										</thead>
 										<tbody>
 
-											<c:forEach var="cardVO" items="${cdlist}">
+											
+											<c:forEach var="cardVO" items="${cardVO}">
 												<tr>
 
 													<td>${cardVO.creditCardNumber}</td>
@@ -337,13 +319,12 @@ pageContext.setAttribute("cuhlist", cuhlist);
 
 													<td>
 														<FORM METHOD="post"
-															ACTION="<%=request.getContextPath()%>/member/CreditCardServlet"
+															ACTION="${pageContext.request.contextPath}/front-end/cerditCard/delete"
 															style="margin-bottom: 0px;">
 															<input type="hidden" name="creditCardID"
 																value="${cardVO.creditCardID}"> <input
 																type="hidden" name="memberID"
-																value="${memVO.getMemberID() }"> <input
-																type="hidden" name="action" value="delete"> <input
+																value="${memVO.memberID}"> <input
 																class="btn" type="submit" value="刪除">
 														</FORM>
 													</td>
@@ -420,18 +401,19 @@ pageContext.setAttribute("cuhlist", cuhlist);
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="memblVO" items="${mblist}">
+									
+										<c:forEach var="memblVO" items="${memblVO}">
 											<tr>
-												<%-- <td>${memblVO.blockListID}</td> --%>
+												
 												<td>${memblVO.storeName}</td>
 
 												<td>
 													<FORM METHOD="post"
-														ACTION="<%=request.getContextPath()%>/member/MemberBlockListServlet"
+														ACTION="${pageContext.request.contextPath}/front-end/memberBlockList/delete"
 														style="margin-bottom: 0px;">
 														<input type="hidden" name="blockListID"
-															value="${memblVO.blockListID}"> <input
-															type="hidden" name="action" value="delete"> <input
+															value="${memblVO.blockListID}"> <input type="hidden" name="memberID"
+													value="${memVO.memberID}"> <input
 															class="btn" type="submit" value="刪除">
 													</FORM>
 												</td>
@@ -510,7 +492,7 @@ pageContext.setAttribute("cuhlist", cuhlist);
 						<div class="tab-pane fade active show" id="account-tab"
 							role="tabpanel" aria-labelledby="account-nav">
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+								ACTION="${pageContext.request.contextPath}/front-end/member/updateOne"
 								enctype="multipart/form-data" name="form1">
 								<h4>帳戶明細</h4>
 								<%-- 錯誤表列 --%>
@@ -528,36 +510,36 @@ pageContext.setAttribute("cuhlist", cuhlist);
 											<div class="col-md py-1">
 												<label>姓名</label> <input class="form-control" type="text"
 													name="userName" placeholder="姓名"
-													value="<%=(memVO.getUserName() == null) ? "" : memVO.getUserName()%>" />
+													value="${(memVO.userName == null) ? '' : memVO.userName}" />
 											</div>
 											<div class="col-md py-1">
 												<label>帳號</label> <input class="form-control" type="text"
 													name="userAccount" placeholder="帳號"
-													value="<%=(memVO.getUserAccount() == null) ? "" : memVO.getUserAccount()%>" />
+													value="${(memVO.userAccount == null) ? '' : memVO.userAccount}" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
 												<label>手機號碼</label> <input class="form-control" type="text"
 													name="phone" placeholder="手機號碼"
-													value="<%=(memVO.getPhone() == null) ? "" : memVO.getPhone()%>" />
+													value="${(memVO.phone == null) ? '' : memVO.phone}" />
 											</div>
 											<div class="col-md py-1">
 												<label>電子信箱</label> <input class="form-control" type="text"
 													name="mail" placeholder="電子信箱"
-													value="<%=(memVO.getMail() == null) ? "" : memVO.getMail()%>" />
+													value="${(memVO.mail == null) ? '' : memVO.mail}" />
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md py-1">
 												<label>身分證號</label> <input class="form-control" type="text"
 													name="idNumber" placeholder="身分證號"
-													value="<%=(memVO.getIdNumber() == null) ? "" : memVO.getIdNumber()%>" />
+													value="${(memVO.idNumber == null) ? '' : memVO.idNumber}" />
 											</div>
 											<div class="col-md py-1">
 												<label>地址</label> <input class="form-control" type="text"
 													name="address" placeholder="地址"
-													value="<%=(memVO.getAddress() == null) ? "" : memVO.getAddress()%>" />
+													value="${(memVO.address == null) ? '' : memVO.address}" />
 											</div>
 										</div>
 
@@ -567,9 +549,8 @@ pageContext.setAttribute("cuhlist", cuhlist);
 										<br> <br> <br> <br> <br>
 										<div class="row">
 											<div class="col-md py-1">
-												<input type="hidden" name="action" value="updateOne">
 												<input type="hidden" name="memberID"
-													value="<%=(memVO == null) ? "" : memVO.getMemberID()%>">
+													value="${memVO.memberID}">
 												<input class="btn" type="submit" value="更新資料"> <br />
 												<br />
 											</div>
@@ -607,7 +588,7 @@ pageContext.setAttribute("cuhlist", cuhlist);
 
 							<h4>變更密碼</h4>
 							<FORM id="passwordForm" METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+								ACTION="${pageContext.request.contextPath}/front-end/member/updateOnePassword"
 								style="margin-bottom: 0px;">
 
 								<div class="row">
@@ -633,9 +614,8 @@ pageContext.setAttribute("cuhlist", cuhlist);
 											placeholder="請再輸入一次新密碼" />
 									</div>
 									<div class="col-md-12">
-										<input type="hidden" name="action" value="updateOnePassword">
 										<input type="hidden" name="memberID"
-											value="<%=memVO.getMemberID()%>"> <input class="btn"
+											value="${memVO.memberID}"> <input class="btn"
 											type="submit" value="送出">
 									</div>
 								</div>
@@ -787,11 +767,11 @@ pageContext.setAttribute("cuhlist", cuhlist);
 	</script>
 
 	<link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.css" />
+		href="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.css" />
 	<script
-		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.js"></script>
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
 	<script>
 		$.datetimepicker.setLocale('zh');
 		$('#f_date1').datetimepicker({

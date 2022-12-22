@@ -1,41 +1,33 @@
 package com.group6.tibame104.shoppingGoldRecord.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingGoldRecordDAO implements ShoppingGoldRecordDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/db06_sym?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+import javax.sql.DataSource;
 
-	private static final String INSERT_STMT = 
-		"INSERT INTO shoppingGoldRecord (memberID, useDate, obtainShoppingCoin, plusOrMinus) VALUES (?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-		"SELECT shoppingGoldRecordID, memberID, useDate, obtainShoppingCoin, plusOrMinus FROM shoppinggoldrecord order by shoppingGoldRecordID;";
-	private static final String GET_ONE_STMT = 
-		"SELECT shoppingGoldRecordID, memberID, useDate, obtainShoppingCoin, plusOrMinus FROM shoppinggoldrecord where memberID = ?";
-	private static final String UPDATE = 
-		"UPDATE shoppingGoldRecordID set shoppingGoldRecordID = ?, memberID = ?, useDate = ?, obtainShoppingCoin = ?, plusOrMinus = ? where shoppingGoldRecordID = ?";
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ShoppingGoldRecordDAO implements ShoppingGoldRecordDAO_interface {
+
+	@Autowired
+	private DataSource dataSource;
+
+	private static final String INSERT_STMT = "INSERT INTO shoppingGoldRecord (memberID, useDate, obtainShoppingCoin, plusOrMinus) VALUES (?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT shoppingGoldRecordID, memberID, useDate, obtainShoppingCoin, plusOrMinus FROM shoppinggoldrecord order by shoppingGoldRecordID;";
+	private static final String GET_ONE_STMT = "SELECT shoppingGoldRecordID, memberID, useDate, obtainShoppingCoin, plusOrMinus FROM shoppinggoldrecord where memberID = ?";
+	private static final String UPDATE = "UPDATE shoppingGoldRecordID set shoppingGoldRecordID = ?, memberID = ?, useDate = ?, obtainShoppingCoin = ?, plusOrMinus = ? where shoppingGoldRecordID = ?";
 
 	@Override
 	public void insert(ShoppingGoldRecordVO shoppingGoldRecordVO) {
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);) {
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
-
-			
 			pstmt.setInt(1, shoppingGoldRecordVO.getMemberID());
 			pstmt.setTimestamp(2, shoppingGoldRecordVO.getUseDate());
 			pstmt.setInt(3, shoppingGoldRecordVO.getObtainShoppingCoin());
@@ -43,45 +35,15 @@ public class ShoppingGoldRecordDAO implements ShoppingGoldRecordDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void update(ShoppingGoldRecordVO shoppingGoldRecordVO) {
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
 
 			pstmt.setInt(1, shoppingGoldRecordVO.getShoppingGoldRecordID());
 			pstmt.setInt(2, shoppingGoldRecordVO.getMemberID());
@@ -91,223 +53,85 @@ public class ShoppingGoldRecordDAO implements ShoppingGoldRecordDAO_interface {
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
-
 
 	@Override
 	public ShoppingGoldRecordVO findByPrimaryKey(Integer ShoppingGoldRecordID) {
 
-		ShoppingGoldRecordVO shoppingGoldRecordVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
-
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
 			pstmt.setInt(1, ShoppingGoldRecordID);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// empVo �]�٬� Domain objects
-				shoppingGoldRecordVO = new ShoppingGoldRecordVO();
-				shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
-				shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
-				shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
-				shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
-				shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
-				
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				while (rs.next()) {
+					ShoppingGoldRecordVO shoppingGoldRecordVO = null;
+					shoppingGoldRecordVO = new ShoppingGoldRecordVO();
+					shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
+					shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
+					shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
+					shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
+					shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
+					return shoppingGoldRecordVO;
 				}
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return shoppingGoldRecordVO;
+		return null;
 	}
 
 	@Override
 	public List<ShoppingGoldRecordVO> getAll() {
-		List<ShoppingGoldRecordVO> list = new ArrayList<ShoppingGoldRecordVO>();
-		ShoppingGoldRecordVO shoppingGoldRecordVO = null;
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+			try (ResultSet rs = pstmt.executeQuery();) {
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// shoppinggoldrecordVO �]�٬� Domain objects
-				shoppingGoldRecordVO = new ShoppingGoldRecordVO();
-				shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
-				shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
-				shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
-				shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
-				shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
-				list.add(shoppingGoldRecordVO); // Store the row in the list
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				List<ShoppingGoldRecordVO> list = new ArrayList<ShoppingGoldRecordVO>();
+				while (rs.next()) {
+					ShoppingGoldRecordVO shoppingGoldRecordVO = new ShoppingGoldRecordVO();
+					shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
+					shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
+					shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
+					shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
+					shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
+					list.add(shoppingGoldRecordVO); // Store the row in the list
 				}
+				return list;
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
-	
+
+	@Override
 	public List<ShoppingGoldRecordVO> getAllShoppingGoldRecord(Integer memberID) {
-		List<ShoppingGoldRecordVO> list = new ArrayList<ShoppingGoldRecordVO>();
-		ShoppingGoldRecordVO shoppingGoldRecordVO = null;
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
 			pstmt.setInt(1, memberID);
-			rs = pstmt.executeQuery();
+			try (ResultSet rs = pstmt.executeQuery();) {
 
-			while (rs.next()) {
-				shoppingGoldRecordVO = new ShoppingGoldRecordVO();
-				shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
-				shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
-				shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
-				shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
-				shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
-				list.add(shoppingGoldRecordVO); // Store the row in the list
-			}
-
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
+				List<ShoppingGoldRecordVO> list = new ArrayList<ShoppingGoldRecordVO>();
+				while (rs.next()) {
+					ShoppingGoldRecordVO shoppingGoldRecordVO = new ShoppingGoldRecordVO();
+					shoppingGoldRecordVO.setShoppingGoldRecordID(rs.getInt("shoppingGoldRecordID"));
+					shoppingGoldRecordVO.setMemberID(rs.getInt("memberID"));
+					shoppingGoldRecordVO.setUseDate(rs.getTimestamp("useDate"));
+					shoppingGoldRecordVO.setObtainShoppingCoin(rs.getInt("obtainShoppingCoin"));
+					shoppingGoldRecordVO.setPlusOrMinus(rs.getInt("plusOrMinus"));
+					list.add(shoppingGoldRecordVO); // Store the row in the list
 				}
+				return list;
 			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return list;
+		return null;
 	}
-
-
 
 //	public static void main(String[] args) {
 //
