@@ -214,8 +214,8 @@
 						<c:forEach var="groupVO" items="${groupVOs}">
 							<c:forEach var="groupproductVO" items="${groupproductVOs}">
 								<c:if
-									test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }"
-									var="cc">
+									test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }" 
+									var="cc"> 
 									<div class="col-md-4">
 										<form id="msform" METHOD="post" class="col-md-12"
 											style="border: 0px"
