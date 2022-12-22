@@ -409,6 +409,7 @@ public class MemberController {
 		memVO = memSvc.loginOneMem(mail);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+		session.setAttribute("mail", mail);
 		session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 
 		return "/front-end/member/my-account";
