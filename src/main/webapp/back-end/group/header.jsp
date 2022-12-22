@@ -136,7 +136,7 @@
 								<a
 								href="${pageContext.request.contextPath}/front-end/group/getAll"
 								class="dropdown-item">團購管理</a>
-								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/getAll" class="dropdown-item">商品管理</a>
+								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/getAll" class="dropdown-item">團購商品管理</a>
 								 <a href="#" class="dropdown-item">折扣管理</a>
 						</div>
 					</div>

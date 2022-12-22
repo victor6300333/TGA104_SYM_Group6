@@ -256,9 +256,18 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+		 for(int i = 0; i <= groupVOs.size();i++) {
+			 for(int j = 0; j<= groupproductVOs.size(); j++ ) {
+				 
+				 if(groupVOs.get(i).getGroupBuyProductID() == groupproductVOs.get(j).getGroupBuyProductID()) {
+					 
+				 }
+			 }
+		 }
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
+		  
 		   return "front-end/group/listAllGroup";
 	   }
 	   //團購主頁 數量排序
@@ -287,7 +296,7 @@ public class GroupController {
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   return "back-end/group/listAllGroup";
 	   }
-	 //首頁用
+	 //首頁測試用
 	   @GetMapping("/index1")
 	   public String index(
 			   Model model

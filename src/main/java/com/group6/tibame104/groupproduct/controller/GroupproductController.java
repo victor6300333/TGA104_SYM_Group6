@@ -115,10 +115,8 @@ public class GroupproductController {
 			List<String> errorMsgs = new LinkedList<String>();
 			model.addAttribute("errorMsgs", errorMsgs);
 
-
 			/*************************** 2.開始查詢資料 ****************************************/
 			GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
-
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			model.addAttribute("groupproductVO", groupproductVO); // 資料庫取出的empVO物件,存入req
 		 return "back-end/groupproduct/update_groupProduct";
