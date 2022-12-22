@@ -139,7 +139,7 @@ public class SearchServlet extends HttpServlet {
 			req.setAttribute("productVO", productVO);
 			req.setAttribute("list", list);
 
-			String url = "/front-end/product_detail/product_detail";
+			String url = "/front-end/product_detail/product_detail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

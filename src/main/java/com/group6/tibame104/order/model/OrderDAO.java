@@ -27,7 +27,7 @@ public class OrderDAO implements OrderDAO_interface {
 	@Autowired
 	OrderlistDAO_interface dao;
 
-	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, userAccount "
+	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID,"
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
 			+ "address, payType, couponID, originalTotal, useShoppingGold, useCouponGold, finalTotal) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
@@ -42,30 +42,31 @@ public class OrderDAO implements OrderDAO_interface {
 	public void insert(OrderVO orderVO, List<OrderlistVO> buylist) {
 
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT);) {
+				PreparedStatement pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);) {
 
 			pstmt.setInt(1, orderVO.getStoreID());
 			pstmt.setString(2, orderVO.getStoreName());
 			pstmt.setInt(3, orderVO.getMemberID());
-			pstmt.setString(4, orderVO.getUserAccount());
-			pstmt.setTimestamp(5, orderVO.getOrderDate());
-			pstmt.setInt(6, orderVO.getOrderStatus());
-			pstmt.setString(7, orderVO.getReceiver());
-			pstmt.setString(8, orderVO.getPhone());
-			pstmt.setString(9, orderVO.getCreditcardNumber());
-			pstmt.setString(10, orderVO.getAddress());
-			pstmt.setString(11, orderVO.getPayType());
-			pstmt.setInt(12, orderVO.getCouponID());
-			pstmt.setInt(13, orderVO.getOriginalTotal());
-			pstmt.setInt(14, orderVO.getUseShoppingGold());
-			pstmt.setInt(15, orderVO.getUseCouponGold());
-			pstmt.setInt(16, orderVO.getFinalTotal());
+			
+			pstmt.setTimestamp(4, orderVO.getOrderDate());
+			pstmt.setInt(5, orderVO.getOrderStatus());
+			pstmt.setString(6, orderVO.getReceiver());
+			pstmt.setString(7, orderVO.getPhone());
+			pstmt.setString(8, orderVO.getCreditcardNumber());
+			pstmt.setString(9, orderVO.getAddress());
+			pstmt.setString(10, orderVO.getPayType());
+			pstmt.setInt(11, orderVO.getCouponID());
+			pstmt.setInt(12, orderVO.getOriginalTotal());
+			pstmt.setInt(13, orderVO.getUseShoppingGold());
+			pstmt.setInt(14, orderVO.getUseCouponGold());
+			pstmt.setInt(15, orderVO.getFinalTotal());
 			pstmt.executeUpdate();
+		
 
 			// 掘取對應的自增主鍵值
 			String next_deptno = null;
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
+			try(ResultSet rs = pstmt.getGeneratedKeys();){
+				if (rs.next()) {
 				next_deptno = rs.getString(1);
 				System.out.println("自增主鍵值= " + next_deptno + "(剛新增成功的部門編號)");
 			} else {
@@ -83,7 +84,10 @@ public class OrderDAO implements OrderDAO_interface {
 			}
 
 //			con.commit();
-//			con.setAutoCommit(true);
+//			con.setAutoCommit(true)
+			}
+			
+			
 
 			// Handle any driver errors
 		} catch (Exception e) {

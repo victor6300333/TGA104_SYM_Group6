@@ -1,9 +1,6 @@
 package com.group6.tibame104.orderlist.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.group6.tibame104.order.model.OrderService;
-import com.group6.tibame104.order.model.OrderVO;
 
 public class OrderlistVO {
 	private Integer orderDetailID;
@@ -17,18 +14,16 @@ public class OrderlistVO {
 	private String shopComment;
 	private String buyerReview;
 	private String buyerComment;
-	@Autowired
-	OrderService orderSvc;
+	private String userAccount;
 	
-    
   
-    
-    public OrderVO getOrderVO() {
-    	
-    	
-		return orderSvc.getOrder(orderID);
-	}
 	
+	public String getUserAccount() {
+		return userAccount;
+	}
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
 	public String getProductName() {
 		return productName;
 	}
