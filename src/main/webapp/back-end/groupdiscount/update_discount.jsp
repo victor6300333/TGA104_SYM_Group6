@@ -334,9 +334,7 @@
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label class="sym-dark-font">
-																<h5>團購編號</h5> <jsp:useBean id="groupSvc"
-																	scope="page"
-																	class="com.group6.tibame104.group.model.GroupService" />
+																<h5>團購編號</h5> 
 															</label> <select size="1" name="groupBuyID"
 																class="form-select mb-3">
 																<c:forEach var="groupVO"

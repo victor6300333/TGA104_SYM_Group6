@@ -275,7 +275,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 						<div class="container-fluid">
 							<div class="row mb-2">
 								<div class="col-sm-6">
-									<h2 class="m-0 sym-dark-font">團購設定 - 更新折扣</h2>
+									<h2 class="m-0 sym-dark-font">團購設定 - 新增折扣</h2>
 								</div>
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
@@ -301,11 +301,11 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 									<!-- general form elements -->
 									<div class="card card-primary">
 										<div class="card-header sym-darkpurple">
-											<h3 class="card-title sym-yellow-font">團購設定 - 更新折扣</h3>
+											<h3 class="card-title sym-yellow-font">團購設定 - 新增折扣</h3>
 										</div>
 										<!-- /.card-header -->
 										<!-- form start -->
-										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/groupdiscount/Groupdiscount.do" name="form1">
+										<form METHOD="post" ACTION="${pageContext.request.contextPath}/Groupdiscount/insert" name="form1">
 											<div class="card-body">
 												<div class="form-group">
 													<div class="display-flex mg-bottom-2">
@@ -321,7 +321,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 																<h5>折數</h5>
 															</label> <input type="text" class="form-control"
 																id="groupBuyCount" name="groupBuyCount"
-																value="<%=(groupdiscountVO == null) ? "0.95" : groupdiscountVO.getGroupBuyCount()%>"
+																value="${(groupdiscountVO == null) ? "0.95" : groupdiscountVO.getAllByGroupBuyID()}"
 																placeholder="請輸入折數" />
 														</div>
 														<div class="col-sm-3 margin-left-1"></div>
@@ -331,16 +331,8 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 													<div class="col-sm-4">
 														<div class="form-group">
 															<label class="sym-dark-font">
-																<h5>團購編號</h5> <jsp:useBean id="groupSvc"
-																	scope="page"
-																	class="com.group6.tibame104.group.model.GroupService" />
-															</label> <select size="1" name="groupBuyID"
-																class="form-select mb-3">
-																<c:forEach var="groupVO"
-																	items="${groupSvc.all}">
-																	<option value="${groupVO.groupBuyID}">${groupVO.groupBuyID}
-																</c:forEach>
-															</select>
+																<h5>團購編號</h5> 
+															</label> <input type="text" name="groupBuyID">
 														</div>
 													</div>
 													<!-- /.card-body -->
@@ -351,6 +343,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 																<input type="hidden" name="action" value="insert">
 																
 																<button
+																	type="submit"
 																	class="btn sym-darkpurple sym-yellow-font btn_style"
 																	id="addProduct">送出新增</button>
 										</form>

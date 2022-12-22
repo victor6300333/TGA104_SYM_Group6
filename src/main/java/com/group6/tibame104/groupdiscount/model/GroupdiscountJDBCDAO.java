@@ -16,17 +16,17 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 	@Autowired
 	private DataSource dataSource;
 
-	private static final String INSERT_STMT = "INSERT INTO groupBuyDiscount(groupBuyID,groupBuyProductOrderTotal,groupBuyCount) VALUES (?,?,?)";
-	private static final String UPDATE = "UPDATE groupBuyDiscount set groupBuyID = ?, groupBuyProductOrderTotal = ?, groupBuyCount = ? where countTableID = ?";
-	private static final String DELETE = "DELETE FROM groupBuyDiscount where countTableID = ?";
-	private static final String GET_ONE_STMT = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount WHERE countTableID = ?;";
-	private static final String GET_ONE_DISCOUNT = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount WHERE groupBuyID = ?;";
-	private static final String GET_ALL_STMT = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount;";
-	private static final String GET_ALL_GBID = "SELECT distinct groupBuyID FROM groupBuyDiscount;";
+	private static final String Insert = "INSERT INTO groupBuyDiscount(groupBuyID,groupBuyProductOrderTotal,groupBuyCount) VALUES (?,?,?)";
+	private static final String Update = "UPDATE groupBuyDiscount set groupBuyID = ?, groupBuyProductOrderTotal = ?, groupBuyCount = ? where countTableID = ?";
+	private static final String Delete = "DELETE FROM groupBuyDiscount where countTableID = ?";
+	private static final String GetAllByCountTableID = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount WHERE countTableID = ?;";
+	private static final String GetAllByGroupBuyID = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount WHERE groupBuyID = ?;";
+	private static final String GetAll = "SELECT countTableID,groupBuyID,groupBuyProductOrderTotal,groupBuyCount FROM groupBuyDiscount;";
+//	private static final String GET_ALL_GBID = "SELECT distinct groupBuyID FROM groupBuyDiscount;";
 
 	@Override
 	public void insert(GroupdiscountVO groupdiscountVO) {
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_STMT)) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(Insert)) {
 
 			pstmt.setInt(1, groupdiscountVO.getGroupBuyID());
 			pstmt.setInt(2, groupdiscountVO.getGroupBuyProductOrderTotal());
@@ -42,7 +42,7 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 	@Override
 	public void update(GroupdiscountVO groupdiscountVO) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE)) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(Update)) {
 
 			pstmt.setInt(1, groupdiscountVO.getGroupBuyID());
 			pstmt.setInt(2, groupdiscountVO.getGroupBuyProductOrderTotal());
@@ -59,7 +59,7 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 	@Override
 	public void delete(Integer countTableID) {
 
-		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE)) {
+		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(Delete)) {
 
 			pstmt.setInt(1, countTableID);
 			pstmt.executeUpdate();
@@ -71,12 +71,12 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 
 	// 查詢單一
 	@Override
-	public GroupdiscountVO findByPrimaryKey(Integer countTableID) {
+	public GroupdiscountVO findByPK(Integer countTableID) {
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_STMT);) {
+				PreparedStatement pstmt = con.prepareStatement(GetAllByCountTableID);) {
 			pstmt.setInt(1, countTableID);
 			try (ResultSet rs = pstmt.executeQuery();) {
-				if (rs.next()) {
+				while (rs.next()) {
 					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
 					groupdiscountVO.setCountTableID(rs.getInt("countTableID"));
 					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
@@ -91,14 +91,14 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 		return null;
 	}
 
+	
 	// 用groupBuyID搜尋所有countTable
-	@Override
-	public List<GroupdiscountVO> getAllCount(Integer groupBuyID) {
+	public List<GroupdiscountVO> findAllByGroupBuyID(Integer groupBuyID) {
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_DISCOUNT);) {
+				PreparedStatement pstmt = con.prepareStatement(GetAllByGroupBuyID);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
-				if (rs.next()) {
+				while (rs.next()) {
 					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
 					groupdiscountVO.setCountTableID(rs.getInt("countTableID"));
 					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
@@ -115,12 +115,12 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 	}
 	// 查詢ALL
 
-	public List<GroupdiscountVO> getAll() {
+	public List<GroupdiscountVO> findAll() {
 		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
+				PreparedStatement pstmt = con.prepareStatement(GetAll);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
 				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
-				if (rs.next()) {
+				while (rs.next()) {
 					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
 
 					groupdiscountVO.setCountTableID(rs.getInt("countTableID"));
@@ -137,49 +137,53 @@ public class GroupdiscountJDBCDAO implements GroupdiscountDAO_interface {
 		return null;
 	}
 
-	// 找有的groupBuyID
-	public List<GroupdiscountVO> getGroupBuyID() {
-		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ALL_GBID);) {
-			try (ResultSet rs = pstmt.executeQuery();) {
-				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
-				if (rs.next()) {
-					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
-					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
-					list.add(groupdiscountVO); // Store the row in the list
-				}
-				return list;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
+//	public List<GroupdiscountVO> findAllByCountTableID(Integer countTableID) {
+//
+//		try (Connection con = dataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(GetAllByCountTableID);) {
+//			try (ResultSet rs = pstmt.executeQuery();) {
+//				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
+//				while (rs.next()) {
+//					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
+//					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
+//					list.add(groupdiscountVO); // Store the row in the list
+//				}
+//				return list;
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
-	// 找屬於某個團購編號的折扣表
-	public List<GroupdiscountVO> getCountTable(Integer groupBuyID) {
+	
+	
+//	// 找有的groupBuyID
+//	public List<GroupdiscountVO> getGroupBuyID() {
+//		try (Connection con = dataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(GET_ALL_GBID);) {
+//			try (ResultSet rs = pstmt.executeQuery();) {
+//				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
+//				while (rs.next()) {
+//					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
+//					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
+//					list.add(groupdiscountVO); // Store the row in the list
+//				}
+//				return list;
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
-		try (Connection con = dataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(GET_ONE_DISCOUNT);) {
-			try (ResultSet rs = pstmt.executeQuery();) {
-				List<GroupdiscountVO> list = new ArrayList<GroupdiscountVO>();
-				if (rs.next()) {
-					GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
-					groupdiscountVO.setGroupBuyID(rs.getInt("groupBuyID"));
-					list.add(groupdiscountVO); // Store the row in the list
-				}
-				return list;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 
 //	public static void main(String[] args) {
 //
 //		GroupdiscountJDBCDAO dao = new GroupdiscountJDBCDAO();
-
+//
 ////新增
 //		GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
 //
