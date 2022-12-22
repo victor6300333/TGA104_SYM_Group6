@@ -1,7 +1,11 @@
 package com.group6.tibame104.shop.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -192,6 +196,9 @@ public class ShopServlet extends HttpServlet {
 
 			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"+str));
 			Double count = Double.valueOf(req.getParameter("couponID"+str));
+			
+
+	      
 
 			ordervo.setMemberID(memberID);
 			ordervo.setStoreID(storeid);
@@ -202,19 +209,23 @@ public class ShopServlet extends HttpServlet {
 			ordervo.setOrderStatus(0);
 			ordervo.setPhone(phone);
 			ordervo.setAddress(address);
-			ordervo.setOrderDate(new Timestamp(System.currentTimeMillis()));
+			
 			ordervo.setOriginalTotal(total);
 			ordervo.setCouponID(1);
 			ordervo.setUseCouponGold((int) (total * (1 - count)));
 			ordervo.setUseShoppingGold(useShoppingGold);
 			ordervo.setFinalTotal((int) (total * count - useShoppingGold));
 			
-			orderVO_list.put(ordervo, orderlist);
+			int orderID = ordsvc.addOrder(ordervo, orderlist);
+			OrderVO order =ordsvc.getOrder(orderID);
+		
+			
+			orderVO_list.put(order, orderlist);
 
 
 			
-			ordsvc.addOrder(ordervo, orderlist);
-
+			
+		
 			
 //			session.setAttribute("orderVO"+str, ordervo);
 			

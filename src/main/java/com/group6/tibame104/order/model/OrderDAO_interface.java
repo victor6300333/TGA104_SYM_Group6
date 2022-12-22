@@ -9,7 +9,7 @@ import com.group6.tibame104.orderlist.model.OrderlistVO;
 
 public interface OrderDAO_interface {
 	
-	 public void insert(OrderVO orderVO, List<OrderlistVO> buylist);
+	 public int insert(OrderVO orderVO, List<OrderlistVO> buylist);
 
    
      public OrderVO getbyOrderID(Integer orderID);

@@ -1,12 +1,13 @@
 package com.group6.tibame104.orderlist.model;
 
-
+import java.sql.Timestamp;
 
 public class OrderlistVO {
 	private Integer orderDetailID;
 	private Integer orderID;
 	private Integer productID;
 	private String productName;
+	private Timestamp orderDate;
 	private Integer quantity;
 	private Integer price;
 	private Integer subTotal;
@@ -17,6 +18,12 @@ public class OrderlistVO {
 	private String userAccount;
 	
   
+	public Timestamp getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Timestamp orderDate) {
+		this.orderDate = orderDate;
+	}
 	
 	public String getUserAccount() {
 		return userAccount;

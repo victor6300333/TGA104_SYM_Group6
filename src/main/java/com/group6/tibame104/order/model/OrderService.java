@@ -15,8 +15,9 @@ public class OrderService {
 	private OrderDAO_interface dao;
 
 
-	public void addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
-		dao.insert(orderVO, buylist);
+	public int addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
+		
+		return dao.insert(orderVO, buylist);
 		
 	}
 

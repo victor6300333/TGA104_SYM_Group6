@@ -324,27 +324,72 @@ cart.addEventListener('click', (event) => {
 							<div class="tab-content">
 								<div id="description" class="container tab-pane active">
 									<h4>Product description</h4>
-									<p>${orderlistVO.buyerComment}</p>
+									
 								</div>
 								<div id="reviews" class="container tab-pane fade">
+								  <c:forEach var="orderlistVO" items="${list}">
+								  	
+ 
+
 									<div class="reviews-submitted">
 										<div class="reviewer">
 											${orderlistVO.userAccount} 
-											<span>${orderlistVO.buyerComment}</span>
+											<span>${orderlistVO.orderDate.toString().substring(0,19)}</span>
 										</div>
-										<div class="ratting">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
+										
 										<div>
-										<c:forEach var="orderlistVO" items="${list}">
-											<p>${orderlistVO.userAccount} </p>
+										
+											
+											<p class="reviewing" style='display:none'>${orderlistVO.buyerReview} </p>
+											<div class="ratting">
+											<i class="fa fa-star" name="fa" style='display:none' ></i> <i class="fa fa-star" name="fa" style='display:none'></i> <i
+												class="fa fa-star" name="fa" style='display:none' ></i> <i class="fa fa-star" name="fa" style='display:none' ></i> <i
+												class="fa fa-star" name="fa" style='display:none' ></i>
+										</div>
 											<p>${orderlistVO.buyerComment}</p>
-										</c:forEach>
+										<hr>
+										
+									
+								  </c:forEach>
 										</div>
 										
 									</div>
+									
+									<script >
+									document.addEventListener("DOMContentLoaded", function(){
+										
+										for(var i=0 ; i< ${list.size()} ; i++){
+										if(document.getElementsByClassName('reviewing')[i].innerHTML == '1分 '){
+											document.getElementsByName("fa")[i*5].style.display = 'inline';		
+										}
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '2分 '){
+											document.getElementsByName("fa")[i*5].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
+										}
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '3分 '){
+											document.getElementsByName("fa")[i*5].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
+										}
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '4分 '){
+											document.getElementsByName("fa")[i*5].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+3].style.display = 'inline';	
+										}
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '5分 '){
+											document.getElementsByName("fa")[i*5].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+3].style.display = 'inline';	
+											document.getElementsByName("fa")[i*5+4].style.display = 'inline';	
+										}	
+									}
+										});
+									
+									
+									</script>
+									
 									<div class="reviews-submit">
 										<h4>Give your Review:</h4>
 										<div class="ratting">
