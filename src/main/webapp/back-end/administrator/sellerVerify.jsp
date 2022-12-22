@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group6.tibame104.administrator.model.*"%>
+<%@ page import="com.administrator.model.*"%>
 
 <html>
 <head>
@@ -28,13 +28,13 @@
 						<div class="container-fluid">
 							<div class="row mb-2">
 								<div class="col-sm-6">
-									<h1 class="m-0 sym-dark-font">賣場申請</h1>
+									<h1 class="m-0 sym-dark-font">賣場審核</h1>
 								</div>
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
-										<li class="breadcrumb-item"><a href="#">Home</a></li>
-										<li class="breadcrumb-item active">會員賣場申請</li>
+										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/back-end/loginAdm/indexAdmin.jsp">Home</a></li>
+										<li class="breadcrumb-item active">會員賣場審核</li>
 									</ol>
 								</div>
 							</div>
@@ -218,7 +218,7 @@
 											//console.log(str);
 											//console.log(data[0].productID+"哭啊");
 											console.log(data.length);
-											$("#searchSeller").html("<h2>搜尋結果總共有"+data.length+"筆</h2>"+template+str+str2);
+											$("#searchSeller").html("<h5>搜尋結果共有"+data.length+"筆</h5>"+template+str+str2);
 										},
 										error : function(XMLHttpRequest) {
 											if (XMLHttpRequest.status >= 400) {

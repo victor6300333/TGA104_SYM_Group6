@@ -35,7 +35,7 @@
 								</div>
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
-										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/back-end/loginAdm/indexAdmin.jsp">Home</a></li>
+										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/back-end/ad/select_page2.jsp">Home</a></li>
 										<li class="breadcrumb-item active">廣告查詢</li>
 									</ol>
 								</div>
@@ -52,10 +52,10 @@
 								</div>
 
 								<jsp:useBean id="adSvc" scope="page"
-									class="com.group6.tibame104.ad.model.AdService" />
+									class="com.ad.model.AdService" />
 
 								<%
-								com.group6.tibame104.ad.model.AdJDBCDAO dao = new com.group6.tibame104.ad.model.AdJDBCDAO();
+								com.ad.model.AdJDBCDAO dao = new com.ad.model.AdJDBCDAO();
 								pageContext.setAttribute("dao", dao);
 								%>
 
@@ -119,25 +119,23 @@
 										id="listAllAd2">
 										<a style="color: white" href='listAllAd2.jsp'>所有廣告</a>
 									</button>
-
 								</div>
 								<!-- card-ends -->
-								<%-- 錯誤表列 --%>
-								<c:if test="${not empty errorMsgs}">
-									<font style="color: red">請修正以下錯誤:</font>
-									<ul>
-										<c:forEach var="message" items="${errorMsgs}">
-											<li style="color: red">${message}</li>
-										</c:forEach>
-									</ul>
-								</c:if>
 							</div>
-
 						</div>
 					</div>
+					<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
 				</div>
-
 			</div>
+			
 			<!-- Footer Start -->
 			<%@ include file="footer.jsp"%>
 			<!-- Footer End -->

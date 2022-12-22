@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.group6.tibame104.ad.model.*"%>
+<%@ page import="com.ad.model.*"%>
 
 <%
 AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
@@ -81,7 +81,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 														<td>${adVO.adDescribe}</td>
 														<td><img
 															src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}"
-															height="150" width="300"></td>
+															height="100" width="300"></td>
 														<td>${adVO.adStartDate}</td>
 														<td>${adVO.adEndDate}</td>
 														<td>${adVO.updateTime}</td>

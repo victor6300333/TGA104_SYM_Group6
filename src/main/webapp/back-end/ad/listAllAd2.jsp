@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group6.tibame104.ad.model.*"%>
+<%@ page import="com.ad.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
@@ -55,7 +55,7 @@ pageContext.setAttribute("list", list);
 					<!-- general form elements -->
 					<div class="card card-primary">
 						<div class="card-header sym-darkpurple">
-							<h3 class="card-title sym-yellow-font">搜尋結果 	 <%@ include file="page1.file"%></h3>
+							<h3 class="card-title sym-yellow-font"><%@ include file="page1.file"%></h3>
 						</div>
 						<!-- /.card-header -->
 						<div class="col-md-12">
@@ -65,7 +65,7 @@ pageContext.setAttribute("list", list);
 								<div class="card-body">
 									<table id="memberTable"
 										class="table table-bordered table-hover">
-									
+										
 										<thead>
 											<tr>
 												<th>廣告編號</th>

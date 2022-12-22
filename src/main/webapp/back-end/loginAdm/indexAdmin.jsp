@@ -95,7 +95,7 @@
 		<nav class="navbar sym-skin navbar-light mb-2rem">
 			<a href="index.html" class="navbar-brand mx-4 mb-3">
 				<h3 class="text-primary">
-					<img src="../img/logoSYM.jpg" alt="logo" width="100%" />
+					<img src="../img/logoSYM.jpg" alt="logo" width="50%" />
 				</h3>
 			</a>
 			<div class="d-flex align-items-center ms-4 mb-4">
@@ -243,7 +243,7 @@
 								<!-- form start -->
 								<div class="card-body">
 									<div class="col-12 form-group">
-										<div class="col-6">
+										<div class="col-4">
 											<img src="../img/logo.png" alt="logo" width="35%" />
 										</div>
 
@@ -277,7 +277,7 @@
 														href="${pageContext.request.contextPath}/back-end/administrator/memberI.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoGreen.jpg"
-																	alt="logo" width="85%" />
+																	alt="logo" width="70%" />
 																<h4 class="sym-dark-font">會員</h4>
 															</div>
 													</a></li>
@@ -289,7 +289,8 @@
 																<h4 class="sym-dark-font">商家</h4>
 															</div>
 													</a></li>
-													<li><a
+													<li>
+														<a
 														href="${pageContext.request.contextPath}/back-end/ad/select_page2.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoPurple.jpg"
@@ -297,14 +298,17 @@
 																<h4 class="sym-dark-font">廣告</h4>
 															</div>
 													</a>
-													<li><a
+													
+													</li>
+													<li>
+												<a
 														href="${pageContext.request.contextPath}/back-end/administrator/sellerVerify.jsp">
 															<div class="text-align-center">
 																<img class="mg-bottom-1" src="../img/logoYellow.jpg"
 																	alt="logo" width="80%" />
 																<h4 style="color: red">待審核</h4>
 															</div>
-													</a></li>
+													</a>
 													</li>
 												</ul>
 
@@ -355,5 +359,9 @@
 		});
 
 		 </script>
+
+
+
+
 </body>
 </html>

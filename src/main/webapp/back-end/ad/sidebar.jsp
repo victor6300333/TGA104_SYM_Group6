@@ -32,7 +32,7 @@
 				</div>
 				<div class="ms-3">
 					<!-- <h4 class="mb-0">歡迎您~</h4> -->
-					<h5>Admin</h5>
+					<a href="${pageContext.request.contextPath}/back-end/loginAdm/indexAdmin.jsp">Admin</a>
 				</div>
 			</div>
 			<div class="navbar-nav w-100">

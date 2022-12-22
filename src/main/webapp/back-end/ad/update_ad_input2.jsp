@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.group6.tibame104.ad.model.*"%>
+<%@ page import="com.ad.model.*"%>
 
 <%
 AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 存入req的advVO物件 (包括幫忙取出的advVO, 也包括輸入資料錯誤時的advVO物件)
@@ -133,8 +133,9 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 																value="<%=adVO.getAdDescribe()%>" /> <br />
 
 															<div>
-																<label>圖片：</label> <input type="file" id="p_file" name="pho">
-																<div id="preview" style="width: 300px">
+																<label>圖片：</label> <input type="file" id="p_file"
+																	name="pho">
+																<div id="preview">
 																	<span class="text">預覽圖</span>
 																</div>
 															</div>
@@ -158,7 +159,15 @@ AdVO adVO = (AdVO) request.getAttribute("adVO"); //EmpServlet.java (Concroller) 
 						</div>
 
 					</div>
-
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font style="color: red">請補上以下資料:</font>
+						<ul>
+							<c:forEach var="message" items="${errorMsgs}">
+								<li style="color: red">${message}</li>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<!-- Footer Start -->
 					<%@ include file="footer.jsp"%>
 					<!-- Footer End -->

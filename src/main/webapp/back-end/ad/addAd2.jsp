@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.group6.tibame104.ad.model.*"%>
+<%@ page import="com.ad.model.*"%>
 
 <%
 AdVO adVO = (AdVO) request.getAttribute("adVO");
@@ -70,27 +70,34 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 												<!-- 												<div class="mg-bottom-2"><input type="TEXT" name="administratorID" size="45"  -->
 												<%-- 													 value="<%=(adVO==null)? "1" : adVO.getAdministratorID()%>" /> --%>
 												<!-- 												</div> -->
-												<jsp:useBean id="adSvc" scope="page"
-													class="com.group6.tibame104.ad.model.AdService" />
-												<select  size="1" name="administratorID">
-													<c:forEach var="adVO" items="${adSvc.all}">
-														<option value="${adVO.administratorID}"
-															${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID}
-													</c:forEach>
-												</select>
+												<%-- 												<jsp:useBean id="adSvc" scope="page" --%>
+												<%-- 													class="com.ad.model.AdService" /> --%>
+												<!-- 												<select size="1" name="administratorID"> -->
+												<%-- 													<c:forEach var="adVO" items="${adSvc.all}"> --%>
+												<%-- 														<option value="${adVO.administratorID}" --%>
+												<%-- 															${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID} --%>
+												<%-- 													</c:forEach> --%>
+												<!-- 												</select> -->
+												<input type="text" name="administratorID" class="mb-2rem"
+													id="proName" placeholder=""
+													value="<%=(adVO == null) ? "1" : adVO.getAdministratorID()%>" />
 											</div>
 											<div class="col-sm-4">
 												<%-- 												<jsp:useBean id="adSvc" scope="page" class="com.ad.model.AdService" /> --%>
 												<h5>
 													廣告類別:<font color=red><b>*</b></font>
 												</h5>
-												<select  size="1" name="adType">
-													<c:forEach var="adVO" items="${adSvc.all}">
-														<option value="${adVO.adType}"
-															${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType}
-													</c:forEach>
-												</select>
+												<!-- 												<select size="1" name="adType"> -->
+												<%-- 													<c:forEach var="adVO" items="${adSvc.all}"> --%>
+												<%-- 														<option value="${adVO.adType}" --%>
+												<%-- 															${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType} --%>
+												<%-- 													</c:forEach> --%>
+												<!-- 												</select> -->
+												<input type="text" name="AdType" class="mb-2rem"
+													id="proName" placeholder=""
+													value="<%=(adVO == null) ? "團購相關" : adVO.getAdType()%>" />
 											</div>
+											<div class="col-sm-4"></div>
 										</div>
 									</div>
 									<div class="display-flex mg-bottom-2">
@@ -113,7 +120,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 									<h5 class="sym-dark-font">廣告標題:</h5>
 									<input type="text" name="adTitle" class="form-control mb-2rem"
 										id="proName" placeholder="請輸入標題內容"
-										value="<%=(adVO == null) ? "請輸入標題內容" : adVO.getAdTitle()%>" />
+										value="<%=(adVO == null) ? "團購優惠活動" : adVO.getAdTitle()%>" />
 								</div>
 
 								<div class="row">
@@ -122,7 +129,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 											<h5 class="sym-dark-font">廣告描述</h5>
 											<input type="text" class="form-control" name="adDescribe"
 												id="proBrand" placeholder=""
-												value="<%=(adVO == null) ? "請輸入廣告描述" : adVO.getAdDescribe()%>" />
+												value="<%=(adVO == null) ? "人數達標享有9折優惠" : adVO.getAdDescribe()%>" />
 										</div>
 									</div>
 
@@ -147,7 +154,7 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 
 							<div class="mg-bottom-2">
 								<label>圖片：</label> <input type="file" name="pho" id="p_file">
-								<div id="preview" style="width: 300px">
+								<div id="preview">
 									<span class="text">預覽圖</span>
 								</div>
 							</div>
@@ -155,6 +162,15 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 					</div>
 				</div>
 			</FORM>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
 			<!-- Footer Start -->
 			<%@ include file="footer.jsp"%>
 			<!-- Footer End -->

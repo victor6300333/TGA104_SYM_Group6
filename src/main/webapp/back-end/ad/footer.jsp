@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +6,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- Footer Start -->
+
+	
+	<!-- Footer Start -->
 	<div class="container-fluid pt-4 px-4">
 		<div class="bg-light rounded-top p-4">
 			<div class="row">

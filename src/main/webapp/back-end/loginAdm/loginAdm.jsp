@@ -62,7 +62,7 @@
         <h2 class="text-primary mb-0"></h2>
       </a>
 <!--       <a href="#" class="sidebar-toggler flex-shrink-0"> -->
-        <img src="../img/logoSYM.jpg" alt="SYM logo" width="125px" />
+<!--         <img src="../img/logoSYM.jpg" alt="SYM logo" width="10%" /> -->
 <!--       </a> -->
 
       <div class="navbar-nav align-items-center ms-auto">
@@ -122,7 +122,7 @@
             name="username"
             id="username"
             class="form-control"
-            placeholder="請輸入帳號"
+            placeholder="請輸入員工編號"
             value="${username}"
             required=""
             pattern="^[t]{1}[i]{1}[b]{1}[a]{1}[0-9]{3}$"
@@ -133,7 +133,7 @@
             name="password"
             id="password"
             class="form-control"
-            placeholder="請輸入密碼"
+            placeholder="請輸入身分證字號"
             required=""
             pattern="^[A-Za-z]{1}[1-2]{1}[0-9]{8}$"
           />
@@ -191,12 +191,12 @@
    		
    		
    		
-   		if (username == '') {
-   			alert('編號不能為空，請重新輸入!');
+   		if (username == ''|| password == null) {
+   			alert('資料不能為空，請重新輸入!');
    			return;
    		}
    		
-   		if (password == '') {
+   		if (password == '' || password == null) {
    			alert('密碼不能為空，請重新輸入!');
    			return;
    		}
