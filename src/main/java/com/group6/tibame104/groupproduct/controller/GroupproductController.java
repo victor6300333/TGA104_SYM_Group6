@@ -90,7 +90,7 @@ public class GroupproductController {
 			jedis.zadd("groupViews", groupViews);
 //			由多到少排序 前五
 			
-			Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "200", "0", 0, 3);
+			Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "+inf", "0", 0, 3);
 			
 			model.addAttribute("popProducts", popProducts);
 			
@@ -115,10 +115,8 @@ public class GroupproductController {
 			List<String> errorMsgs = new LinkedList<String>();
 			model.addAttribute("errorMsgs", errorMsgs);
 
-
 			/*************************** 2.開始查詢資料 ****************************************/
 			GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
-
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			model.addAttribute("groupproductVO", groupproductVO); // 資料庫取出的empVO物件,存入req
 		 return "back-end/groupproduct/update_groupProduct";

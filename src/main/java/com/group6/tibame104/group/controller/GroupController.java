@@ -247,6 +247,7 @@ public class GroupController {
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			return getAll(model);
 	   }
+	   //團購主頁
 	   @GetMapping("/allGroup")
 	   public String allGroup(
 			   Model model
@@ -255,10 +256,32 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+		 for(int i = 0; i <= groupVOs.size();i++) {
+			 for(int j = 0; j<= groupproductVOs.size(); j++ ) {
+				 
+				 if(groupVOs.get(i).getGroupBuyProductID() == groupproductVOs.get(j).getGroupBuyProductID()) {
+					 
+				 }
+			 }
+		 }
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
 		  
+		   return "front-end/group/listAllGroup";
+	   }
+	   //團購主頁 數量排序
+	   @GetMapping("/orderBy")
+	   public String orderBy(
+			   Model model
+			   ) {
+		   
+		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		  List<GroupVO> groupVOs = groupSvc.orderBy();
+		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+		  model.addAttribute("groupproductVOs",groupproductVOs);
+		  model.addAttribute("groupVOs",groupVOs);
+		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
 		   return "front-end/group/listAllGroup";
 	   }
 	   
@@ -273,7 +296,7 @@ public class GroupController {
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   return "back-end/group/listAllGroup";
 	   }
-	 //團購主頁用
+	 //首頁測試用
 	   @GetMapping("/index1")
 	   public String index(
 			   Model model
@@ -294,7 +317,7 @@ public class GroupController {
 		   
 		   return"back-end/group/addGroup";
 	   }
-	   //取得全部團購商品 for新增
+	   //取得全部團購商品 for修改
 	   @GetMapping("/getGroupproduct2")
 	   public String getGroupproduct2(
 			   Model model) {

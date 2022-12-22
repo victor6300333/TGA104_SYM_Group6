@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,9 +126,6 @@ public class GrouporderController {
 			groupBuyTotal = 0;
 			errorMsgs.add("總金額請填數字.");
 		}
-		
-			orderTime = new Timestamp(System.currentTimeMillis());
-			
 			
 		String paymentTermReg = "^[(\u4e00-\u9fa5)]{1,4}$";
 		if (paymentTerm == null || paymentTerm.trim().length() == 0) {
@@ -189,6 +188,7 @@ public class GrouporderController {
 	@PostMapping("insert")
 	public String insert(
 			Model model,
+			HttpSession session,
 			@RequestParam("groupBuyID") Integer groupBuyID,
 			@RequestParam("memberID") Integer memberID,
 			@RequestParam("groupBuyProductID") Integer groupBuyProductID,
@@ -199,9 +199,12 @@ public class GrouporderController {
 			@RequestParam("paymentState") Integer paymentState,
 			@RequestParam("contactNumber") String contactNumber,
 			@RequestParam("shippingLocation") String shippingLocation
-			
-			) {
 		
+			) {
+//		Object account = session.getAttribute("mail"); // 從 session內取出 (key) account的值
+//		if (account == null) { // 如為 null, 代表此user未登入過 , 才做以下工作
+//			session.setAttribute("location", "/back-end/grouporder/insert"); //*工作1 : 同時記下目前位置 , 以便於login.html登入成功後 , 能夠直接導至此網頁(須配合LoginHandler.java)
+//			return "/front-end/member/login.jsp";}
 		List<String> errorMsgs = new LinkedList<String>();
 		model.addAttribute("errorMsgs", errorMsgs);
 

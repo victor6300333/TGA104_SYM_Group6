@@ -170,8 +170,8 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="product-search">
-											<input type="email" value="Search">
-											<button>
+											<input type="text" value="Search">
+											<button id="search" >
 												<i class="fa fa-search"></i>
 											</button>
 										</div>
@@ -182,8 +182,7 @@
 												<div class="dropdown-toggle" data-toggle="dropdown">排序
 												</div>
 												<div class="dropdown-menu dropdown-menu-right">
-													<a href="#" class="dropdown-item">最新</a> <a href="#"
-														class="dropdown-item">熱門</a> <a href="#"
+													<a href="${pageContext.request.contextPath}/front-end/group/allGroup" class="dropdown-item">最新</a> <a href="${pageContext.request.contextPath}/front-end/group/orderBy"
 														class="dropdown-item">最多參與</a>
 												</div>
 											</div>
@@ -520,6 +519,10 @@
 					countTable.val(currentDiscount*0.1)
 					};
 // 					console.log(currentDiscount);
+				})
+				$("#search").on("click",function(){
+					
+					console.log("123")
 				})
 	</script>
 
