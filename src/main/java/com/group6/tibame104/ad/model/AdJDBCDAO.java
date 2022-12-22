@@ -10,10 +10,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class AdJDBCDAO implements AdDAO_interface {
+	@Autowired
 	private DataSource dataSource;
 
 	private static final String INSERT_STMT = "INSERT INTO advertise (administratorID, groupBuyID, adTitle, adType, adDescribe, adStartDate, adEndDate, adPhoto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
