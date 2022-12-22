@@ -14,9 +14,6 @@ public class OrderService {
 	@Autowired
 	private OrderDAO_interface dao;
 
-	public OrderService() {
-		dao = new OrderDAO();
-	}
 
 	public void addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
 		dao.insert(orderVO, buylist);

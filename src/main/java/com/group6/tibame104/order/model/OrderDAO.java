@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.group6.tibame104.orderlist.model.OrderlistDAO;
+import com.group6.tibame104.orderlist.model.OrderlistDAO_interface;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
 @Repository
@@ -23,6 +24,8 @@ public class OrderDAO implements OrderDAO_interface {
 
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	OrderlistDAO_interface dao;
 
 	private static final String INSERT_STMT = "INSERT INTO `order` (storeID, storeName, memberID, userAccount "
 			+ "orderDate ,orderStatus,receiver, phone,creditcardNumber,"
@@ -72,7 +75,7 @@ public class OrderDAO implements OrderDAO_interface {
 
 			orderVO.setOrderID(Integer.parseInt(next_deptno));
 
-			OrderlistDAO dao = new OrderlistDAO();
+			
 //			System.out.println("list.size()-A="+list.size());
 			for (OrderlistVO orderlist : buylist) {
 				orderlist.setOrderID(new Integer(next_deptno));
