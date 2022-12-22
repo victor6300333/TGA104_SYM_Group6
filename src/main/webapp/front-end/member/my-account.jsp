@@ -120,8 +120,7 @@
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="${pageContext.request.contextPath}/member/MemberServlet">
-								<input type="hidden" name="action" value="getOne_For_LogOut">
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
 							</FORM>

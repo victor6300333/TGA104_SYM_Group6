@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,7 +153,7 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Con
 						<br />
 						<FORM METHOD="post"
 							ACTION="
-							<%=request.getContextPath()%>/member/MemberServlet"
+							${pageContext.request.contextPath}/front-end/member/update"
 							enctype="multipart/form-data" name="form3">
 							<%-- 錯誤表列 --%>
 							<c:if test="${not empty errorMsgs}">
@@ -232,7 +230,7 @@ MemberVO memVO = (MemberVO) session.getAttribute("memVO"); //EmpServlet.java(Con
 
 									<br /> <br />
 									<div class="col-md">
-										<input type="hidden" name="action" value="update"> <input
+										 <input
 											type="hidden" name="memberID" value="${memVO.getMemberID()}">
 										<input type="hidden" name="mail" value="${memVO.getMail()}">
 										<input class="btn" type="submit" value="註冊">
