@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.group6.tibame104.ad.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -173,33 +179,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="header-slider normal-slider">
-						<div class="header-slider-item">
-							<img src="img/slider-1.jpg" alt="Slider Image" />
-							<!-- <div class="header-slider-caption">
-                  <p></p>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Shop Now</a
-                  >
-                </div> -->
-						</div>
-						<div class="header-slider-item">
-							<img src="img/slider-2.jpg" alt="Slider Image" />
-							<!-- <div class="header-slider-caption">
-                  <p>Some text goes here that describes the image</p>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Shop Now</a
-                  >
-                </div> -->
-						</div>
-						<div class="header-slider-item">
-							<img src="img/slider-3.jpg" alt="Slider Image" />
-							<!-- <div class="header-slider-caption">
-                  <p>Some text goes here that describes the image</p>
-                  <a class="btn" href=""
-                    ><i class="fa fa-shopping-cart"></i>Shop Now</a
-                  >
-                </div> -->
-						</div>
+						
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -287,157 +267,43 @@
 			<div class="section-header">
 				<h1>團購專區</h1>
 			</div>
-			<div class="row align-items-center product-slider product-slider-4">
-				<div class="col-lg-3">
-					<div class="product-item">
-						<div class="product-title">
-							<a href="#">商品名稱</a>
-							<!-- <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div> -->
-						</div>
-						<div class="product-image">
-							<a href="product-detail.html"> <img src="img/product-1.jpg"
-								alt="Product Image" />
-							</a>
-							<!-- <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
-                  <a href="#"><i class="fa fa-heart"></i></a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div> -->
-						</div>
-						<div class="product-price">
-							<h5>
-								<span></span>目前價格:99
-							</h5>
-							<a class="btn" href="">立即加入</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="product-item">
-						<div class="product-title">
-							<a href="#">商品名稱</a>
-							<!-- <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div> -->
-						</div>
-						<div class="product-image">
-							<a href="product-detail.html"> <img src="img/product-2.jpg"
-								alt="Product Image" />
-							</a>
-							<!-- <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
-                  <a href="#"><i class="fa fa-heart"></i></a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div> -->
-						</div>
-						<div class="product-price">
-							<h5>
-								<span></span>目前價格:99
-							</h5>
-							<a class="btn" href="">立即加入</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="product-item">
-						<div class="product-title">
-							<a href="#">商品名稱</a>
-							<!-- <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div> -->
-						</div>
-						<div class="product-image">
-							<a href="product-detail.html"> <img src="img/product-3.jpg"
-								alt="Product Image" />
-							</a>
-							<!-- <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
-                  <a href="#"><i class="fa fa-heart"></i></a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div> -->
-						</div>
-						<div class="product-price">
-							<h5>
-								<span></span>目前價格:99
-							</h5>
-							<a class="btn" href="">立即加入</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="product-item">
-						<div class="product-title">
-							<a href="#">商品名稱</a>
-							<!-- <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div> -->
-						</div>
-						<div class="product-image">
-							<a href="product-detail.html"> <img src="img/product-4.jpg"
-								alt="Product Image" />
-							</a>
-							<!-- <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
-                  <a href="#"><i class="fa fa-heart"></i></a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div> -->
-						</div>
-						<div class="product-price">
-							<h5>
-								<span></span>目前價格:99
-							</h5>
-							<a class="btn" href=""> 立即加入</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3">
-					<div class="product-item">
-						<div class="product-title">
-							<a href="#">商品名稱</a>
-							<!-- <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                </div> -->
-						</div>
-						<div class="product-image">
-							<a href="product-detail.html"> <img src="img/product-5.jpg"
-								alt="Product Image" />
-							</a>
-							<!-- <div class="product-action">
-                  <a href="#"><i class="fa fa-cart-plus"></i></a>
-                  <a href="#"><i class="fa fa-heart"></i></a>
-                  <a href="#"><i class="fa fa-search"></i></a>
-                </div> -->
-						</div>
-						<div class="product-price">
-							<h5>
-								<span></span>目前價格:99
-							</h5>
-							<a class="btn" href="">立即加入</a>
-						</div>
-					</div>
-				</div>
+			<div class="row align-items-center">
+				<c:forEach var="groupVOs" items="${groupVOs}">
+					<c:forEach var="groupproductVOs" items="${groupproductVOs}">
+						<c:if
+							test="${(groupVOs.groupBuyProductID == groupproductVOs.groupBuyProductID)}"
+							var="cc">
+							<div class="col-md-4">
+								<form id="msform" METHOD="post" class="col-md-12"
+									style="border: 0px"
+									ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
+									<div class="col-md-4" style="max-width: 100%">
+										<div class="product-item">
+											<div class="product-title">
+												<a>團購編號 : ${groupVOs.groupBuyID}</a>
+											</div>
+											<div class="product-image">
+												<a> <img
+													src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVOs.groupBuyProductID}"
+													style="width: 100%" alt="product-image">
+													</td>
+												</a>
+											</div>
+											<div class="product-price">
+												<h3>
+													<span>原價$</span>${groupproductVOs.groupBuyProductPrice}</h3>
+												<input type="hidden" name="groupBuyProductID"
+													value="${groupVOs.groupBuyID}">
+												<button class="btn fa fa-search" type="submit">查看商品
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

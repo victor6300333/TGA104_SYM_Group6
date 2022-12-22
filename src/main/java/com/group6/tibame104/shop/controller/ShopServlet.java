@@ -152,6 +152,7 @@ public class ShopServlet extends HttpServlet {
 				String str = req.getParameter("product"+order.getStoreID()+i);
 				Integer quantity = Integer.parseInt(str);
 				Integer productID = order.getProductID();
+				String userAccount = req.getParameter("userAccount");
 				
 				total += (price * quantity);
 				
@@ -167,6 +168,7 @@ public class ShopServlet extends HttpServlet {
 				list.setPrice(price);
 				list.setQuantity(quantity);
 				list.setSubTotal(price*quantity);
+				list.setUserAccount(userAccount);
 
 				orderlist.add(list);
 		
@@ -179,7 +181,7 @@ public class ShopServlet extends HttpServlet {
 			OrderVO ordervo = new OrderVO(); //產生訂單物件
 			
 			Integer memberID = Integer.parseInt( req.getParameter("memberID") );
-			String userAccount = req.getParameter("userAccount");
+			
 			String str = req.getParameter("storeID"+storeID.toString());
 			Integer storeid = Integer.parseInt(str);
 			String storeName = req.getParameter("storeName"+str);
@@ -192,7 +194,6 @@ public class ShopServlet extends HttpServlet {
 			Double count = Double.valueOf(req.getParameter("couponID"+str));
 
 			ordervo.setMemberID(memberID);
-			ordervo.setUserAccount(userAccount);
 			ordervo.setStoreID(storeid);
 			ordervo.setStoreName(storeName);
 			ordervo.setCreditcardNumber("10");

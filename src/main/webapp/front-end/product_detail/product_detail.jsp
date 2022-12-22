@@ -329,7 +329,7 @@ cart.addEventListener('click', (event) => {
 								<div id="reviews" class="container tab-pane fade">
 									<div class="reviews-submitted">
 										<div class="reviewer">
-											${orderlistVO.orderVO} 
+											${orderlistVO.userAccount} 
 											<span>${orderlistVO.buyerComment}</span>
 										</div>
 										<div class="ratting">
@@ -339,7 +339,7 @@ cart.addEventListener('click', (event) => {
 										</div>
 										<div>
 										<c:forEach var="orderlistVO" items="${list}">
-											<p>${orderlistVO.orderVO} </p>
+											<p>${orderlistVO.userAccount} </p>
 											<p>${orderlistVO.buyerComment}</p>
 										</c:forEach>
 										</div>

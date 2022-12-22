@@ -17,20 +17,20 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	@Autowired
 	private DataSource dataSource;
 	
-	private static final String INSERT_STMT = "INSERT INTO orderDetail (orderID, productID, productName,"
+	private static final String INSERT_STMT = "INSERT INTO orderDetail (orderID, productID, productName, userAccount,"
 			+ "			quantity ,price ,subTotal, shopReview,shopComment, buyerReview, buyerComment)"
 			+ "			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 	private static final String GET_ONE_STMT = 
-		"SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
+		"SELECT orderDetailID, orderID, productID, productName, userAccount, quantity ,price ,"
 		     + "subTotal, shopReview,shopComment, buyerReview, buyerComment"
 		     + " FROM orderDetail where orderDetailID = ?";
-	private static final String GET_ALL_STMT = "SELECT orderDetailID, orderID, productID, productName, quantity ,price ,"
+	private static final String GET_ALL_STMT = "SELECT orderDetailID, orderID, productID, productName, userAccount, quantity ,price ,"
 			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment "
 			+ "				FROM orderDetail where orderID = ?";
 	private static final String UPDATE = 
 		"UPDATE orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
 	
-	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderID, productID, buyerReview, buyerComment"
+	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderID, productID, userAccount, buyerReview, buyerComment"
 		     + " FROM orderDetail where productID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
@@ -50,8 +50,9 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO = new OrderlistVO();
 				orderlistVO.setOrderDetailID(rs.getInt("orderDetailID"));
 				orderlistVO.setOrderID(rs.getInt("orderID"));			
-				orderlistVO.setProductName(rs.getString("productName"));			
 				orderlistVO.setProductID(rs.getInt("productID"));
+				orderlistVO.setProductName(rs.getString("productName"));			
+				orderlistVO.setUserAccount(rs.getString("userAccount"));			
 				orderlistVO.setQuantity(rs.getInt("quantity"));
 				orderlistVO.setPrice(rs.getInt("price"));
 				orderlistVO.setSubTotal(rs.getInt("subTotal"));
@@ -82,13 +83,14 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			pstmt.setInt(1,orderlistVO.getOrderID());
 			pstmt.setInt(2, orderlistVO.getProductID());
 			pstmt.setString(3, orderlistVO.getProductName());
-			pstmt.setInt(4, orderlistVO.getQuantity());
-			pstmt.setInt(5, orderlistVO.getPrice());
-			pstmt.setInt(6, orderlistVO.getSubTotal());
-			pstmt.setString(7, orderlistVO.getShopReview());
-			pstmt.setString(8, orderlistVO.getShopComment());
-			pstmt.setString(9, orderlistVO.getBuyerReview());
-			pstmt.setString(10, orderlistVO.getBuyerComment());
+			pstmt.setString(4, orderlistVO.getUserAccount());
+			pstmt.setInt(5, orderlistVO.getQuantity());
+			pstmt.setInt(6, orderlistVO.getPrice());
+			pstmt.setInt(7, orderlistVO.getSubTotal());
+			pstmt.setString(8, orderlistVO.getShopReview());
+			pstmt.setString(9, orderlistVO.getShopComment());
+			pstmt.setString(10, orderlistVO.getBuyerReview());
+			pstmt.setString(11, orderlistVO.getBuyerComment());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,7 +130,8 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO = new OrderlistVO();
 				orderlistVO.setOrderDetailID(rs.getInt("orderDetailID"));
 				orderlistVO.setOrderID(rs.getInt("orderID"));			
-				orderlistVO.setProductName(rs.getString("productName"));			
+				orderlistVO.setProductName(rs.getString("productName"));
+				orderlistVO.setUserAccount(rs.getString("userAccount"));
 				orderlistVO.setProductID(rs.getInt("productID"));
 				orderlistVO.setQuantity(rs.getInt("quantity"));
 				orderlistVO.setPrice(rs.getInt("price"));
