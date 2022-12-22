@@ -90,7 +90,7 @@ public class GroupproductController {
 			jedis.zadd("groupViews", groupViews);
 //			由多到少排序 前五
 			
-			Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "200", "0", 0, 3);
+			Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "+inf", "0", 0, 3);
 			
 			model.addAttribute("popProducts", popProducts);
 			
