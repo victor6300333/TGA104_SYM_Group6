@@ -40,15 +40,15 @@ public class AnnouncementController {
 		
 		//未檢查請求參數
 		
-		// 獲得時間戳記
-		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String strUpdateTime = df.format(updateTime);
-		updateTime = Timestamp.valueOf(strUpdateTime);
+		announSvc.insertAnnoun(administratorID, announcementTitle, announcementContent, startDate, endDate, offLoadStatus, showStatus);
 		
-		AnnouncementVO announcementVo = new AnnouncementVO();	
-		model.addAttribute("announcementVO", announcementVo);	
-		
+//		// 獲得時間戳記(JDBC方法已改已不需要)
+//		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String strUpdateTime = df.format(updateTime);
+//		updateTime = Timestamp.valueOf(strUpdateTime);
+		List<AnnouncementVO> list = announSvc.getAnnounByPK(administratorID);
+		model.addAttribute("list",list);	
 		return "/back-end/announcement/announcementSearch";	
 	}
 	
@@ -67,7 +67,7 @@ public class AnnouncementController {
 		
 		List<String> errorMsgs = new LinkedList<String>();
 		session.setAttribute("errorMsgs", errorMsgs);	
-		Timestamp updateTime = new Timestamp(System.currentTimeMillis());
+		
 		announSvc.updateAnnoun(
 				announcementSerialID,
 				administratorID,
@@ -75,7 +75,6 @@ public class AnnouncementController {
 				announcementContent,
 				startDate,
 				endDate,
-				updateTime,
 				offLoadStatus,
 				showStatus);
 		List<AnnouncementVO> list = announSvc.getAllAnnoun();

@@ -65,7 +65,7 @@ public class GroupdiscountServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-			GroupdiscountVO groupdiscountVO = groupdiscountSvc.getOneGroupdiscount(countTableID);
+			GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
 
 			if (groupdiscountVO == null) {
 				errorMsgs.add("查無資料");
@@ -119,7 +119,7 @@ public class GroupdiscountServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-			List<GroupdiscountVO> groupdiscountVO = groupdiscountSvc.getAllCount(groupBuyID);
+			List<GroupdiscountVO> groupdiscountVO = groupdiscountSvc.getAllByGroupBuyID(groupBuyID);
 
 			if (groupdiscountVO == null) {
 				errorMsgs.add("查無資料");
@@ -150,7 +150,7 @@ public class GroupdiscountServlet extends HttpServlet {
 
 			/*************************** 2.開始查詢資料 ****************************************/
 			GroupdiscountService groupdiscountSvc = new GroupdiscountService();
-			GroupdiscountVO groupdiscountVO = groupdiscountSvc.getOneGroupdiscount(countTableID);
+			GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 			req.setAttribute("groupdiscountVO", groupdiscountVO); // 資料庫取出的empVO物件,存入req
