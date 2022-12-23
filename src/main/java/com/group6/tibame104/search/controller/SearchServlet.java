@@ -79,7 +79,7 @@ public class SearchServlet extends HttpServlet {
 			 * 轉去 listAllProduct 頁面
 			 */
 			req.setAttribute("productVOall", productVOall);
-			String url = "/front-end/product_detail/listAllProduct.jsp";
+			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -92,41 +92,42 @@ public class SearchServlet extends HttpServlet {
 
 			String str = req.getParameter("productID");
 			
-			if (str == null || (str.trim()).length() == 0) {
-				errorMsgs.put("productID", "請輸入正常的數字");
-			}
- 
+			Integer productID = Integer.valueOf(str);
+//			if (str == null || (str.trim()).length() == 0) {
+//				errorMsgs.put("productID", "請輸入正常的數字");
+//			}
+// 
 			/*
 			 * 如果報錯 轉去 addProduct 頁面
 			 */
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
-				try {
-					failureView.forward(req, res);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return;
-			}
-
-			Integer productID = null;
-			try {
-				productID = Integer.valueOf(str);
-			} catch (Exception e) {
-				errorMsgs.put("productID", "請輸入正常的數字");
-			}
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
+//				try {
+//					failureView.forward(req, res);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				return;
+//			}
+//
+			
+//			try {
+				
+//			} catch (Exception e) {
+//				errorMsgs.put("productID", "請輸入正常的數字");
+//			}
 			/*
 			 * 如果報錯 轉去 addProduct 頁面
 			 */
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct");
-				try {
-					failureView.forward(req, res);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return;
-			}
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct");
+//				try {
+//					failureView.forward(req, res);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				return;
+//			}
 			/*
 			 * 取得資料
 			 * 
