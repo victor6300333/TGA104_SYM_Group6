@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.group6.tibame104.category.model.CategoryService;
+import com.group6.tibame104.category.model.CategoryVO;
 import com.group6.tibame104.orderlist.model.OrderlistService;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 import com.group6.tibame104.product.model.ProductVO;
@@ -26,6 +28,8 @@ public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private OrderlistService orderlistSvc;
+	@Autowired
+	private CategoryService categorySvc;
 	
 	
     
@@ -141,6 +145,31 @@ public class SearchServlet extends HttpServlet {
 			req.setAttribute("list", list);
 
 			String url = "/front-end/product_detail/product_detail.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		if("category".equals(action)) {
+
+		    Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*
+			 * 商品名稱取值
+			 */
+			Integer productMainID = Integer.valueOf(req.getParameter("productMainID"));
+			
+			
+			List<CategoryVO> list = categorySvc.getbyProductMainID(productMainID);
+
+		
+
+
+			/*
+			 * 轉去 listAllProduct 頁面
+			 */
+			req.setAttribute("productVOall", list);
+			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

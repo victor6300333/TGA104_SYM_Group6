@@ -32,8 +32,8 @@ public class CategoryDAO implements CategoryDAO_interface {
 	
 
 	@Override
-	public CategoryVO getbyProductSecID(Integer productSecID) {
-		
+	public List<CategoryVO> getbyProductSecID(Integer productSecID) {
+		List<CategoryVO> list = new ArrayList<CategoryVO>();
 		CategoryVO categoryVO = null;
 
 		try (Connection con = dataSource.getConnection();
@@ -46,22 +46,35 @@ public class CategoryDAO implements CategoryDAO_interface {
 
 					categoryVO = new CategoryVO();
 					categoryVO.setProductID(rs.getInt("productID"));
+					categoryVO.setStoreID(rs.getInt("storeID"));				
+					categoryVO.setProductName(rs.getString("productName"));
+					categoryVO.setProductStock(rs.getInt("productStock"));
+					categoryVO.setProductPrice(rs.getInt("productPrice"));
+					categoryVO.setProductDesc(rs.getString("productDesc"));
+					categoryVO.setSource(rs.getString("source"));
+					categoryVO.setProductImg(rs.getBytes("productImg"));
+					categoryVO.setProductImg2(rs.getBytes("productImg2"));
+					categoryVO.setProductImg3(rs.getBytes("productImg3"));
+					categoryVO.setProductStatus(rs.getBoolean("productStatus"));
+					categoryVO.setCommentTotal(rs.getInt("commentTotal"));
+					categoryVO.setCommentAvgStar(rs.getDouble("commentTotal"));				
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					list.add(categoryVO);
 					
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return categoryVO;
+		return list;
 
 	}
 
 
 	@Override
-	public CategoryVO getbyProductMainID(Integer productMainID) {
-		
+	public List<CategoryVO> getbyProductMainID(Integer productMainID) {
+		List<CategoryVO> list = new ArrayList<CategoryVO>();
 		CategoryVO categoryVO = null;
 
 		try (Connection con = dataSource.getConnection();
@@ -74,14 +87,27 @@ public class CategoryDAO implements CategoryDAO_interface {
 
 					categoryVO = new CategoryVO();
 					categoryVO.setProductID(rs.getInt("productID"));
+					categoryVO.setStoreID(rs.getInt("storeID"));				
+					categoryVO.setProductName(rs.getString("productName"));
+					categoryVO.setProductStock(rs.getInt("productStock"));
+					categoryVO.setProductPrice(rs.getInt("productPrice"));
+					categoryVO.setProductDesc(rs.getString("productDesc"));
+					categoryVO.setSource(rs.getString("source"));
+					categoryVO.setProductImg(rs.getBytes("productImg"));
+					categoryVO.setProductImg2(rs.getBytes("productImg2"));
+					categoryVO.setProductImg3(rs.getBytes("productImg3"));
+					categoryVO.setProductStatus(rs.getBoolean("productStatus"));
+					categoryVO.setCommentTotal(rs.getInt("commentTotal"));
+					categoryVO.setCommentAvgStar(rs.getDouble("commentTotal"));				
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					list.add(categoryVO);
 					
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return categoryVO;
+		return list;
 	}
 }

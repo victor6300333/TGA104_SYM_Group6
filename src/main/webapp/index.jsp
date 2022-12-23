@@ -158,22 +158,25 @@
 				<div class="col-md-3">
 					<nav class="navbar bg-light">
 						<ul class="navbar-nav">
-							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-home"></i>居家生活</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-shopping-bag"></i>包包/精品</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-plus-square"></i>美妝保健</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
+							<li class="nav-item"><a class="nav-link" 
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
+									class="fa fa-home"></i>3C</a></li>
+							<li class="nav-item"><a class="nav-link" 
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
+									class="fa fa-shopping-bag"></i>周邊</a></li>
+							<li class="nav-item"><a class="nav-link" 
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
+									class="fa fa-plus-square"></i>精品</a></li>
+					<!--  	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-female"></i>女生配件</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-child"></i>嬰幼童與母親</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-tshirt"></i>男/女衣著</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-mobile-alt"></i>3C與電腦</a></li>
 							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-microchip"></i>家電影音</a></li>
+									class="fa fa-microchip"></i>家電影音</a></li> -->	
 						</ul>
 					</nav>
 				</div>
