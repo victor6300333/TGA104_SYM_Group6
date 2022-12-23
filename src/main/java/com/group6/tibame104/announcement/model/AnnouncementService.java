@@ -20,7 +20,6 @@ public class AnnouncementService {
 			String announcementContent,
 			Date startDate, 
 			Date endDate,
-			Timestamp updateTime,
 			Boolean offLoadStatus,
 			Boolean showStatus) {
 		
@@ -31,7 +30,6 @@ public class AnnouncementService {
 		announcementVO.setAnnouncementContent(announcementContent);
 		announcementVO.setStartDate(startDate);
 		announcementVO.setEndDate(endDate);
-		announcementVO.setUpdateTime(updateTime);
 		announcementVO.setOffLoadStatus(offLoadStatus);
 		announcementVO.setShowStatus(showStatus);
 		dao.insert(announcementVO);
@@ -46,7 +44,6 @@ public class AnnouncementService {
 			String announcementContent, 
 			Date startDate,
 			Date endDate,
-			Timestamp updateTime,
 			Boolean offLoadStatus, 
 			Boolean showStatus) {
 		AnnouncementVO announcementVO = new AnnouncementVO();

@@ -17,7 +17,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	private DataSource dataSource;
 
 	// 新增公告
-	private static final String Insert = "INSERT INTO announcement (administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String Insert = "INSERT INTO announcement (administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus) VALUES(?, ?, ?, ?, ?, now(), ?, ?)";
 	// 修改公告
 	private static final String Update = "UPDATE announcement SET administratorID=?, announcementTitle=?, announcementContent=?, startDate=?, endDate=?,updateTime=now(), offLoadStatus=?, showStatus=? WHERE announcementSerialID=?";
 	// 刪除公告
@@ -42,9 +42,8 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 			pstmt.setString(3, announcementVO.getAnnouncementContent());
 			pstmt.setDate(4, announcementVO.getStartDate());
 			pstmt.setDate(5, announcementVO.getEndDate());
-			pstmt.setTimestamp(6, announcementVO.getUpdateTime());
-			pstmt.setBoolean(7, announcementVO.getOffLoadStatus());
-			pstmt.setBoolean(8, announcementVO.getShowStatus());
+			pstmt.setBoolean(6, announcementVO.getOffLoadStatus());
+			pstmt.setBoolean(7, announcementVO.getShowStatus());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

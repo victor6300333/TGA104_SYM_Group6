@@ -296,6 +296,7 @@
 										<div class="card-header sym-darkpurple">
 											<h3 class="card-title sym-yellow-font">搜尋列表</h3>
 										</div>
+										
 										<!-- /.card-header -->
 										<!-- form start -->
 
@@ -332,6 +333,9 @@
 													</div>
 												</div>
 											</div>
+<!-- 											<div class="table-responsive"> -->
+<!-- 					            <input type="text" class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()"> -->
+<!-- 					            </div> -->
 											<!-- /.card-body -->
 											<div class="card-footer">
 												<button type="submit"
@@ -521,5 +525,7 @@
 		src="${pageContext.request.contextPath}/back-end/group/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/back-end/group/js/admin.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/announcement/js/search.js"></script>
 </body>
 </html>
