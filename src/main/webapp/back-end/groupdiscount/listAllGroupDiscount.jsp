@@ -287,10 +287,10 @@
 					<div class="d-flex align-items-center justify-content-between mb-4">
 						<a
 							class="btn btn-sm card-header sym-darkpurple sym-yellow-font font-m btn_style"
-							href="${pageContext.request.contextPath}/back-end/groupdiscount/addGroupDiscount.jsp">新增折扣</a>
+							href="${pageContext.request.contextPath}/back-end/groupdiscount/addGroupDiscount.jsp">新增公告</a>
 					</div>
 					<div class="table-responsive">
-					            <input class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()">
+					            <input type="text" class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()">
 						<br>
 						<div class="card card-primary">
 							<table
@@ -403,6 +403,8 @@
 		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/admin.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/search.js"></script>
+		
+		
 </body>
 
 </html>
