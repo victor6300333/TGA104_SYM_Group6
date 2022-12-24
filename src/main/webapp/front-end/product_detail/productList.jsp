@@ -186,22 +186,16 @@
                             <div class="col-md-12">
                                 <div class="product-view-top">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="product-search">
-                                                <input type="email" value="Search">
-                                                <button><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-md-4">
                                             <div class="商品順序">
                                                 <div class="dropdown">
                                                 <form>
-                                                    <div class="dropdown-toggle" data-toggle="dropdown">商品順序</div>
+                                                    <div class="dropdown-toggle" data-toggle="dropdown">商品價格順序</div>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_price" class="dropdown-item">價格(由低至高)</a>
                                                         <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_price_reverse" class="dropdown-item">價格(由高至低)</a>
-                                                        <a href="#" class="dropdown-item">熱門商品</a>
-                                                        <a href="#" class="dropdown-item">熱銷商品</a>
+                        
                                                     </div>
                                                 </form>
                                                 </div>
@@ -225,11 +219,11 @@
                                 </div>
                             </div>
                             
-                            <c:forEach  var="productVO" items="${productVOall}">
+                            <c:forEach  var="categoryVO" items="${categoryVOall}">
                               <div class="col-md-4">
                        			 <div class="product-item">
                                     <div class="product-title">
-                                        <a href="#">${productVO.productName}</a>
+                                        <a href="#">${categoryVO.productName}</a>
                                         <div class="ratting">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -240,7 +234,7 @@
                                     </div>
                                     <div class="商品圖片">
                                         <a href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
-                                            <img src="${pageContext.request.contextPath}/product/picServlet?productID=${productVO.productID}" 
+                                            <img src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}" 
                                             style="width: 230px; height: 200px" alt="Product Image"> 
                                         </a>
                                         <div class="product-action">
@@ -250,12 +244,12 @@
                                         </div>
                                     </div>
                                     <div class="商品價格">
-                                        <h3><span>$</span>${productVO.productPrice}</h3>
+                                        <h3><span>$</span>${categoryVO.productPrice}</h3>
                             <form name="shoppingForm" action="${pageContext.request.contextPath}/SearchServlet" method="POST">
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="hidden" name="productID" value="${productVO.productID}">
+					<input type="hidden" name="productID" value="${categoryVO.productID}">
 					<a class="btn" 
-					href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${productVO.productID}"><i class="fa fa-shopping-cart"></i>查看</a>
+					href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i class="fa fa-shopping-cart"></i>查看</a>
 				</form>	 
                                     </div>
                                	 </div>

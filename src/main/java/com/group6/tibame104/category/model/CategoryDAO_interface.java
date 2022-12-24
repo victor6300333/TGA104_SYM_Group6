@@ -14,4 +14,8 @@ public interface CategoryDAO_interface {
 
 	public List<CategoryVO> getbyProductMainID(Integer productMainID);
 
+	public List<CategoryVO> getAll();
+
+	public List<String> getAllCategory();
+
 }

@@ -41,7 +41,7 @@ public class OrderController {
 		List<OrderVO> list  = orderSvc.getAllOrderByComposite(map);
 		model.addAttribute("list", list);
 	
-				return "/front-end/order/listOrder";
+				return "front-end/order/listOrder";
 		
 	}
 }

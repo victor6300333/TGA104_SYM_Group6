@@ -21,6 +21,23 @@ public class CategoryVO {
 	private String storeName;
     private String storeAddress;
     private String phoneNumber;
+    private Integer productSecID;
+    private String productSecName;
+    private Integer productMainID;
+    private String productMainName;
+    
+	public String getProductSecName() {
+		return productSecName;
+	}
+	public void setProductSecName(String string) {
+		this.productSecName = string;
+	}
+	public String getProductMainName() {
+		return productMainName;
+	}
+	public void setProductMainName(String productMainName) {
+		this.productMainName = productMainName;
+	}
 	public String getStoreName() {
 		return storeName;
 	}
@@ -39,8 +56,6 @@ public class CategoryVO {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	private Integer productSecID;
-	private Integer productMainID;
 	
 	public Integer getStoreID() {
 		return storeID;

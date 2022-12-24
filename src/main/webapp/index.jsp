@@ -182,7 +182,14 @@
 				</div>
 				<div class="col-md-6">
 					<div class="header-slider normal-slider">
-						
+						<c:forEach var="adVO" items="${list}">
+							<div class="header-slider-item">
+								
+								<img
+									src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}" height="100%" width="100%">
+								
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 				<div class="col-md-3">

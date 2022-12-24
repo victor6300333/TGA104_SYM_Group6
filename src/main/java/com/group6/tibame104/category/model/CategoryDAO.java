@@ -31,6 +31,8 @@ public class CategoryDAO implements CategoryDAO_interface {
 	private static final String GET_PRODUCTID = "SELECT * FROM category where productID= ? ";
 	private static final String GET_SEC = "SELECT * FROM category where productSecID= ? ";
 	private static final String GET_MAIN = "SELECT * FROM category where productMainID= ? ";
+	private static final String GET_ALL = "SELECT * FROM category ";
+	private static final String GET_ALL_CATEGORY = "select distinct productMainName from category";
 
 	
 	@Override
@@ -65,7 +67,9 @@ public class CategoryDAO implements CategoryDAO_interface {
 					categoryVO.setStoreAddress(rs.getString("storeAddress"));
 					categoryVO.setPhoneNumber(rs.getString("phoneNumber"));
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
+					categoryVO.setProductSecName(rs.getString("productSecName"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					categoryVO.setProductMainName(rs.getString("productMainName"));
 					list.add(categoryVO);
 					
 				}
@@ -108,7 +112,9 @@ public class CategoryDAO implements CategoryDAO_interface {
 					categoryVO.setStoreAddress(rs.getString("storeAddress"));
 					categoryVO.setPhoneNumber(rs.getString("phoneNumber"));
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
+					categoryVO.setProductSecName(rs.getString("productSecName"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					categoryVO.setProductMainName(rs.getString("productMainName"));
 					
 					
 				}
@@ -153,7 +159,9 @@ public class CategoryDAO implements CategoryDAO_interface {
 					categoryVO.setStoreAddress(rs.getString("storeAddress"));
 					categoryVO.setPhoneNumber(rs.getString("phoneNumber"));
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
+					categoryVO.setProductSecName(rs.getString("productSecName"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					categoryVO.setProductMainName(rs.getString("productMainName"));
 					list.add(categoryVO);
 					
 				}
@@ -198,8 +206,81 @@ public class CategoryDAO implements CategoryDAO_interface {
 					categoryVO.setStoreAddress(rs.getString("storeAddress"));
 					categoryVO.setPhoneNumber(rs.getString("phoneNumber"));
 					categoryVO.setProductSecID(rs.getInt("productSecID"));
+					categoryVO.setProductSecName(rs.getString("productSecName"));
 					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					categoryVO.setProductMainName(rs.getString("productMainName"));
 					list.add(categoryVO);
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<CategoryVO> getAll() {
+		List<CategoryVO> list = new ArrayList<CategoryVO>();
+		CategoryVO categoryVO = null;
+
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL);) {
+
+			
+
+			try (ResultSet rs = pstmt.executeQuery();) {
+				while (rs.next()) {
+
+					categoryVO = new CategoryVO();
+					categoryVO.setProductID(rs.getInt("productID"));
+					categoryVO.setStoreID(rs.getInt("storeID"));				
+					categoryVO.setProductName(rs.getString("productName"));
+					categoryVO.setProductStock(rs.getInt("productStock"));
+					categoryVO.setProductPrice(rs.getInt("productPrice"));
+					categoryVO.setProductDesc(rs.getString("productDesc"));
+					categoryVO.setSource(rs.getString("source"));
+					categoryVO.setProductImg(rs.getBytes("productImg"));
+					categoryVO.setProductImg2(rs.getBytes("productImg2"));
+					categoryVO.setProductImg3(rs.getBytes("productImg3"));
+					categoryVO.setInsertTime(rs.getTimestamp("insertTime"));
+					categoryVO.setProductStatus(rs.getBoolean("productStatus"));
+					categoryVO.setCommentTotal(rs.getInt("commentTotal"));
+					categoryVO.setCommentAvgStar(rs.getDouble("commentAvgStar"));	
+					categoryVO.setStoreName(rs.getString("storeName"));
+					categoryVO.setStoreAddress(rs.getString("storeAddress"));
+					categoryVO.setPhoneNumber(rs.getString("phoneNumber"));
+					categoryVO.setProductSecID(rs.getInt("productSecID"));
+					categoryVO.setProductSecName(rs.getString("productSecName"));
+					categoryVO.setProductMainID(rs.getInt("productMainID"));
+					categoryVO.setProductMainName(rs.getString("productMainName"));
+					list.add(categoryVO);
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<String> getAllCategory() {
+		List<String> list = new ArrayList<String>();
+		
+
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_ALL_CATEGORY);) {
+
+			
+
+			try (ResultSet rs = pstmt.executeQuery();) {
+				while (rs.next()) {
+
+					String mainName ;
+					
+					mainName = rs.getString("productMainName");
+					list.add(mainName);
 					
 				}
 			}

@@ -56,17 +56,18 @@ public class SearchServlet extends HttpServlet {
 			 * 商品名稱取值
 			 */
 			String productName = req.getParameter("productName");
-
-			List<CategoryVO> productVOall;
-			productVOall = categorySvc.getbyProductName(productName) ;
+			List<CategoryVO> categoryVOall;
+			
 
 			/*
 			 * 搜尋 商品名稱 為空 全部 不為空 有條件
 			 */
-//			if (productName.trim().length() == 0) {
-//				productVOall = new ProductService().getAll();
-//			} else {
-//			}
+			if (productName.trim().length() == 0) {
+				categoryVOall = categorySvc.getAll();
+			} else {
+				
+				categoryVOall = categorySvc.getbyProductName(productName) ;
+			}
 
 			/*
 			 * 如果報錯 轉去 addProduct 頁面
@@ -84,8 +85,8 @@ public class SearchServlet extends HttpServlet {
 			/*
 			 * 轉去 listAllProduct 頁面
 			 */
-			session.removeAttribute("productVOall_forsort");
-			session.setAttribute("productVOall", productVOall);
+			session.removeAttribute("categoryVOall_forsort");
+			session.setAttribute("categoryVOall", categoryVOall);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -126,7 +127,7 @@ public class SearchServlet extends HttpServlet {
 			Integer productMainID = Integer.valueOf(req.getParameter("productMainID"));
 			
 			
-			List<CategoryVO> list = categorySvc.getbyProductMainID(productMainID);
+			List<CategoryVO> categoryVOall = categorySvc.getbyProductMainID(productMainID);
 
 		
 
@@ -134,8 +135,8 @@ public class SearchServlet extends HttpServlet {
 			/*
 			 * 轉去 listAllProduct 頁面
 			 */
-			session.removeAttribute("productVOall_forsort");
-			session.setAttribute("productVOall", list);
+			session.removeAttribute("categoryVOall_forsort");
+			session.setAttribute("categoryVOall", categoryVOall);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

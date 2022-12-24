@@ -27,4 +27,13 @@ public class CategoryService {
 	public List<CategoryVO> getbyProductMainID(Integer productMainID) {
 		return dao.getbyProductMainID(productMainID);
 	}
+	
+	public List<CategoryVO> getAll(){
+		return dao.getAll();		
+	}
+	
+	public List<String> getAllCategory(){
+		return dao.getAllCategory();
+		
+	}
 }

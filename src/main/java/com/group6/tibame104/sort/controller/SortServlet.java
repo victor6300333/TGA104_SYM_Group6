@@ -16,11 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.group6.tibame104.category.model.CategoryService;
 import com.group6.tibame104.category.model.CategoryVO;
@@ -44,12 +40,12 @@ public class SortServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
 		@SuppressWarnings("unchecked")
-		List<CategoryVO> list = (List<CategoryVO>) session.getAttribute("productVOall");
+		List<CategoryVO> list = (List<CategoryVO>) session.getAttribute("categoryVOall");
 
 		if ("sort_price".equals(action) || "sort_price_reverse".equals(action) ) {
 			
-			if(session.getAttribute("productVOall_forsort") != null) {
-				list = (List<CategoryVO>) session.getAttribute("productVOall_forsort");
+			if(session.getAttribute("categoryVOall_forsort") != null) {
+				list = (List<CategoryVO>) session.getAttribute("categoryVOall_forsort");
 			}
 
 			Collections.sort(list, new Comparator<CategoryVO>() {
@@ -64,7 +60,7 @@ public class SortServlet extends HttpServlet {
 			if("sort_price_reverse".equals(action))
 				Collections.reverse(list);
 
-			req.setAttribute("productVOall", list);
+			req.setAttribute("categoryVOall", list);
 			
 			
 			String url = "/front-end/product_detail/productList.jsp";
@@ -96,8 +92,8 @@ public class SortServlet extends HttpServlet {
 				}
 			}
 			
-			req.setAttribute("productVOall", newlist);
-			session.setAttribute("productVOall_forsort", newlist);
+			req.setAttribute("categoryVOall", newlist);
+			session.setAttribute("categoryVOall_forsort", newlist);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);		
