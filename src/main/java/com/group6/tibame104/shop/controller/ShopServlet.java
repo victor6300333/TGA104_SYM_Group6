@@ -24,6 +24,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.group6.tibame104.category.model.CategoryService;
+import com.group6.tibame104.category.model.CategoryVO;
 import com.group6.tibame104.order.model.OrderService;
 import com.group6.tibame104.order.model.OrderVO;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
@@ -47,6 +49,8 @@ public class ShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	OrderService ordsvc;
+	@Autowired
+	CategoryService categorySvc;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -121,9 +125,9 @@ public class ShopServlet extends HttpServlet {
 			}
 			if(req.getParameter("method").equals("cart")) {
 
-				ProductVO productVO = new ProductService().findByPrimaryKey(Integer.parseInt(req.getParameter("productID")));
+				CategoryVO categoryVO =categorySvc.getbyProductID(Integer.parseInt(req.getParameter("productID")));
 
-				req.setAttribute("productVO", productVO);
+				req.setAttribute("categoryVO", categoryVO);
 				
 				String url = "/front-end/product_detail/product_detail.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);

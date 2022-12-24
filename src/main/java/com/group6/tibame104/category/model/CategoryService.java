@@ -9,11 +9,22 @@ import org.springframework.stereotype.Service;
 public class CategoryService {
 	@Autowired
 	CategoryDAO_interface dao;
-	
-	 public List<CategoryVO> getbyProductSecID(Integer productSecID) {
+
+	public List<CategoryVO> getbyProductName(String productName){
+		return dao.getbyProductName(productName);
+		
+	}
+
+	public CategoryVO getbyProductID(Integer productID) {
+		return dao.getbyProductID(productID);
+		
+	}
+
+	public List<CategoryVO> getbyProductSecID(Integer productSecID) {
 		return dao.getbyProductSecID(productSecID);
-		}
-     public List<CategoryVO> getbyProductMainID(Integer productMainID) {
+	}
+
+	public List<CategoryVO> getbyProductMainID(Integer productMainID) {
 		return dao.getbyProductMainID(productMainID);
-		}
+	}
 }
