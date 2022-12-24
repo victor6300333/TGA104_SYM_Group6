@@ -1,11 +1,13 @@
-var current_fs, next_fs, previous_fs;
+/*var current_fs, next_fs, previous_fs;
 
 var left, opacity, scale;
 
-var animating; $(".next").click(function() {
+var animating; */
+/*$(".next").click(function() {
 	if (animating) {
 		return false
 	}
+	
 	animating = true;
 	current_fs = $(this).parent();
 	next_fs = $(this).parent().next();
@@ -29,7 +31,7 @@ var animating; $(".next").click(function() {
 });
 
 $(".previous").click(function(){
-    if(animating){
+   if(animating){
         return false
     }
     animating=true;
@@ -50,11 +52,9 @@ $(".previous").click(function(){
         },
         easing:"easeInOutBack"}
     )
-});
+});*/
 
-$(".submit").click(function() {
-	return false
-});
+
 
 
 

@@ -3,13 +3,17 @@ package com.group6.tibame104.member.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.group6.tibame104.creditCard.model.CreditCardService;
 import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MailService;
@@ -528,32 +533,39 @@ public class MemberController {
 	}
 
 	@PostMapping("/forgetPassword")
-	public String forgetPassword(Model model, @RequestParam("mail") String mail) {
+	public void forgetPassword(HttpServletResponse res, Model model, @RequestParam("mail") String mail)
+			throws IOException {
+		res.setCharacterEncoding("UTF-8");
 
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs", errorMsgs);
+		Map<String, String> errorMsg = new HashMap<String, String>();
 
+		Gson gson = new Gson();
+
+		PrintWriter writer = res.getWriter();
+
+		MemberVO memVO = new MemberVO();
 		/*************************** 1.接收請求參數 ****************************************/
 		String mailReg = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z]+$";
 		if (mail == null || mail.trim().length() == 0) {
-			errorMsgs.add("使用者信箱: 請勿空白");
+
+			errorMsg.put("errorMsg", "使用者信箱: 請勿空白");
+			String json = gson.toJson(errorMsg);
+
+			writer.write(json);
+			return;
 		} else if (!mail.trim().matches(mailReg)) { // 以下練習正則(規)表示式(regular-expression)
-			errorMsgs.add("請輸入正確的信箱格式！");
-		}
 
-		MemberVO memVO = new MemberVO();
-		memVO.setMail(mail);
+			errorMsg.put("errorMsg", "請輸入正確的信箱格式！");
+			String json = gson.toJson(errorMsg);
+			writer.write(json);
+			return;
+		} else if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
 
-		if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
-			errorMsgs.add("使用者信箱錯誤或查無此信箱");
+			errorMsg.put("errorMsg", "使用者信箱錯誤或查無此信箱");
+			String json = gson.toJson(errorMsg);
+			writer.write(json);
+			return;
 
-		}
-
-		if (!errorMsgs.isEmpty()) {
-			model.addAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/front-end/member/forgetPassword"; // 程式中斷
 		}
 
 		// 產生亂數密碼
@@ -590,7 +602,8 @@ public class MemberController {
 
 		mailSvc.sendMail(mail, subject, messageText);
 
-		return "front-end/member/login";
+		String json = gson.toJson(mail);
+		writer.write(json);
 
 	}
 
