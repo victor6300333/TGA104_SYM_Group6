@@ -261,7 +261,7 @@ public class MemberController {
 		memVO.setCurrentShoppingCoin(currentShoppingCoin);
 		// Send the use back to the form, if there were errors
 
-		if ((memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
+		if ((memSvc.findMemberByMail(mail))) { // 【信箱無效時】
 			errorMsgs.add("此信箱已有人使用");
 
 		}
@@ -311,12 +311,15 @@ public class MemberController {
 	}
 
 	@PostMapping("/mailVerification")
-	public String mailVerification(HttpSession session, Model model, @RequestParam("vCode") String vCode) {
+	public void mailVerification(HttpServletResponse res, HttpSession session, Model model,
+			@RequestParam("vCode") String vCode) throws IOException {
+		res.setCharacterEncoding("UTF-8");
 
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs", errorMsgs);
+		Map<String, String> msg = new HashMap<String, String>();
+
+		Gson gson = new Gson();
+
+		PrintWriter writer = res.getWriter();
 
 		/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
@@ -326,9 +329,15 @@ public class MemberController {
 		String passRandom = jedis.get("passRandom");
 
 		if (passRandom == null) {
-			errorMsgs.add("連結信已逾時，請重新申請");
+			msg.put("errorMsg", "連結信已逾時，請重新申請");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
 		} else if (!(vCode.equals(passRandom))) {
-			errorMsgs.add("驗證有誤，請重新輸入");
+			msg.put("errorMsg", "驗證有誤，請重新輸入");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
 		} else if (vCode.equals(passRandom))
 			jedis.close();
 
@@ -343,11 +352,6 @@ public class MemberController {
 		Boolean sellerAuditApprovalState = memVO.getSellerAuditApprovalState();
 		Integer currentShoppingCoin = memVO.getCurrentShoppingCoin();
 
-		if (!errorMsgs.isEmpty()) {
-			model.addAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/front-end/member/register"; // 程式中斷
-		}
-
 		/*************************** 2.開始新增資料 ***************************************/
 		memVO = memSvc.addMember(userAccount, userPassword, userName, phone, mail, registrationTime, mailCertification,
 				sellerAuditApprovalState, currentShoppingCoin);
@@ -356,8 +360,11 @@ public class MemberController {
 
 		mailCertification = true;// 驗證成功
 		session.setAttribute("memVO", memVO);
-		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-		return "/front-end/member/register2";
+
+		msg.put("succsess", mail);
+
+		String json = gson.toJson(msg);
+		writer.write(json);
 
 	}
 
@@ -537,7 +544,7 @@ public class MemberController {
 			throws IOException {
 		res.setCharacterEncoding("UTF-8");
 
-		Map<String, String> errorMsg = new HashMap<String, String>();
+		Map<String, String> msg = new HashMap<String, String>();
 
 		Gson gson = new Gson();
 
@@ -548,21 +555,21 @@ public class MemberController {
 		String mailReg = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z]+$";
 		if (mail == null || mail.trim().length() == 0) {
 
-			errorMsg.put("errorMsg", "使用者信箱: 請勿空白");
-			String json = gson.toJson(errorMsg);
+			msg.put("errorMsg", "使用者信箱: 請勿空白");
+			String json = gson.toJson(msg);
 
 			writer.write(json);
 			return;
 		} else if (!mail.trim().matches(mailReg)) { // 以下練習正則(規)表示式(regular-expression)
 
-			errorMsg.put("errorMsg", "請輸入正確的信箱格式！");
-			String json = gson.toJson(errorMsg);
+			msg.put("errorMsg", "請輸入正確的信箱格式！");
+			String json = gson.toJson(msg);
 			writer.write(json);
 			return;
 		} else if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
 
-			errorMsg.put("errorMsg", "使用者信箱錯誤或查無此信箱");
-			String json = gson.toJson(errorMsg);
+			msg.put("errorMsg", "使用者信箱錯誤或查無此信箱");
+			String json = gson.toJson(msg);
 			writer.write(json);
 			return;
 
@@ -602,7 +609,9 @@ public class MemberController {
 
 		mailSvc.sendMail(mail, subject, messageText);
 
-		String json = gson.toJson(mail);
+		msg.put("succsess", mail);
+
+		String json = gson.toJson(msg);
 		writer.write(json);
 
 	}

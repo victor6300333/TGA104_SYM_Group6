@@ -137,9 +137,7 @@
 
 
 	<!-- register Start -->
-	<form id="msform" METHOD="post"
-		ACTION="${pageContext.request.contextPath}/front-end/member/mailVerification"
-		name="form1">
+	<form id="msform" name="form1">
 		<!-- progressbar -->
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
@@ -147,37 +145,28 @@
 			<li>完成</li>
 		</ul>
 		<!-- fieldsets -->
-		<fieldset>
+		<fieldset id="register1">
 			<h1 class="fs-title">請輸入信箱驗證碼</h1>
 			<br />
 			<h3 class="fs-subtitle">您的驗證碼已透過E-mail傳送至</h3>
 			<h4 class="fs-subtitle">${memVO.mail}</h4>
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
+			
 			<input type="text" name="vCode" placeholder="輸入驗證碼" />
 			<h3 class="fs-subtitle">沒有收到驗證碼嗎？</h3>
 			<h3 class="fs-subtitle">重新傳送</h3>
 
 			
-			<input class="next action-button" name="next" type="submit"
+			<input id="continue" class="next action-button" name="next" type="button"
 				value="驗證">
 
 		</fieldset>
-		<fieldset>
+		<fieldset id="register2">
 			<h2 class="fs-title">驗證完成</h2>
 			<h2 class="fs-title circle-check">
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
 				<br />
 			</h2>
-			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
+			<h3 class="fs-subtitle text_t1">已使用電子信箱<div id="email"></div></h3>
 			<h3 class="fs-subtitle">驗證註冊成功</h3>
 			<h3 class="fs-subtitle">請點選完成繼續註冊流程</h3>
 			<a
@@ -301,5 +290,81 @@
 	<script src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
 	<script src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
+	
+	<script>
+  // 全域變數
+  var animating = false;
+  var current_fs;
+  var next_fs;
+
+  // 觸發頁面切換的動畫
+  function triggerAnimation() {
+    if (animating) {
+      return false;
+    }
+    animating = true;
+    current_fs = document.querySelector("#register1");
+    next_fs = document.querySelector("#register2");
+    document.querySelector("#progressbar li:nth-of-type(2)").classList.add("active");
+    next_fs.style.display = "block";
+
+    current_fs.animate(
+    		{ opacity: 0 },
+    		{
+    		step: function(b, a) {
+    		scale = 1 - (1 - b) * 0.2;
+    		left = b * 50 + "%";
+    		opacity = 1 - b;
+    		current_fs.style.transform = "scale(" + scale + ")";
+    		next_fs.style.left = left;
+    		next_fs.style.opacity = opacity;
+    		},
+    		duration: 800,
+    		complete: function() {
+    		current_fs.style.display = "none";
+    		animating = false;
+    		},
+    		easing: "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+    		}
+    		);
+
+
+
+  }
+
+  // 當按下驗證按鈕時
+ 
+
+   $("#continue").click(function() {
+  $.ajax({
+    url: "${pageContext.request.contextPath}/front-end/member/mailVerification", // 資料請求的網址
+    type: "POST", // GET | POST | PUT | DELETE | PATCH
+    data: $("#msform").serialize(),
+    dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+    beforeSend: function() {
+      // 顯示讀取中的動畫
+      $("#continue").addClass("loading");
+      // 禁用按鈕
+      $("#continue").attr("disabled", true);
+    },
+    success: function(data) {
+      if ("errorMsg" in data) {
+        alert(data.errorMsg); // 顯示訊息	 
+      } else {
+        $("#email").text(data.succsess);
+       /*  alert("修改成功！");  */
+        triggerAnimation(); // 觸發頁面切換的動畫
+      }
+    },
+    complete: function() {
+      // 隱藏讀取中的動畫
+      $("#continue").removeClass("loading");
+      // 啟用按鈕
+      $("#continue").attr("disabled", false);
+    }
+  });
+});
+
+	</script>
 </body>
 </html>

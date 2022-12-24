@@ -400,11 +400,11 @@
       $("#forgetPass").attr("disabled", true);
     },
     success: function(data) {
-      if (Object.keys(data)[0] == "errorMsg") {
-        alert(data.errorMsg); // 顯示訊息		
+      if ("errorMsg" in data) {
+        alert(data.errorMsg); // 顯示訊息	 
       } else {
-        $("#email").text(data);
-        alert("修改成功！"); 
+        $("#email").text(data.succsess);
+       /*  alert("修改成功！");  */
         triggerAnimation(); // 觸發頁面切換的動畫
       }
     },
