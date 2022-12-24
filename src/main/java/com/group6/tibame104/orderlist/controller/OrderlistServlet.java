@@ -37,16 +37,17 @@ public class OrderlistServlet extends HttpServlet {
 		
 		if ("do_buyercomment".equals(action)) {
 
-			Integer orderID = Integer.parseInt(req.getParameter("orderID"));
+			Integer orderlistID = Integer.parseInt(req.getParameter("orderlistID"));
 			
 			
 
-			List<OrderlistVO> list = orderlistSvc.searchOrderlist(orderID);
-			req.setAttribute("list", list);
+			OrderlistVO orderlistVO = orderlistSvc.findByOrderlistID(orderlistID);
+			req.setAttribute("orderlistVO", orderlistVO);
 			String url = "/front-end/comment/addComment.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 		}
+		
 		if ("update".equals(action)) {
 			
 			String index = req.getParameter("comment");
@@ -72,51 +73,64 @@ public class OrderlistServlet extends HttpServlet {
 			
 		}
 		
-		
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-		
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			Integer orderDetailID = Integer.valueOf(req.getParameter("orderDetailID"));
-			Integer orderID = Integer.valueOf(req.getParameter("orderID"));
-			Integer productID = Integer.valueOf(req.getParameter("productID"));
-			Integer quantity = Integer.valueOf(req.getParameter("quantity"));
-			Integer price = Integer.valueOf(req.getParameter("price"));
-			Integer subTotal = Integer.valueOf(req.getParameter("subTotal"));
-
-			String shopReview = req.getParameter("shopReview");
-			String shopComment = req.getParameter("shopComment");
-			String buyerReview = req.getParameter("buyerReview");
-			String buyerComment = req.getParameter("buyerComment");
-
-			// Send the use back to the form, if there were errors
-
-			/*************************** 2.開始新增資料 ***************************************/
+		if ("check_buyercomment".equals(action)) {
 			
-			OrderlistVO orderlistVO = new OrderlistVO();
-
-			orderlistVO.setOrderDetailID(orderDetailID);
-			orderlistVO.setOrderID(orderID);
-			orderlistVO.setProductID(productID);
-			orderlistVO.setQuantity(quantity);
-			orderlistVO.setPrice(price);
-			orderlistVO.setSubTotal(subTotal);
-			orderlistVO.setShopReview(shopReview);
-			orderlistVO.setShopComment(shopComment);
-			orderlistVO.setBuyerReview(buyerReview);
-			orderlistVO.setBuyerComment(buyerComment);
+			Integer orderlistID = Integer.parseInt(req.getParameter("orderlistID"));
 			
-			orderlistSvc.addOrderlist(orderlistVO);
 			
+			
+			OrderlistVO orderlistVO = orderlistSvc.findByOrderlistID(orderlistID);
 			req.setAttribute("orderlistVO", orderlistVO);
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/back-end/comment/listComment.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+			String url = "/front-end/comment/listComment.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 		}
+		
+		
+//		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//		
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+//			Integer orderDetailID = Integer.valueOf(req.getParameter("orderDetailID"));
+//			Integer orderID = Integer.valueOf(req.getParameter("orderID"));
+//			Integer productID = Integer.valueOf(req.getParameter("productID"));
+//			Integer quantity = Integer.valueOf(req.getParameter("quantity"));
+//			Integer price = Integer.valueOf(req.getParameter("price"));
+//			Integer subTotal = Integer.valueOf(req.getParameter("subTotal"));
+//
+//			String shopReview = req.getParameter("shopReview");
+//			String shopComment = req.getParameter("shopComment");
+//			String buyerReview = req.getParameter("buyerReview");
+//			String buyerComment = req.getParameter("buyerComment");
+//
+//			// Send the use back to the form, if there were errors
+//
+//			/*************************** 2.開始新增資料 ***************************************/
+//			
+//			OrderlistVO orderlistVO = new OrderlistVO();
+//
+//			orderlistVO.setOrderDetailID(orderDetailID);
+//			orderlistVO.setOrderID(orderID);
+//			orderlistVO.setProductID(productID);
+//			orderlistVO.setQuantity(quantity);
+//			orderlistVO.setPrice(price);
+//			orderlistVO.setSubTotal(subTotal);
+//			orderlistVO.setShopReview(shopReview);
+//			orderlistVO.setShopComment(shopComment);
+//			orderlistVO.setBuyerReview(buyerReview);
+//			orderlistVO.setBuyerComment(buyerComment);
+//			
+//			orderlistSvc.addOrderlist(orderlistVO);
+//			
+//			req.setAttribute("orderlistVO", orderlistVO);
+//			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+//			String url = "/back-end/comment/listComment.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//			successView.forward(req, res);
+//		}
 
 
 	}

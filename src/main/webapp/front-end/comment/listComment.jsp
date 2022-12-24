@@ -52,7 +52,7 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>已送出評價</h3>
+		 <h3>評價</h3>
 		
 	</td></tr>
 </table>

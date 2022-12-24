@@ -1,5 +1,6 @@
 package com.group6.tibame104.order.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.group6.tibame104.order.model.OrderService;
 import com.group6.tibame104.order.model.OrderVO;
+import com.group6.tibame104.orderlist.model.OrderlistService;
+import com.group6.tibame104.orderlist.model.OrderlistVO;
 
 @Controller
 @RequestMapping("/front-end/order")
 public class OrderController {
 	@Autowired
 	OrderService orderSvc;
+	@Autowired
+	OrderlistService orderlistSvc;
 	
 	
 	@PostMapping("/select_by_OrderID")
@@ -37,9 +42,15 @@ public class OrderController {
 	public String selectOrder(Model model, @RequestParam Map<String,String> map
 			) {
 		
+		Map<OrderVO,List<OrderlistVO>> map_list = new HashMap<OrderVO,List<OrderlistVO>>();
+		List<OrderVO> list_OrderVO  = orderSvc.getAllOrderByComposite(map);
 		
-		List<OrderVO> list  = orderSvc.getAllOrderByComposite(map);
-		model.addAttribute("list", list);
+		for(OrderVO orderVO : list_OrderVO) {
+			List<OrderlistVO> list_OrderlistVO = orderlistSvc.searchOrderlist(orderVO.getOrderID());
+			map_list.put(orderVO, list_OrderlistVO);
+		}
+		
+		model.addAttribute("map_list", map_list);
 	
 				return "front-end/order/listOrder";
 		

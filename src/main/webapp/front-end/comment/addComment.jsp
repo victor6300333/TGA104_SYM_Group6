@@ -3,10 +3,7 @@
 <%@ page import="com.group6.tibame104.orderlist.model.*, java.util.*"%>
 
 
-<%
-@SuppressWarnings("unchecked")
-List<OrderlistVO> list = (List<OrderlistVO>) request.getAttribute("list");
-%>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -48,7 +45,7 @@ th, td {
 }
 </style>
 
- <link rel="stylesheet" href="./css/review.css" />
+<link rel="stylesheet" href="./css/review.css" />
 
 </head>
 <body bgcolor='white'>
@@ -67,86 +64,78 @@ th, td {
 
 
 
-	<%
-	for (int index = 0; index < list.size(); index++) {
-		OrderlistVO order = list.get(index);
-	%>
-<table >	
 
-<tr>
-	<td width="200">訂單明細</td>
-	<td width="200">訂單編號</td>
-	<td width="200">商品編號</td>
-	<td width="200">數量</td>
-	<td width="200">價錢</td>
-	<td width="200">小計</td>
-</tr>	
-<tr> 
-	<td width="200"><%=order.getOrderDetailID()%></td>
-	<td width="200"><%=order.getOrderID()%></td>
-	<td width="200"><%=order.getProductID()%></td>
-	<td width="200"><%=order.getQuantity()%></td>
-	<td width="200"><%=order.getPrice()%></td>
-	<td width="200"><%=order.getSubTotal()%></td>
-</tr> 
+	<table>
 
+		<tr>
+			<td width="155">商品名稱</td>
+			<td width="155">商品圖片</td>
+			<td width="125">價格</td>
 
+			<td width="105">數量</td>
+			<td width="130">小計</td>
+			<td width="130">評價</td>
+		</tr>
+		<tr>
+			<td width="155">${orderlistVO.productName}</td>
+			<td width="155"><img
+				src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
+				style="width: 230px; height: 200px" alt="Product Image"></td>
+			<td width="125">${orderlistVO.price}</td>
 
-<div class="star-mark">
-      <span>評價</span>
-      <ul class="star">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <div class="result">
-        <span class="mark"></span><span class="detail"></span>
-      </div>
-      <div class="help-info">
-        <span class="mark"></span>&nbsp;<span class="decri"></span><br />
-        <span class="detail"></span>
-      </div>
-    </div>
-	<FORM METHOD="post" ACTION="OrderlistServlet" >
-	
-    
-    <script src="./js/review.js"></script>
-    <script src="./vendors/jquery/jquery-3.4.1.min.js"></script>
-    
-		<table>
-			<tr>
-				<td>買家評論:</td>
-				<td><input type="TEXT" name="buyerComment" size="45" /></td>
-			</tr>
+			<td width="105">${orderlistVO.quantity}</td>
+			<td width="130">${orderlistVO.subTotal}</td>
+		</tr>
 
-		</table>
+	</table>
+ 
+		<div class="star-mark">
+			<span>評價</span>
+			<ul class="star">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<div class="result">
+				<span class="mark"></span><span class="detail"></span>
+			</div>
+			<div class="help-info">
+				<span class="mark"></span>&nbsp;<span class="decri"></span><br /> <span
+					class="detail"></span>
+			</div>
+		</div>
 	
 
-	<input type="hidden" name="orderDetailID" value="<%=order.getOrderDetailID()%>" size="45" />
-    <input type="hidden" name="buyerReview" id="buyerComment" value="" />
-	<input type="hidden" name="comment" value="<%=index%>" size="45" />
-	
-	
+	<FORM METHOD="post" ACTION="OrderlistServlet">
 
-	<input type="hidden" name="action" value="update"> 
-	<input type="submit" value="送出新增">
+
+		
+				<p>買家評論:</p>
+				<input type="TEXT" name="buyerComment" size="45" />
+			
+
+
+		<input type="hidden" name="orderDetailID"
+			value="${orderlistVO.orderDetailID}" size="45" /> 
+			<input type="hidden" name="buyerReview" id="buyerComment" value="" /> 
+			<input type="hidden" name="action" value="update"> 
+			<input type="submit" value="送出新增">
 	</FORM>
-	<br> <br> <br>
-	</table>	
-	<%
-	}
-	%>
+	<br>
+	<br>
+	<br>
 
-		<form name="checkoutForm" action="Shopping.html" method="POST">
-			
-		</form>
-		
-		<script>
-			
-		</script>
-		
+
+	<form name="checkoutForm" action="Shopping.html" method="POST">
+
+	</form>
+
+
+	<script src="./js/review.js"></script>
+	<script src="./vendors/jquery/jquery-3.4.1.min.js"></script>
+
 </body>
 
 
@@ -154,5 +143,5 @@ th, td {
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
 
-</script>
+
 </html>

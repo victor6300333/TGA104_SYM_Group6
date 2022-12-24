@@ -1,12 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.group6.tibame104.order.model.*, java.util.*"%>
+<%@ page import="com.group6.tibame104.order.model.*,com.group6.tibame104.orderlist.model.*, java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
 <%
-List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpServlet.java(Controller), 存入req的empVO物件
 
-//EmpServlet.java(Controller), 存入req的empVO物件
+
+
+Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) request.getAttribute("map_list");
+		
 
 %>
 
@@ -205,83 +208,93 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
 					<div class="tab-pane fade active show" id="orders-tab"
 						role="tabpanel" aria-labelledby="orders-nav">
 						<div class="table-responsive">
-							<table class="table table-bordered">
-								<thead class="thead-dark">
-	
-									
-									<br><br>
 
-									<FORM METHOD="post" ACTION="OrderServlet">
-										<b>輸入訂單編號: </b> <input type="text" name="order"> <input
-											type="hidden" name="action" value="getOne_For_Display">
-										<input type="submit" value="送出">
-									</FORM>
-									<br>
-									<br>
-							<% for(OrderVO orderVO : list){	%>
-							<tr>
-								<td >
-									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
-										
-										
-										<input type="hidden" name="orderID" value="<%=orderVO.getOrderID()%>" />
-										<input type="hidden" name="action" value="do_buyercomment" />
-										<input type="submit" value="給予評價" />
-									</form>
-								</td>
+
+
+							<br> <br>
+
+							<FORM METHOD="post" ACTION="OrderServlet">
+								<b>輸入訂單編號: </b> <input type="text" name="order"> <input
+									type="hidden" name="action" value="getOne_For_Display">
+								<input type="submit" value="送出">
+							</FORM>
+							<br> <br>
+							<%
+	Set<OrderVO> set = map_list.keySet();
+	Iterator<OrderVO> it = set.iterator();
+	while (it.hasNext()) {
+		OrderVO orderVO = it.next(); 
+		List<OrderlistVO> list = map_list.get(orderVO);
+		%>
+		
+		<p>訂單日期:<%=orderVO.getOrderDate().toString().substring(0,19) %>
+		&emsp;&emsp;&emsp;&emsp;賣場:<%=orderVO.getStoreName() %>
+		&emsp;&emsp;&emsp;&emsp;訂單狀態:<%=orderVO.getOrderStatus() %> </p>
+		
+		
 							
-								<td>
-									<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
-										<input type="hidden" name="orderID" value="<%=orderVO.getOrderID()%>" />
-										<input type="hidden" name="action" value="check_buyercomment" />
-										<input type="submit" value="查看評價" />
-									</form>
-								</td>
-							</tr>
-									
-									<tr>
-										<th>訂單編號</th>
-										<th>賣場編號</th>
-										<th>會員ID</th>
-										<th>訂單日期</th>
-										<th>訂單狀態</th>
-										<th>收件人</th>
-										<th>電話</th>
-										<th>信用卡號碼</th>
-										<th>收件地址</th>
-										<th>付款方式</th>
-										<th>優惠券ID</th>
-										<th>原總價</th>
-										<th>購物金折抵金額</th>
-										<th>優惠券折抵金額</th>
-										<th>最終總金額</th>
-									</tr>
-								
-									
-									<tr>
-	         							<td><%=orderVO.getOrderID()%></td>
-										<td><%=orderVO.getStoreID()%></td>
-										<td><%=orderVO.getMemberID()%></td>
-										<td><%=orderVO.getOrderDate()%></td>
-										<td><%=orderVO.getOrderStatus()%></td>
-										<td><%=orderVO.getReceiver()%></td>
-										<td><%=orderVO.getPhone()%></td>
-										<td><%=orderVO.getCreditcardNumber()%></td>
-										<td><%=orderVO.getAddress()%></td>
-										<td><%=orderVO.getPayType()%></td>
-										<td><%=orderVO.getCouponID()%></td>
-										<td><%=orderVO.getOriginalTotal()%></td>
-										<td><%=orderVO.getUseShoppingGold()%></td>
-										<td><%=orderVO.getUseCouponGold()%></td>
-										<td><%=orderVO.getFinalTotal()%></td>
-										
-									</tr>	
-										<% } %>
+							<table id="table-1" class="table" border="1">
 
+								<tr>
+									<td width="155">商品名稱</td>
+									<td width="155">商品圖片</td>
+									<td width="125">價格</td>
 
+									<td width="105">數量</td>
+									<td width="130">小計</td>
+									<td width="130">評價</td>
+
+								</tr>
+						
+							<c:forEach var="orderlistVO" items="<%=list%>">
 							
-								</thead>
-								<!--   <tbody>
+								<tr>
+									<td width="155">${orderlistVO.productName}</td>
+									<td width="155"><img src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}" 
+                                            style="width: 230px; height: 200px" alt="Product Image"> </td>
+									<td width="125">${orderlistVO.price}</td>
+
+									<td width="105">${orderlistVO.quantity}</td>
+									<td width="130">${orderlistVO.subTotal}</td>
+									<td width="130">
+											<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
+
+
+												<input type="hidden" name="orderlistID"
+													value="${orderlistVO.orderDetailID}" /> <input type="hidden"
+													name="action" value="do_buyercomment" /> <input
+													type="submit" value="給予評價" />
+											</form>
+										
+											<form
+												action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
+												<input type="hidden" name="orderlistID"
+													value="${orderlistVO.orderDetailID}" /> <input type="hidden"
+													name="action" value="check_buyercomment" /> <input
+													type="submit" value="查看評價" />
+											</form>
+										</td>
+									
+
+								</tr>
+							</c:forEach>
+					</table>
+					<br>
+					<br>
+					<br>
+							
+						<%
+		}
+						%>
+							
+							
+							
+							
+
+
+
+							</thead>
+							<!--   <tbody>
                     <tr>
                       <td>1</td>
                       <td>Product Name</td>
@@ -307,7 +320,9 @@ List<OrderVO> list = (ArrayList<OrderVO>) request.getAttribute("list"); //EmpSer
                       <td><button class="btn">View</button></td>
                     </tr>
                   </tbody> -->
-							</table>
+
+
+
 						</div>
 					</div>
 

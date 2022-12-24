@@ -153,7 +153,7 @@
 			</td>
 			
 			<td id="<%=index + 1 + count%>" width="30"><%=order.getQuantity()%></td>
-			<input type="hidden" id="product<%=order.getStoreID() %><%=index%>"  name="product<%=order.getStoreID() %><%=index%>"  value = "<%=order.getQuantity()%>" />
+			<input type="hidden" id="product<%=order.getStoreName() %><%=index%>"  name="product<%=order.getStoreID() %><%=index%>"  value = "<%=order.getQuantity()%>" />
 			
 			<td id="plus" > 
 			    <input id="plus1" type="button" onclick="adder<%=index + 1 + count%>()" value="+" 

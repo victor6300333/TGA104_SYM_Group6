@@ -285,7 +285,7 @@ public class ShopServlet extends HttpServlet {
 		product.setPrice(new Integer(price));
 		product.setQuantity((new Integer(quantity)).intValue());
 		product.setStoreID(Integer.parseInt(storeID));
-		product.setStoreName(storeName+"號賣場");
+		product.setStoreName(storeName);
 		return product;
 	}
 	

@@ -157,9 +157,9 @@
 	<div class="breadcrumb-wrap">
 		<div class="container-fluid">
 			<ul class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">商品大分類</a></li>
-				<li class="breadcrumb-item"><a href="#">商品中分類</a></li>
-				<li class="breadcrumb-item active">商品名稱</li>
+				<li class="breadcrumb-item"><a href="#">${categoryVO.productMainName}</a></li>
+				<li class="breadcrumb-item"><a href="#">${categoryVO.productSecName}</a></li>
+				<li class="breadcrumb-item active">${categoryVO.productName}</li>
 			</ul>
 		</div>
 	</div>
@@ -236,7 +236,7 @@
 			
 										
 										<input type="hidden" name="name"  value="${categoryVO.productName}" />
-										<input type="hidden" name="storeName"  value="${categoryVO.storeID}" />
+										<input type="hidden" name="storeName"  value="${categoryVO.storeName}" />
 										<input type="hidden" name="quantity"  value="${categoryVO.productName}" />
 									
 										<input type="hidden" name="price"  value="${categoryVO.productPrice}" />
@@ -248,9 +248,9 @@
 										
 										<button  class="btn" id="bag" href="#"><i class="fa fa-shopping-bag" ></i>直接購買</button>
 										<button   class="btn" id="cart" href="#"><i class="fa fa-shopping-cart"></i>加入購物車</button>
-								
-									</FORM>		
 									</div>
+								
+									 </FORM>		
 <script>
 var bag = document.getElementById('bag');
 var cart = document.getElementById('cart');
