@@ -206,6 +206,7 @@
                                                 <div class="dropdown">
                                                     <div class="dropdown-toggle" data-toggle="dropdown">商品價格範圍</div>
                                                     <div class="dropdown-menu dropdown-menu-right">
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_0" class="dropdown-item">全部</a>
                                                         <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_0_1000" class="dropdown-item">$0 to $1000</a>
                                                         <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_1000_5000" class="dropdown-item">$1000 to $5000</a>
                                                         <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_5000_10000" class="dropdown-item">$5000 to $10000</a>
