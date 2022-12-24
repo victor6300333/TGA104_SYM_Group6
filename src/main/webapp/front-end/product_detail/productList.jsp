@@ -198,7 +198,8 @@
                                                 <form>
                                                     <div class="dropdown-toggle" data-toggle="dropdown">商品順序</div>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item">價格</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_price" class="dropdown-item">價格(由低至高)</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_price_reverse" class="dropdown-item">價格(由高至低)</a>
                                                         <a href="#" class="dropdown-item">熱門商品</a>
                                                         <a href="#" class="dropdown-item">熱銷商品</a>
                                                     </div>
@@ -211,16 +212,11 @@
                                                 <div class="dropdown">
                                                     <div class="dropdown-toggle" data-toggle="dropdown">商品價格範圍</div>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item">$0 to $50</a>
-                                                        <a href="#" class="dropdown-item">$51 to $100</a>
-                                                        <a href="#" class="dropdown-item">$101 to $150</a>
-                                                        <a href="#" class="dropdown-item">$151 to $200</a>
-                                                        <a href="#" class="dropdown-item">$201 to $250</a>
-                                                        <a href="#" class="dropdown-item">$251 to $300</a>
-                                                        <a href="#" class="dropdown-item">$301 to $350</a>
-                                                        <a href="#" class="dropdown-item">$351 to $400</a>
-                                                        <a href="#" class="dropdown-item">$401 to $450</a>
-                                                        <a href="#" class="dropdown-item">$451 to $500</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_0_1000" class="dropdown-item">$0 to $1000</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_1000_5000" class="dropdown-item">$1000 to $5000</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_5000_10000" class="dropdown-item">$5000 to $10000</a>
+                                                        <a href="${pageContext.request.contextPath}/sortbyPrice?action=sort_10000" class="dropdown-item">$10000以上</a>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,7 +254,8 @@
                             <form name="shoppingForm" action="${pageContext.request.contextPath}/SearchServlet" method="POST">
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="hidden" name="productID" value="${productVO.productID}">
-					<th><input type="submit" value="查看"></th>
+					<a class="btn" 
+					href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${productVO.productID}"><i class="fa fa-shopping-cart"></i>查看</a>
 				</form>	 
                                     </div>
                                	 </div>

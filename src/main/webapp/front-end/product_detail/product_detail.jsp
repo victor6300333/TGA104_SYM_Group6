@@ -174,19 +174,19 @@
 						<div class="row align-items-center">
 							<div class="col-md-5">
 								<div class="product-slider-single normal-slider">
-									<img src="${pageContext.request.contextPath}/product/picServlet?productID=${productVO.productID}" alt="Product Image"> 
-									<img src="${pageContext.request.contextPath}/product/picServlet2?productID=${productVO.productID}" alt="Product Image"> 
-									<img src="${pageContext.request.contextPath}/product/picServlet3?productID=${productVO.productID}" alt="Product Image"> 
+									<img src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}" alt="Product Image"> 
+									<img src="${pageContext.request.contextPath}/product/picServlet2?productID=${categoryVO.productID}" alt="Product Image"> 
+									<img src="${pageContext.request.contextPath}/product/picServlet3?productID=${categoryVO.productID}" alt="Product Image"> 
 								</div>
 								<div class="product-slider-single-nav normal-slider">
 									<div class="slider-nav-img">
-										<img src="${pageContext.request.contextPath}/product/picServlet?productID=${productVO.productID}" alt="Product Image"> 
+										<img src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}" alt="Product Image"> 
 									</div>
 									<div class="slider-nav-img">
-										<img src="${pageContext.request.contextPath}/product/picServlet2?productID=${productVO.productID}" alt="Product Image"> 
+										<img src="${pageContext.request.contextPath}/product/picServlet2?productID=${categoryVO.productID}" alt="Product Image"> 
 									</div>
 									<div class="slider-nav-img">
-										<img src="${pageContext.request.contextPath}/product/picServlet3?productID=${productVO.productID}" alt="Product Image"> 
+										<img src="${pageContext.request.contextPath}/product/picServlet3?productID=${categoryVO.productID}" alt="Product Image"> 
 									</div>
 									
 								</div>
@@ -194,7 +194,7 @@
 							<div class="col-md-7">
 								<div class="product-content">
 									<div class="title">
-										<h2>${productVO.productName}</h2>
+										<h2>${categoryVO.productName}</h2>
 									</div>
 									<div class="ratting">
 										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -204,7 +204,7 @@
 									<div class="price">
 										<h4>價格:</h4>
 										<p>
-											${productVO.productPrice} 
+											${categoryVO.productPrice} 
 										</p>
 									</div>
 
@@ -226,7 +226,7 @@
 									<div class="stock">
 										<h4>庫存:</h4>
 										<div >
-										   ${productVO.productStock}
+										   ${categoryVO.productStock}
 										</div>
 									</div>
 									<div class="action">
@@ -235,13 +235,13 @@
 						
 			
 										
-										<input type="hidden" name="name"  value="${productVO.productName}" />
-										<input type="hidden" name="storeName"  value="${productVO.storeID}" />
-										<input type="hidden" name="quantity"  value="${productVO.productName}" />
+										<input type="hidden" name="name"  value="${categoryVO.productName}" />
+										<input type="hidden" name="storeName"  value="${categoryVO.storeID}" />
+										<input type="hidden" name="quantity"  value="${categoryVO.productName}" />
 									
-										<input type="hidden" name="price"  value="${productVO.productPrice}" />
-										<input type="hidden" name="productID"  value="${productVO.productID}" />
-										<input type="hidden" name="storeID"  value="${productVO.storeID}" />
+										<input type="hidden" name="price"  value="${categoryVO.productPrice}" />
+										<input type="hidden" name="productID"  value="${categoryVO.productID}" />
+										<input type="hidden" name="storeID"  value="${categoryVO.storeID}" />
 						
 										<input type="hidden" name="action"  value="ADD" />
 										<input type="hidden" id="method" name="method"  value="" />
@@ -281,14 +281,14 @@ cart.addEventListener('click', (event) => {
 										sizes="(max-width: 100px) 50px, 1vw" />
 								</a></li>
 								<li class="nav-item col-lg-4"><a class="nav-link active"
-									data-toggle="pill" href="#description">企鵝的家</a> <a
+									data-toggle="pill" href="#description">${categoryVO.storeName}</a> <a
 									class="nav-link active" data-toggle="pill" href="#description">100分鐘前上線</a>
 									<a class="btn" href="#">聊聊</a> <a class="btn" href="#">查看賣場</a>
 								</li>
 								<li class="nav-item col-lg-2"><a class="nav-link active"
-									data-toggle="pill" href="#specification">商品評價</a> <a
+									data-toggle="pill" href="#specification">賣場地址:${categoryVO.storeAddress}</a> <a
 									class="nav-link active" data-toggle="pill"
-									href="#specification">商品數量</a></li>
+									href="#specification">聯絡電話:${categoryVO.phoneNumber}</a></li>
 								<li class="nav-item col-lg-2"><a class="nav-link active"
 									data-toggle="pill" href="#specification">聊聊回應率</a> <a
 									class="nav-link active" data-toggle="pill"
@@ -307,12 +307,14 @@ cart.addEventListener('click', (event) => {
 								<li class="nav-item"><a class="nav-link active"
 									data-toggle="pill" href="#description">商品詳情</a></li>
 								<li class="nav-item"><a class="nav-link" data-toggle="pill"
-									href="#reviews">評論(數量)</a></li>
+									href="#reviews">評論(${list.size()})</a></li>
 							</ul>
 
 							<div class="tab-content">
 								<div id="description" class="container tab-pane active">
-									<h4>Product description</h4>
+									<p>出貨地:${categoryVO.source}</p>
+									<p>上架日期:${categoryVO.insertTime.toString().substring(0,10)}</p>
+									<p>商品描述:${categoryVO.productDesc}</p>
 									
 								</div>
 								<div id="reviews" class="container tab-pane fade">

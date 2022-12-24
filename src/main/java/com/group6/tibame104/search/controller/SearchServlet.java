@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,7 @@ public class SearchServlet extends HttpServlet {
 		    res.setContentType("text/html; charset=UTF-8");
 		    
 		    String action = req.getParameter("action");
+		    HttpSession session = req.getSession();
 		
 		if("getAll_For_Display".equals(action)) {
 
@@ -55,16 +57,16 @@ public class SearchServlet extends HttpServlet {
 			 */
 			String productName = req.getParameter("productName");
 
-			List<ProductVO> productVOall;
+			List<CategoryVO> productVOall;
+			productVOall = categorySvc.getbyProductName(productName) ;
 
 			/*
 			 * 搜尋 商品名稱 為空 全部 不為空 有條件
 			 */
-			if (productName.trim().length() == 0) {
-				productVOall = new ProductService().getAll();
-			} else {
-				productVOall = new ProductService().getAll(productName);
-			}
+//			if (productName.trim().length() == 0) {
+//				productVOall = new ProductService().getAll();
+//			} else {
+//			}
 
 			/*
 			 * 如果報錯 轉去 addProduct 頁面
@@ -82,7 +84,8 @@ public class SearchServlet extends HttpServlet {
 			/*
 			 * 轉去 listAllProduct 頁面
 			 */
-			req.setAttribute("productVOall", productVOall);
+			session.removeAttribute("productVOall_forsort");
+			session.setAttribute("productVOall", productVOall);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -97,52 +100,15 @@ public class SearchServlet extends HttpServlet {
 			String str = req.getParameter("productID");
 			
 			Integer productID = Integer.valueOf(str);
-//			if (str == null || (str.trim()).length() == 0) {
-//				errorMsgs.put("productID", "請輸入正常的數字");
-//			}
-// 
-			/*
-			 * 如果報錯 轉去 addProduct 頁面
-			 */
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
-//				try {
-//					failureView.forward(req, res);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				return;
-//			}
-//
-			
-//			try {
-				
-//			} catch (Exception e) {
-//				errorMsgs.put("productID", "請輸入正常的數字");
-//			}
-			/*
-			 * 如果報錯 轉去 addProduct 頁面
-			 */
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct");
-//				try {
-//					failureView.forward(req, res);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				return;
-//			}
-			/*
-			 * 取得資料
-			 * 
-			 */
-			ProductVO productVO = new ProductService().findByPrimaryKey(productID);
+
+			CategoryVO categoryVO = categorySvc.getbyProductID(productID);
 			List<OrderlistVO> list = orderlistSvc.findByProductID(productID);
 			/*
 			 * 導向 listOneProduct頁面
 			 */
-			req.setAttribute("productVO", productVO);
-			req.setAttribute("list", list);
+			req.setAttribute("categoryVO", categoryVO);
+			
+			session.setAttribute("list", list);
 
 			String url = "/front-end/product_detail/product_detail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -168,7 +134,8 @@ public class SearchServlet extends HttpServlet {
 			/*
 			 * 轉去 listAllProduct 頁面
 			 */
-			req.setAttribute("productVOall", list);
+			session.removeAttribute("productVOall_forsort");
+			session.setAttribute("productVOall", list);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
