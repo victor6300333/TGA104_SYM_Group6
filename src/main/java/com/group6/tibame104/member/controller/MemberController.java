@@ -511,18 +511,18 @@ public class MemberController {
 			} catch (Exception ignored) {
 			}
 
-//			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
-//			StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-//
-//			// 有賣場名稱才執行
-//			if (storeVO2 != null && storeVO2.getStoreName() != null) {
-//				String storeName = storeVO2.getStoreName();
-//				session.setAttribute("storeName", storeName);
-//			}
+			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
+			StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
+
+			// 有賣場名稱才執行
+			if (storeVO2 != null && storeVO2.getStoreName() != null) {
+				String storeName = storeVO2.getStoreName();
+				session.setAttribute("storeName", storeName);
+			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-//			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
+			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
 		return "/index"; // *工作3:
