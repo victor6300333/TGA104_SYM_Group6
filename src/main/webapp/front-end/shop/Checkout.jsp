@@ -4,9 +4,35 @@
 <head>
  <title>Mode II 範例程式 - Checkout.jsp</title>
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/shop/css/ShoppingCart.css">
+ 
+ <!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+	rel="stylesheet" />
+
+<!-- CSS Libraries -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/order/lib/slick/slick.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/order/lib/slick/slick-theme.css"
+	rel="stylesheet" />
+
+<!-- Template Stylesheet -->
+
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/front-end/order/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/front-end/order/css/woody.css" />
  </head>
 <body>
- <font size="+3">結帳：（Checkout.jsp）</font>
+ <font size="+2">訂單完成</font>
 <hr><p>
 
 
@@ -25,13 +51,15 @@
 	while (it.hasNext()) {
 		OrderVO ordervo = it.next(); 
 		List<OrderlistVO> orderlist = orderVO_list.get(ordervo);
-		%>	
-		 <tr>
+		%>
+	<table id="table-1">
+	  <tr>
 		<th width="200">商品名稱</th>
 		<th width="100">價格</th>
 		<th width="100">數量</th>
-		<th width="120"><h3>總價</h3></th>
-	</tr>
+		<th width="120">總價</th>
+	  </tr>
+	</table>
 		
 	<%
 		for (int i = 0; i < orderlist.size(); i++) {
@@ -41,7 +69,7 @@
 			Integer quantity = order.getQuantity();
 			Integer subTotal = price*quantity;
 		%>
-<table style="margin: auto;">	
+<table >	
 
     	
 	<tr>
@@ -50,20 +78,20 @@
 		<td width="100"><%=quantity%> </td>
 		<td width="120"><%=subTotal%></td>
 	</tr>
-</table>	
+	
 	<%
 		}
 	%>
 	
 
-<table>
-	<tr>
-		<td colspan="6" style="text-align:right;"> 
-		   <font size="+2">總金額： <h4>$<%=ordervo.getOriginalTotal()%></h4> </font>
-	    </td>
-	</tr>
+
+	    <tr>
+
+			<td colspan="3" style="text-align: right"></td>
+			<td colspan="5" style="text-align: right">總金額:<%=ordervo.getOriginalTotal()%></td>
+
+		</tr>
 </table>
-       
 		
 		<p>訂單編號:<%=ordervo.getOrderID()%></p>
 		<p>賣場編號:<%=ordervo.getStoreID()%></p>
