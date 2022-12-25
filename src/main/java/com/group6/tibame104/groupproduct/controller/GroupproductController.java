@@ -3,14 +3,16 @@ package com.group6.tibame104.groupproduct.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.group6.tibame104.groupproduct.model.GroupproductService;
 import com.group6.tibame104.groupproduct.model.GroupproductVO;
 
@@ -219,4 +222,53 @@ public class GroupproductController {
 		 
 		 return getAll(model);
 	 }
+	 @PostMapping("/GroupproductSearch")
+		public void GroupproductSearch(
+				Model Model,
+				HttpServletRequest req, 
+				HttpServletResponse res,
+//				@RequestParam("groupbuyProductID") String groupbuyProductID1,
+//				@RequestParam("groupbuyProductPrice") String groupbuyProductPrice1,
+				@RequestParam("groupbuyProductDescrip") String groupbuyProductDescrip1
+				) throws IOException {
+		 
+		 	res.setCharacterEncoding("UTF-8");
+			PrintWriter writer = res.getWriter();
+			/* queryString */
+			Map<String, String> queryString = new HashMap<String, String>();
+			/* JSON */
+			Gson gson = new Gson();
+
+			/* 1. 請求參數的格式整理 */
+//			Integer groupbuyProductID = null;
+//			try {
+//				groupbuyProductID = Integer.valueOf(groupbuyProductID1.trim());
+//				queryString.put("groupbuyProductID", groupbuyProductID + "");
+//			} catch (Exception e) {
+//				System.out.println("groupbuyProductID錯誤");
+//			}
+//
+//			Integer groupbuyProductPrice = null;
+//			try {
+//				groupbuyProductPrice = Integer.valueOf(groupbuyProductPrice1.trim());
+//				queryString.put("groupbuyProductPrice", groupbuyProductPrice + "");
+//			} catch (Exception e) {
+//				System.out.println("groupbuyProductPrice錯誤");
+//			}
+			String groupbuyProductDescrip = null;
+			try {
+				groupbuyProductDescrip = groupbuyProductDescrip1.trim();
+				queryString.put("groupbuyProductDescrip", "'%" + groupbuyProductDescrip + "%'");
+			} catch (Exception e) {
+				System.out.println("groupbuyProductDescrip錯誤");
+			}
+
+//			System.out.println("queryString = " + queryString);
+
+			List<GroupproductVO> allByCond = groupproductSvc.getAllBySearch(queryString);
+			String json = gson.toJson(allByCond);
+			writer.write(json);
+
+		}
+	
 }

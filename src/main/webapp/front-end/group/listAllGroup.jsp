@@ -39,15 +39,16 @@
 	rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/front-end/group/css/style.css"
+<link
+	href="${pageContext.request.contextPath}/front-end/group/css/style.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/front-end/group/css/stylenew.css"
 	rel="stylesheet">
-<link href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
+<link
+	href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
 	rel="stylesheet" />
 <style type="text/css">
-
 </style>
 
 </head>
@@ -169,12 +170,15 @@
 							<div class="product-view-top">
 								<div class="row">
 									<div class="col-md-4">
-										<div class="product-search">
-											<input type="text" value="Search">
-											<button id="search" >
-												<i class="fa fa-search"></i>
-											</button>
-										</div>
+										<form id="form">
+											<div class="product-search">
+												<input id="searchinput" name="groupbuyProductDescrip"
+													type="text" placeholder="商品搜尋">
+												<button id="search">
+													<i class="fa fa-search"></i>
+												</button>
+											</div>
+										</form>
 									</div>
 									<div class="col-md-4">
 										<div class="product-short">
@@ -182,7 +186,10 @@
 												<div class="dropdown-toggle" data-toggle="dropdown">排序
 												</div>
 												<div class="dropdown-menu dropdown-menu-right">
-													<a href="${pageContext.request.contextPath}/front-end/group/allGroup" class="dropdown-item">最新</a> <a href="${pageContext.request.contextPath}/front-end/group/orderBy"
+													<a
+														href="${pageContext.request.contextPath}/front-end/group/allGroup"
+														class="dropdown-item">最新</a> <a
+														href="${pageContext.request.contextPath}/front-end/group/orderBy"
 														class="dropdown-item">最多參與</a>
 												</div>
 											</div>
@@ -211,99 +218,105 @@
 								</div>
 							</div>
 						</div>
-						<c:forEach var="groupVO" items="${groupVOs}">
-							<c:forEach var="groupproductVO" items="${groupproductVOs}">
-								<c:if
-									test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }" 
-									var="cc"> 
-									<div class="col-md-4">
-										<form id="msform" METHOD="post" class="col-md-12"
-											style="border: 0px"
-											ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
-											<div class="col-md-4">
-												<div class="product-item">
-													<div class="product-title">
-														<a>團購編號 : ${groupVO.groupBuyID}</a>
-													</div>
-													<div class="product-image">
-														<a> <img
-															src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVO.groupBuyProductID}"
-															style="width: 100%" alt="product-image">
-															</td>
-														</a>
-													</div>
-													<div class="product-price">
-														<h3>
-															<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
-														<input type="hidden" name="groupBuyProductID"
-															value="${groupproductVO.groupBuyProductID}"> 
-<!-- 															<input -->
-<!-- 															type="hidden" name="action" value="getOne_For_Display"> -->
-														<button class="btn fa fa-search" type="submit">查看商品
-														</button>
+						<div id="listAll" class="row">
+							<c:forEach var="groupVO" items="${groupVOs}">
+								<c:forEach var="groupproductVO" items="${groupproductVOs}">
+									<c:if
+										test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }"
+										var="cc">
+										<div class="col-md-4">
+											<form id="msform" METHOD="post" class="col-md-12"
+												style="border: 0px"
+												ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
+												<div class="col-md-4">
+													<div class="product-item">
+														<div class="product-title">
+															<a>團購編號 : ${groupVO.groupBuyID}</a>
+														</div>
+														<div class="product-image">
+															<a> <img
+																src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVO.groupBuyProductID}"
+																style="width: 100%" alt="product-image">
+																</td>
+															</a>
+														</div>
+														<div class="product-price">
+															<h3>
+																<span>原價$</span>${groupproductVO.groupBuyProductPrice}</h3>
+															<input type="hidden" name="groupBuyProductID"
+																value="${groupproductVO.groupBuyProductID}">
+															<!-- 															<input -->
+															<!-- 															type="hidden" name="action" value="getOne_For_Display"> -->
+															<button class="btn fa fa-search" type="submit">查看商品
+															</button>
+														</div>
 													</div>
 												</div>
-											</div>
-										</form>
-									</div>
-									<form id="msform" METHOD="post"
-										ACTION="${pageContext.request.contextPath}/front-end/group/addOrder" style="border-radius: 10px;box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px;
-										border: 0.1px solid #cdcdcd; margin-bottom: 10px">
-										<div class="product-content">
-											<div class="col-md-12" >
+											</form>
+										</div>
+										<form id="msform" METHOD="post"
+											ACTION="${pageContext.request.contextPath}/front-end/group/addOrder"
+											style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px; border: 0.1px solid #cdcdcd; margin-bottom: 10px">
+											<div class="product-content">
+												<div class="col-md-12">
 
-												<br>
-												<div>
-													<h3>目前團購數 : </h3><span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
-												</div>
+													<br>
+													<div>
+														<h3>目前團購數 :</h3>
+														<span id="group_count">${groupVO.groupBuyProductOrderTotal}</span>個
+													</div>
 
-												<td><h3>團購開始時間 : </h3><fmt:formatDate
-														value="${groupVO.groupBuyingOnLoadDate}"
-														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
-												<td><h3>團購結束時間 : </h3><fmt:formatDate
-														value="${groupVO.groupBuyingOffLoadDate}"
-														pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
-												
-												<td><h3>商品描述 :</h3></td>
-												<td>${groupproductVO.groupBuyProductDescrip}</td> <br><br>
+													<td><h3>團購開始時間 :</h3> <fmt:formatDate
+															value="${groupVO.groupBuyingOnLoadDate}"
+															pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
+													<td><h3>團購結束時間 :</h3> <fmt:formatDate
+															value="${groupVO.groupBuyingOffLoadDate}"
+															pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
 
-												<ul id="progressbar" class="progressbar" >
-													<!-- progressbar -->
-													<c:forEach var="groupdiscountVO" items="${groupdiscountVOs}">
-														<c:if
-															test="${(groupVO.groupBuyID == groupdiscountVO.groupBuyID)}"
-															var="cc">
-															<c:choose>
-																<c:when
-																	test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
-																	<li class="active" ><i>${(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a> 個</li>
+													<td><h3>商品描述 :</h3></td>
+													<td>${groupproductVO.groupBuyProductDescrip}</td> <br>
+													<br>
 
-																</c:when>
+													<ul id="progressbar" class="progressbar">
+														<!-- progressbar -->
+														<c:forEach var="groupdiscountVO"
+															items="${groupdiscountVOs}">
+															<c:if
+																test="${(groupVO.groupBuyID == groupdiscountVO.groupBuyID)}"
+																var="cc">
+																<c:choose>
+																	<c:when
+																		test="${(groupVO.groupBuyProductOrderTotal >= groupdiscountVO.groupBuyProductOrderTotal)}">
+																		<li class="active"><i>${(groupdiscountVO.groupBuyCount * 10)}</i>
+																			折<br> <a>${groupdiscountVO.groupBuyProductOrderTotal}</a>
+																			個</li>
 
-																<c:otherwise>
-																	<li class=""><i>${(groupdiscountVO.groupBuyCount * 10)}</i> 折<br>
-																	<a>${groupdiscountVO.groupBuyProductOrderTotal}</a >個</li>
-																</c:otherwise>
-															</c:choose>
-														</c:if>
-													</c:forEach>
-												</ul>
-												<!-- fieldsets -->
-												<button class="btn fa fa-shopping-cart" type="submit">參加團購
-												</button>
-												<input type="hidden" name="groupBuyCount" value="">
-												<input type="hidden" name="groupBuyID"
-													value="${groupVO.groupBuyID}"> <input type="hidden"
-													name="groupBuyProductID"
-													value="${groupVO.groupBuyProductID}">
-									</FORM>
+																	</c:when>
+
+																	<c:otherwise>
+																		<li class=""><i>${(groupdiscountVO.groupBuyCount * 10)}</i>
+																			折<br> <a>${groupdiscountVO.groupBuyProductOrderTotal}</a>個</li>
+																	</c:otherwise>
+																</c:choose>
+															</c:if>
+														</c:forEach>
+													</ul>
+													<!-- fieldsets -->
+													<button class="btn fa fa-shopping-cart" type="submit">參加團購
+													</button>
+													<input type="hidden" name="groupBuyCount" value="">
+													<input type="hidden" name="groupBuyID"
+														value="${groupVO.groupBuyID}"> <input
+														type="hidden" name="groupBuyProductID"
+														value="${groupVO.groupBuyProductID}">
+										</FORM>
+						</div>
 					</div>
+					<br>
+					</c:if>
+					</c:forEach>
+					</c:forEach>
 				</div>
-				<br>
-				</c:if>
-				</c:forEach>
-				</c:forEach>
 				<!-- Pagination Start -->
 				<div class="col-md-12">
 					<nav aria-label="Page navigation example">
@@ -496,10 +509,13 @@
 		src="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
 	<script>
-	
-		$(".btn").on(
+	$(document).ready(function() {
+		  // DOM 載入完成之後
+		  
+		  $(".btn").on(
 				"click",
 				function(e) {
 // 					e.preventDefault();
@@ -520,10 +536,72 @@
 					};
 // 					console.log(currentDiscount);
 				})
-				$("#search").on("click",function(){
-					
-					console.log("123")
+				$("#search").on("click",function(e){
+					e.preventDefault();			
+					$.ajax({
+						  url: "${pageContext.request.contextPath}/back-end/groupproduct/GroupproductSearch",           // 資料請求的網址
+						  type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+						  data: $("#form").serialize(),           // 將物件資料(不用雙引號) 傳送到指定的 url
+						  dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+						  success: function(data){      // request 成功取得回應後執行
+// 							  console.log(data);
+// 						  console.log(JSON.stringify(data))
+							 var str = "";
+							for(var i = 0; i < data.length; i++){
+								var  str1 = `
+									  <div class="col-md-4">
+										<form id="msform" METHOD="post" class="col-md-12"
+											style="border: 0px"
+											ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
+											<div class="col-md-4">
+												<div class="product-item">
+													<div class="product-title">
+														<a>商品編號 : \${data[i].groupBuyProductID}</a>
+													</div>
+													<div class="product-image">
+														<a> <img
+															src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=\${data[i].groupBuyProductID}"
+															style="width: 100%" alt="product-image">
+															</td>
+														</a>
+													</div>
+													<div class="product-price">
+														<h3>
+															<span>原價$</span>\${data[i].groupBuyProductPrice}</h3>
+														<input type="hidden" name="groupBuyProductID"
+															value="\${data[i].groupBuyProductID}">
+														<button class="btn fa fa-search" type="submit">查看商品
+														</button>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									  `;
+									  
+									  str = str + str1;
+									  
+							}
+							console.log(str);
+						  $("#listAll").html(str);
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  },
+						  error: function(xhr){         // request 發生錯誤的話執行
+						    console.log(xhr);
+						  },
+						});
 				})
+		});
+		
+				
+				
 	</script>
 
 </body>

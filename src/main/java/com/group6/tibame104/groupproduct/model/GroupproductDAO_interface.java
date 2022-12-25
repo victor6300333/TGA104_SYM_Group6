@@ -1,8 +1,7 @@
 package com.group6.tibame104.groupproduct.model;
 
 import java.util.List;
-
-import org.springframework.stereotype.Component;
+import java.util.Map;
 public interface GroupproductDAO_interface {
 
 	public void insert(GroupproductVO groupproductVO);
@@ -14,6 +13,7 @@ public interface GroupproductDAO_interface {
 	public GroupproductVO findByPrimaryKey(Integer groupbuyProductID);
 
 	public List<GroupproductVO> getAll();
+	public List<GroupproductVO> getAllBySearch(String queryString);
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //   public List<(GroupproductVO> getAll(Map<String, String[]> map); 
 }
