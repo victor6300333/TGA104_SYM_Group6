@@ -737,10 +737,11 @@ create table orderDetail(
     quantity int not null comment '訂購數量',
     price int not null comment '訂購單價',
     subTotal int not null comment '小計',
-    shopReview varchar(200) comment '訂單評價(賣場對買家)',
+    shopReview int comment '訂單評價(賣場對買家)',
     shopComment varchar(200) comment '訂單評論(賣場對買家)',
-    buyerReview varchar(200) comment '訂單評價(買家對賣場)',
+    buyerReview int comment '訂單評價(買家對賣場)',
     buyerComment varchar(200) comment '訂單評論(買家對賣場)',
+    buyerCommentPic longblob comment '評價圖片(買家對賣場)',
     primary key(orderDetailID),
     constraint FK_orderDetail_orderID foreign key(orderID)
     references `order`(orderID),

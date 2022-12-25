@@ -1,15 +1,19 @@
 package com.group6.tibame104.orderlist.controller;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +23,7 @@ import com.group6.tibame104.orderlist.model.OrderlistVO;
 //import redis.clients.jedis.Jedis;
 
 @WebServlet("/front-end/comment/OrderlistServlet")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class OrderlistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
@@ -50,17 +55,26 @@ public class OrderlistServlet extends HttpServlet {
 		
 		if ("update".equals(action)) {
 			
+			Part part = req.getPart("upfile");
 			String index = req.getParameter("comment");
-			String buyerReview = req.getParameter("buyerReview");
+			String str = req.getParameter("buyerReview");
+			Integer buyerReview = Integer.parseInt(str.substring(0, 1));
 			String buyerComment = req.getParameter("buyerComment");
 			Integer orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
 			
+			InputStream in = part.getInputStream();
+			byte[] pic = new byte[in.available()];   // byte[] buf = in.readAllBytes();  // Java 9 ���s��k
+			BufferedInputStream bis = new BufferedInputStream(in);
+			bis.read(pic);
+			bis.close();
+			in.close();
+			
 		
 			
 			
 		
 		
-			orderlistSvc.updateOrderlist(orderDetailID, buyerReview, buyerComment);
+			orderlistSvc.updateOrderlist(orderDetailID, buyerReview, buyerComment, pic);
 			
 			OrderlistVO orderlistVO = orderlistSvc.findByOrderlistID(orderDetailID);
 		

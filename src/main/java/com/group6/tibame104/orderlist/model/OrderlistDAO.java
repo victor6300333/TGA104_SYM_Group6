@@ -18,19 +18,19 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	private DataSource dataSource;
 	
 	private static final String INSERT_STMT = "INSERT INTO orderDetail (orderID, productID, productName, userAccount, orderDate,"
-			+ "			quantity ,price ,subTotal, shopReview,shopComment, buyerReview, buyerComment)"
-			+ "			VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?,?, ?)";
+			+ "			quantity ,price ,subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic)"
+			+ "			VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?,?, ?, ?)";
 	private static final String GET_ONE_STMT = 
 		"SELECT orderDetailID, orderID, productID, productName, userAccount, orderDate, quantity ,price ,"
-		     + "subTotal, shopReview,shopComment, buyerReview, buyerComment"
+		     + "subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic"
 		     + " FROM orderDetail where orderDetailID = ?";
 	private static final String GET_ALL_STMT = "SELECT orderDetailID, orderID, productID, productName, userAccount, orderDate,quantity ,price ,"
-			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment "
+			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic "
 			+ "				FROM orderDetail where orderID = ?";
 	private static final String UPDATE = 
-		"UPDATE orderDetail set buyerReview=?, buyerComment=? where orderDetailID = ?";
+		"UPDATE orderDetail set buyerReview=?, buyerComment=?, buyerCommentPic=? where orderDetailID = ?";
 	
-	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderID, productID, userAccount, orderDate,buyerReview, buyerComment"
+	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderID, productID, userAccount, orderDate,buyerReview, buyerComment, buyerCommentPic"
 		     + " FROM orderDetail where productID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
@@ -57,10 +57,11 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO.setQuantity(rs.getInt("quantity"));
 				orderlistVO.setPrice(rs.getInt("price"));
 				orderlistVO.setSubTotal(rs.getInt("subTotal"));
-				orderlistVO.setShopReview(rs.getString("shopReview"));
+				orderlistVO.setShopReview(rs.getInt("shopReview"));
 				orderlistVO.setShopComment(rs.getString("shopComment"));
-				orderlistVO.setBuyerReview(rs.getString("buyerReview"));
+				orderlistVO.setBuyerReview(rs.getInt("buyerReview"));
 				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
+				orderlistVO.setBuyerCommentPic(rs.getBytes("buyerCommentPic"));
 				list.add(orderlistVO);
 
 			}
@@ -88,10 +89,12 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			pstmt.setInt(5, orderlistVO.getQuantity());
 			pstmt.setInt(6, orderlistVO.getPrice());
 			pstmt.setInt(7, orderlistVO.getSubTotal());
-			pstmt.setString(8, orderlistVO.getShopReview());
+			pstmt.setInt(8, orderlistVO.getShopReview());
 			pstmt.setString(9, orderlistVO.getShopComment());
-			pstmt.setString(10, orderlistVO.getBuyerReview());
+			pstmt.setInt(10, orderlistVO.getBuyerReview());
 			pstmt.setString(11, orderlistVO.getBuyerComment());
+			pstmt.setBytes(12, orderlistVO.getBuyerCommentPic());
+			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,16 +102,17 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	}
 
 	@Override
-	public void update(Integer orderDetailID, String buyerReview, String buyerComment) {
+	public void update(Integer orderDetailID, Integer buyerReview, String buyerComment, byte[] pic) {
 		
 		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt =  con.prepareStatement(UPDATE);){
-			pstmt.setString(1, buyerReview);
+			pstmt.setInt(1, buyerReview);
 			pstmt.setString(2, buyerComment);
-			pstmt.setInt(3, orderDetailID);
+			pstmt.setBytes(3, pic);			
+			pstmt.setInt(4, orderDetailID);
 
 			pstmt.executeUpdate();
-			
+			System.out.println(buyerReview);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,10 +142,11 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO.setQuantity(rs.getInt("quantity"));
 				orderlistVO.setPrice(rs.getInt("price"));
 				orderlistVO.setSubTotal(rs.getInt("subTotal"));
-				orderlistVO.setShopReview(rs.getString("shopReview"));
+				orderlistVO.setShopReview(rs.getInt("shopReview"));
 				orderlistVO.setShopComment(rs.getString("shopComment"));
-				orderlistVO.setBuyerReview(rs.getString("buyerReview"));
+				orderlistVO.setBuyerReview(rs.getInt("buyerReview"));
 				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
+				orderlistVO.setBuyerCommentPic(rs.getBytes("buyerCommentPic"));
 	 }
 			
 				
@@ -174,8 +179,9 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO.setProductID(rs.getInt("productID"));
 				orderlistVO.setUserAccount(rs.getString("userAccount"));
 				orderlistVO.setOrderDate(rs.getTimestamp("orderDate"));	
-				orderlistVO.setBuyerReview(rs.getString("buyerReview"));
+				orderlistVO.setBuyerReview(rs.getInt("buyerReview"));
 				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
+				orderlistVO.setBuyerCommentPic(rs.getBytes("buyerCommentPic"));
 				if(orderlistVO.getBuyerComment() != null && orderlistVO.getBuyerReview() != null )
 					list.add(orderlistVO);
 			}

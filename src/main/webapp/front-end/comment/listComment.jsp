@@ -236,6 +236,7 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 		<th>小計</th>
 		<th>買家評價</th>
 		<th>買家評論</th>
+		<th>買家圖片</th>
 	</tr>
 		
 		<tr>
@@ -247,8 +248,10 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 			<td>${orderlistVO.getQuantity()}</td>
 			<td>${orderlistVO.getPrice()}</td>
 			<td>${orderlistVO.getSubTotal()}</td> 		
-			<td>${orderlistVO.getBuyerReview()}</td>
+			<td>${orderlistVO.getBuyerReview()}分</td>
 			<td>${orderlistVO.getBuyerComment()}</td>
+			<td><img src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.getOrderDetailID()}"
+								style="width: 140px; height: 120px" alt="Product Image"></td>
 			
 		</tr>
 		

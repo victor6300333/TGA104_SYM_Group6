@@ -1,16 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.group6.tibame104.order.model.*,com.group6.tibame104.orderlist.model.*, java.util.*"%>
+<%@ page
+	import="com.group6.tibame104.order.model.*,com.group6.tibame104.orderlist.model.*, java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
 <%
-
-
-
-Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) request.getAttribute("map_list");
-		
-
+Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) request.getAttribute("map_list");
 %>
 
 <!DOCTYPE html>
@@ -63,7 +59,7 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
 	rel="stylesheet" />
-	
+
 <link rel="stylesheet" href="./css/review.css" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
@@ -221,73 +217,78 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 								<input type="submit" value="送出">
 							</FORM>
 							<br> <br>
+
+
+
+							<table id="table-1" class="table">
+
+								<tr>
+									<td width="155">商品名稱</td>
+									<td width="155">商品圖片</td>
+									<td width="125">價格</td>
+
+									<td width="105">數量</td>
+									<td width="130">小計</td>
+
+								</tr>
+								<tr>
+									<td width="155">${orderlistVO.productName}</td>
+									<td width="155"><img
+										src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
+										style="width: 230px; height: 200px" alt="Product Image"></td>
+									<td width="125">${orderlistVO.price}</td>
+
+									<td width="105">${orderlistVO.quantity}</td>
+									<td width="130">${orderlistVO.subTotal}</td>
+								</tr>
+							</table>
+
+
+
+							<p>評價:</p>
+							<div class="star-mark">
+
+								<ul class="star">
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+									<li></li>
+								</ul>
+								<div class="result">
+									<span class="mark"></span><span class="detail"></span>
+								</div>
+								<div class="help-info">
+									<span class="mark"></span>&nbsp;<span class="decri"></span><br />
+									<span class="detail"></span>
+								</div>
+							</div>
+							<br>
+
+							<FORM id="upload" METHOD="post" ACTION="OrderlistServlet"
+								enctype="multipart/form-data">
+								
+								<input type="file" name="upfile" id="upfile"> <br><br>
+			 					<img id="preview" style="width: 200px; height: 160px;" border="0" />
+								<br><br>
+								<p>買家評論:</p>
+								<textarea type="TEXT" name="buyerComment" size="45"></textarea>
+
+
+
+								<input type="hidden" name="orderDetailID"
+									value="${orderlistVO.orderDetailID}" size="45" /> <input
+									type="hidden" name="buyerReview" id="buyerComment" value="" />
+								<input type="hidden" name="action" value="update"> <input
+									type="submit" value="送出新增">
+							</FORM>
+
 							
-							
-
-<table id="table-1" class="table" >
-
-		<tr>
-			<td width="155">商品名稱</td>
-			<td width="155">商品圖片</td>
-			<td width="125">價格</td>
-
-			<td width="105">數量</td>
-			<td width="130">小計</td>
-			
-		</tr>
-		<tr>
-			<td width="155">${orderlistVO.productName}</td>
-			<td width="155"><img
-				src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
-				style="width: 230px; height: 200px" alt="Product Image"></td>
-			<td width="125">${orderlistVO.price}</td>
-
-			<td width="105">${orderlistVO.quantity}</td>
-			<td width="130">${orderlistVO.subTotal}</td>
-		</tr>
-	</table>
- 
-	<p>評價:</p>
-		<div class="star-mark">
-			
-			<ul class="star">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-			<div class="result">
-				<span class="mark"></span><span class="detail"></span>
-			</div>
-			<div class="help-info">
-				<span class="mark"></span>&nbsp;<span class="decri"></span><br /> <span
-					class="detail"></span>
-			</div>
-		</div>
-	
-
-	<FORM METHOD="post" ACTION="OrderlistServlet">
 
 
-		<br>
-				<p>買家評論:</p>
-				<textarea type="TEXT" name="buyerComment" size="45" ></textarea>
-			
 
 
-		<input type="hidden" name="orderDetailID"
-			value="${orderlistVO.orderDetailID}" size="45" /> 
-			<input type="hidden" name="buyerReview" id="buyerComment" value="" /> 
-			<input type="hidden" name="action" value="update"> 
-			<input type="submit" value="送出新增">
-	</FORM>
 
-
-							
-							
-							
-							
 
 
 
@@ -419,9 +420,36 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script src="js/woody.js"></script>
-	
+
 	<script src="./js/review.js"></script>
 	<script src="./vendors/jquery/jquery-3.4.1.min.js"></script>
+	 <script>
+        // Get the form element
+        const form = document.getElementById('upload');
+      
+        // Handle the form submission
+        form.addEventListener('change', (e) => {
+          e.preventDefault();
+      
+          // Get the selected file
+          const file = document.getElementById('upfile').files[0];
+      
+          // Create a new FileReader object
+          const reader = new FileReader();
+      
+          // Set the onload event to handle the image preview
+          reader.onload = (event) => {
+            // Get the image data
+            const data = event.target.result;
+      
+            // Set the preview image source
+            document.getElementById('preview').src = data;
+          }
+      
+          // Read the selected file as a Data URL
+          reader.readAsDataURL(file);
+        });
+      </script>
 </body>
 
 </html>

@@ -11,13 +11,20 @@ public class OrderlistVO {
 	private Integer quantity;
 	private Integer price;
 	private Integer subTotal;
-	private String shopReview;
+	private Integer shopReview;
 	private String shopComment;
-	private String buyerReview;
+	private Integer buyerReview;
 	private String buyerComment;
 	private String userAccount;
+	private byte[] buyerCommentPic;
 	
   
+	public byte[] getBuyerCommentPic() {
+		return buyerCommentPic;
+	}
+	public void setBuyerCommentPic(byte[] buyerCommentPic) {
+		this.buyerCommentPic = buyerCommentPic;
+	}
 	public Timestamp getOrderDate() {
 		return orderDate;
 	}
@@ -73,10 +80,10 @@ public class OrderlistVO {
 	public void setSubTotal(Integer subTotal) {
 		this.subTotal = subTotal;
 	}
-	public String getShopReview() {
+	public Integer getShopReview() {
 		return shopReview;
 	}
-	public void setShopReview(String shopReview) {
+	public void setShopReview(Integer shopReview) {
 		this.shopReview = shopReview;
 	}
 	public String getShopComment() {
@@ -85,10 +92,10 @@ public class OrderlistVO {
 	public void setShopComment(String shopComment) {
 		this.shopComment = shopComment;
 	}
-	public String getBuyerReview() {
+	public Integer getBuyerReview() {
 		return buyerReview;
 	}
-	public void setBuyerReview(String buyerReview) {
+	public void setBuyerReview(Integer buyerReview) {
 		this.buyerReview = buyerReview;
 	}
 	public String getBuyerComment() {

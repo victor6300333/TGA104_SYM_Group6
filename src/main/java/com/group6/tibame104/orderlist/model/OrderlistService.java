@@ -22,9 +22,9 @@ public class OrderlistService {
 
 	}
 	
-	public void updateOrderlist(Integer orderDetailID, String buyerReview, String buyerComment) {
+	public void updateOrderlist(Integer orderDetailID, Integer buyerReview, String buyerComment, byte[] pic) {
 
-		dao.update(orderDetailID, buyerReview, buyerComment);
+		dao.update(orderDetailID, buyerReview, buyerComment, pic);
 
 	}
 	

@@ -6,7 +6,7 @@ import java.util.List;
 public interface OrderlistDAO_interface {
 	public void insert(OrderlistVO orderlistVO);
 	
-    public void update(Integer orderDetailID, String buyerReview, String buyerComment);
+    public void update(Integer orderDetailID, Integer buyerReview, String buyerComment, byte[] pic);
 
     public List<OrderlistVO> findByOrderID(Integer orderID);
     
