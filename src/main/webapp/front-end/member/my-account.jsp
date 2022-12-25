@@ -230,7 +230,9 @@
 														style="width: 100px; height: 25px"> 
 													<input type="submit" value="送出">
 												</FORM>
-												<br><br>
+												<br><br><br>
+											</li>
+											<li>
 												<FORM METHOD="post"
 													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
