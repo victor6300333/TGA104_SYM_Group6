@@ -20,8 +20,7 @@ import com.group6.tibame104.groupproduct.model.GroupproductVO;
 
 @Controller
 public class IndexController {
-	@Autowired
-	AdService adService;
+	
 	@Autowired
 	GroupService groupSvc;
 	@Autowired
@@ -32,9 +31,9 @@ public class IndexController {
 	@RequestMapping("/")
 	public String index(Model model, HttpSession session) {
 		
-//		AdService adService = new AdService();
-//		List<AdVO> list = adService.getAll();
-//		model.addAttribute("list", list);
+		AdService adService = new AdService();
+		List<AdVO> list = adService.getAll();
+		model.addAttribute("list", list);
 		
 		 List<GroupVO> groupVOs = groupSvc.getAll();
 	     model.addAttribute("groupVOs",groupVOs);

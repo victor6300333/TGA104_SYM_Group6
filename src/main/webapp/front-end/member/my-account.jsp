@@ -225,12 +225,12 @@
 										<ul>
 											<li>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/select_by_OrderID">
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 													<b>輸入訂單編號: </b> <input type="text" name="orderID"
-														style="width: 100px; height: 25px"> <input
-														type="hidden" name="action" value="select_by_OrderID">
+														style="width: 100px; height: 25px"> 
 													<input type="submit" value="送出">
 												</FORM>
+												<br><br>
 												<FORM METHOD="post"
 													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
@@ -247,10 +247,10 @@
 														<option value="3">已出貨</option>
 														<option value="4">已取貨</option>
 
-													</select> <br> <br> <input type="hidden" name="memberID"
-														value="${memVO.memberID}"> <input type="hidden"
-														name="action" value="select_Order"> <input
-														type="submit" value="送出">
+													</select> <br> <br> 
+													<input type="hidden" name="memberID" value="${memVO.memberID}"> 
+													
+													<input type="submit" value="送出">
 												</FORM>
 
 

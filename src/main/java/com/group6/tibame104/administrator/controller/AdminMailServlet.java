@@ -31,6 +31,7 @@ public class AdminMailServlet extends HttpServlet {
 			MailService mailService = new MailService();
 			
 			String to = memberVO.getMail();
+			System.out.println("to = "+to);
 
 			String subject = "賣場開通通知";
 			String ch_name = memberVO.getUserName();

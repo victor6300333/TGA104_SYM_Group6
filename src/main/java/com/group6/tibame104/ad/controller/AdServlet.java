@@ -182,7 +182,7 @@ java.sql.Date adEndDate = null;
 			adVO.setAdSerialID(adSerialID);
 //			adVO.setGroupBuyID(groupBuyID);
 			adVO.setAdTitle(adTitle);
-			adVO.setAdType(adType);
+			adVO.setAdType("團購活動");
 			adVO.setAdDescribe(adDescribe);
 			adVO.setAdPhoto(imgAdd);
 			adVO.setAdStartDate(adStartDate);

@@ -128,6 +128,7 @@ public class SearchServlet extends HttpServlet {
 			
 			
 			List<CategoryVO> categoryVOall = categorySvc.getbyProductMainID(productMainID);
+			List<CategoryVO> all = categorySvc.getAll();
 
 		
 
@@ -136,6 +137,7 @@ public class SearchServlet extends HttpServlet {
 			 * 轉去 listAllProduct 頁面
 			 */
 			session.removeAttribute("categoryVOall_forsort");
+			session.setAttribute("all", all);
 			session.setAttribute("categoryVOall", categoryVOall);
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);

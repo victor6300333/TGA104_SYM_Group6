@@ -69,7 +69,8 @@ public class SortServlet extends HttpServlet {
 		}
 
 		else if ("sort_0_1000".equals(action) || "sort_1000_5000".equals(action) ||
-				"sort_5000_10000".equals(action) || "sort_10000".equals(action)) {
+				"sort_5000_10000".equals(action) || "sort_10000".equals(action) ||
+				"sort_0".equals(action)) {
 			
 			String[] tokens = action.split("_");
 			int min = Integer.valueOf(tokens[1]) ;	

@@ -1,16 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.group6.tibame104.order.model.*,com.group6.tibame104.orderlist.model.*, java.util.*"%>
+<%@ page
+	import="com.group6.tibame104.order.model.*,com.group6.tibame104.orderlist.model.*, java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
 <%
-
-
-
-Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) request.getAttribute("map_list");
-		
-
+Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) request.getAttribute("map_list");
 %>
 
 <!DOCTYPE html>
@@ -210,30 +206,64 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 						<div class="table-responsive">
 
 
+							<table class="table table-bordered">
+									<thead class="thead-dark">
+										<ul>
+											<li>
+												<FORM METHOD="post"
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
+													<b>輸入訂單編號: </b> <input type="text" name="orderID"
+														style="width: 100px; height: 25px"> 
+													<input type="submit" value="送出">
+												</FORM>
+												<br><br>
+											</li>
+											<li>
+												<FORM METHOD="post"
+													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
-							<br> <br>
+													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
+														type="text" style="width: 100px; height: 25px"> <b>至</b>
+													<input name="todate" id="f_date2" type="text"
+														style="width: 100px; height: 25px"> <br> <br>
+													<b>選擇訂單狀態:</b> <select name="status"
+														style="width: 80px; height: 25px">
 
-							<FORM METHOD="post" ACTION="OrderServlet">
-								<b>輸入訂單編號: </b> <input type="text" name="order"> <input
-									type="hidden" name="action" value="getOne_For_Display">
-								<input type="submit" value="送出">
-							</FORM>
-							<br> <br>
-							<%
-	Set<OrderVO> set = map_list.keySet();
-	Iterator<OrderVO> it = set.iterator();
-	while (it.hasNext()) {
-		OrderVO orderVO = it.next(); 
-		List<OrderlistVO> list = map_list.get(orderVO);
-		%>
-		
-		<p>訂單日期:<%=orderVO.getOrderDate().toString().substring(0,19) %>
-		&emsp;&emsp;&emsp;&emsp;賣場:<%=orderVO.getStoreName() %>
-		&emsp;&emsp;&emsp;&emsp;訂單狀態:<%=orderVO.getOrderStatus() %> </p>
-		
-		
+														<option value="0">全部</option>
+														<option value="1">待付款</option>
+														<option value="2">待出貨</option>
+														<option value="3">已出貨</option>
+														<option value="4">已取貨</option>
+
+													</select> <br> <br> 
+													<input type="hidden" name="memberID" value="${memVO.memberID}"> 
+													
+													<input type="submit" value="送出">
+												</FORM>
+
+
+											</li>
+										</ul>
+									</thead>
+								</table>
 							
-							<table id="table-1" class="table" border="1">
+							<%
+							Set<OrderVO> set = map_list.keySet();
+							Iterator<OrderVO> it = set.iterator();
+							while (it.hasNext()) {
+								OrderVO orderVO = it.next();
+								List<OrderlistVO> list = map_list.get(orderVO);
+							%>
+
+							<p>
+								訂單日期:<%=orderVO.getOrderDate().toString().substring(0, 19)%>
+								&emsp;&emsp;&emsp;&emsp;賣場:<%=orderVO.getStoreName()%>
+								&emsp;&emsp;&emsp;&emsp;訂單狀態:<%=orderVO.getOrderStatus()%>
+							</p>
+
+
+
+							<table id="table-1" class="table" style="vertical-align:middle;">
 
 								<tr>
 									<td width="155">商品名稱</td>
@@ -245,55 +275,56 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 									<td width="130">評價</td>
 
 								</tr>
-						
-							<c:forEach var="orderlistVO" items="<%=list%>">
-							
-								<tr>
-									<td width="155">${orderlistVO.productName}</td>
-									<td width="155"><img src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}" 
-                                            style="width: 230px; height: 200px" alt="Product Image"> </td>
-									<td width="125">${orderlistVO.price}</td>
 
-									<td width="105">${orderlistVO.quantity}</td>
-									<td width="130">${orderlistVO.subTotal}</td>
-									<td width="130">
-											<form action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
+								<c:forEach var="orderlistVO" items="<%=list%>">
+
+									<tr >
+										<td  width="155">${orderlistVO.productName}</td>
+										<td width="155"><img
+											src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
+											style="width: 230px; height: 200px" alt="Product Image">
+										</td>
+										<td width="125">${orderlistVO.price}</td>
+
+										<td width="105">${orderlistVO.quantity}</td>
+										<td width="130">${orderlistVO.subTotal}</td>
+										<td width="130">
+											<form
+												action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
 
 
 												<input type="hidden" name="orderlistID"
-													value="${orderlistVO.orderDetailID}" /> <input type="hidden"
-													name="action" value="do_buyercomment" /> <input
+													value="${orderlistVO.orderDetailID}" /> <input
+													type="hidden" name="action" value="do_buyercomment" /> <input
 													type="submit" value="給予評價" />
 											</form>
-										
+
 											<form
 												action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
 												<input type="hidden" name="orderlistID"
-													value="${orderlistVO.orderDetailID}" /> <input type="hidden"
-													name="action" value="check_buyercomment" /> <input
-													type="submit" value="查看評價" />
+													value="${orderlistVO.orderDetailID}" /> <input
+													type="hidden" name="action" value="check_buyercomment" />
+												<input type="submit" value="查看評價" />
 											</form>
 										</td>
-									
 
-								</tr>
-							</c:forEach>
-					</table>
-					<br>
-					<br>
-					<br>
-							
-						<%
-		}
-						%>
-							
-							
-							
-							
+
+									</tr>
+								</c:forEach>
+							</table>
+							<br> <br> <br>
+
+							<%
+							}
+							%>
 
 
 
-							</thead>
+
+
+
+
+							
 							<!--   <tbody>
                     <tr>
                       <td>1</td>
@@ -422,6 +453,37 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script src="js/woody.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.css" />
+	<script
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script>
+		$.datetimepicker.setLocale('zh');
+		$('#f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+		$('#f_date2').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+	</script>
 </body>
 
 </html>

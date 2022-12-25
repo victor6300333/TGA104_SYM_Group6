@@ -105,16 +105,16 @@ public class MailService {
 	public static void main(String args[]) {
 
 //		String to = "wangliu12151205@gmail.com";
-		String to = "tkcomo2000@gmail.com";
-
-		String subject = "密碼通知";
-
-		String ch_name = "David";
-		String passRandom = "111";
-		String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
-
-		MailService mailService = new MailService();
-		mailService.sendMail(to, subject, messageText);
+//		String to = "tkcomo2000@gmail.com";
+//
+//		String subject = "密碼通知";
+//
+//		String ch_name = "David";
+//		String passRandom = "111";
+//		String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
+//
+//		MailService mailService = new MailService();
+//		mailService.sendMail(to, subject, messageText);
 
 	}
 

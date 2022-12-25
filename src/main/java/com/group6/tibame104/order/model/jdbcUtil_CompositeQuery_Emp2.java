@@ -26,6 +26,8 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 					whereCondition.append(" && orderStatus = " + value);
 				else if("memberID".equals(key)  )
 					whereCondition.append(" && memberID = " + value);
+				else if("orderID".equals(key)  )
+					whereCondition.append("where orderID = " + value);
 				System.out.println("key:"+ key + ", value:" + value + ", 次數: " + count);
 			}
 		}

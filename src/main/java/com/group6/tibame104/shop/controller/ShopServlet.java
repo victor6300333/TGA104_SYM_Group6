@@ -118,6 +118,9 @@ public class ShopServlet extends HttpServlet {
 	
 			session.setAttribute("check", check);
 			session.setAttribute("count_num", count_num);
+			CategoryVO categoryVO =categorySvc.getbyProductID(Integer.parseInt(req.getParameter("productID")));		
+			req.setAttribute("categoryVO", categoryVO);
+			
 			if(req.getParameter("method").equals("bag")) {
 				String url = "/front-end/shop/Cart_new.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -125,9 +128,6 @@ public class ShopServlet extends HttpServlet {
 			}
 			if(req.getParameter("method").equals("cart")) {
 
-				CategoryVO categoryVO =categorySvc.getbyProductID(Integer.parseInt(req.getParameter("productID")));
-
-				req.setAttribute("categoryVO", categoryVO);
 				
 				String url = "/front-end/product_detail/product_detail.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
