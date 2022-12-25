@@ -1,6 +1,7 @@
 package com.group6.tibame104.order.model;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class OrderVO {
@@ -8,6 +9,8 @@ public class OrderVO {
 	private Integer storeID ;
 	private String storeName ;
 	private Integer memberID ;
+	
+	
 	private Timestamp orderDate ;
 	private Integer orderStatus;
 	private String receiver;
@@ -20,7 +23,8 @@ public class OrderVO {
 	private Integer useShoppingGold;
 	private Integer useCouponGold;
 	private Integer finalTotal;
-    
+	
+	
 	public String getStoreName() {
 		return storeName;
 	}
@@ -48,8 +52,8 @@ public class OrderVO {
 	public Timestamp getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Timestamp orderDate) {
-		this.orderDate = orderDate;
+	public void setOrderDate(Timestamp timestamp) {
+		this.orderDate = timestamp;
 	}
 	public Integer getOrderStatus() {
 		return orderStatus;

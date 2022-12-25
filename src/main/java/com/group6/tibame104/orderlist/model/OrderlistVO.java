@@ -1,21 +1,37 @@
 package com.group6.tibame104.orderlist.model;
 
+import java.sql.Timestamp;
+
 public class OrderlistVO {
-	Integer orderDetailID;
-	Integer orderID;
-    Integer productID;
-    String productName;
-	Integer quantity;
-    Integer price;
-    Integer subTotal;
-    String shopReview;
-    String shopComment;
-    String buyerReview;
-    String buyerComment;
-    
+	private Integer orderDetailID;
+	private Integer orderID;
+	private Integer productID;
+	private String productName;
+	private Timestamp orderDate;
+	private Integer quantity;
+	private Integer price;
+	private Integer subTotal;
+	private String shopReview;
+	private String shopComment;
+	private String buyerReview;
+	private String buyerComment;
+	private String userAccount;
+	
   
-    
-    public String getProductName() {
+	public Timestamp getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Timestamp orderDate) {
+		this.orderDate = orderDate;
+	}
+	
+	public String getUserAccount() {
+		return userAccount;
+	}
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+	public String getProductName() {
 		return productName;
 	}
 	public void setProductName(String productName) {

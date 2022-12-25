@@ -8,12 +8,12 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 	
 
 
-	public static String get_WhereCondition(Map<String, String[]> map) {
+	public static String get_WhereCondition(Map<String, String> map) {
 		Set<String> keys = map.keySet();
 		StringBuffer whereCondition = new StringBuffer();
 		int count = 0;
 		for (String key : keys) {
-			String value = map.get(key)[0];
+			String value = map.get(key);
 			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
 				

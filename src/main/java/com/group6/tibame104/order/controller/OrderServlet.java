@@ -37,12 +37,12 @@ public class OrderServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 		
 			req.setAttribute("errorMsgs", errorMsgs);
-			Map<String, String[]> map = req.getParameterMap();
-			OrderService orderSvc = new OrderService();
-			List<OrderVO> list  = orderSvc.getAllOrderByComposite(map);
+//			Map<String, String[]> map = req.getParameterMap();
+//			OrderService orderSvc = new OrderService();
+//			List<OrderVO> list  = orderSvc.getAllOrderByComposite(map);
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 					
-			req.setAttribute("list", list);
+//			req.setAttribute("list", list);
 			String url = "/front-end/order/listOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);

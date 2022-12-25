@@ -14,12 +14,10 @@ public class OrderService {
 	@Autowired
 	private OrderDAO_interface dao;
 
-	public OrderService() {
-		dao = new OrderDAO();
-	}
 
-	public void addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
-		dao.insert(orderVO, buylist);
+	public int addOrder(OrderVO orderVO, List<OrderlistVO> buylist) {
+		
+		return dao.insert(orderVO, buylist);
 		
 	}
 
@@ -28,7 +26,7 @@ public class OrderService {
 	
 		return dao.getbyOrderID(orderID);
 	}
-	public List<OrderVO> getAllOrderByComposite(Map<String, String[]> map ) {
+	public List<OrderVO> getAllOrderByComposite(Map<String, String> map ) {
 		
 
 		return  dao.getAllByComposite( map );

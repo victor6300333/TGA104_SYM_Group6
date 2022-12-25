@@ -3,14 +3,17 @@ package com.group6.tibame104.member.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
@@ -21,11 +24,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.group6.tibame104.creditCard.model.CreditCardService;
 import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MailService;
 import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
+import com.group6.tibame104.memberBlockList.model.MemberBlockListService;
+import com.group6.tibame104.memberBlockList.model.ViewMemberBlockListVO;
 import com.group6.tibame104.store.model.StoreJDBCDAO;
 import com.group6.tibame104.store.model.StoreVO;
 
@@ -33,7 +39,7 @@ import redis.clients.jedis.Jedis;
 
 @Controller
 @RequestMapping("/front-end/member")
-@MultipartConfig(fileSizeThreshold = 100 * 1024 * 1024, maxFileSize = 100 * 1024 * 1024, maxRequestSize = 100 * 100
+@MultipartConfig(fileSizeThreshold = 100 * 1024 * 1024, maxFileSize = 1000 * 1024 * 1024, maxRequestSize = 100 * 100
 		* 1024 * 1024)
 public class MemberController {
 	@Autowired
@@ -42,6 +48,8 @@ public class MemberController {
 	private MailService mailSvc;
 	@Autowired
 	private CreditCardService cardSvc;
+	@Autowired
+	private MemberBlockListService blockSvc;
 
 	@PostMapping("/getOneForDisplay")
 	public String getOneForDisplay(Model model, @RequestParam("memberID") Integer memberID) {
@@ -60,17 +68,7 @@ public class MemberController {
 
 	@PostMapping("/getOneForUpdate")
 	public String getOneForUpdate(Model model, @RequestParam("memberID") Integer memberID) {
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs", errorMsgs);
-
-		/*************************** 1.接收請求參數 ****************************************/
-
-		/*************************** 2.開始查詢資料 ****************************************/
 		MemberVO memVO = memSvc.getOneMem(memberID);
-
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 		model.addAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
 		return "/member/update_member_input";
 	}
@@ -80,7 +78,7 @@ public class MemberController {
 			@RequestParam("userAccount") String userAccount, @RequestParam("phone") String phone,
 			@RequestParam("mail") String mail, @RequestParam("userPhoto") Part userPhoto,
 			@RequestParam("idNumber") String idNumber, @RequestParam("address") String address,
-			@RequestParam("memberID") Integer memberID, HttpServletRequest req) throws IOException {
+			@RequestParam("memberID") Integer memberID) throws IOException {
 		List<String> errorMsgsForupdate = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
@@ -263,7 +261,7 @@ public class MemberController {
 		memVO.setCurrentShoppingCoin(currentShoppingCoin);
 		// Send the use back to the form, if there were errors
 
-		if ((memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
+		if ((memSvc.findMemberByMail(mail))) { // 【信箱無效時】
 			errorMsgs.add("此信箱已有人使用");
 
 		}
@@ -313,12 +311,15 @@ public class MemberController {
 	}
 
 	@PostMapping("/mailVerification")
-	public String mailVerification(HttpSession session, Model model, @RequestParam("vCode") String vCode) {
+	public void mailVerification(HttpServletResponse res, HttpSession session, Model model,
+			@RequestParam("vCode") String vCode) throws IOException {
+		res.setCharacterEncoding("UTF-8");
 
-		List<String> errorMsgs = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs", errorMsgs);
+		Map<String, String> msg = new HashMap<String, String>();
+
+		Gson gson = new Gson();
+
+		PrintWriter writer = res.getWriter();
 
 		/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
@@ -328,9 +329,15 @@ public class MemberController {
 		String passRandom = jedis.get("passRandom");
 
 		if (passRandom == null) {
-			errorMsgs.add("連結信已逾時，請重新申請");
+			msg.put("errorMsg", "連結信已逾時，請重新申請");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
 		} else if (!(vCode.equals(passRandom))) {
-			errorMsgs.add("驗證有誤，請重新輸入");
+			msg.put("errorMsg", "驗證有誤，請重新輸入");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
 		} else if (vCode.equals(passRandom))
 			jedis.close();
 
@@ -345,11 +352,6 @@ public class MemberController {
 		Boolean sellerAuditApprovalState = memVO.getSellerAuditApprovalState();
 		Integer currentShoppingCoin = memVO.getCurrentShoppingCoin();
 
-		if (!errorMsgs.isEmpty()) {
-			model.addAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/front-end/member/register"; // 程式中斷
-		}
-
 		/*************************** 2.開始新增資料 ***************************************/
 		memVO = memSvc.addMember(userAccount, userPassword, userName, phone, mail, registrationTime, mailCertification,
 				sellerAuditApprovalState, currentShoppingCoin);
@@ -358,21 +360,19 @@ public class MemberController {
 
 		mailCertification = true;// 驗證成功
 		session.setAttribute("memVO", memVO);
-		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//		PrintWriter out = res.getWriter();
-//		out.println("<meta http-equiv='refresh' content='1;URL=" + req.getContextPath()
-//	      + "/front-end/member/register2'>");
-//	    out.println("<script> alert('註冊成功!');</script>");
-		String url = "/front-end/member/register2";
-		return "/front-end/member/register2";
+
+		msg.put("succsess", mail);
+
+		String json = gson.toJson(msg);
+		writer.write(json);
 
 	}
 
 	@PostMapping("/update")
 	public String update(HttpSession session, Model model, @RequestParam("gender") String gender,
-			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") byte[] userPhoto,
+			@RequestParam("birthday") java.sql.Date birthday, @RequestParam("userPhoto") Part userPhoto,
 			@RequestParam("idNumber") String idNumber, @RequestParam("address") String address,
-			@RequestParam("mail") String mail) {
+			@RequestParam("mail") String mail) throws IOException {
 
 		List<String> errorMsgs = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to
@@ -394,12 +394,25 @@ public class MemberController {
 
 		Integer currentShoppingCoin = 0;
 
+		// 圖片相關
+		byte[] userPhoto1 = null;
+		if (userPhoto.getSize() == 0) {
+			userPhoto = null;
+		} else {
+			InputStream in = userPhoto.getInputStream();
+			BufferedInputStream bis = new BufferedInputStream(in);
+			userPhoto1 = new byte[bis.available()];
+			bis.read(userPhoto1);
+			bis.close();
+			in.close();
+		}
+
 		Integer memberID = memSvc.getOne();
 
 		MemberVO memVO = new MemberVO();
 		memVO.setGender(gender);
 		memVO.setBirthday(birthday);
-		memVO.setUserPhoto(userPhoto);
+		memVO.setUserPhoto(userPhoto1);
 		memVO.setMailCertification(mailCertification);
 		memVO.setIdNumber(idNumber);
 		memVO.setAddress(address);
@@ -415,12 +428,13 @@ public class MemberController {
 
 		/*************************** 2.開始修改資料 *****************************************/
 
-		memSvc.updateMember(memberID, gender, birthday, userPhoto, mailCertification, idNumber, address,
+		memSvc.updateMember(memberID, gender, birthday, userPhoto1, mailCertification, idNumber, address,
 				sellerAuditApprovalState, currentShoppingCoin);
 
 		memVO = memSvc.loginOneMem(mail);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+		session.setAttribute("mail", mail);
 		session.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的memVO物件,存入req
 
 		return "/front-end/member/my-account";
@@ -483,6 +497,11 @@ public class MemberController {
 
 				memVO = memSvc.loginOneMem(mail);
 				session.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+
+				List<ViewMemberBlockListVO> memblVO = blockSvc.getAll(memVO.getMemberID());
+				List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
+				session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
+				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 //				System.out.println(memVO);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
@@ -500,11 +519,9 @@ public class MemberController {
 //				String storeName = storeVO2.getStoreName();
 //				session.setAttribute("storeName", storeName);
 //			}
-			List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-			session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
 //			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
@@ -512,7 +529,7 @@ public class MemberController {
 		// (-->如無來源網頁:則重導至login_success)
 	}
 
-	@PostMapping("getOneForLogOut")
+	@PostMapping("/getOneForLogOut")
 	public String getOneForLogOut(HttpSession session) {
 
 		// 登出操作，清除用戶的登入狀態
@@ -523,32 +540,39 @@ public class MemberController {
 	}
 
 	@PostMapping("/forgetPassword")
-	public String forgetPassword(HttpSession session, Model model, @RequestParam("mail") String mail) {
+	public void forgetPassword(HttpServletResponse res, Model model, @RequestParam("mail") String mail)
+			throws IOException {
+		res.setCharacterEncoding("UTF-8");
 
-		List<String> errorMsgs1 = new LinkedList<String>();
-		// Store this set in the request scope, in case we need to
-		// send the ErrorPage view.
-		model.addAttribute("errorMsgs1", errorMsgs1);
+		Map<String, String> msg = new HashMap<String, String>();
 
+		Gson gson = new Gson();
+
+		PrintWriter writer = res.getWriter();
+
+		MemberVO memVO = new MemberVO();
 		/*************************** 1.接收請求參數 ****************************************/
 		String mailReg = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z]+$";
 		if (mail == null || mail.trim().length() == 0) {
-			errorMsgs1.add("使用者信箱: 請勿空白");
+
+			msg.put("errorMsg", "使用者信箱: 請勿空白");
+			String json = gson.toJson(msg);
+
+			writer.write(json);
+			return;
 		} else if (!mail.trim().matches(mailReg)) { // 以下練習正則(規)表示式(regular-expression)
-			errorMsgs1.add("請輸入正確的信箱格式！");
-		}
 
-		MemberVO memVO = new MemberVO();
-		memVO.setMail(mail);
+			msg.put("errorMsg", "請輸入正確的信箱格式！");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
+		} else if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
 
-		if (!(memSvc.findMemberByMail(mail))) { // 【帳號 , 密碼無效時】
-			errorMsgs1.add("使用者信箱錯誤或查無此信箱");
+			msg.put("errorMsg", "使用者信箱錯誤或查無此信箱");
+			String json = gson.toJson(msg);
+			writer.write(json);
+			return;
 
-		}
-
-		if (!errorMsgs1.isEmpty()) {
-			model.addAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/front-end/member/login"; // 程式中斷
 		}
 
 		// 產生亂數密碼
@@ -569,7 +593,6 @@ public class MemberController {
 		}
 
 		// 取得該會員所有資料
-		MemberService memSvc = new MemberService();
 		memVO = memSvc.loginOneMem(mail);
 
 		// 把該會員的亂數密碼在資料庫做更新
@@ -586,7 +609,10 @@ public class MemberController {
 
 		mailSvc.sendMail(mail, subject, messageText);
 
-		return "front-end/member/login";
+		msg.put("succsess", mail);
+
+		String json = gson.toJson(msg);
+		writer.write(json);
 
 	}
 

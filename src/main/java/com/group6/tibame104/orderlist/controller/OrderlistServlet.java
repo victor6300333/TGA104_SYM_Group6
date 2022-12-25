@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.group6.tibame104.orderlist.model.OrderlistService;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
@@ -19,6 +21,8 @@ import com.group6.tibame104.orderlist.model.OrderlistVO;
 @WebServlet("/front-end/comment/OrderlistServlet")
 public class OrderlistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	OrderlistService orderlistSvc;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -34,10 +38,10 @@ public class OrderlistServlet extends HttpServlet {
 		if ("do_buyercomment".equals(action)) {
 
 			Integer orderID = Integer.parseInt(req.getParameter("orderID"));
-			OrderlistService orderlistService = new OrderlistService();	
+			
 			
 
-			List<OrderlistVO> list = orderlistService.searchOrderlist(orderID);
+			List<OrderlistVO> list = orderlistSvc.searchOrderlist(orderID);
 			req.setAttribute("list", list);
 			String url = "/front-end/comment/addComment.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
@@ -54,10 +58,10 @@ public class OrderlistServlet extends HttpServlet {
 			
 			
 		
-			OrderlistService orderlistService = new OrderlistService();
-			orderlistService.updateOrderlist(orderDetailID, buyerReview, buyerComment);
+		
+			orderlistSvc.updateOrderlist(orderDetailID, buyerReview, buyerComment);
 			
-			OrderlistVO orderlistVO = orderlistService.findByOrderlistID(orderDetailID);
+			OrderlistVO orderlistVO = orderlistSvc.findByOrderlistID(orderDetailID);
 		
 			
 			req.setAttribute("orderlistVO", orderlistVO);
@@ -91,7 +95,7 @@ public class OrderlistServlet extends HttpServlet {
 			// Send the use back to the form, if there were errors
 
 			/*************************** 2.開始新增資料 ***************************************/
-			OrderlistService orderlistSvc = new OrderlistService();
+			
 			OrderlistVO orderlistVO = new OrderlistVO();
 
 			orderlistVO.setOrderDetailID(orderDetailID);

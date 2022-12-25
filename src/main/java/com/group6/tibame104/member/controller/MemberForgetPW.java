@@ -34,25 +34,20 @@ public class MemberForgetPW extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		/*************************** 1.接收請求參數 ****************************************/
-		/* JSON */
+
 		Gson gson = new Gson();
 
 		PrintWriter writer = res.getWriter();
 
 		MemberVO memVO = new MemberVO();
 
-		String tomail = req.getParameter("mail").trim();
+		String mail = req.getParameter("mail").trim();
 
 //		System.out.println(tomail);
-		try {
-			memVO.setMail(tomail);
-
-		} catch (Exception e) {
-			return;
-		}
+		memVO = memSvc.loginOneMem(mail);
 
 		// 產生亂數密碼
 		// 建立一個新的Random物件
@@ -72,7 +67,7 @@ public class MemberForgetPW extends HttpServlet {
 		}
 
 		// 取得該會員所有資料
-		memVO = memSvc.loginOneMem(tomail);
+		memVO = memSvc.loginOneMem(mail);
 
 		// 把該會員的亂數密碼在資料庫做更新
 		Integer memberID = memVO.getMemberID();
@@ -86,9 +81,9 @@ public class MemberForgetPW extends HttpServlet {
 		String messageText = "Hello! " + username + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
 				+ "請使用此密碼進行登入及修改密碼";
 
-		mailService.sendMail(tomail, subject, messageText);
+		mailService.sendMail(mail, subject, messageText);
 
-		String json = gson.toJson(tomail);
+		String json = gson.toJson(mail);
 		writer.write(json);
 	}
 

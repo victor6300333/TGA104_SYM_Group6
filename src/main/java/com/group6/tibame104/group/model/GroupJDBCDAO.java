@@ -132,12 +132,13 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 	}
 
 	public List<GroupVO> getAll() {
-		List<GroupVO> list = new ArrayList<GroupVO>();
 
 		try (Connection con = dataSource.getConnection();
 			 PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT);) {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				List<GroupVO> list = new ArrayList<GroupVO>();
 
 				while (rs.next()) {
 					GroupVO groupVO = new GroupVO();
@@ -152,8 +153,39 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 					groupVO.setUpdateTime(rs.getTimestamp("updateTime"));
 
 					list.add(groupVO);
-					return list;
 				}
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	private static final String ORDERBY = "SELECT groupBuyID,groupBuyProductID,administratorID,groupBuyProductOrderTotal,groupBuyingState,groupBuyingOnLoadDate,groupBuyingOffLoadDate,updateTime FROM groupBuying order by groupBuyProductOrderTotal desc";
+	public List<GroupVO> orderBy() {
+
+		try (Connection con = dataSource.getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(ORDERBY);) {
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				List<GroupVO> list = new ArrayList<GroupVO>();
+
+				while (rs.next()) {
+					GroupVO groupVO = new GroupVO();
+
+					groupVO.setGroupBuyID(rs.getInt("groupBuyID"));
+					groupVO.setGroupBuyProductID(rs.getInt("groupBuyProductID"));
+					groupVO.setAdministratorID(rs.getInt("AdministratorID"));
+					groupVO.setGroupBuyProductOrderTotal(rs.getInt("groupBuyProductOrderTotal"));
+					groupVO.setGroupBuyingState(rs.getBoolean("groupBuyingState"));
+					groupVO.setGroupBuyingOnLoadDate(rs.getTimestamp("groupBuyingOnLoadDate"));
+					groupVO.setGroupBuyingOffLoadDate(rs.getTimestamp("groupBuyingOffLoadDate"));
+					groupVO.setUpdateTime(rs.getTimestamp("updateTime"));
+
+					list.add(groupVO);
+				}
+				return list;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group6.tibame104.member.model.*"%>
-<%
-MemberVO memVO = (MemberVO) request.getAttribute("memVO");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +31,9 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 <link href="lib/slick/slick.css" rel="stylesheet" />
 <link href="lib/slick/slick-theme.css" rel="stylesheet" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+
 <!-- Template Stylesheet -->
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/style.css"
@@ -46,11 +46,41 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
+	
+	
+	<style>
+ #forgetPass {
+  position: relative;
+}
+
+#forgetPass.loading::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  animation: spin 0.6s linear infinite;
+}
+
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-	
+
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
             <div class="container-fluid">
@@ -107,7 +137,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img
+						<a href="index.jsp"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
@@ -151,9 +181,7 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	<!-- Breadcrumb End -->
 
 	<!-- register Start -->
-	<form id="msform" METHOD="post"
-		ACTION="<%=request.getContextPath()%>/member/MemberServlet"
-		name="form1">
+	<form id="msform" name="form1">
 
 		<ul id="progressbar">
 			<li class="active">信箱驗證</li>
@@ -162,21 +190,15 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 		</ul>
 		<!-- fieldsets -->
 		<fieldset id="forgetpass1">
-			
+
 			<h1 class="fs-title">請輸入註冊的信箱</h1>
-			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
+			
 			<br /> <input id="mail" type="text" name="mail" placeholder="請輸入信箱" />
-			<input type="hidden" name="action" value="forgetPassword"><input
-				id="forgetPass"  name="next" type="submit"
+
+			<input id="forgetPass" type="button" name="next"
 				class="next action-button" value="驗證" />
+
+
 		</fieldset>
 		<fieldset id="forgetpass2">
 			<h2 class="fs-title">修改完成</h2>
@@ -184,7 +206,10 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 				<br /> <br /> <i class="fa-solid fa-circle-check"></i> <br /> <br />
 				<br />
 			</h2>
-			<h3 class="fs-subtitle text_t1">已使用電子信箱${memVO.mail}</h3>
+			<h3 class="fs-subtitle text_t1">
+				已使用電子信箱
+				<div id="email"></div>
+			</h3>
 			<h3 class="fs-subtitle">寄送新的密碼</h3>
 			<h3 class="fs-subtitle">請點選完成回到登入頁重新登入</h3>
 			<a
@@ -298,19 +323,100 @@ MemberVO memVO = (MemberVO) request.getAttribute("memVO");
 	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
 	<!-- JavaScript Libraries -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/jquery.easing.min.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/front-end/member/js/register.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
-	<script src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/easing/easing.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/member/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/member/js/woody.js"></script>
+
+	<script>
+  // 全域變數
+  var animating = false;
+  var current_fs;
+  var next_fs;
+
+  // 觸發頁面切換的動畫
+  function triggerAnimation() {
+    if (animating) {
+      return false;
+    }
+    animating = true;
+    current_fs = document.querySelector("#forgetpass1");
+    next_fs = document.querySelector("#forgetpass2");
+    document.querySelector("#progressbar li:nth-of-type(2)").classList.add("active");
+    next_fs.style.display = "block";
+
+    current_fs.animate(
+    		{ opacity: 0 },
+    		{
+    		step: function(b, a) {
+    		scale = 1 - (1 - b) * 0.2;
+    		left = b * 50 + "%";
+    		opacity = 1 - b;
+    		current_fs.style.transform = "scale(" + scale + ")";
+    		next_fs.style.left = left;
+    		next_fs.style.opacity = opacity;
+    		},
+    		duration: 800,
+    		complete: function() {
+    		current_fs.style.display = "none";
+    		animating = false;
+    		},
+    		easing: "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+    		}
+    		);
+
+
+
+  }
+
+  // 當按下驗證按鈕時
+ 
+
+   $("#forgetPass").click(function() {
+  $.ajax({
+    url: "${pageContext.request.contextPath}/front-end/member/forgetPassword", // 資料請求的網址
+    type: "POST", // GET | POST | PUT | DELETE | PATCH
+    data: $("#msform").serialize(),
+    dataType: "json", // 預期會接收到回傳資料的格式： json | xml | html
+    beforeSend: function() {
+      // 顯示讀取中的動畫
+      $("#forgetPass").addClass("loading");
+      // 禁用按鈕
+      $("#forgetPass").attr("disabled", true);
+    },
+    success: function(data) {
+      if ("errorMsg" in data) {
+        alert(data.errorMsg); // 顯示訊息	 
+      } else {
+        $("#email").text(data.succsess);
+       /*  alert("修改成功！");  */
+        triggerAnimation(); // 觸發頁面切換的動畫
+      }
+    },
+    complete: function() {
+      // 隱藏讀取中的動畫
+      $("#forgetPass").removeClass("loading");
+      // 啟用按鈕
+      $("#forgetPass").attr("disabled", false);
+    }
+  });
+});
+
+	</script>
 </body>
 </html>

@@ -290,7 +290,7 @@
 							href="${pageContext.request.contextPath}/back-end/groupdiscount/addGroupDiscount.jsp">新增折扣</a>
 					</div>
 					<div class="table-responsive">
-					            <input class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()">
+					            <input type="text" class="form-control border-1" id="reserve_search" type="search" placeholder="輸入欲查詢的團購編號" onkeyup="searchFunction()">
 						<br>
 						<div class="card card-primary">
 							<table
@@ -307,33 +307,31 @@
 									</tr>
 								</thead>
 								<tbody>
-								<jsp:useBean id="groupdiscountSvc" scope="page" class="com.group6.tibame104.groupdiscount.model.GroupdiscountService"></jsp:useBean>
-									<c:forEach var="groupdiscountVO" items="${groupdiscountSvc.all}">
+								
+									<c:forEach var="groupdiscountVOs" items="${groupdiscountVOs}">
 
 										<tr>
-											<td>${groupdiscountVO.countTableID}</td>
-											<td>${groupdiscountVO.groupBuyID}</td>
-											<td>${groupdiscountVO.groupBuyProductOrderTotal}</td>
-											<td>${groupdiscountVO.groupBuyCount}</td>
-
-
-											<td>
-												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/groupdiscount/Groupdiscount.do"
+											<td>${groupdiscountVOs.countTableID}</td>
+											<FORM METHOD="post"
+													ACTION="${pageContext.request.contextPath}/Groupdiscount/update"
 													style="margin-bottom: 0px;">
+											<td><input type="text" name="groupBuyID" value="${groupdiscountVOs.groupBuyID}"></td>
+											<td><input type="text" name="groupBuyProductOrderTotal" value="${groupdiscountVOs.groupBuyProductOrderTotal}"></td>
+											<td><input type="text" name="groupBuyCount" value="${groupdiscountVOs.groupBuyCount}"></td>
+											<td>
+												
 													<input type="submit" class="btn sym-darkpurple sym-yellow-font btn_style" value="修改"> <input
 														type="hidden" name="countTableID"
-														value="${groupdiscountVO.countTableID}"> <input
-														type="hidden" name="action"  value="getOne_For_Update">
+														value="${groupdiscountVOs.countTableID}"> 
 												</FORM>
 											</td>
 											<td>
 												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/groupdiscount/Groupdiscount.do"
+													ACTION="${pageContext.request.contextPath}/Groupdiscount/delete"
 													style="margin-bottom: 0px;">
 													<input type="submit" class="btn sym-darkpurple sym-yellow-font btn_style" value="刪除" > <input
 														type="hidden" name="countTableID"
-														value="${groupdiscountVO.countTableID}"> <input
+														value="${groupdiscountVOs.countTableID}"> <input
 														type="hidden" name="action" value="delete">
 												</FORM>
 											</td>
@@ -405,6 +403,8 @@
 		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/admin.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/back-end/groupdiscount/js/search.js"></script>
+		
+		
 </body>
 
 </html>

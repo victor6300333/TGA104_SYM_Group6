@@ -48,6 +48,8 @@ th, td {
 }
 </style>
 
+ <link rel="stylesheet" href="./css/review.css" />
+
 </head>
 <body bgcolor='white'>
 
@@ -90,14 +92,30 @@ th, td {
 
 
 
-
+<div class="star-mark">
+      <span>評價</span>
+      <ul class="star">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div class="result">
+        <span class="mark"></span><span class="detail"></span>
+      </div>
+      <div class="help-info">
+        <span class="mark"></span>&nbsp;<span class="decri"></span><br />
+        <span class="detail"></span>
+      </div>
+    </div>
 	<FORM METHOD="post" ACTION="OrderlistServlet" >
+	
+    
+    <script src="./js/review.js"></script>
+    <script src="./vendors/jquery/jquery-3.4.1.min.js"></script>
+    
 		<table>
-
-			<tr>
-				<td>買家評價:</td>
-				<td><input type="TEXT" name="buyerReview" size="45" /></td>
-			</tr>
 			<tr>
 				<td>買家評論:</td>
 				<td><input type="TEXT" name="buyerComment" size="45" /></td>
@@ -107,10 +125,11 @@ th, td {
 	
 
 	<input type="hidden" name="orderDetailID" value="<%=order.getOrderDetailID()%>" size="45" />
+    <input type="hidden" name="buyerReview" id="buyerComment" value="" />
 	<input type="hidden" name="comment" value="<%=index%>" size="45" />
 	
 	
-	
+
 	<input type="hidden" name="action" value="update"> 
 	<input type="submit" value="送出新增">
 	</FORM>
@@ -123,6 +142,10 @@ th, td {
 		<form name="checkoutForm" action="Shopping.html" method="POST">
 			
 		</form>
+		
+		<script>
+			
+		</script>
 		
 </body>
 
