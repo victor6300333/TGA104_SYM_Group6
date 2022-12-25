@@ -65,10 +65,15 @@
 					<div class="navbar-nav mr-auto">
 						<a href="index.html" class="nav-item nav-link">首頁</a> <a
 							href="product-list.html" class="nav-item nav-link">我的賣場</a>
-
+						
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
-
+							
+<!-- 公告 -->
+<div class=" marquee text-white"  style="width: 900px">
+          <marquee bgcolor="gray" hspace="30" scrollamount="8"><strong>最新消息：${announcementVO.announcementContent}</strong>
+			</marquee>
+</div>
 
 						</div>
 					</div>

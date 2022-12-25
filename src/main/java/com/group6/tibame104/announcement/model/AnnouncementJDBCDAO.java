@@ -32,7 +32,10 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	private static final String GetByShowStatus = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementSerialID=?";
 	// 查詢全部公告
 	private static final String GetAll = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement ORDER BY announcementSerialID";
-
+	// 查詢上架中的最新消息
+	private static final String GetIndexNews = "SELECT announcementContent FROM announcement WHERE (offLoadStatus=0 and showStatus=0)";
+	// 依照公告Title做查詢
+	private static final String GetShopNews = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementTitle=?";
 	@Override
 	public void insert(AnnouncementVO announcementVO) {
 		try (Connection con = dataSource.getConnection();
