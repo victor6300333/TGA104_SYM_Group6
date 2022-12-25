@@ -177,8 +177,7 @@ public class ShopServlet extends HttpServlet {
 				list.setQuantity(quantity);
 				list.setSubTotal(price*quantity);
 				list.setUserAccount(userAccount);
-				list.setBuyerReview(0);
-				list.setShopReview(0);
+
 
 				orderlist.add(list);
 		

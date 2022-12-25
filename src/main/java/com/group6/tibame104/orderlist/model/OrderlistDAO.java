@@ -18,8 +18,8 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	private DataSource dataSource;
 	
 	private static final String INSERT_STMT = "INSERT INTO orderDetail (orderID, productID, productName, userAccount, orderDate,"
-			+ "			quantity ,price ,subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic)"
-			+ "			VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?,?, ?, ?)";
+			+ "			quantity ,price ,subTotal, shopComment, buyerComment, buyerCommentPic)"
+			+ "			VALUES (?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ONE_STMT = 
 		"SELECT orderDetailID, orderID, productID, productName, userAccount, orderDate, quantity ,price ,"
 		     + "subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic"
@@ -89,11 +89,11 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			pstmt.setInt(5, orderlistVO.getQuantity());
 			pstmt.setInt(6, orderlistVO.getPrice());
 			pstmt.setInt(7, orderlistVO.getSubTotal());
-			pstmt.setInt(8, orderlistVO.getShopReview());
-			pstmt.setString(9, orderlistVO.getShopComment());
-			pstmt.setInt(10, orderlistVO.getBuyerReview());
-			pstmt.setString(11, orderlistVO.getBuyerComment());
-			pstmt.setBytes(12, orderlistVO.getBuyerCommentPic());
+			
+			pstmt.setString(8, orderlistVO.getShopComment());
+			
+			pstmt.setString(9, orderlistVO.getBuyerComment());
+			pstmt.setBytes(10, orderlistVO.getBuyerCommentPic());
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
