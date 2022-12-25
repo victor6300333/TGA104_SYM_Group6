@@ -46,23 +46,6 @@
 </head>
 
 <body>
-	<!-- Top bar Start -->
-	<!-- <div class="top-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <i class="fa fa-envelope"></i>
-                        support@email.com
-                    </div>
-                    <div class="col-sm-6">
-                        <i class="fa fa-phone-alt"></i>
-                        +012-345-6789
-                    </div>
-                </div>
-            </div>
-        </div> -->
-	<!-- Top bar End -->
-
 	<!-- Nav Bar Start -->
 	<div class="nav">
 		<div class="container-fluid">
@@ -131,20 +114,8 @@
 	</div>
 	<!-- Bottom Bar End -->
 
-	<!-- Breadcrumb Start -->
-	<!-- <div class="breadcrumb-wrap">
-      <div class="container-fluid">
-        <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">Products</a></li>
-          <li class="breadcrumb-item active">Login & Register</li>
-        </ul>
-      </div>
-    </div> -->
-	<!-- Breadcrumb End -->
-
 	<!-- Login Start -->
-	<div class="login">
+	<div class="login" role="tabpanel">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg">
@@ -247,7 +218,7 @@
 											class="col-6 p-1 align-self-center d-flex justify-content-center">
 											<img class="rounded-circle user_img"
 												src="${pageContext.request.contextPath}/front-end/member/img/account.jpg"
-												alt="" style="width: 200px; height: 200px" />
+												alt="" style="width: 200px; height: 200px; object-fit: cover" />
 										</div>
 										<div class="w-100"></div>
 										<br />
@@ -295,20 +266,7 @@
 					</div>
 				</div>
 
-				<!-- <div class="col-lg-3 col-md-6">
-              <div class="footer-widget">
-                <h2>Follow Us</h2>
-                <div class="contact-info">
-                  <div class="social">
-                    <a href=""><i class="fab fa-twitter"></i></a>
-                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                    <a href=""><i class="fab fa-instagram"></i></a>
-                    <a href=""><i class="fab fa-youtube"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+			
 
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-widget">
@@ -321,23 +279,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- <div class="row payment align-items-center">
-            <div class="col-md-6">
-              <div class="payment-method">
-                <h2>We Accept:</h2>
-                <img src="img/payment-method.png" alt="Payment Method" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="payment-security">
-                <h2>Secured By:</h2>
-                <img src="img/godaddy.svg" alt="Payment Security" />
-                <img src="img/norton.svg" alt="Payment Security" />
-                <img src="img/ssl.svg" alt="Payment Security" />
-              </div>
-            </div>
-          </div> -->
 		</div>
 	</div>
 	<!-- Footer End -->
