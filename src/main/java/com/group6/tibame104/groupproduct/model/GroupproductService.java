@@ -1,6 +1,9 @@
 package com.group6.tibame104.groupproduct.model;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +56,35 @@ public class GroupproductService {
 
 	public void deleteGroupproduct(Integer groupBuyProductID) {
 		dao.delete(groupBuyProductID);
+	}
+	
+	
+	public List<GroupproductVO> getAllBySearch(Map<String, String> queryString){
+		
+		StringBuilder sb = new StringBuilder();
+		Iterator<Entry<String, String>> it = queryString.entrySet().iterator();
+		int i = 0;
+		if (it.hasNext()) {
+			sb.append(" where ");
+		}
+		while (it.hasNext()) {
+			Entry<String, String> next = it.next();
+			if (i > 0) {
+				sb.append(" and ");
+			}
+			if ("groupbuyProductID".equals(next.getKey())) {
+				sb.append(next.getKey() + " = " + next.getValue());
+			} else if ("groupbuyProductPrice".equals(next.getKey())) {
+				sb.append(next.getKey() + " = " + next.getValue());
+			} else if ("groupbuyProductDescrip".equals(next.getKey())) {
+				sb.append(next.getKey()  + " like " + next.getValue());
+			} 
+			i++;
+		}
+//		System.out.println("sb = " + sb);
+		
+		
+		return dao.getAllBySearch(sb.toString());
 	}
 
 }

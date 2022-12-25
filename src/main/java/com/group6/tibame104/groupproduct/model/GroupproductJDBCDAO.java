@@ -133,6 +133,33 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 		}
 		return null;
 			}
+	
+	public List<GroupproductVO> getAllBySearch(String queryString) {
+
+		try(
+			Connection con = dataSource.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(GET_ALL_STMT + queryString);
+			){
+			
+			try(ResultSet rs = pstmt.executeQuery()){
+				List<GroupproductVO> list = new ArrayList<GroupproductVO>();
+				while (rs.next()) {
+					GroupproductVO groupproductVO = new GroupproductVO();
+					
+					groupproductVO.setGroupBuyProductID(rs.getInt("groupBuyProductID"));
+					groupproductVO.setGroupBuyProductPrice(rs.getInt("groupBuyProductPrice"));
+					groupproductVO.setGroupBuyProductPicture(rs.getBytes("groupBuyProductPicture"));
+					groupproductVO.setGroupBuyProductDescrip(rs.getString("groupBuyProductDescrip"));
+					
+					list.add(groupproductVO); 
+				}
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();;
+		}
+		return null;
+			}
 //	public static void main(String[] args) {
 ////		單一查詢
 //		GroupproductJDBCDAO dao = new GroupproductJDBCDAO();
