@@ -416,7 +416,7 @@
 																			name="announcementSerialID"
 																			value="${announcementVO.announcementSerialID}">
 																	</FORM>
-																	</td>
+																	
 																	<td>
 																		<FORM METHOD="post"
 																			ACTION="${pageContext.request.contextPath}/Announcement/delete"
