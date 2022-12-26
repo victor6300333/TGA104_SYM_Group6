@@ -303,8 +303,7 @@ public class MemberController {
 		jedis.close();
 
 		/*************************** 2.開始新增資料 ***************************************/
-		session.setAttribute("memVO",
-				memVO);/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+		session.setAttribute("memVO", memVO);
 
 		return "/front-end/member/register";
 
@@ -502,11 +501,9 @@ public class MemberController {
 				List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 				session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
 				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
-//				System.out.println(memVO);
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
-					session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-					return location;
+					return "forward:" + location;
 				}
 			} catch (Exception ignored) {
 			}
