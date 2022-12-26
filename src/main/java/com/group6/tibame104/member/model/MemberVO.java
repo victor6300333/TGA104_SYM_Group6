@@ -4,22 +4,48 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "member")
 public class MemberVO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "memberID")
 	private Integer memberID;
+	@Column(name = "userAccount")
 	private String userAccount;
+	@Column(name = "userPassword")
 	private String userPassword;
+	@Column(name = "userName")
 	private String userName;
+	@Column(name = "phone")
 	private String phone;
+	@Column(name = "mail")
 	private String mail;
+	@Column(name = "gender")
 	private String gender;
+	@Column(name = "birthday", columnDefinition = "date")
 	private Date birthday;
+	@Column(name = "userPhoto", columnDefinition = "longblob")
 	private byte[] userPhoto;
+	@Column(name = "registrationTime", columnDefinition = "datetime")
 	private Timestamp registrationTime;
+	@Column(name = "mailCertification")
 	private Boolean mailCertification;
+	@Column(name = "idNumber")
 	private String idNumber;
+	@Column(name = "address")
 	private String address;
+	@Column(name = "sellerAuditApprovalState")
 	private Boolean sellerAuditApprovalState;
+	@Column(name = "currentShoppingCoin")
 	private Integer currentShoppingCoin;
 
 	public Integer getMemberID() {
