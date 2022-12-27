@@ -389,6 +389,15 @@ public class MemberController {
 			errorMsgs.add("請輸入正確的身分證字號");
 		}
 
+//		java.sql.Date birthday1 = null;
+//
+//		try {
+//			birthday1 = java.sql.Date.valueOf(birthday);
+//		} catch (Exception e) {
+//			birthday1 = null;
+//			errorMsgs.add("請選擇生日！");
+//		}
+
 		Boolean sellerAuditApprovalState = false;
 
 		Integer currentShoppingCoin = 0;
