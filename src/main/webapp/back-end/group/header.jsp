@@ -43,7 +43,8 @@
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/back-end/group/css/style.css"
+<link
+	href="${pageContext.request.contextPath}/back-end/group/css/style.css"
 	rel="stylesheet" />
 
 <!--Admin-->
@@ -96,7 +97,9 @@
 							data-bs-toggle="dropdown"><i
 							class="fa fa-tachometer-alt me-2"></i>公告管理</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="./announcement.html" class="dropdown-item">公告消息管理</a>
+							<a
+								href="${pageContext.request.contextPath}/Announcement/getAll"
+								class="dropdown-item">公告消息管理</a>
 						</div>
 					</div>
 
@@ -132,12 +135,13 @@
 						<div class="dropdown-menu bg-transparent border-0">
 							<a
 								href="${pageContext.request.contextPath}/back-end/grouporder/getAll"
-								class="dropdown-item">團購訂單管理</a>
-								<a
+								class="dropdown-item">團購訂單管理</a> <a
 								href="${pageContext.request.contextPath}/front-end/group/getAll"
-								class="dropdown-item">團購管理</a>
-								 <a href="${pageContext.request.contextPath}/back-end/groupproduct/getAll" class="dropdown-item">團購商品管理</a>
-								 <a href="#" class="dropdown-item">折扣管理</a>
+								class="dropdown-item">團購管理</a> <a
+								href="${pageContext.request.contextPath}/back-end/groupproduct/getAll"
+								class="dropdown-item">團購商品管理</a> <a
+								href="${pageContext.request.contextPath}/Groupdiscount/getAll"
+								class="dropdown-item">折扣管理</a>
 						</div>
 					</div>
 
@@ -176,8 +180,9 @@
 							class="dropdown-menu dropdown-menu-end border-0 rounded-0 rounded-bottom m-0">
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg" alt=""
-										style="width: 40px; height: 40px" />
+									<img class="rounded-circle"
+										src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg"
+										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
 										<small>15 minutes ago</small>
@@ -187,8 +192,9 @@
 							<hr class="dropdown-divider" />
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg" alt=""
-										style="width: 40px; height: 40px" />
+									<img class="rounded-circle"
+										src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg"
+										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
 										<small>15 minutes ago</small>
@@ -198,8 +204,9 @@
 							<hr class="dropdown-divider" />
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg" alt=""
-										style="width: 40px; height: 40px" />
+									<img class="rounded-circle"
+										src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg"
+										alt="" style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
 										<small>15 minutes ago</small>
@@ -238,8 +245,9 @@
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"> <img
-							class="rounded-circle me-lg-2" src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg" alt=""
-							style="width: 40px; height: 40px" /> <span
+							class="rounded-circle me-lg-2"
+							src="${pageContext.request.contextPath}/back-end/groupproduct/img/logoSYM3.jpg"
+							alt="" style="width: 40px; height: 40px" /> <span
 							class="d-none d-lg-inline-flex">歡迎您~ Admin</span>
 						</a>
 						<div

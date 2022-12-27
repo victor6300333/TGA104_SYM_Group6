@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.group6.tibame104.group.model.GroupService;
+import com.group6.tibame104.group.model.GroupVO;
+import com.group6.tibame104.groupdiscount.model.GroupdiscountService;
+import com.group6.tibame104.groupdiscount.model.GroupdiscountVO;
 import com.group6.tibame104.groupproduct.model.GroupproductService;
 import com.group6.tibame104.groupproduct.model.GroupproductVO;
 
@@ -36,6 +41,10 @@ import redis.clients.jedis.Jedis;
 public class GroupproductController {
 	 @Autowired
 	    private GroupproductService groupproductSvc;
+	 @Autowired
+	    private GroupService groupSvc;
+	 @Autowired
+	    private GroupdiscountService GroupdiscountSvc;
 	 @GetMapping("getAll")
 	 public String getAll(
 			 Model model
@@ -224,7 +233,7 @@ public class GroupproductController {
 	 }
 	 @PostMapping("/GroupproductSearch")
 		public void GroupproductSearch(
-				Model Model,
+				Model model,
 				HttpServletRequest req, 
 				HttpServletResponse res,
 //				@RequestParam("groupbuyProductID") String groupbuyProductID1,
@@ -266,6 +275,28 @@ public class GroupproductController {
 //			System.out.println("queryString = " + queryString);
 
 			List<GroupproductVO> allByCond = groupproductSvc.getAllBySearch(queryString);
+//			List<GroupVO> groupVOs = groupSvc.getAll();
+//			List<List> test = new ArrayList<List>();
+//			for(int i = 0 ; i < allByCond.size() ; i++) {
+//				for(int j = 0 ; j < groupVOs.size() ; j++) {
+//				if(allByCond.get(i).getGroupBuyProductID() == groupVOs.get(j).getGroupBuyProductID()) {
+//					System.out.print(allByCond.get(i));
+//					System.out.println(groupVOs.get(j));
+//					test.add();
+//					test.add();
+//				}
+//				
+//				}
+//				
+//			}
+			
+			
+//			List<GroupdiscountVO> groupdiscountVOs = GroupdiscountSvc.getAll();
+//			test.add(allByCond);
+//			test.add(groupVOs);
+//			test.add(groupdiscountVOs);
+			
+			 
 			String json = gson.toJson(allByCond);
 			writer.write(json);
 
