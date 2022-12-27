@@ -243,11 +243,11 @@
 													<b>選擇訂單狀態:</b> <select name="status"
 														style="width: 80px; height: 25px">
 
-														<option value="0">全部</option>
-														<option value="1">待付款</option>
-														<option value="2">待出貨</option>
-														<option value="3">已出貨</option>
-														<option value="4">已取貨</option>
+														<option value="-1">全部</option>
+														<option value="0">待付款</option>
+														<option value="1">待出貨</option>
+														<option value="2">已出貨</option>													
+														<option value="3">訂單完成</option>
 
 													</select> <br> <br> 
 													<input type="hidden" name="memberID" value="${memVO.memberID}"> 

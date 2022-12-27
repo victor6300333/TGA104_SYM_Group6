@@ -143,7 +143,7 @@
 	
 		<tr id="my-car-tr<%=index + 1 + count%>"   >
 			<td width="140"><%=order.getName()%></td>
-			<td width="140"><img src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
+			<td width="140"><img src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
 								style="width: 140px; height: 120px" alt="Product Image"></td>
 			<td width="135"><%=order.getPrice()%></td>
 		

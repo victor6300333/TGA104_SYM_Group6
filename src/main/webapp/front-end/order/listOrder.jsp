@@ -59,11 +59,14 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
 	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/order/css/bar.css"
+	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body translate="no">
 	<!-- Top bar Start -->
 	<!-- <div class="top-bar">
       <div class="container-fluid">
@@ -207,46 +210,45 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 
 							<table class="table table-bordered">
-									<thead class="thead-dark">
-										<ul>
-											<li>
-												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
-													<b>輸入訂單編號: </b> <input type="text" name="orderID"
-														style="width: 100px; height: 25px"> 
-													<input type="submit" value="送出">
-												</FORM>
-												<br><br>
-											</li>
-											<li>
-												<FORM METHOD="post"
-													ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
+								<thead class="thead-dark">
+									<ul>
+										<li>
+											<FORM METHOD="post"
+												ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
+												<b>輸入訂單編號: </b> <input type="text" name="orderID"
+													style="width: 100px; height: 25px"> <input
+													type="submit" value="送出">
+											</FORM> <br>
+										<br>
+										</li>
+										<li>
+											<FORM METHOD="post"
+												ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
 
-													<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
-														type="text" style="width: 100px; height: 25px"> <b>至</b>
-													<input name="todate" id="f_date2" type="text"
-														style="width: 100px; height: 25px"> <br> <br>
-													<b>選擇訂單狀態:</b> <select name="status"
-														style="width: 80px; height: 25px">
+												<b>輸入訂單日期:</b> <input name="fromdate" id="f_date1"
+													type="text" style="width: 100px; height: 25px"> <b>至</b>
+												<input name="todate" id="f_date2" type="text"
+													style="width: 100px; height: 25px"> <br> <br>
+												<b>選擇訂單狀態:</b> <select name="status"
+													style="width: 80px; height: 25px">
 
-														<option value="0">全部</option>
-														<option value="1">待付款</option>
-														<option value="2">待出貨</option>
-														<option value="3">已出貨</option>
-														<option value="4">已取貨</option>
+													<option value="-1">全部</option>
+													<option value="0">待付款</option>
+													<option value="1">待出貨</option>
+													<option value="2">已出貨</option>
+													<option value="3">訂單完成</option>
 
-													</select> <br> <br> 
-													<input type="hidden" name="memberID" value="${memVO.memberID}"> 
-													
-													<input type="submit" value="送出">
-												</FORM>
+												</select> <br> <br> <input type="hidden" name="memberID"
+													value="${memVO.memberID}"> <input type="submit"
+													value="送出">
+											</FORM>
 
 
-											</li>
-										</ul>
-									</thead>
-								</table>
-							
+										</li>
+									</ul>
+								</thead>
+							</table>
+
 							<%
 							Set<OrderVO> set = map_list.keySet();
 							Iterator<OrderVO> it = set.iterator();
@@ -255,31 +257,31 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 								List<OrderlistVO> list = map_list.get(orderVO);
 							%>
 
-							<p>
+							<b>
 								訂單日期:<%=orderVO.getOrderDate().toString().substring(0, 19)%>
 								&emsp;&emsp;&emsp;&emsp;賣場:<%=orderVO.getStoreName()%>
-								&emsp;&emsp;&emsp;&emsp;訂單狀態:<%=orderVO.getOrderStatus()%>
-							</p>
+							</b>
+							<br><br>
 
 
 
-							<table id="table-1" class="table" style="vertical-align:middle;">
+							<table id="table-1" class="table" border="0" >
 
 								<tr>
-									<td width="155">商品名稱</td>
-									<td width="155">商品圖片</td>
-									<td width="125">價格</td>
+									<th width="155">商品名稱</th>
+									<th width="155">商品圖片</th>
+									<th width="125">價格</th>
 
-									<td width="105">數量</td>
-									<td width="130">小計</td>
-									<td width="130">評價</td>
+									<th width="105">數量</th>
+									<th width="130">小計</th>
+									<th width="130">評價</th>
 
 								</tr>
 
 								<c:forEach var="orderlistVO" items="<%=list%>">
 
-									<tr >
-										<td  width="155">${orderlistVO.productName}</td>
+									<tr>
+										<td width="155">${orderlistVO.productName}</td>
 										<td width="155"><img
 											src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
 											style="width: 230px; height: 200px" alt="Product Image">
@@ -312,49 +314,50 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 									</tr>
 								</c:forEach>
 							</table>
-							<br> <br> <br>
+							<br>
+							<b>訂單狀態:</b>	
+							<br><br><br>
+							
+							<b>待繳款&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+							   待出貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&emsp;
+							   已出貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
+							   訂單完成
+							   </b>
+							  <br><br>
+
+							<p class="status" style="display:none">
+								<%=orderVO.getOrderStatus()%>
+							</p>
+							<div class="container">
+								<div class="progress">
+									<div class="percent"></div>
+								</div>
+
+								<div class="steps">
+									<div class="step" id="0"></div>
+									<div class="step" id="1"></div>
+									<div class="step" id="2"></div>
+									<div class="step" id="3"></div>
+
+								</div>
+							</div>
+
+							<br> <br> <br> <br>
+							<hr>
+
+
+							<br> <br> <br> 
 
 							<%
 							}
 							%>
 
-
-
-
-
-
-
-							
-							<!--   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Product Name</td>
-                      <td>01 Jan 2020</td>
-                      <td>$99</td>
-                      <td>Approved</td>
-                      <td><button class="btn">View</button></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Product Name</td>
-                      <td>01 Jan 2020</td>
-                      <td>$99</td>
-                      <td>Approved</td>
-                      <td><button class="btn">View</button></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Product Name</td>
-                      <td>01 Jan 2020</td>
-                      <td>$99</td>
-                      <td>Approved</td>
-                      <td><button class="btn">View</button></td>
-                    </tr>
-                  </tbody> -->
-
-
+<p id="size" style="display:none"><%=map_list.keySet().size() %></p>
 
 						</div>
+
+
+
 					</div>
 
 				</div>
@@ -371,8 +374,8 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 		</div>
 
 	</div>
-	</div>
-	</div>
+
+
 	<!-- My Account End -->
 
 	<!-- Footer Start -->
@@ -459,6 +462,8 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/order/js/bar.js"></script>
 	<script>
 		$.datetimepicker.setLocale('zh');
 		$('#f_date1').datetimepicker({
@@ -484,6 +489,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 		});
 	</script>
+
 </body>
 
 </html>

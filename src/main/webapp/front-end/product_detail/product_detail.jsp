@@ -157,7 +157,7 @@ Integer count_num = (Integer) session.getAttribute("count_num");
                   <span>(0)</span>
                 </a> -->
 
-						<a href="cart.html" class="btn cart"> <i
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
 							class="fa fa-shopping-cart"></i> <span>(<%=(count_num == null) ? "0" : count_num%>)
 						</span>
 						</a>
@@ -349,16 +349,15 @@ cart.addEventListener('click', (event) => {
 
 
 
-											<div class="reviews-submitted">
+											
 												<div class="reviewer">
-													${orderlistVO.userAccount} <span>${orderlistVO.orderDate.toString().substring(0,19)}</span>
+													${orderlistVO.userAccount} &nbsp; <span>${orderlistVO.orderDate.toString().substring(0,19)}</span>
 												</div>
 
-												<div>
+											
 
 
-													<p class="reviewing" style='display: none'>${orderlistVO.buyerReview}
-													</p>
+													<p class="reviewing" style='display: none'>${orderlistVO.buyerReview}</p>
 													<div class="ratting">
 														<i class="fa fa-star" name="fa" style='display: none'></i>
 														<i class="fa fa-star" name="fa" style='display: none'></i>
@@ -366,6 +365,9 @@ cart.addEventListener('click', (event) => {
 														<i class="fa fa-star" name="fa" style='display: none'></i>
 														<i class="fa fa-star" name="fa" style='display: none'></i>
 													</div>
+													<p><img style="width: 200px; height: 160px;"
+											src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.orderDetailID}"
+											alt="Product Image"></p>
 													<p>${orderlistVO.buyerComment}</p>
 													<hr>
 										</c:forEach>
@@ -377,25 +379,25 @@ cart.addEventListener('click', (event) => {
 									document.addEventListener("DOMContentLoaded", function(){
 										
 										for(var i=0 ; i< ${list.size()} ; i++){
-										if(document.getElementsByClassName('reviewing')[i].innerHTML == '1分 '){
+										if(document.getElementsByClassName('reviewing')[i].innerHTML == '1'){
 											document.getElementsByName("fa")[i*5].style.display = 'inline';		
 										}
-										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '2分 '){
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '2'){
 											document.getElementsByName("fa")[i*5].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
 										}
-										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '3分 '){
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '3'){
 											document.getElementsByName("fa")[i*5].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
 										}
-										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '4分 '){
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '4'){
 											document.getElementsByName("fa")[i*5].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+3].style.display = 'inline';	
 										}
-										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '5分 '){
+										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '5'){
 											document.getElementsByName("fa")[i*5].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
 											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	

@@ -211,7 +211,7 @@ public class ShopServlet extends HttpServlet {
 			ordervo.setCreditcardNumber("10");
 			ordervo.setPayType(paytype);
 			ordervo.setReceiver(receiver);
-			ordervo.setOrderStatus(0);
+			ordervo.setOrderStatus(2);
 			ordervo.setPhone(phone);
 			ordervo.setAddress(address);
 			
@@ -252,6 +252,7 @@ public class ShopServlet extends HttpServlet {
 			rd.forward(req, res);
 
 			session.removeAttribute("check");
+			session.removeAttribute("count_num");
 
 //			receiver:input, phone:input, address:input
 //			creditcard:信用卡, atm: atm轉帳, arrive:貨到付款, coupon:85 75, 

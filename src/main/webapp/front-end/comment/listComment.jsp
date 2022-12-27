@@ -258,6 +258,8 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 
 </table>
 
+<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"><font size="+1">  返回會員中心首頁</font></a>
+
 
 							
 							

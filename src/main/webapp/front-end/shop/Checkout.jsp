@@ -124,6 +124,6 @@
 	}
 	%>
 	<p>
-		<a href="EShop.jsp"><font size="+1"> 是 否 繼 續 購 物</font></a>
+		<a href="${pageContext.request.contextPath}/"><font size="+1">  繼 續 購 物</font></a>
 </body>
 </html>
