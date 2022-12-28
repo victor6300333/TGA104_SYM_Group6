@@ -5,13 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.group6.tibame104.product.model.ProductDAO_interface;
 import com.group6.tibame104.product.model.ProductJDBCDAO;
 import com.group6.tibame104.product.model.ProductVO;
 
+@Service
+@Transactional
 public class ProductService implements ProductService_interface {
-
-	private ProductDAO_interface dao = new ProductJDBCDAO();
+	@Autowired
+	private ProductDAO_interface dao;
 
 	@Override
 	public void insert(ProductVO productVO) {

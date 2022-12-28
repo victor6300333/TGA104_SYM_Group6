@@ -47,7 +47,7 @@
 						function() {
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath}/product/productPutOn?productID="
+										url : "${pageContext.request.contextPath}/product/productPutOn/on?productID="
 												+ id, // 資料請求的網址
 										type : "POST", // GET | POST | PUT | DELETE | PATCH
 										// data: 物件資料,             // 將物件資料(不用雙引號) 傳送到指定的 url
@@ -67,7 +67,7 @@
 						function() {
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath}/product/productPutOff?productID="
+										url : "${pageContext.request.contextPath}/product/productPutOff/off?productID="
 												+ id, // 資料請求的網址
 										type : "POST", // GET | POST | PUT | DELETE | PATCH
 										// data: 物件資料,             // 將物件資料(不用雙引號) 傳送到指定的 url
@@ -91,14 +91,15 @@
 	
 	<div style="text-align:center;">
 		<FORM METHOD="post"
-			ACTION="${pageContext.request.contextPath}/product/productServlet"
+			ACTION="${pageContext.request.contextPath}/product/productServlet/update"
 			enctype="multipart/form-data">
 			<div>
 				<h1>修改商品資料<h1>
 			</div>
 			<div>
-				<label>請輸入商品ID : </label> <input type="text" name="productID"
-					class="btn btn-secondary m-2" value="${productVO.productID}" />
+				<label>商品ID : </label> <input type="text" name="productID"
+					class="btn btn-secondary m-2" value="${productVO.productID}" disabled="disabled" />
+					<input type="hidden" name="productID2" value="${productVO.productID}" />
 			</div>
 			<div>
 				<label>商品次分類 : </label> <select class="form-select mb-3"

@@ -2,6 +2,7 @@ package com.group6.tibame104.product.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,24 +14,44 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.google.gson.Gson;
 import com.group6.tibame104.product.model.ProductVO;
 import com.group6.tibame104.product.service.ProductService;
 
-@WebServlet("/product/productSearchProduct")
-public class ProductSearchProduct extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final String saveDirectory = "front-end/images";
+@Controller
+@RequestMapping("/product/productSearchProduct")
+public class ProductSearchProduct {
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
+	@Autowired
+	private ProductService productSvc;
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	@GetMapping("/getAll_By_Cond")
+	public void getAllByCond(Model model,
+			HttpServletResponse response,
+			@RequestParam("storeID") String storeID,
+			@RequestParam("productID") String productIDStr,
+			@RequestParam("productSecID") String productSecIDStr,
+			@RequestParam("productStatus") String productStatus) {
+		
 		List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
-		res.setContentType("text/html; charset=UTF-8");
-		PrintWriter writer = res.getWriter();
+		model.addAttribute("errorMsgs", errorMsgs);		
+
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		/*queryString*/
 		Map<String, String>  queryString = new HashMap<String,String>();
@@ -40,11 +61,11 @@ public class ProductSearchProduct extends HttpServlet {
 		
 		/* 1. 請求參數的格式整理 */
 		
-		queryString.put("storeID", req.getParameter("storeID"));
+		queryString.put("storeID", storeID);
 
 		Integer productID = null;
 		try {
-			productID = Integer.valueOf(req.getParameter("productID").trim());
+			productID = Integer.valueOf(productIDStr.trim());
 			queryString.put("productID", productID+"");
 		} catch (Exception e) {
 			System.out.println("錯誤");
@@ -53,21 +74,20 @@ public class ProductSearchProduct extends HttpServlet {
 
 		Integer productSecID = null;
 		try {
-			productSecID = Integer.valueOf(req.getParameter("productSecID").trim());
+			productSecID = Integer.valueOf(productSecIDStr.trim());
 			queryString.put("productSecID", productSecID+"");
 		} catch (Exception e) {
 			System.out.println("錯誤");
 		}
-
 		
-		queryString.put("productStatus", req.getParameter("productStatus"));
+		queryString.put("productStatus", productStatus);
 
 		
 		/***************************
 		 * 搜尋資料
 		 ***************************************/
 		System.out.println("queryString = " + queryString);
-		List<ProductVO> allByCond = new ProductService().getAllByCondFront(queryString);
+		List<ProductVO> allByCond = productSvc.getAllByCondFront(queryString);
 
 		String json = gson.toJson(allByCond);
 		writer.write(json);

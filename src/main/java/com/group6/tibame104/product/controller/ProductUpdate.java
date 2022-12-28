@@ -1,6 +1,9 @@
 package com.group6.tibame104.product.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,28 +13,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.group6.tibame104.product.model.ProductVO;
 import com.group6.tibame104.product.service.ProductService;
 
-@WebServlet("/product/productUpdate")
-public class ProductUpdate extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final String saveDirectory = "front-end/images";
+@Controller
+@RequestMapping("/product/productUpdate")
+public class ProductUpdate {
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
+	@Autowired
+	private ProductService productSvc;
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	@PostMapping("/getOne_For_Display")
+	public String getOneForDisplay(Model model, HttpServletRequest request, @RequestParam("productID") String str) throws IOException, ServletException {
 		List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
+		model.addAttribute("errorMsgs", errorMsgs);
 
-		System.out.println(req.getReader().readLine());
-        Gson gson = new Gson();
-        ProductVO fromJson = gson.fromJson(req.getReader(), ProductVO.class);
-		System.out.println(fromJson);
+		Gson gson = new Gson();
+		ProductVO fromJson = gson.fromJson(request.getReader(), ProductVO.class);
+
 		/* 1. 隢����撘��� */
 		Integer productID = null;
 		try {
@@ -85,7 +94,6 @@ public class ProductUpdate extends HttpServlet {
 			errorMsgs.add("��: 隢蝛箇");
 		}
 
-
 		Boolean productStatus = fromJson.getProductStatus();
 
 		if (new Integer(1).equals(productStatus)) {
@@ -94,27 +102,18 @@ public class ProductUpdate extends HttpServlet {
 			productStatus = false;
 		}
 
-		/* ����1 */
-		/* getServletContext().getRealPath("front-end/images") */
-		String realPath = getServletContext().getRealPath(saveDirectory);
-//		System.out.println("realPath=" + realPath);
-//		File fsaveDirectory = new File(realPath);
-//		if (!fsaveDirectory.exists())
-//			fsaveDirectory.mkdirs();
-//
-//		Collection<Part> parts = req.getParts();
-//
-//		List<String> pList = new ArrayList<String>();
-//		List<byte[]> bList = new ArrayList<byte[]>();
-//		for (Part part : parts) {
-//			String filename = part.getSubmittedFileName();
-//			if (filename != null && filename.length() != 0 && part.getContentType() != null) {
-//				InputStream inputStream = part.getInputStream();
-//				pList.add(part.getName());
-//				bList.add(inputStream.readAllBytes());
-//			}
-//		}
+		Collection<Part> parts = request.getParts();
 
+		List<String> pList = new ArrayList<String>();
+		List<byte[]> bList = new ArrayList<byte[]>();
+		for (Part part : parts) {
+			String filename = part.getSubmittedFileName();
+			if (filename != null && filename.length() != 0 && part.getContentType() != null) {
+				InputStream inputStream = part.getInputStream();
+				pList.add(part.getName());
+				bList.add(inputStream.readAllBytes());
+			}
+		}
 		/* ����2 */
 		ProductVO productVO = new ProductVO();
 		productVO.setProductID(productID);
@@ -124,15 +123,17 @@ public class ProductUpdate extends HttpServlet {
 		productVO.setProductPrice(productPrice);
 		productVO.setProductDesc(productDesc);
 		productVO.setSource(source);
-//		if (pList.contains("upfile1")) {
-//			productVO.setProductImg(bList.get(pList.indexOf("upfile1")));
-//		}
-//		if (pList.contains("upfile2")) {
-//			productVO.setProductImg2(bList.get(pList.indexOf("upfile2")));
-//		}
-//		if (pList.contains("upfile3")) {
-//			productVO.setProductImg3(bList.get(pList.indexOf("upfile3")));
-//		}
+
+		if (pList.contains("upfile1")) {
+			productVO.setProductImg(bList.get(pList.indexOf("upfile1")));
+		}
+		if (pList.contains("upfile2")) {
+			productVO.setProductImg2(bList.get(pList.indexOf("upfile2")));
+		}
+		if (pList.contains("upfile3")) {
+			productVO.setProductImg3(bList.get(pList.indexOf("upfile3")));
+		}
+
 		productVO.setProductStatus(productStatus);
 		productVO.setCommentTotal(0);
 		productVO.setCommentAvgStar(0.0);
@@ -142,27 +143,20 @@ public class ProductUpdate extends HttpServlet {
 		 * 憒�� 頧 addProduct ��
 		 */
 		if (!errorMsgs.isEmpty()) {
-			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
-			try {
-				failureView.forward(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
+			return "front-end/product/addProduct";
 		}
 
 		/***************************
-		 * 2.靽格鞈��
+		 * 2.修改資料
 		 ***************************************/
-		new ProductService().update(productVO);
+		productSvc.update(productVO);
 
 		/*
-		 * 撠�� listOneProduct��
+		 * 導向 myStore頁面
 		 */
-		req.setAttribute("productVO", productVO);
-		String url = "/front-end/product/updateProduct.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
+
+		model.addAttribute("productVO", productVO);
+		return "front-end/product/updateProduct";
 
 	}
 
