@@ -2,6 +2,8 @@ package com.group6.tibame104.product.controller;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -11,42 +13,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.group6.tibame104.product.model.ProductVO;
 import com.group6.tibame104.product.service.ProductService;
 
-@WebServlet("/product/productGetOne")
-public class ProductGetOne extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/product/productGetOne")
+public class ProductGetOne {
+	
+	@Autowired
+	private ProductService productSvc;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	@GetMapping("/get")
+	public String update(Model model, HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("productID") String productIDStr) {
+			
+		
 		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-		req.setAttribute("errorMsgs", errorMsgs);
+		model.addAttribute("errorMsgs", errorMsgs);
 
-		String str = req.getParameter("productID");
-		if (str == null || (str.trim()).length() == 0) {
+		if (productIDStr == null || (productIDStr.trim()).length() == 0) {
 			errorMsgs.put("productID", "請輸入正常的數字");
-		}
-
-		/*
-		 * 如果報錯 轉去 Error 頁面
-		 */
-		if (!errorMsgs.isEmpty()) {
-			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/Error.jsp");
-			try {
-				failureView.forward(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
 		}
 
 		Integer productID = null;
 		try {
-			productID = Integer.valueOf(str);
+			productID = Integer.valueOf(productIDStr);
 		} catch (Exception e) {
 			errorMsgs.put("productID", "請輸入正常的數字");
 		}
@@ -54,27 +54,20 @@ public class ProductGetOne extends HttpServlet {
 		 * 如果報錯 轉去 Error 頁面
 		 */
 		if (!errorMsgs.isEmpty()) {
-			RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/Error.jsp");
-			try {
-				failureView.forward(req, res);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return;
+			return "front-end/store/Error";
 		}
 		/*
 		 * 取得資料
 		 * 
 		 */
-		ProductVO productVO = new ProductService().findByPrimaryKey(productID);
+		ProductVO productVO = productSvc.findByPrimaryKey(productID);
 
 		/* 
 		 * 導向 productUpdate頁面
 		 */
-		req.setAttribute("productVO", productVO);
-		String url = "/front-end/product/updateProduct.jsp";
-		RequestDispatcher successView = req.getRequestDispatcher(url);
-		successView.forward(req, res);
+		model.addAttribute("productVO", productVO);
+		return "front-end/product/updateProduct";
+		
 	}
 
 }

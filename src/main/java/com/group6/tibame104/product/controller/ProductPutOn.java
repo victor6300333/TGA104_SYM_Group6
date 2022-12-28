@@ -9,30 +9,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.google.gson.Gson;
 import com.group6.tibame104.product.service.ProductService;
 
-@WebServlet("/product/productPutOn")
-public class ProductPutOn extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@Controller
+@RequestMapping("/product/productPutOn")
+public class ProductPutOn{
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
+	@Autowired
+	private ProductService productSvc;
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter writer = res.getWriter();
+	@PostMapping("/on")
+	public void update(Model model,
+			HttpServletResponse response,
+			@RequestParam("productID") String productIDStr) throws IOException {
+
+		PrintWriter writer = response.getWriter();
+		
 		Integer productID = null;
 
 		try {
-			productID = Integer.valueOf(req.getParameter("productID").trim());
+			productID = Integer.valueOf(productIDStr.trim());
 		} catch (Exception e) {
 			productID = 0;
 		}
 		Gson gson = new Gson();
-		ProductService productService = new ProductService();
-		writer.write(gson.toJson(productService.putOn(productID)));
-
+		String json = gson.toJson(productSvc.putOn(productID));
+		writer.write(json);
 	}
 
 }

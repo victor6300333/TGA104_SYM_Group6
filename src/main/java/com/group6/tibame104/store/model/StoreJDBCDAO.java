@@ -14,7 +14,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 	String userid = "root";
 	String passwd = "password";
 
-	private static final String GET_ONE_STMT = "SELECT storeID,storeName,storeDelBankCode,storeBankAccount,storeAddress,phoneNumber"
+	private static final String GET_ONE_STMT = "SELECT storeID,storeName,storeDelBankCode,storeBankAccount,storeAddress,phoneNumber,createDate"
 			+ ",taxID,storeAuditStatus FROM store where memberID = ?";
 	private static final String UPDATE = "UPDATE store set memberID=?, storeName=?, storeDelBankCode=?, storeBankAccount=?, storeAddress=?, phoneNumber=?,"
 			+ "updateDate=now(),taxID=? where storeID = ?";
@@ -98,6 +98,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 				storeVO.setStoreBankAccount(rs.getString("storeBankAccount"));
 				storeVO.setStoreAddress(rs.getString("storeAddress"));
 				storeVO.setPhoneNumber(rs.getString("phoneNumber"));
+				storeVO.setCreateDate(rs.getTimestamp("createDate"));
 				storeVO.setTaxID(rs.getString("taxID"));
 				storeVO.setStoreAuditStatus(rs.getInt("storeAuditStatus"));
 			}

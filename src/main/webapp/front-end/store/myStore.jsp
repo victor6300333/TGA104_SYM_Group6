@@ -89,7 +89,7 @@
 						<td>`+data[i].productDesc+`</td>
 						<td>`+data[i].source+`</td>
 						<th>`+status+`</th>
-						<th><a href="${pageContext.request.contextPath}/product/productGetOne?productID=`+data[i].productID+`"><button>修改</button></a></th>
+						<th><a href="${pageContext.request.contextPath}/product/productGetOne/get?productID=`+data[i].productID+`"><button>修改</button></a></th>
 					</tr>
 				`;
 				str = str + templateList;
@@ -107,7 +107,7 @@
 						function() {
 							$
 									.ajax({
-										url : "${pageContext.request.contextPath}/product/productSearchProduct?storeID="
+										url : "${pageContext.request.contextPath}/product/productSearchProduct/getAll_By_Cond?storeID="
 												+$("#searchSID").val()+"&productID="+$("#searchPID").val()
 												+"&productSecID="+$("#searchPSID").val()+"&productStatus="+$("#searchPSTATUS").val(), // 資料請求的網址
 										type : "GET", // GET | POST | PUT | DELETE | PATCH
@@ -266,8 +266,8 @@
 							aria-labelledby="address-nav">
 							<div>
 								請輸入商品ID <input type="text" id="searchPID" name="productID"
-									value="1" /> 請輸入商品次分類ID <input type="text" id="searchPSID"
-									name="productSecID" value="2" /> 請輸入商品狀態: <select
+									value="" /> 請輸入商品次分類ID <input type="text" id="searchPSID"
+									name="productSecID" value="" /> 請輸入商品狀態: <select
 									class="form-select mb-3" aria-label="Default select example"
 									name="productStatus" id="searchPSTATUS">
 									<option selected value="true">已上架</option>
@@ -348,7 +348,7 @@
 							<h4>新增商品</h4>
 							<div class="row">
 								<form
-									action="${pageContext.request.contextPath}/product/productServlet"
+									action="${pageContext.request.contextPath}/product/productServlet/insert"
 									method="post" id="the_form" enctype="multipart/form-data">
 									<div>
 										<label>商品名稱：</label> <input type="text" id="p_name"
