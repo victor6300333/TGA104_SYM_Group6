@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -153,33 +154,41 @@ public class ShopServlet extends HttpServlet {
 			Integer storeID = it.next();
 			List<Product> buylist = check.get(storeID);
 			
-			for (int i = 0; i < buylist.size(); i++) {
-				Product order = buylist.get(i);
-				String name = order.getName();
-				Integer price = order.getPrice();
-				String str = req.getParameter("product"+order.getStoreID()+i);
-				Integer quantity = Integer.parseInt(str);
-				Integer productID = order.getProductID();
-				String userAccount = req.getParameter("userAccount");
+			
+			Map<String, String[]> map = req.getParameterMap();
+			String[] valuelist = map.get("check"+storeID);
+			System.out.println(valuelist[0]);
+			
+			
+			for (int i = 0; i < valuelist.length; i++) {
+				if(valuelist[i].equals("1")) {
+					Product order = buylist.get(i);
+					String name = order.getName();
+					Integer price = order.getPrice();
+					String str = req.getParameter("product"+order.getStoreID()+i);
+					Integer quantity = Integer.parseInt(str);
+					Integer productID = order.getProductID();
+					String userAccount = req.getParameter("userAccount");
 				
-				total += (price * quantity);
+					total += (price * quantity);
 				
 //				double total1 = buylist.stream()
 //								      .mapToDouble(b -> b.getPrice()*b.getQuantity())
 //								      .sum();
 
 				
-				OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
+					OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
 
-				list.setProductID(productID);
-				list.setProductName(name);
-				list.setPrice(price);
-				list.setQuantity(quantity);
-				list.setSubTotal(price*quantity);
-				list.setUserAccount(userAccount);
+					list.setProductID(productID);
+					list.setProductName(name);
+					list.setPrice(price);
+					list.setQuantity(quantity);
+					list.setSubTotal(price*quantity);
+					list.setUserAccount(userAccount);
 
 
-				orderlist.add(list);
+					orderlist.add(list);
+				}
 		
 			 }
 			

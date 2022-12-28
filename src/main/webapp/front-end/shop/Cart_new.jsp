@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.* ,com.group6.tibame104.orderlist.model.Product, com.group6.tibame104.member.model.*"%>
+<%@ page
+	import="java.util.* ,com.group6.tibame104.orderlist.model.Product, com.group6.tibame104.member.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
@@ -49,7 +50,7 @@
 </head>
 
 <body>
-	
+
 	<div class="nav">
 		<div class="container-fluid">
 			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -92,9 +93,9 @@
 	</div>
 	<!-- Nav Bar End -->
 
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/front-end/shop/css/ShoppingCart.css">
-<%
+	<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath()%>/front-end/shop/css/ShoppingCart.css">
+	<%
 	@SuppressWarnings("unchecked")
 
 	Map<Integer, List<Product>> check = (Map<Integer, List<Product>>) session.getAttribute("check");
@@ -108,8 +109,8 @@
 
 
 
-<form id="checkoutForm" action="ShopServlet" method="POST" >
-	<%
+	<form id="checkoutForm" action="ShopServlet" method="POST">
+		<%
 	Set<Integer> set = check.keySet();
 	Iterator<Integer> it = set.iterator();
 	int count =0;
@@ -118,95 +119,107 @@
 	Integer storeID = it.next();
 	List<Product> buylist = check.get(storeID);
 	%>
-	
-<table id="table-1" class="table<%=storeID%>" border="1" >
-	    <tr>
-			<td width="140" colspan="5"  >賣場: <%=buylist.get(0).getStoreName()%></td>
-	
-		</tr>
-		<tr>
-			<td width="155">商品名稱</td>
-			<td width="155">商品圖片</td>
-			<td width="125">價格</td>
-		
-			<td width="105">數量</td>
-			<td width="130">小計</td>
-		
-		</tr>
-</table>
 
-<table class="table<%=storeID%>" >
-	<%
+		<table id="table-1" class="table<%=storeID%>" border="1">
+			<tr>
+				<td width="140" colspan="6"><font size="4">賣場: <%=buylist.get(0).getStoreName()%></font></td>
+
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td ></td>
+			</tr>
+			<tr>
+				<td ></td>
+			</tr>
+			<tr>
+				<td ></td>
+			</tr>
+			<tr>
+				<td width="95">全選<input type="checkbox"
+					id="checktotal<%=storeID%>" /></td>
+				<td width="155">商品名稱</td>
+				<td width="165">商品圖片</td>
+				<td width="125">價格</td>
+
+				<td width="105">數量</td>
+				<td width="130">小計</td>
+
+			</tr>
+		</table>
+
+		<table class="table<%=storeID%>">
+			<%
 	for (int index = 0; index < buylist.size(); index++) {
 		Product order = buylist.get(index);
 	%>
-	
-		<tr id="my-car-tr<%=index + 1 + count%>"   >
-			<td width="140"><%=order.getName()%></td>
-			<td width="140"><img src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
-								style="width: 140px; height: 120px" alt="Product Image"></td>
-			<td width="135"><%=order.getPrice()%></td>
-		
 
-			<td id="minus" >
-				<input id="minus1" type="button" onclick="minuser<%=index + 1 + count%>()" value="-"
-               style="width:25px;height:29px;"/>
-			</td>
-			
-			<td id="<%=index + 1 + count%>" width="30"><%=order.getQuantity()%></td>
-			<input type="hidden" id="product<%=order.getStoreName() %><%=index%>"  name="product<%=order.getStoreID() %><%=index%>"  value = "<%=order.getQuantity()%>" />
-			
-			<td id="plus" > 
-			    <input id="plus1" type="button" onclick="adder<%=index + 1 + count%>()" value="+" 
-			    style="width:25px;height:29px;" />
-			</td>
-
-			<td class="my-car-td<%=storeID%>" width="130" align="center" valign="middle" 
-				id="<%=-index - 1 - count%>"><%=order.getPrice() * order.getQuantity()%></td>
-		</tr>
-	
+			<tr id="my-car-tr<%=1 + count%>">
+				<td width="125"><input type="checkbox" name="check<%=storeID%>" value='0'/></td>
+				<td width="160"><%=order.getName()%></td>
+				<td width="120"><img
+					src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
+					style="width: 140px; height: 120px" alt="Product Image"></td>
+				<td width="135"><%=order.getPrice()%></td>
 
 
-	<script src="./jquery/jquery-3.6.1.min.js"></script>
-	<script>
+				<td id="minus"><input id="minus1" type="button"
+					onclick="minuser<%=1 + count%>()" value="-"
+					style="width: 25px; height: 29px;" /></td>
+
+				<td id="<%=1 + count%>" width="30"><%=order.getQuantity()%></td>
+				<input type="hidden"
+					id="product<%=order.getStoreName() %><%=index%>"
+					name="product<%=order.getStoreID() %><%=index%>"
+					value="<%=order.getQuantity()%>" />
+
+				<td id="plus"><input id="plus1" type="button"
+					onclick="adder<%=1 + count%>()" value="+"
+					style="width: 25px; height: 29px;" /></td>
+
+				<td class="my-car-td<%=storeID%>" width="130" align="center"
+					valign="middle" id="<%=- 1 - count%>"><%=order.getPrice() * order.getQuantity()%></td>
+			</tr>
+
+
+
+			<script src="./jquery/jquery-3.6.1.min.js"></script>
+			<script>
 	   
 		
-		function adder<%=index + 1 + count%>() {
-			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=-index - 1 - count%>").innerHTML;
+		function adder<%=1 + count%>() {
+			var count = document.getElementById("<%=1 + count%>").innerHTML;
+			var sum = document.getElementById("<%=- 1 - count%>").innerHTML;
 			count = parseInt(count) + 1;
 			sum = <%=order.getPrice()%> * count;
-			document.getElementById("<%=index + 1 + count%>").innerHTML = count;
-			document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
+			document.getElementById("<%=1 + count%>").innerHTML = count;
+			document.getElementById("<%=- 1 - count%>").innerHTML = sum;
 			
 			add<%=storeID%>();
 			
-			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
-				
-			quantity.value = $("#<%=index + 1 + count%>").html();
+			
 			
 			
 		}
-		function minuser<%=index + 1 + count%>() {
-			var count = document.getElementById("<%=index + 1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=-index - 1 - count%>").innerHTML;
+		function minuser<%=1 + count%>() {
+			var count = document.getElementById("<%=1 + count%>").innerHTML;
+			var sum = document.getElementById("<%=-1 - count%>").innerHTML;
 			if (count <= 1 && confirm("確認要刪除此商品嗎?")==true) {
 				
-					document.getElementById("my-car-tr<%=index + 1 + count%>").remove();
+					document.getElementById("my-car-tr<%=1 + count%>").remove();
 		
 			} else if(count>1) {
 				count = parseInt(count) - 1;
 				sum = <%=order.getPrice()%> * count;
-				document.getElementById("<%=index + 1 + count%>").innerHTML = count;
-			    document.getElementById("<%=-index - 1 - count%>").innerHTML = sum;
+				document.getElementById("<%=1 + count%>").innerHTML = count;
+			    document.getElementById("<%=- 1 - count%>").innerHTML = sum;
 				
 			}
 		
 			add<%=storeID%>();
-			
-			var quantity = document.getElementById("product<%=order.getStoreID() %><%=index%>" );
-			
-			quantity.value = $("#<%=index + 1 + count%>").html();
+		
 
 		}
 	
@@ -217,50 +230,63 @@
 
 
 
-	<%
+			<%
 	count = count +10000;
 	}
 	%>
- 
-  <td colspan="3" style=" text-align:right " ></td> 
-  <td colspan="5" style=" text-align:right " >總金額:<b id="count<%=storeID%>"></b></td> 
-</table>	
-  
-<div class="table<%=storeID%>">
-		<br>
-		<input type="hidden" name="storeID<%=storeID%>" value="<%=storeID%>" > 
-		<input type="hidden" name="storeName<%=storeID%>" value="<%=buylist.get(0).getStoreName()%>">
-		<input type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>"><b>選用會員資料</b> <br><br>
-		<b>收件者:  </b><input type="text" name="receiver<%=storeID%>" id="receiver<%=storeID%>"
-		   style="width:100px; height:26px"> <br> <br>
-		<b>電話號碼: </b><input type="text" name="phone<%=storeID%>" id="phone<%=storeID%>"
-		   style="width:140px; height:26px"> <br>  <br>
-		<b>收件地址: </b><input type="text" name="address<%=storeID%>" id="address<%=storeID%>"
-		   style="width:300px; height:26px"> <br> <br>
-	    <b>付款方式:  </b> 
-	         <input type="radio" name="paytype<%=storeID%>" value="信用卡">信用卡 
-			<input type="radio" name="paytype<%=storeID%>" value="atm轉帳">atm轉帳 
-			<input type="radio" name="paytype<%=storeID%>" value="貨到付款">貨到付款 <br> <br>
-		<b>使用購物金: </b> <input type=text name="useShoppingGold<%=storeID%>" style="width:70px; height:26px"> <br> <br>
-		<b>使用優惠券: </b> 
-		   <select name="couponID<%=storeID%>">
-			<option value="0.85">85折</option>
-			<option value="0.75">75折</option>
-		   </select>
-		    <br> <br>
-</div>		
-		
+
+			<td colspan="3" style="text-align: right"></td>
+			<td colspan="5" style="text-align: right">總金額:<b
+				id="count<%=storeID%>">0</b></td>
+		</table>
+
+		<div class="table<%=storeID%>">
+			<br> <input type="hidden" name="storeID<%=storeID%>"
+				value="<%=storeID%>"> <input type="hidden"
+				name="storeName<%=storeID%>"
+				value="<%=buylist.get(0).getStoreName()%>"> <input
+				type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>"><b>選用會員資料</b>
+			<br> <br> <b>收件者: </b><input type="text"
+				name="receiver<%=storeID%>" id="receiver<%=storeID%>"
+				style="width: 100px; height: 26px"> <br> <br> <b>電話號碼:
+			</b><input type="text" name="phone<%=storeID%>" id="phone<%=storeID%>"
+				style="width: 140px; height: 26px"> <br> <br> <b>收件地址:
+			</b><input type="text" name="address<%=storeID%>"
+				id="address<%=storeID%>" style="width: 300px; height: 26px">
+			<br> <br> <b>付款方式: </b> <input type="radio"
+				name="paytype<%=storeID%>" value="信用卡">信用卡 <input
+				type="radio" name="paytype<%=storeID%>" value="atm轉帳">atm轉帳
+			<input type="radio" name="paytype<%=storeID%>" value="貨到付款">貨到付款
+			<br> <br> <b>使用購物金: </b> <input type=text
+				name="useShoppingGold<%=storeID%>" style="width: 70px; height: 26px">
+			<br> <br> <b>使用優惠券: </b> <select
+				name="couponID<%=storeID%>">
+				<option value="0.85">85折</option>
+				<option value="0.75">75折</option>
+			</select> <br> <br>
+		</div>
 
 
-    <script>
+
+		<script>
 function add<%=storeID%>(){
 			var count = document.querySelector('#count<%=storeID%>');
 			let total = 0;
 			var mount = document.querySelectorAll('.my-car-td<%=storeID%>').length;
+			var test<%=storeID%> = 0;
+			
 			for(var i=0 ; i<mount ; i++){ 
-				total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
-				count.innerHTML =  total;
+				if(document.getElementsByName('check<%=storeID%>')[i].checked ) {
+					total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
+					count.innerHTML =  total;
+					test<%=storeID%>++;
+				} 
 			}
+			
+			if(test<%=storeID%> == 0){
+				count.innerHTML = '0';
+			}
+			
 				
 		};
 		
@@ -281,26 +307,88 @@ function add<%=storeID%>(){
 			  phone<%=storeID%>.value = "";
 			  address<%=storeID%>.value = "";
 		  }
+		  add<%=storeID%>();
 		})
+		
+		var checktotal<%=storeID%> = document.getElementById('checktotal<%=storeID%>');
+		var check<%=storeID%> = document.getElementsByName('check<%=storeID%>');
+		var counting<%=storeID%>=0;
+		
+		checktotal<%=storeID%>.addEventListener('change', (event) => {
+		
+		        if (event.currentTarget.checked) {
+		        	
+		        	checktotal<%=storeID%>.value = "1";
+		        	
+		        	for( var i=0 ; i < check<%=storeID%>.length ; i++){
+		        		check<%=storeID%>[i].checked="true";
+		        		check<%=storeID%>[i].value="1";
+		        		
+		        	}
+		          
+		        } else {
+		        	
+					checktotal<%=storeID%>.value = "0";
+		        	
+					for( var i=0 ; i < check<%=storeID%>.length ; i++){
+						check<%=storeID%>[i].checked="";
+						check<%=storeID%>[i].value="0";
+		        	}
+	
+		        }
+		        add<%=storeID%>();
+		    
+		});
+		
+	for( var i=0 ; i < check<%=storeID%>.length ; i++){
+		(function(i){
+			check<%=storeID%>[i].addEventListener('change', (event) => {
+				 if (event.currentTarget.checked) {
+			        		
+			        		check<%=storeID%>[i].value="1";
+			        		counting<%=storeID%>++;
+			        		
+			      } else {
+
+							check<%=storeID%>[i].value="0";
+							counting<%=storeID%>--;
+							
+			        }
+				  
+				 if(counting<%=storeID%> == check<%=storeID%>.length ){
+					 checktotal<%=storeID%>.value = "1";
+					 checktotal<%=storeID%>.checked = "true";
+				 } else{
+					 checktotal<%=storeID%>.value = "0";
+					 checktotal<%=storeID%>.checked = "";
+				 }
+				 add<%=storeID%>();
+			});
+		})(i);
+		
+		
+	}
+	
+	
 
 		
 		
 	</script>
 
-	
 
 
-	<%
-	}
-	%>
+
+		<%
+		}
+		%>
 
 
-<input type="hidden" name="action" value="CHECKOUT">
-<input type="hidden" name="memberID" value="${memVO.memberID}">
-<input type="hidden" name="userAccount" value="${memVO.userAccount}">
-<input type="submit" value="送出" class="button">
+		<input type="hidden" name="action" value="CHECKOUT"> <input
+			type="hidden" name="memberID" value="${memVO.memberID}"> <input
+			type="hidden" name="userAccount" value="${memVO.userAccount}">
+		<input type="submit" value="送出" class="button">
 	</form>
-	
+
 
 	<%
 	}
@@ -311,13 +399,13 @@ function add<%=storeID%>(){
 
 
 
-	
-		
-		
+
+
+
 
 	<!-- Bottom Bar Start -->
 
-	
+
 	<!-- Bottom Bar End -->
 
 	<!-- Breadcrumb Start -->
@@ -325,12 +413,12 @@ function add<%=storeID%>(){
 	<!-- Breadcrumb End -->
 
 	<!-- My Account Start -->
-	
 
 
-			<hr>
 
-		</div>
+	<hr>
+
+	</div>
 
 	</div>
 	</div>
@@ -415,7 +503,7 @@ function add<%=storeID%>(){
 	<!-- Template Javascript -->
 	<script src="js/main.js"></script>
 	<script src="js/woody.js"></script>
-	
+
 
 
 	<link rel="stylesheet" type="text/css"
