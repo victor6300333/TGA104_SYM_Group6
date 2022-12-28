@@ -6,9 +6,9 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-@Repository
+//@Repository
 public class GroupproductHibernate implements GroupproductDAO_interface {
-	@PersistenceContext
+//	@PersistenceContext
 	private Session session;
 
 	@Override
