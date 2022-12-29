@@ -512,9 +512,10 @@ public class MemberController {
 				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
+					session.removeAttribute("location");
 					return "redirect:" + location;
 				}
-			} catch (Exception ignored) {
+			} catch (Exception e) {
 			}
 
 			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
@@ -543,6 +544,7 @@ public class MemberController {
 
 		// 登出操作，清除用戶的登入狀態
 		session.removeAttribute("mail");
+		session.removeAttribute("storeName");
 		// 重定向到登入頁面
 		return "/front-end/member/login";
 
