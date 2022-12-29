@@ -482,7 +482,7 @@ CREATE TABLE couponUsageHistory(
     couponID int comment '優惠券ID',
     usageRecord boolean not null comment "使用紀錄 : 0 : false / 1 : true",
     useDate timestamp comment "使用日期",
-    primary key(memberID, couponID),
+    
     constraint Fk_couponUsageHistory_memberID foreign key(memberID)
     references member(memberID),
     constraint Fk_couponUsageHistory_couponID foreign key(couponID)

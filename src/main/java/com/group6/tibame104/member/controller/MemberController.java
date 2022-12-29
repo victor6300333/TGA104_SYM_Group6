@@ -523,12 +523,15 @@ public class MemberController {
 			// 有賣場名稱才執行
 			if (storeVO2 != null && storeVO2.getStoreName() != null) {
 				String storeName = storeVO2.getStoreName();
+				System.out.println("storeName = " + storeName);
 				session.setAttribute("storeName", storeName);
 			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
 			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
+
+			System.out.println("123");
 
 		}
 		return "/index"; // *工作3:
@@ -645,6 +648,7 @@ public class MemberController {
 		dao.insert(storeVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+		session.setAttribute("storeName", storeName);
 		session.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的memVO物件,存入req
 		return "front-end/store/myStore";
 
