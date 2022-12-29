@@ -75,12 +75,6 @@
 						<a href="index.html" class="nav-item nav-link">首頁</a> <a
 							href="product-list.html" class="nav-item nav-link">我的賣場</a>
 
-						<div class="nav-item dropdown">
-							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
-
-							
-
-						</div>
 					</div>
 				</div>
 				<div class="navbar-nav ml-auto">
@@ -314,7 +308,7 @@
 					<a
 						href="${pageContext.request.contextPath}/front-end/announcement/listAllAnnoun.jsp">
 						<div class="centered" style="font-weight: bold; font-size: larger">最新消息：
-							${list1.announcementContent}</div>
+							${list.announcementContent}</div>
 					</a>
 				</c:forEach>
 			</div>

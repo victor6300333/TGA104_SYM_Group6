@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.group6.tibame104.ad.model.AdService;
 import com.group6.tibame104.ad.model.AdVO;
+import com.group6.tibame104.announcement.model.AnnouncementService;
+import com.group6.tibame104.announcement.model.AnnouncementVO;
 import com.group6.tibame104.category.model.CategoryService;
 import com.group6.tibame104.category.model.CategoryVO;
 import com.group6.tibame104.group.model.GroupService;
@@ -25,6 +27,8 @@ public class IndexController {
 	GroupService groupSvc;
 	@Autowired
 	GroupproductService groupproductSvc;
+	@Autowired
+	AnnouncementService announSvc;
 //	@Autowired
 //	CategoryService categorySvc;
 	
@@ -39,6 +43,9 @@ public class IndexController {
 	     model.addAttribute("groupVOs",groupVOs);
 	     List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 	     model.addAttribute("groupproductVOs",groupproductVOs);
+	     
+	     List<AnnouncementVO> list1 = announSvc.getIndexNews();
+	     model.addAttribute("list1",list1);
 	     
 //	     List<CategoryVO> list = categorySvc.getAll();
 //	     session.setAttribute("list", list);
