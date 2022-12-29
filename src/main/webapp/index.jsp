@@ -38,6 +38,7 @@
 <!-- Template Stylesheet -->
 <link href="css/style.css" rel="stylesheet" />
 <link href="css/woody.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -77,12 +78,7 @@
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
 
-							<!-- 公告 -->
-							<div class=" marquee text-white" style="width: 900px">
-								<marquee bgcolor="gray" hspace="30" scrollamount="8">
-									<strong>最新消息：${announcementVO.announcementContent}</strong>
-								</marquee>
-							</div>
+							
 
 						</div>
 					</div>
@@ -97,8 +93,7 @@
 								<div class="dropdown-menu">
 									<a
 										href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
-										class="dropdown-item">會員中心</a> <a href="#"
-										class="dropdown-item">登出</a>
+										class="dropdown-item">登入</a> <a href="#" class="dropdown-item">登出</a>
 								</div>
 							</c:when>
 
@@ -312,7 +307,19 @@
 	<!-- Call to Action Start -->
 
 	<!-- Call to Action End -->
-
+	<div class="featured-product product">
+		<div class="container-fluid">
+			<div class="section-header">
+				<c:forEach var="list" items="${list1}" begin="1" end="2">
+					<a
+						href="${pageContext.request.contextPath}/front-end/announcement/listAllAnnoun.jsp">
+						<div class="centered" style="font-weight: bold; font-size: larger">最新消息：
+							${list1.announcementContent}</div>
+					</a>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
 	<!-- Featured Product Start -->
 	<div class="featured-product product">
 		<div class="container-fluid">

@@ -20,3 +20,6 @@ body {
 .btn.cart {
     width: 120px;
 }
+  .centered {
+    text-align: center;
+  }
