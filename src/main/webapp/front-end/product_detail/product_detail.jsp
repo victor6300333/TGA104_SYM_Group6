@@ -307,23 +307,18 @@ cart.addEventListener('click', (event) => {
 											src="img/account.jpg" alt="沒惹" srcset="img/account.jpg 80w"
 											sizes="(max-width: 100px) 50px, 1vw" />
 									</a></li>
-									<li class="nav-item col-lg-4"><a class="nav-link active"
+									<li class="nav-item col-lg-41"><a class="nav-link active"
 										data-toggle="pill" href="#description">${categoryVO.storeName}</a>
-										<a class="nav-link active" data-toggle="pill"
-										href="#description">100分鐘前上線</a> <a class="btn" href="#">聊聊</a>
+										 <a class="btn" href="#">聊聊</a>
 										<a class="btn" href="#">查看賣場</a></li>
-									<li class="nav-item col-lg-2"><a class="nav-link active"
+									<li class="nav-item col-lg-21" ><a class="nav-link active"
 										data-toggle="pill" href="#specification">賣場地址:${categoryVO.storeAddress}</a>
 										<a class="nav-link active" data-toggle="pill"
 										href="#specification">聯絡電話:${categoryVO.phoneNumber}</a></li>
-									<li class="nav-item col-lg-2"><a class="nav-link active"
-										data-toggle="pill" href="#specification">聊聊回應率</a> <a
-										class="nav-link active" data-toggle="pill"
-										href="#specification">回應速度</a></li>
-									<li class="nav-item col-lg-2"><a class="nav-link active"
-										data-toggle="pill" href="#specification">加入時間</a> <a
-										class="nav-link active" data-toggle="pill"
-										href="#specification">粉絲</a></li>
+								
+									<li class="nav-item col-lg-21"><a class="nav-link active"
+										data-toggle="pill" href="#specification">加入時間:${categoryVO.insertTime.toString().substring(0,10)}</a> 
+										</li>
 								</ul>
 
 							</div>
