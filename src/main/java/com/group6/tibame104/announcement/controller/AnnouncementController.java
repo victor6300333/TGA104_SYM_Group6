@@ -143,6 +143,14 @@ public class AnnouncementController {
 		return "back-end/announcement/announcementSearch";
 	}
 	
+	//查詢首頁公告
+		@PostMapping("/getIndexNews")
+		public String getIndexNews(Model model) {
+			List<AnnouncementVO> list2 = announSvc.getIndexNews();
+			model.addAttribute("list2", list2);
+			return "back-end/announcement/announcementSearch";
+		}
+	
 	
 //	//PK查詢
 //	@GetMapping("/getPK4Display")
