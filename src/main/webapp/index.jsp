@@ -16,7 +16,9 @@
 <meta content="eCommerce HTML Template Free Download" name="description" />
 
 <!-- Favicon -->
-<link href="${pageContext.request.contextPath}/front-end/product_detail/img/logoSYM.jpg" rel="icon" />
+<link
+	href="${pageContext.request.contextPath}/front-end/product_detail/img/logoSYM.jpg"
+	rel="icon" />
 
 <!-- Google Fonts -->
 <link
@@ -71,28 +73,59 @@
 					<div class="navbar-nav mr-auto">
 						<a href="index.html" class="nav-item nav-link">首頁</a> <a
 							href="product-list.html" class="nav-item nav-link">我的賣場</a>
-						
+
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
-							
-<!-- 公告 -->
-<div class=" marquee text-white"  style="width: 900px">
-          <marquee bgcolor="gray" hspace="30" scrollamount="8"><strong>最新消息：${announcementVO.announcementContent}</strong>
-			</marquee>
-</div>
+
+							<!-- 公告 -->
+							<div class=" marquee text-white" style="width: 900px">
+								<marquee bgcolor="gray" hspace="30" scrollamount="8">
+									<strong>最新消息：${announcementVO.announcementContent}</strong>
+								</marquee>
+							</div>
 
 						</div>
 					</div>
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
+
+						<c:choose>
+							<c:when test="${memVO.userName == null}">
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown"> 登入/註冊</a>
+								<div class="dropdown-menu">
+									<a
+										href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+										class="dropdown-item">會員中心</a> <a href="#"
+										class="dropdown-item">登出</a>
+								</div>
+							</c:when>
+
+
+							<c:otherwise>
+								<a href="#" class="nav-link dropdown-toggle"
+									data-toggle="dropdown"> <img class="rounded-circle "
+									src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+									alt="" style="width: 40px; height: 40px; object-fit: cover"
+									onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'" />
+									${memVO.userAccount}
+								</a>
+								<div class="dropdown-menu">
+									<a
+										href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+										class="dropdown-item">會員中心</a>
+									<FORM METHOD="post"
+										ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+										<input class="dropdown-item" type="submit" name="action"
+											value="登出"></a>
+									</FORM>
+								</div>
+							</c:otherwise>
+						</c:choose>
+
 						<!-- 登入前 -->
-						<a href="#" class="nav-link dropdown-toggle"
-							data-toggle="dropdown"> 登入/註冊</a>
-						<div class="dropdown-menu">
-							<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="dropdown-item">會員中心</a> <a href="#"
-								class="dropdown-item">登出</a>
-						</div>
+
 						<!-- 登入後 -->
 						<!-- <a
                   href="#"
@@ -125,14 +158,17 @@
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="${pageContext.request.contextPath}/front-end/product_detail/img/logoSYM.jpg" alt="Logo" />
+						<a href="index.html"> <img
+							src="${pageContext.request.contextPath}/front-end/product_detail/img/logoSYM.jpg"
+							alt="Logo" />
 						</a>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/SearchServlet">
-							<input type="hidden" name="action"  value="getAll_For_Display" />
+						<FORM METHOD="post"
+							ACTION="${pageContext.request.contextPath}/SearchServlet">
+							<input type="hidden" name="action" value="getAll_For_Display" />
 							<input type="text" placeholder="商品搜尋" name="productName" />
 							<button>
 								<i class="fa fa-search"></i>
@@ -163,16 +199,16 @@
 				<div class="col-md-3">
 					<nav class="navbar bg-light">
 						<ul class="navbar-nav">
-							<li class="nav-item"><a class="nav-link" 
+							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
 									class="fa fa-home"></i>3C</a></li>
-							<li class="nav-item"><a class="nav-link" 
+							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
 									class="fa fa-shopping-bag"></i>周邊</a></li>
-							<li class="nav-item"><a class="nav-link" 
+							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
 									class="fa fa-plus-square"></i>精品</a></li>
-					<!--  	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
+							<!--  	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-female"></i>女生配件</a></li>
 							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-child"></i>嬰幼童與母親</a></li>
@@ -181,7 +217,7 @@
 							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
 									class="fa fa-mobile-alt"></i>3C與電腦</a></li>
 							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-microchip"></i>家電影音</a></li> -->	
+									class="fa fa-microchip"></i>家電影音</a></li> -->
 						</ul>
 					</nav>
 				</div>
@@ -189,10 +225,11 @@
 					<div class="header-slider normal-slider">
 						<c:forEach var="adVO" items="${list}">
 							<div class="header-slider-item">
-								
+
 								<img
-									src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}" height="100%" width="100%">
-								
+									src="${pageContext.request.contextPath}/back-end/ad/ad2.do?adSerialID=${adVO.adSerialID}"
+									height="100%" width="100%">
+
 							</div>
 						</c:forEach>
 					</div>
@@ -373,8 +410,8 @@
 							<h3>
 								<span>$</span>99
 							</h3>
-							<a class="btn" href=""><i
-								class="fa fa-shopping-cart"></i>Buy Now</a>
+							<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+								Now</a>
 						</div>
 					</div>
 				</div>
@@ -402,8 +439,8 @@
 							<h3>
 								<span>$</span>99
 							</h3>
-							<a class="btn" href=""><i
-								class="fa fa-shopping-cart"></i>Buy Now</a>
+							<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+								Now</a>
 						</div>
 					</div>
 				</div>
@@ -431,8 +468,8 @@
 							<h3>
 								<span>$</span>99
 							</h3>
-							<a class="btn" href=""><i
-								class="fa fa-shopping-cart"></i>Buy Now</a>
+							<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+								Now</a>
 						</div>
 					</div>
 				</div>
@@ -460,8 +497,8 @@
 							<h3>
 								<span>$</span>99
 							</h3>
-							<a class="btn" href=""><i
-								class="fa fa-shopping-cart"></i>Buy Now</a>
+							<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+								Now</a>
 						</div>
 					</div>
 				</div>
@@ -489,8 +526,8 @@
 							<h3>
 								<span>$</span>99
 							</h3>
-							<a class="btn" href=""><i
-								class="fa fa-shopping-cart"></i>Buy Now</a>
+							<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+								Now</a>
 						</div>
 					</div>
 				</div>
