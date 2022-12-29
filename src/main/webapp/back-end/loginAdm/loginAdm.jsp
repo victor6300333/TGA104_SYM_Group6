@@ -62,7 +62,7 @@
         <h2 class="text-primary mb-0"></h2>
       </a>
 <!--       <a href="#" class="sidebar-toggler flex-shrink-0"> -->
-        <img src="../img/logoSYM.jpg" alt="SYM logo" width="125px" />
+      <!--   <img src="../img/logoSYM.jpg" alt="SYM logo" width="125px" /> -->
 <!--       </a> -->
 
       <div class="navbar-nav align-items-center ms-auto">

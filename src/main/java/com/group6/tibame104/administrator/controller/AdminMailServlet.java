@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.group6.tibame104.administrator.model.MailService;
-import com.group6.tibame104.member.model.MemberJDBCDAO;
+import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
-import com.group6.tibame104.store.model.StoreJDBCDAO;
+
 
 
 @WebServlet("/back-end/administrator/AdminMailServlet")
@@ -25,9 +25,9 @@ public class AdminMailServlet extends HttpServlet {
 		Integer memberID = null;
 		try {
 			memberID =Integer.valueOf(req.getParameter("memberID"));
-			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
+			com.group6.tibame104.store.model.StoreJDBCDAO storeJDBCDAO = new com.group6.tibame104.store.model.StoreJDBCDAO();
 			storeJDBCDAO.pass(memberID);
-			MemberVO memberVO = new MemberJDBCDAO().getByPrimaryKey(memberID);
+			MemberVO memberVO = new MemberService().getOneMem(memberID);
 			MailService mailService = new MailService();
 			
 			String to = memberVO.getMail();

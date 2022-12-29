@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		System.out.println("username : " + username);
@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 			// 帳號或密碼錯誤
 			req.setAttribute("username", username);
 			req.setAttribute("error", "帳號或密碼錯誤, 請重新輸入!");
-			req.getRequestDispatcher("/").forward(req, resp);
+			req.getRequestDispatcher("/back-end/loginAdm/loginAdm.jsp").forward(req, resp);
 //			resp.sendRedirect("/back-end/loginAdm/loginAdm.jsp");
 		}
 
