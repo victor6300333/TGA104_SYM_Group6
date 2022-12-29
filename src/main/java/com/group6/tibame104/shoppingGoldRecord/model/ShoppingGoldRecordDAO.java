@@ -34,6 +34,7 @@ public class ShoppingGoldRecordDAO implements ShoppingGoldRecordDAO_interface {
 			pstmt.setInt(4, shoppingGoldRecordVO.getPlusOrMinus());
 
 			pstmt.executeUpdate();
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

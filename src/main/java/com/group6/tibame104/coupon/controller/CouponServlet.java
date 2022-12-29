@@ -11,13 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.group6.tibame104.coupon.model.CouponService;
 import com.group6.tibame104.coupon.model.CouponVO;
 
 @WebServlet("/front-end/coupon/Coupon.do")
 public class CouponServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	@Autowired
+	private CouponService couponSvc;
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -36,7 +40,7 @@ public class CouponServlet extends HttpServlet {
 			/*************************** 1.�����ШD�Ѽ� - ��J�榡�����~�B�z **********************/
 			String str = req.getParameter("couponID");
 			if (str == null || (str.trim()).length() == 0) {
-				errorMsgs.add("�п�J�u�f��ID");
+				errorMsgs.add("請輸入會員ID");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -49,7 +53,7 @@ public class CouponServlet extends HttpServlet {
 			try {
 				couponID = Integer.valueOf(str);
 			} catch (Exception e) {
-				errorMsgs.add("�|��ID�����T");
+				errorMsgs.add("會員ID不正確");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -62,7 +66,7 @@ public class CouponServlet extends HttpServlet {
 			CouponService couponSvc = new CouponService();
 			CouponVO couponVO = couponSvc.getOneCoupon(couponID);
 			if (couponVO == null) {
-				errorMsgs.add("�d�L���");
+				errorMsgs.add("查無資料");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -150,14 +154,14 @@ public class CouponServlet extends HttpServlet {
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("couponVO", couponVO); // �t����J�榡���~��empVO����,�]�s�Jreq
+				req.setAttribute("couponVO", couponVO);
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coupon/update_emp_input.jsp");
 				failureView.forward(req, res);
 				return; // �{�����_
 			}
 
 			/*************************** 2.�}�l�ק��� *****************************************/
-			System.out.println("discount = "+discount);
+			
 			CouponService couponSvc = new CouponService();
 			couponVO = couponSvc.updateCoupon( couponID, couponName, startDate, endDate, discount, discountAmount, fullCondition,
 					couponTimeBegins, couponTimeEnd, exchangeAmount, couponDescription );
@@ -171,10 +175,10 @@ public class CouponServlet extends HttpServlet {
 		}
 		if ("getOne_For_Update".equals(action)) { // �Ӧ�listAllEmp.jsp���ШD
 
-//			List<String> errorMsgs = new LinkedList<String>();
+			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
+			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.�����ШD�Ѽ� ****************************************/
 			Integer couponID = Integer.valueOf(req.getParameter("couponID"));
@@ -185,7 +189,7 @@ public class CouponServlet extends HttpServlet {
 
 			/*************************** 3.�d�ߧ���,�ǳ����(Send the Success view) ************/
 			req.setAttribute("couponVO", couponVO); // ��Ʈw���X��empVO����,�s�Jreq
-			String url = "/back-end/coupon/update_Coupon_input.jsp";
+			String url = "/back-end/coupon/newUpdateCoupon.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// ���\��� update_emp_input.jsp
 			successView.forward(req, res);
 		}
@@ -261,7 +265,7 @@ public class CouponServlet extends HttpServlet {
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("couponVO", couponVO); // �t����J�榡���~��empVO����,�]�s�Jreq
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coupon/addCoupon.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/coupon/newCoupon.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -269,10 +273,10 @@ public class CouponServlet extends HttpServlet {
 			/*************************** 2.�}�l�s�W��� ***************************************/
 			CouponService couponSvc = new CouponService();
 			couponVO = couponSvc.addCoupon(couponName, startDate, endDate, discount, discountAmount, fullCondition,
-					couponTimeBegins, couponTimeEnd, exchangeAmount, couponPicture, couponDescription);
+					couponTimeBegins, couponTimeEnd, exchangeAmount, couponDescription);
 
 			/*************************** 3.�s�W����,�ǳ����(Send the Success view) ***********/
-			String url = "/back-end/coupon/listAllCoupon.jsp";
+			String url = "/back-end/coupon/newAllCoupon.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // �s�W���\�����listAllEmp.jsp
 			successView.forward(req, res);
 		}

@@ -13,11 +13,10 @@ public class CouponService {
 
 	@Autowired
 	private CouponDAO_interface dao;
-	private CouponVO couponVO;
 
 	public CouponVO addCoupon(String couponName, Date startDate, Date endDate, Double discount, Integer discountAmount,
 			Integer fullCondition, Date couponTimeBegins, Date couponTimeEnd, Integer exchangeAmount,
-			byte[] couponPicture, String couponDescription) {
+			 String couponDescription) {
 
 		CouponVO couponVO = new CouponVO();
 
@@ -30,7 +29,7 @@ public class CouponService {
 		couponVO.setCouponTimeBegins(couponTimeBegins);
 		couponVO.setCouponTimeEnd(couponTimeEnd);
 		couponVO.setExchangeAmount(exchangeAmount);
-//		couponVO.setCouponPicture(couponPicture);
+
 		couponVO.setCouponDescription(couponDescription);
 
 		dao.insert(couponVO);
@@ -53,7 +52,7 @@ public class CouponService {
 		couponVO.setCouponTimeBegins(couponTimeBegins);
 		couponVO.setCouponTimeEnd(couponTimeEnd);
 		couponVO.setExchangeAmount(exchangeAmount);
-//		couponVO.setCouponPicture(couponPicture);
+
 		couponVO.setCouponDescription(couponDescription);
 
 		dao.update(couponVO);
