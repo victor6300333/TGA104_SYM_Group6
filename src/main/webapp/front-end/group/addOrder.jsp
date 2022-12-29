@@ -44,9 +44,11 @@
 	rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath}/front-end/group/css/style.css"
+<link
+	href="${pageContext.request.contextPath}/front-end/group/css/style.css"
 	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
+<link
+	href="${pageContext.request.contextPath}/front-end/group/css/woody.css"
 	rel="stylesheet" />
 <script src="https://kit.fontawesome.com/bc79e44e11.js"
 	crossorigin="anonymous"></script>
@@ -86,13 +88,12 @@
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="${pageContext.request.contextPath}/member/MemberServlet">
-								<input type="hidden" name="action" value="getOne_For_LogOut">
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
 							</FORM>
+						</div>
 					</div>
-				</div>
 			</nav>
 		</div>
 	</div>
@@ -160,9 +161,7 @@
 								<div class="col-6">
 									<div class="col">
 										<label>會員名稱</label> <input class="form-control" type="text"
-											placeholder="會員名稱"
-										 value="${memVO.userName}"
-											readonly />
+											placeholder="會員名稱" value="${memVO.userName}" readonly />
 									</div>
 									<div class="col">
 										<label>團購編號</label> <input class="form-control" type="text"
@@ -177,18 +176,15 @@
 												for="newaccount">同會員資料</label>
 										</div>
 										<input class="form-control" type="text" id="contactNumber"
-											name="contactNumber"
-											value=""
-											placeholder="聯絡電話" />
+											name="contactNumber" value="" placeholder="聯絡電話" />
 									</div>
 								</div>
 
 								<div class="col-6">
 									<div class="col">
 										<label>購買數量</label> <input id="qua" class="form-control"
-											name="groupBuyQuantity"
-											value="1"
-											type="text" placeholder="購買數量" />
+											name="groupBuyQuantity" value="1" type="text"
+											placeholder="購買數量" />
 									</div>
 									<div class="col">
 										<label>付款方式</label> <select name="paymentTerm"
@@ -206,8 +202,7 @@
 										<!-- 																		第二層選單(先隱藏，選完第一層後再出現) -->
 										<select id="area" name="area" style="display: none;">
 											<option value="">請選擇</option>
-										</select> <input id="shippingLocation" name="shippingLocation"
-											value=""
+										</select> <input id="shippingLocation" name="shippingLocation" value=""
 											class="form-control" type="text" placeholder="寄送地址" />
 									</div>
 								</div>
@@ -217,9 +212,8 @@
 									<label>總金額</label> <input id="total" class="form-control"
 										name="groupBuyTotal"
 										value="${Math.round(groupproductVO.groupBuyProductPrice* groupBuyCount)}"
-										type="text" placeholder="總金額" readonly /><input
-										type="hidden" name="groupBuyID"
-										value="${groupVO.groupBuyID}"> <input
+										type="text" placeholder="總金額" readonly /><input type="hidden"
+										name="groupBuyID" value="${groupVO.groupBuyID}"> <input
 										type="hidden" name="giftVoucher" value=0> <input
 										type="hidden" name="groupBuyProductID"
 										value="${groupVO.groupBuyProductID}"> <input
@@ -227,8 +221,7 @@
 										value="${groupVO.administratorID}"> <input
 										type="hidden" name="paymentState" value="1"> <input
 										type="hidden" name="memberID" value="${memVO.memberID}">
-										<input
-										type="hidden" name="orderTime"> <a href="#">
+									<input type="hidden" name="orderTime"> <a href="#">
 										<button class="btn">送出訂單</button>
 									</a>
 	</form>
@@ -348,7 +341,8 @@
 		src="${pageContext.request.contextPath}/front-end/group/lib/slick/slick.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/group/js/main.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/back-end/grouporder/js/address.js"></script>
 

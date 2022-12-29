@@ -97,8 +97,7 @@
 							data-bs-toggle="dropdown"><i
 							class="fa fa-tachometer-alt me-2"></i>公告管理</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a
-								href="${pageContext.request.contextPath}/Announcement/getAll"
+							<a href="${pageContext.request.contextPath}/Announcement/getAll"
 								class="dropdown-item">公告消息管理</a>
 						</div>
 					</div>
@@ -107,8 +106,11 @@
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>商家管理</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="button.html" class="dropdown-item">商家審核</a> <a
-								href="typography.html" class="dropdown-item">商家查詢</a>
+							<a
+								href="${pageContext.request.contextPath}/back-end/administrator/sellerVerify.jsp"
+								class="dropdown-item">商家審核</a> <a
+								href="${pageContext.request.contextPath}/back-end/administrator/sellerVerify.jsp"
+								class="dropdown-item">商家查詢</a>
 						</div>
 					</div>
 
@@ -116,8 +118,15 @@
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"><i class="fa fa-th me-2"></i>活動管理</a>
 						<div class="dropdown-menu bg-transparent border-0">
-							<a href="./advertise.html" class="dropdown-item">廣告設定</a> <a
-								href="typography.html" class="dropdown-item">優惠券設定</a>
+							<a
+								href="${pageContext.request.contextPath}/back-end/ad/select_page2.jsp"
+								class="dropdown-item">廣告設定</a> <a
+								href="${pageContext.request.contextPath}/back-end/shoppingGoldRecord/newShoppingGoldRecord.jsp"
+								class="dropdown-item">購物金管理</a> <a
+								href="${pageContext.request.contextPath}/back-end/coupon/newCoupon2.jsp"
+								class="dropdown-item">優惠券管理</a> <a
+								href="${pageContext.request.contextPath}/back-end/couponUsageHistory/newCouponUsageHistory.jsp"
+								class="dropdown-item">優惠券紀錄管理</a>
 						</div>
 					</div>
 
