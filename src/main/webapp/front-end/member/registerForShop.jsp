@@ -5,10 +5,7 @@
 <%@ page import="com.group6.tibame104.creditCard.model.*"%>
 <%@ page import="com.group6.tibame104.memberBlockList.model.*"%>
 <%@ page import="com.group6.tibame104.store.model.*"%>
-<%
-MemberVO memVO = (MemberVO) session.getAttribute("memVO");
-StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,18 +88,17 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+							<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
 							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
-							alt="" style="width: 40px; height: 40px" />
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userName}
 						</a>
 						<div class="dropdown-menu">
 							<a
 								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
 								class="dropdown-item">我的帳號</a>
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/member/MemberServlet">
-								<input type="hidden" name="action" value="getOne_For_LogOut">
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
 								<input class="dropdown-item" type="submit" name="action"
 									value="登出"></a>
 							</FORM>
@@ -166,7 +162,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 	<!-- Login Start -->
 	<div class="login">
 		<FORM METHOD="post"
-			ACTION="<%=request.getContextPath()%>/member/MemberServlet"
+			ACTION="${pageContext.request.contextPath}/front-end/member/registerForShop"
 			name="form2">
 			<div class="container-fluid">
 				<div class="row">
@@ -188,15 +184,15 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 
 									<div class="col">
 										<label>賣場銀行代碼</label> <input class="form-control" type="text"
-											name="storeDelBankCode" placeholder="賣場銀行代碼" value="<%=(storeVO == null) ? "" : storeVO.getStoreDelBankCode()%>" />
+											name="storeDelBankCode" placeholder="賣場銀行代碼" value="" />
 									</div>
 									<div class="col">
 										<label>統一編號</label> <input class="form-control"
-											name="taxID" type="text" placeholder="統一編號" value="<%=(storeVO == null) ? "" : storeVO.getTaxID()%>" />
+											name="taxID" type="text" placeholder="統一編號" value="" />
 									</div>
 									<div class="col">
 										<label>賣場電話</label> <input class="form-control"
-											name="phoneNumber" type="text" placeholder="賣場電話" value="<%=(storeVO == null) ? "" : storeVO.getPhoneNumber()%>" />
+											name="phoneNumber" type="text" placeholder="賣場電話" value="" />
 									</div>
 								</div>
 
@@ -204,16 +200,16 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 
 									<div class="col">
 										<label>賣場銀行帳號</label> <input class="form-control" type="text"
-											name="storeBankAccount" placeholder="賣場銀行帳號" value="<%=(storeVO == null) ? "" : storeVO.getStoreBankAccount()%>" />
+											name="storeBankAccount" placeholder="賣場銀行帳號" value="" />
 									</div>
 									<div class="col">
 										<label>賣場名稱</label> <input class="form-control" type="text"
-											name="storeName" placeholder="賣場名稱" value="<%=(storeVO == null) ? "" : storeVO.getStoreName()%>" />
+											name="storeName" placeholder="賣場名稱" value="" />
 									</div>
 
 									<div class="col">
 										<label>賣場地址</label> <input class="form-control"
-											name="storeAddress" type="text" placeholder="賣場地址" value="<%=(storeVO == null) ? "" : storeVO.getStoreAddress()%>" />
+											name="storeAddress" type="text" placeholder="賣場地址" value="" />
 									</div>
 
 								</div>
@@ -222,7 +218,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 
 								<br /> <br /> <br /> <br />
 								<div class="col-md-6">
-									<input type="hidden" name="action" value="registerForShop">
+									
 									<input type="hidden" name="memberID" value="${memVO.memberID}">
 									<input class="btn" type="submit" value="送出">
 								</div>
