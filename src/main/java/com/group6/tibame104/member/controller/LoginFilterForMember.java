@@ -35,7 +35,12 @@ public class LoginFilterForMember extends HttpFilter {
 		// 【從 session 判斷此user是否登入過】
 		Object account = session.getAttribute("mail");
 		if (account == null) {
-			session.setAttribute("location", req.getServletPath());
+//			System.out.println(req.getRequestURI());
+//			System.out.println(req.getRequestURL());
+//			System.out.println(req.getHeader("Referer"));
+			String fullURL = req.getHeader("Referer");
+			String targetURL = fullURL.split(req.getContextPath())[1];
+			session.setAttribute("location", targetURL);
 			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
 			return;
 		} else {

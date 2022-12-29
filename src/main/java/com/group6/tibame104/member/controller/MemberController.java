@@ -512,7 +512,7 @@ public class MemberController {
 				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
-					return "forward:" + location;
+					return "redirect:" + location;
 				}
 			} catch (Exception ignored) {
 			}
