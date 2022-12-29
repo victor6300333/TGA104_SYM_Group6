@@ -81,10 +81,12 @@ public class AnnouncementService {
 	}
 	
 	public List<AnnouncementVO> getAllAnnoun() {
-		return dao.getAll();
+		return dao.findAll();
 	}
 
-
+	public List<AnnouncementVO> getIndexNews() {
+		return dao.findIndexNews();
+	}
 
 
 //	public static void main(String[] args) {

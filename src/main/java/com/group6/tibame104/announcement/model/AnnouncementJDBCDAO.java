@@ -34,8 +34,8 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	private static final String GetAll = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement ORDER BY announcementSerialID";
 	// 查詢上架中的最新消息
 	private static final String GetIndexNews = "SELECT announcementContent FROM announcement WHERE (offLoadStatus=0 and showStatus=0)";
-	// 依照公告Title做查詢
-	private static final String GetShopNews = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementTitle=?";
+//	// 依照公告Title做查詢
+//	private static final String GetShopNews = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementTitle=?";
 	@Override
 	public void insert(AnnouncementVO announcementVO) {
 		try (Connection con = dataSource.getConnection();
@@ -196,7 +196,7 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	}
 
 	@Override
-	public List<AnnouncementVO> getAll() {
+	public List<AnnouncementVO> findAll() {
 		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(GetAll);) {
 			try (ResultSet rs = pstmt.executeQuery();) {
@@ -212,6 +212,26 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 					announcementVO.setUpdateTime(rs.getTimestamp("updateTime"));
 					announcementVO.setOffLoadStatus(rs.getBoolean("offLoadStatus"));
 					announcementVO.setShowStatus(rs.getBoolean("showStatus"));
+					list.add(announcementVO);
+				}
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	@Override
+	public List<AnnouncementVO> findIndexNews(){
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GetIndexNews);) {
+			try (ResultSet rs = pstmt.executeQuery();) {
+				List<AnnouncementVO> list = new ArrayList<AnnouncementVO>();
+				while (rs.next()) {
+					AnnouncementVO announcementVO = new AnnouncementVO();
+					announcementVO.setAnnouncementContent(rs.getString("announcementContent"));
 					list.add(announcementVO);
 				}
 				return list;

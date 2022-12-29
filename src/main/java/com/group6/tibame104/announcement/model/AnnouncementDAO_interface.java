@@ -25,8 +25,13 @@ public interface AnnouncementDAO_interface {
     //使用公告位置查詢
     public List<AnnouncementVO> findByShowStatus(Boolean showStatus);
     
+    //查詢首頁上架公告
+    public List<AnnouncementVO> findIndexNews();
+    
     //查詢所有公告
-    public List<AnnouncementVO> getAll();
+    public List<AnnouncementVO> findAll();
+
+    
 
 
 
