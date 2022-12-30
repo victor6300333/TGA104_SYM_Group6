@@ -19,4 +19,6 @@ public interface StoreDAO_interface {
 	public void pass(Integer memberID);
 
 	public List<StoreVO> findAllByAudit0();
+
+	public Integer findMemberID(Integer storeID);
 }
