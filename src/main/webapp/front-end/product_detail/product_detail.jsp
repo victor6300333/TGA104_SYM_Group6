@@ -315,7 +315,7 @@ cart.addEventListener('click', (event) => {
 									<li class="nav-item col-lg-41"><a class="nav-link active1"
 										data-toggle="pill" href="#description">${categoryVO.storeName}</a>
 										<a class="btn" href="${pageContext.request.contextPath}
-										 		/store/storeServlet?storeID=${categoryVO.storeID}&action=gotoShop">查看賣場</a></li>
+										 		/store/productStoreServlet?storeID=${categoryVO.storeID}">查看賣場</a></li>
 									<li class="nav-item col-lg-21">賣場地址:${categoryVO.storeAddress}
 									<br><br>聯絡電話:${categoryVO.phoneNumber}</li>
 
