@@ -36,4 +36,8 @@ public class CategoryService {
 		return dao.getAllCategory();
 		
 	}
+	
+	public void updateStar(Integer productID){
+		dao.updateStar(productID);
+	}
 }

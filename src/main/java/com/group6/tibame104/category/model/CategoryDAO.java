@@ -33,6 +33,9 @@ public class CategoryDAO implements CategoryDAO_interface {
 	private static final String GET_MAIN = "SELECT * FROM category where productMainID= ? ";
 	private static final String GET_ALL = "SELECT * FROM category ";
 	private static final String GET_ALL_CATEGORY = "select distinct productMainName from category";
+	private static final String UPDATE = "update category "
+			                     + "	set commentAvgStar =(SELECT avg(buyerReview) FROM orderDetail "
+			                      + "	where productID = ?) where  productID = ?";
 
 	
 	@Override
@@ -288,5 +291,24 @@ public class CategoryDAO implements CategoryDAO_interface {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public void updateStar(Integer productID) {
+		
+
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
+
+			pstmt.setInt(1, productID);
+			pstmt.setInt(2, productID);
+
+			pstmt.executeUpdate();
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

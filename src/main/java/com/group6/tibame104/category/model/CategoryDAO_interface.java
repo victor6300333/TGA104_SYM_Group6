@@ -17,5 +17,7 @@ public interface CategoryDAO_interface {
 	public List<CategoryVO> getAll();
 
 	public List<String> getAllCategory();
+	
+	public void updateStar(Integer productID);
 
 }

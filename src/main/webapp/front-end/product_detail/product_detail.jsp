@@ -157,8 +157,9 @@ Integer count_num = (Integer) session.getAttribute("count_num");
                   <span>(0)</span>
                 </a> -->
 
-						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(<%=(count_num == null) ? "0" : count_num%>)
+						<a
+							href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp"
+							class="btn cart"> <i class="fa fa-shopping-cart"></i> <span>(<%=(count_num == null) ? "0" : count_num%>)
 						</span>
 						</a>
 					</div>
@@ -221,10 +222,13 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 									<div class="title">
 										<h2>${categoryVO.productName}</h2>
 									</div>
+									<p class="previewing" style='display: none'>${categoryVO.commentAvgStar}</p>
 									<div class="ratting">
-										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i>
+										<i class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i>
 									</div>
 									<div class="price">
 										<h4>價格:</h4>
@@ -247,9 +251,10 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 												</button>
 											</div>
 										</div>
-										<div class="stock">
+										<div class="quantity">
 											<h4>庫存:</h4>
-											<div>${categoryVO.productStock}</div>
+											<h4>${categoryVO.productStock}</h4>
+
 										</div>
 										<div class="action">
 
@@ -302,23 +307,21 @@ cart.addEventListener('click', (event) => {
 							<div class="col-lg-12">
 								<ul class="nav nav-pills nav-justified align-items-center"
 									id="account-sv">
-									<li class="nav-item col-lg-2"><a class="nav-link active"
+									<li class="nav-item col-lg-2"><a class="nav-link active1"
 										data-toggle="pill" href="#description"> <img
 											src="img/account.jpg" alt="沒惹" srcset="img/account.jpg 80w"
 											sizes="(max-width: 100px) 50px, 1vw" />
 									</a></li>
-									<li class="nav-item col-lg-41"><a class="nav-link active"
+									<li class="nav-item col-lg-41"><a class="nav-link active1"
 										data-toggle="pill" href="#description">${categoryVO.storeName}</a>
-										 <a class="btn" href="#">聊聊</a>
-										<a class="btn" href="#">查看賣場</a></li>
-									<li class="nav-item col-lg-21" ><a class="nav-link active"
-										data-toggle="pill" href="#specification">賣場地址:${categoryVO.storeAddress}</a>
-										<a class="nav-link active" data-toggle="pill"
-										href="#specification">聯絡電話:${categoryVO.phoneNumber}</a></li>
-								
-									<li class="nav-item col-lg-21"><a class="nav-link active"
-										data-toggle="pill" href="#specification">加入時間:${categoryVO.insertTime.toString().substring(0,10)}</a> 
-										</li>
+										<a class="btn" href="${pageContext.request.contextPath}
+										 		/store/storeServlet?storeID=${categoryVO.storeID}&action=gotoShop">查看賣場</a></li>
+									<li class="nav-item col-lg-21">賣場地址:${categoryVO.storeAddress}
+									<br><br>聯絡電話:${categoryVO.phoneNumber}</li>
+
+									<li class="nav-item col-lg-21"><a class="nav-link active1"
+										data-toggle="pill" href="#specification">加入時間:${categoryVO.insertTime.toString().substring(0,10)}</a>
+									</li>
 								</ul>
 
 							</div>
@@ -344,27 +347,29 @@ cart.addEventListener('click', (event) => {
 
 
 
-											
-												<div class="reviewer">
-													${orderlistVO.userAccount} &nbsp; <span>${orderlistVO.orderDate.toString().substring(0,19)}</span>
-												</div>
 
-											
+											<div class="reviewer">
+												${orderlistVO.userAccount} &nbsp; <span>${orderlistVO.orderDate.toString().substring(0,19)}</span>
+											</div>
 
 
-													<p class="reviewing" style='display: none'>${orderlistVO.buyerReview}</p>
-													<div class="ratting">
-														<i class="fa fa-star" name="fa" style='display: none'></i>
-														<i class="fa fa-star" name="fa" style='display: none'></i>
-														<i class="fa fa-star" name="fa" style='display: none'></i>
-														<i class="fa fa-star" name="fa" style='display: none'></i>
-														<i class="fa fa-star" name="fa" style='display: none'></i>
-													</div>
-													<p><img style="width: 200px; height: 160px;"
-											src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.orderDetailID}"
-											alt="Product Image"></p>
-													<p>${orderlistVO.buyerComment}</p>
-													<hr>
+
+
+											<p class="reviewing" style='display: none'>${orderlistVO.buyerReview}</p>
+											<div class="ratting">
+												<i class="fa fa-star" name="fa" style='display: none'></i> <i
+													class="fa fa-star" name="fa" style='display: none'></i> <i
+													class="fa fa-star" name="fa" style='display: none'></i> <i
+													class="fa fa-star" name="fa" style='display: none'></i> <i
+													class="fa fa-star" name="fa" style='display: none'></i>
+											</div>
+											<p>
+												<img style="width: 200px; height: 160px;"
+													src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.orderDetailID}"
+													alt="Product Image">
+											</p>
+											<p>${orderlistVO.buyerComment}</p>
+											<hr>
 										</c:forEach>
 									</div>
 
@@ -372,6 +377,8 @@ cart.addEventListener('click', (event) => {
 
 								<script>
 									document.addEventListener("DOMContentLoaded", function(){
+										var previewing = Number(document.getElementsByClassName('previewing').innerHTML);
+										var fa = document.getElementsByName("fa");
 										
 										for(var i=0 ; i< ${list.size()} ; i++){
 										if(document.getElementsByClassName('reviewing')[i].innerHTML == '1'){
@@ -401,6 +408,25 @@ cart.addEventListener('click', (event) => {
 										}	
 									}
 										});
+									
+									if(previewing >= 1 && previewing < 2){
+										fa[i*5].style.display = 'inline';		
+									}
+									else if(previewing >= 2 && previewing < 3){
+										fa[i*5].style.display = 'inline';	
+										fa[i*5+1].style.display = 'inline';	
+									}
+									else if(previewing >= 3 && previewing < 4){
+										fa[i*5].style.display = 'inline';	
+										fa[i*5+1].style.display = 'inline';	
+										fa[i*5+2].style.display = 'inline';	
+									}
+									else if(previewing >= 4 && previewing <= 5){
+										fa[i*5].style.display = 'inline';	
+										fa[i*5+1].style.display = 'inline';	
+										fa[i*5+2].style.display = 'inline';	
+										fa[i*5+3].style.display = 'inline';	
+									}
 									
 									
 									</script>
@@ -608,8 +634,8 @@ cart.addEventListener('click', (event) => {
 									<h3>
 										<span>$</span>99
 									</h3>
-									<a class="btn" href=""><i
-										class="fa fa-shopping-cart"></i>Buy Now</a>
+									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+										Now</a>
 								</div>
 							</div>
 							<div class="product-item">
@@ -635,8 +661,8 @@ cart.addEventListener('click', (event) => {
 									<h3>
 										<span>$</span>99
 									</h3>
-									<a class="btn" href=""><i
-										class="fa fa-shopping-cart"></i>Buy Now</a>
+									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+										Now</a>
 								</div>
 							</div>
 							<div class="product-item">
@@ -662,8 +688,8 @@ cart.addEventListener('click', (event) => {
 									<h3>
 										<span>$</span>99
 									</h3>
-									<a class="btn" href=""><i
-										class="fa fa-shopping-cart"></i>Buy Now</a>
+									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
+										Now</a>
 								</div>
 							</div>
 						</div>

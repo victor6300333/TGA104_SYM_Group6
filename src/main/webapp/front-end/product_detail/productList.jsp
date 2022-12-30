@@ -32,7 +32,7 @@
 <link href="lib/slick/slick-theme.css" rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/front-end/product_detail/css/style.css" rel="stylesheet" />
 <link href="css/woody.css" rel="stylesheet" />
 </head>
 
@@ -215,13 +215,16 @@
 								<div class="product-item">
 									<div class="product-title">
 										<a href="#">${categoryVO.productName}</a>
-										<div class="ratting">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
+										<p class="previewing" style='display: none'>${categoryVO.commentAvgStar}</p>
+									<div class="ratting">
+										<i class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i>
 									</div>
-									<div class="商品圖片">
+									</div>
+									<div class="product-image">
 										<a
 											href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
 											<img
@@ -233,18 +236,13 @@
 												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
 										</div>
 									</div>
-									<div class="商品價格">
-										<h3>
-											<span>$</span>${categoryVO.productPrice}</h3>
-										<form name="shoppingForm"
-											action="${pageContext.request.contextPath}/SearchServlet"
-											method="POST">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="productID"
-												value="${categoryVO.productID}"> <a class="btn"
-												href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
-												class="fa fa-shopping-cart"></i>查看</a>
-										</form>
+									<div class="product-price">
+										<h4 style="text-align:center">
+											<span>$</span>${categoryVO.productPrice}</h4>
+												
+												<a class="btn" href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}">
+												<i class="fa fa-shopping-cart"></i>查看</a>
+								
 									</div>
 								</div>
 							</div>
@@ -465,6 +463,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<!-- Footer Bottom End -->
 
 		<!-- Back to Top -->
@@ -479,5 +478,37 @@
 
 		<!-- Template Javascript -->
 		<script src="js/main.js"></script>
+		<script>
+		document.addEventListener("DOMContentLoaded", function(){
+			var fa = document.getElementsByName("fa");
+			
+			for(var i=0 ; i< ${categoryVOall.size()} ; i++){
+				
+			var previewing = Number(document.getElementsByClassName('previewing')[i].innerHTML);
+			
+			if(previewing >= 1 && previewing < 2){
+				fa[i*5].style.display = 'inline';		
+			}
+			else if(previewing >= 2 && previewing < 3){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+			}
+			else if(previewing >= 3 && previewing < 4){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+				fa[i*5+2].style.display = 'inline';	
+			}
+			else if(previewing >= 4 && previewing <= 5){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+				fa[i*5+2].style.display = 'inline';	
+				fa[i*5+3].style.display = 'inline';	
+			}
+		}
+			
+		});
+		
+		
+		</script>
 </body>
 </html>
