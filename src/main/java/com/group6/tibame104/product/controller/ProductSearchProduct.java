@@ -37,8 +37,8 @@ public class ProductSearchProduct {
 	public void getAllByCond(Model model,
 			HttpServletResponse response,
 			@RequestParam("storeID") String storeID,
-			@RequestParam("productID") String productIDStr,
-			@RequestParam("productSecID") String productSecIDStr,
+			@RequestParam(value="productID",required=false) String productIDStr,
+			@RequestParam(value="productSecID",required=false) String productSecIDStr,
 			@RequestParam("productStatus") String productStatus) {
 		
 		List<String> errorMsgs = new LinkedList<String>();
