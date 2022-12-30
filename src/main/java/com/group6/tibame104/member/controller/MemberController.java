@@ -516,8 +516,9 @@ public class MemberController {
 				// 有賣場名稱才執行
 				if (storeVO2 != null && storeVO2.getStoreName() != null) {
 					String storeName = storeVO2.getStoreName();
-					System.out.println("storeName = " + storeName);
+//					System.out.println("storeName = " + storeName);
 					session.setAttribute("storeName", storeName);
+					session.setAttribute("storeVO2", storeVO2);
 				}
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
