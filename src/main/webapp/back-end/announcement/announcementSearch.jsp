@@ -465,19 +465,6 @@
 					<!-- /.content -->
 				</div>
 				
-				<!-- ============ Footer段落 ============ -->
-				<footer id="footer" class="main-footer"></footer>
-				<!-- Control Sidebar -->
-				<aside class="control-sidebar control-sidebar-dark">
-					<!-- Control sidebar content goes here -->
-				</aside>
-				<!-- /.control-sidebar -->
-				<!-- ============ Footer段落 ============ -->
-				<!-- /.content-wrapper -->
-			</div>
-			<!-- Content ends-->
-
-			<!-- Footer Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-light rounded-top p-4">
 					<div class="row">
@@ -491,6 +478,10 @@
 					</div>
 				</div>
 			</div>
+			</div>
+			<!-- Content ends-->
+
+			<!-- Footer Start -->
 			<!-- Footer End -->
 		</div>
 		<!-- Content End -->

@@ -150,7 +150,13 @@ public class AnnouncementController {
 			model.addAttribute("list2", list2);
 			return "back-end/announcement/announcementSearch";
 		}
-	
+	//查詢所有首頁公告
+		@GetMapping("/getIndexNews2")
+		public String getIndexNews2(Model model) {
+			List<AnnouncementVO> list3 = announSvc.getIndexNews();
+			model.addAttribute("list3", list3);
+			return "front-end/announcement/listAllAnnoun";
+		}
 	
 //	//PK查詢
 //	@GetMapping("/getPK4Display")

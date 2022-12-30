@@ -162,7 +162,7 @@
 	<div class="featured-product product">
 		<div class="container-fluid">
 			<div class="section-header">
-				<c:forEach var="list" items="${list}">
+				<c:forEach var="list" items="${list3}">
    						<div div class="centered" style="font-weight: bold; font-size: larger;">最新消息：${list.announcementContent}</div>
   					</a>
 				</c:forEach>
