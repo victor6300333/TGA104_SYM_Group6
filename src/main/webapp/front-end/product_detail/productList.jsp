@@ -118,16 +118,20 @@
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="./img/logoSYM.jpg" alt="Logo" />
+						<a href="${pageContext.request.contextPath}/"> <img src="./img/logoSYM.jpg" alt="Logo" />
 						</a>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<input type="text" placeholder="商品搜尋" />
-						<button>
-							<i class="fa fa-search"></i>
-						</button>
+						<FORM METHOD="post"
+							ACTION="${pageContext.request.contextPath}/SearchServlet">
+							<input type="hidden" name="action" value="getAll_For_Display" />
+							<input type="text" placeholder="商品搜尋" name="productName" />
+							<button>
+								<i class="fa fa-search"></i>
+							</button>
+						</FORM>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -136,8 +140,8 @@
                       <i class="fa fa-heart"></i>
                       <span>(0)</span>
                     </a> -->
-						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
+							class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})</span>
 						</a>
 					</div>
 				</div>
@@ -231,16 +235,18 @@
 											src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
 											style="width: 230px; height: 200px" alt="Product Image">
 										</a>
-										<div class="product-action">
+								<!-- 		<div class="product-action">
 											<a href="#"><i class="fa fa-加入購物車"></i></a> <a href="#"><i
 												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
-										</div>
+										</div> -->
 									</div>
 									<div class="product-price">
 										<h4 style="text-align:center">
 											<span>$</span>${categoryVO.productPrice}</h4>
 												
-												<a class="btn" href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}">
+												<a class="btn" href="${pageContext.request.contextPath}
+													/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}
+														&productMainID=${categoryVO.productMainID}&storeID=${categoryVO.storeID}">
 												<i class="fa fa-shopping-cart"></i>查看</a>
 								
 									</div>
@@ -286,10 +292,12 @@
 							</ul>
 						</nav>
 					</div>
-
+					<br>
 					<div class="sidebar-widget widget-slider">
+					<br>
+					<h2 class="title">好物推薦</h2>
 						<div class="sidebar-slider normal-slider">
-							<c:forEach var="categoryVO" items="${all}">
+							<c:forEach var="categoryVO" items="${categoryOther}">
 					
 								<div class="product-item">
 									<div class="product-title">
@@ -315,15 +323,12 @@
 									<div class="商品價格">
 										<h3>
 											<span>$</span>${categoryVO.productPrice}</h3>
-										<form name="shoppingForm"
-											action="${pageContext.request.contextPath}/SearchServlet"
-											method="POST">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="productID"
-												value="${categoryVO.productID}"> <a class="btn"
-												href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
+									<a class="btn"
+												href="${pageContext.request.contextPath}
+													/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}
+														&productMainID=${categoryVO.productMainID}&storeID=${categoryVO.storeID}"><i
 												class="fa fa-shopping-cart"></i>查看</a>
-										</form>
+		
 									</div>
 								</div>
 							
@@ -346,30 +351,7 @@
 	<!-- Product List End -->
 
 	<!-- Brand Start -->
-	<div class="brand">
-		<div class="container-fluid">
-			<div class="brand-slider">
-				<div class="brand-item">
-					<img src="img/brand-1.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-2.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-3.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-4.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-5.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-6.png" alt="">
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Brand End -->
 
 	<!-- Footer Start -->

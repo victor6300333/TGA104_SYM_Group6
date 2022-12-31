@@ -138,8 +138,7 @@
 				<td ></td>
 			</tr>
 			<tr>
-				<td width="95">全選<input type="checkbox" class="checkcount"
-					id="checktotal<%=storeID%>" /></td>
+				
 				<td width="155">商品名稱</td>
 				<td width="165">商品圖片</td>
 				<td width="125">價格</td>
@@ -156,8 +155,8 @@
 		Product order = buylist.get(index);
 	%>
 
-			<tr id="my-car-tr<%=1 + count%>">
-				<td width="125"><input type="checkbox" name="check<%=storeID%>" value='0' class="checkcount"/></td>
+			<tr id="my-car-tr">
+				
 				<td width="160"><%=order.getName()%></td>
 				<td width="120"><img
 					src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
@@ -165,66 +164,21 @@
 				<td width="135"><%=order.getPrice()%></td>
 
 
-				<td id="minus"><input id="minus1" type="button" name='clickbutton'
-					onclick="minuser<%=1 + count%>()" value="-"
-					style="width: 25px; height: 29px;" /></td>
+				
 
-				<td id="<%=1 + count%>" width="30"><%=order.getQuantity()%></td>
-				<input type="hidden"
-					id="product<%=order.getStoreName() %><%=index%>"
-					name="product<%=order.getStoreID() %><%=index%>"
-					value="<%=order.getQuantity()%>" />
+				<td  width="30"><%=order.getQuantity()%></td>
+			
 
-				<td id="plus"><input id="plus1" type="button" name='clickbutton'
-					onclick="adder<%=1 + count%>()" value="+"
-					style="width: 25px; height: 29px;" /></td>
+				
 
-				<td class="my-car-td<%=storeID%>" width="130" align="center"
-					valign="middle" id="<%=- 1 - count%>"><%=order.getPrice() * order.getQuantity()%></td>
+				<td class="my-car-td" width="130" align="center"
+					valign="middle"><%=order.getPrice() * order.getQuantity()%></td>
 			</tr>
 
 
 
 			<script src="./jquery/jquery-3.6.1.min.js"></script>
-<script>
-	   
-		
-		function adder<%=1 + count%>() {
-			var count = document.getElementById("<%=1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=- 1 - count%>").innerHTML;
-			count = parseInt(count) + 1;
-			sum = <%=order.getPrice()%> * count;
-			document.getElementById("<%=1 + count%>").innerHTML = count;
-			document.getElementById("<%=- 1 - count%>").innerHTML = sum;
-			
-			add<%=storeID%>();
-			
-			
-			
-			
-		}
-		function minuser<%=1 + count%>() {
-			var count = document.getElementById("<%=1 + count%>").innerHTML;
-			var sum = document.getElementById("<%=-1 - count%>").innerHTML;
-			if (count <= 1 && confirm("確認要刪除此商品嗎?")==true) {
-				
-					document.getElementById("my-car-tr<%=1 + count%>").remove();
-				
-		
-			} else if(count>1) {
-				count = parseInt(count) - 1;
-				sum = <%=order.getPrice()%> * count;
-				document.getElementById("<%=1 + count%>").innerHTML = count;
-			    document.getElementById("<%=- 1 - count%>").innerHTML = sum;
-				
-			}
-		
-			add<%=storeID%>();
-		
 
-		}
-	
-	</script>
 
 
 
@@ -232,7 +186,7 @@
 
 
 			<%
-	count = count +10000;
+	
 	}
 	%>
 
@@ -357,7 +311,7 @@ function add<%=storeID%>(){
 				<td colspan="6" style="text-align: right ; background-color: #FFFBE3">
 			 		 <b style='font-size: 20px;'>訂單總金額 :</b> &emsp;<b id='ordertotal' style='font-size: 20px;'>0</b>
 					&emsp; 
-			 		<input type="hidden" name="action" value="CHECK"> <input
+			 		<input type="hidden" name="action" value="CHECKOUT"> <input
 					type="hidden" name="memberID" value="${memVO.memberID}"> <input
 					type="hidden" name="userAccount" value="${memVO.userAccount}">
 					<input type="submit" value="送出" class="button" style='background-color: #FFA9A9 ; border:0px ; font-weight:bold'>

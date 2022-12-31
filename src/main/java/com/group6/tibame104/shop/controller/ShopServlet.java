@@ -70,7 +70,7 @@ public class ShopServlet extends HttpServlet {
 		else
 			count_num = count_string;
 
-		if (!action.equals("CHECKOUT")) {
+		if (!action.equals("CHECKOUT") && !action.equals("CHECK")) {
 			
 			// 新增書籍至購物車中
 			 if (action.equals("ADD")) {
@@ -83,7 +83,7 @@ public class ShopServlet extends HttpServlet {
 
 				if (check==null) {
 					
-					List list = new ArrayList();
+					List<Product> list = new ArrayList<Product>();
 					list.add(product);
 					
 					check = new HashMap<Integer, List<Product>>();
@@ -123,6 +123,7 @@ public class ShopServlet extends HttpServlet {
 			req.setAttribute("categoryVO", categoryVO);
 			
 			if(req.getParameter("method").equals("bag")) {
+				System.out.println(check.size());
 				String url = "/front-end/shop/Cart_new.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
@@ -139,7 +140,66 @@ public class ShopServlet extends HttpServlet {
 		
 
 		// 結帳，計算購物車書籍價錢總數
-		if (action.equals("CHECKOUT")) {
+		if (action.equals("CHECK")) {
+			
+//			List<OrderVO> orderVO_list = new ArrayList();
+			Map<OrderVO,List<OrderlistVO>> orderVO_list = new HashMap<OrderVO,List<OrderlistVO>>();
+			
+			Set<Integer> set = check.keySet();
+			Iterator<Integer> it = set.iterator();
+			
+			while (it.hasNext()) {
+			int total = 0;
+			
+			List<OrderlistVO> orderlist = new ArrayList<OrderlistVO>();
+			Integer storeID = it.next();
+			List<Product> buylist = check.get(storeID);
+			
+			
+			Map<String, String[]> map = req.getParameterMap();
+			String[] valuelist = map.get("check"+storeID);
+			System.out.println(valuelist[0]);
+			
+			
+			for (int i = 0; i < valuelist.length; i++) {
+				if(valuelist[i].equals("1")) {
+					Product order = buylist.get(i);
+					
+					Integer price = order.getPrice();
+					String str = req.getParameter("product"+order.getStoreID()+i);
+					Integer quantity = Integer.parseInt(str);
+					order.setQuantity(quantity);
+			
+				
+					total += (price * quantity);
+				
+
+				}
+		
+			 }
+			
+			
+			String amount = String.valueOf(total);
+			req.setAttribute("amount", amount);
+
+			}
+			
+			session.setAttribute("orderVO_list", orderVO_list);
+			
+			
+//			OrderlistService orderlistService = new OrderlistService();
+//			orderlistService.addOrderlist(orderlist);
+		
+			
+			
+
+			String url = "/front-end/shop/Checkout.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
+
+		}
+		
+		if("CHECKOUT".equals(action)) {
 			
 //			List<OrderVO> orderVO_list = new ArrayList();
 			Map<OrderVO,List<OrderlistVO>> orderVO_list = new HashMap<OrderVO,List<OrderlistVO>>();
@@ -275,6 +335,7 @@ public class ShopServlet extends HttpServlet {
 //			ordervo.setCouponGold();
 //			ordervo.setFinalTotal(null);
 
+		
 		}
 	}
 

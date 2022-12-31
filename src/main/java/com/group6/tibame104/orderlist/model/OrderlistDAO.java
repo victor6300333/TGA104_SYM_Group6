@@ -159,7 +159,7 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 	}
 
 	@Override
-	public List<OrderlistVO> findByProductID(Integer productID) {
+	public List<OrderlistVO> findByProductID(Integer productID, Boolean all) {
 		
 		OrderlistVO orderlistVO = null;
 		List<OrderlistVO> list = new ArrayList<OrderlistVO>();
@@ -183,8 +183,12 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 				orderlistVO.setBuyerReview(rs.getInt("buyerReview"));
 				orderlistVO.setBuyerComment(rs.getString("buyerComment"));
 				orderlistVO.setBuyerCommentPic(rs.getBytes("buyerCommentPic"));
-				if(orderlistVO.getBuyerComment() != null && orderlistVO.getBuyerReview() != null )
+				if(all == true) {
 					list.add(orderlistVO);
+				} else if(all == false) {
+					if(orderlistVO.getBuyerComment() != null && orderlistVO.getBuyerReview() != null )
+						list.add(orderlistVO);
+				}
 			}
 				
 			}

@@ -8,6 +8,7 @@
 Map<Integer, List<Product>> check = (Map<Integer, List<Product>>) session.getAttribute("check");
 Integer count_num = (Integer) session.getAttribute("count_num");
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +49,7 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 <link
 	href="${pageContext.request.contextPath}/front-end/product_detail/css/woody.css"
 	rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -132,7 +134,7 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img
+						<a href="${pageContext.request.contextPath}/"> <img
 							src="${pageContext.request.contextPath}/front-end/product_detail/img/logoSYM.jpg"
 							alt="Logo" />
 						</a>
@@ -159,7 +161,7 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 
 						<a
 							href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp"
-							class="btn cart"> <i class="fa fa-shopping-cart"></i> <span>(<%=(count_num == null) ? "0" : count_num%>)
+							class="btn cart"> <i class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})
 						</span>
 						</a>
 					</div>
@@ -221,18 +223,29 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 								<div class="product-content">
 									<div class="title">
 										<h2>${categoryVO.productName}</h2>
-									</div>
-									<p class="previewing" style='display: none'>${categoryVO.commentAvgStar}</p>
+									</div> 
 									<div class="ratting">
-										<i class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i>
+									 <b id="previewing" >${categoryVO.commentAvgStar.toString().substring(0,3)}</b>&nbsp;
+										<i class="fa fa-star"  style='display: none'></i> 
+											<i class="fa fa-star-half-o" style='display: none' ></i>
+										<i class="fa fa-star"  style='display: none'></i> 
+											<i class="fa fa-star-half-o" style='display: none'></i>
+										<i class="fa fa-star"  style='display: none'></i> 
+											<i class="fa fa-star-half-o" style='display: none'></i>
+										<i class="fa fa-star"  style='display: none'></i>
+											<i class="fa fa-star-half-o" style='display: none'></i> 
+										<i class="fa fa-star"  style='display: none'></i>
+										<i class="fa fa-star-o" aria-hidden="true" style='display: none'></i>
+										<i class="fa fa-star-o" aria-hidden="true" style='display: none'></i>
+										<i class="fa fa-star-o" aria-hidden="true" style='display: none'></i>
+										<i class="fa fa-star-o" aria-hidden="true" style='display: none'></i>
+										<i class="fa fa-star-o" aria-hidden="true" style='display: none'></i>&emsp;
+										<b id='rate'>|&emsp; ${list.size()} 評價 &emsp;</b>
+										<b>|&emsp;  ${listAll.size()} 已售出 </b>
 									</div>
 									<div class="price">
 										<h4>價格:</h4>
-										<p>${categoryVO.productPrice}</p>
+										<p>$${categoryVO.productPrice}</p>
 									</div>
 
 
@@ -242,14 +255,15 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 										<div class="quantity">
 											<h4>數量:</h4>
 											<div class="qty">
-												<button type="button" class="btn-minus">
+												<button type="button" class="btn-minus" id="btn-minus">
 													<i class="fa fa-minus"></i>
 												</button>
 												<input type="text" id="quantity" name="quantity" value="1">
-												<button type="button" class="btn-plus">
+												<button type="button" class="btn-plus" id="btn-plus">
 													<i class="fa fa-plus"></i>
 												</button>
 											</div>
+											<b id='alert'></b>
 										</div>
 										<div class="quantity">
 											<h4>庫存:</h4>
@@ -332,7 +346,7 @@ cart.addEventListener('click', (event) => {
 									<li class="nav-item"><a class="nav-link active"
 										data-toggle="pill" href="#description">商品詳情</a></li>
 									<li class="nav-item"><a class="nav-link"
-										data-toggle="pill" href="#reviews">評論(${list.size()})</a></li>
+										data-toggle="pill" href="#reviews">評價(${list.size()})</a></li>
 								</ul>
 
 								<div class="tab-content">
@@ -357,11 +371,11 @@ cart.addEventListener('click', (event) => {
 
 											<p class="reviewing" style='display: none'>${orderlistVO.buyerReview}</p>
 											<div class="ratting">
-												<i class="fa fa-star" name="fa" style='display: none'></i> <i
-													class="fa fa-star" name="fa" style='display: none'></i> <i
-													class="fa fa-star" name="fa" style='display: none'></i> <i
-													class="fa fa-star" name="fa" style='display: none'></i> <i
-													class="fa fa-star" name="fa" style='display: none'></i>
+												<i class="fa fa-star"  style='display: none'></i> <i
+													class="fa fa-star"  style='display: none'></i> <i
+													class="fa fa-star"  style='display: none'></i> <i
+													class="fa fa-star"  style='display: none'></i> <i
+													class="fa fa-star"  style='display: none'></i>
 											</div>
 											<p>
 												<img style="width: 200px; height: 160px;"
@@ -376,57 +390,136 @@ cart.addEventListener('click', (event) => {
 								</div>
 
 								<script>
+										var fa = document.getElementsByClassName("fa fa-star");
 									document.addEventListener("DOMContentLoaded", function(){
-										var previewing = Number(document.getElementsByClassName('previewing').innerHTML);
-										var fa = document.getElementsByName("fa");
 										
 										for(var i=0 ; i< ${list.size()} ; i++){
 										if(document.getElementsByClassName('reviewing')[i].innerHTML == '1'){
-											document.getElementsByName("fa")[i*5].style.display = 'inline';		
+											fa[5+i*5].style.display = 'inline';		
 										}
 										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '2'){
-											document.getElementsByName("fa")[i*5].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
+											fa[5+i*5].style.display = 'inline';	
+											fa[5+i*5+1].style.display = 'inline';	
 										}
 										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '3'){
-											document.getElementsByName("fa")[i*5].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
+											fa[5+i*5].style.display = 'inline';	
+											fa[5+i*5+1].style.display = 'inline';	
+											fa[5+i*5+2].style.display = 'inline';	
 										}
 										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '4'){
-											document.getElementsByName("fa")[i*5].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+3].style.display = 'inline';	
+											fa[5+i*5].style.display = 'inline';	
+											fa[5+i*5+1].style.display = 'inline';	
+											fa[5+i*5+2].style.display = 'inline';	
+											fa[5+i*5+3].style.display = 'inline';	
 										}
 										else if(document.getElementsByClassName('reviewing')[i].innerHTML == '5'){
-											document.getElementsByName("fa")[i*5].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+1].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+2].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+3].style.display = 'inline';	
-											document.getElementsByName("fa")[i*5+4].style.display = 'inline';	
+											fa[5+i*5].style.display = 'inline';	
+											fa[5+i*5+1].style.display = 'inline';	
+											fa[5+i*5+2].style.display = 'inline';	
+											fa[5+i*5+3].style.display = 'inline';	
+											fa[5+i*5+4].style.display = 'inline';	
 										}	
 									}
 										});
 									
-									if(previewing >= 1 && previewing < 2){
-										fa[i*5].style.display = 'inline';		
+										var previewing = Number(document.getElementById('previewing').innerHTML);
+										var fahalf = document.getElementsByClassName("fa fa-star-half-o");
+										var faempty = document.getElementsByClassName("fa fa-star-o");
+									if(previewing == 0){				
+										document.getElementById('previewing').innerHTML = '尚無評價';
+										document.getElementById('rate').remove();
+								    }else if(previewing >= 1 && previewing < 1.5){
+										fa[0].style.display = 'inline';						
+										faempty[0].style.display = 'inline';						
+										faempty[1].style.display = 'inline';						
+										faempty[2].style.display = 'inline';						
+										faempty[3].style.display = 'inline';						
+									} else if (previewing >= 1.5 && previewing < 2){
+										fa[0].style.display = 'inline';
+										fahalf[0].style.display = 'inline';
+										fahalf[0].style.display = 'inline';
+										fahalf[1].style.display = 'inline';
+										fahalf[2].style.display = 'inline';
+										
+									} else if(previewing >= 2 && previewing < 2.5){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+									} else if(previewing >= 2.5 && previewing < 3){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fahalf[1].style.display = 'inline';
+										faempty[0].style.display = 'inline';
+										faempty[1].style.display = 'inline';
+									} else if(previewing >= 3 && previewing < 3.5){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+										faempty[0].style.display = 'inline';	
+										faempty[1].style.display = 'inline';	
+									} else if(previewing >= 3.5 && previewing < 4){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+										fahalf[2].style.display = 'inline';
+										faempty[0].style.display = 'inline';
+									} else if(previewing >= 4 && previewing <= 4.5){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+										fa[3].style.display = 'inline';	
+										faempty[0].style.display = 'inline';	
+									} else if(previewing >= 4.5 && previewing < 5){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+										fa[3].style.display = 'inline';	
+										fahalf[3].style.display = 'inline';
+									} else if(previewing == 5){
+										fa[0].style.display = 'inline';	
+										fa[1].style.display = 'inline';	
+										fa[2].style.display = 'inline';	
+										fa[3].style.display = 'inline';	
+										fa[4].style.display = 'inline';	
 									}
-									else if(previewing >= 2 && previewing < 3){
-										fa[i*5].style.display = 'inline';	
-										fa[i*5+1].style.display = 'inline';	
-									}
-									else if(previewing >= 3 && previewing < 4){
-										fa[i*5].style.display = 'inline';	
-										fa[i*5+1].style.display = 'inline';	
-										fa[i*5+2].style.display = 'inline';	
-									}
-									else if(previewing >= 4 && previewing <= 5){
-										fa[i*5].style.display = 'inline';	
-										fa[i*5+1].style.display = 'inline';	
-										fa[i*5+2].style.display = 'inline';	
-										fa[i*5+3].style.display = 'inline';	
-									}
+									
+									var quantity = document.getElementById("quantity");
+									var alert = document.getElementById("alert");
+									var btnplus = document.getElementById("btn-plus");
+									var btnminus = document.getElementById("btn-minus");
+									
+									quantity.addEventListener("keyup", function(event) {
+										
+											 if(quantity.value > Number(${categoryVO.productStock})){
+												 quantity.value = Number(${categoryVO.productStock})
+											alert.innerHTML = "已達庫存上限";							 		
+									 		event.preventDefault();
+									     } else{
+									    	 alert.innerHTML = "";
+									     }
+									});
+									
+									btnplus.addEventListener("click", function(event) {
+										
+										if(quantity.value >= Number(${categoryVO.productStock})){
+												 quantity.value = Number(${categoryVO.productStock})-1
+											alert.innerHTML = "已達庫存上限";							 		
+									 		event.preventDefault();
+									     } else{
+									    	 alert.innerHTML = "";
+									     }
+									});
+									
+									btnminus.addEventListener("click", function(event) {
+										
+										if(quantity.value <= Number(${categoryVO.productStock})){
+												alert.innerHTML = "";
+									     }
+									});
+									
+									
 									
 									
 									</script>
@@ -437,156 +530,51 @@ cart.addEventListener('click', (event) => {
 
 						<div class="product">
 							<div class="section-header">
-								<h1>Related Products</h1>
+								<h2>相關商品</h2>
 							</div>
 
 							<div
 								class="row align-items-center product-slider product-slider-3">
-								<div class="col-lg-3">
-									<div class="product-item">
-										<div class="product-title">
-											<a href="#">Product Name</a>
-											<div class="ratting">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<div class="product-image">
-											<a href="product-detail.html"> <img
-												src="img/product-10.jpg" alt="Product Image">
-											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-													class="fa fa-heart"></i></a> <a href="#"><i
-													class="fa fa-search"></i></a>
-											</div>
-										</div>
-										<div class="product-price">
-											<h3>
-												<span>$</span>99
-											</h3>
-											<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-												Now</a>
+								
+								<c:forEach var="categoryVO" items="${categoryMainID}">
+					
+								<div class="product-item">
+									<div class="product-title">
+										<a href="#">${categoryVO.productName}</a>
+										<div class="ratting">
+											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i>
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-3">
-									<div class="product-item">
-										<div class="product-title">
-											<a href="#">Product Name</a>
-											<div class="ratting">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<div class="product-image">
-											<a href="product-detail.html"> <img
-												src="img/product-8.jpg" alt="Product Image">
-											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-													class="fa fa-heart"></i></a> <a href="#"><i
-													class="fa fa-search"></i></a>
-											</div>
-										</div>
-										<div class="product-price">
-											<h3>
-												<span>$</span>99
-											</h3>
-											<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-												Now</a>
+									<div class="商品圖片">
+										<a
+											href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
+											<img
+											src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
+											style="width: 230px; height: 200px" alt="Product Image">
+										</a>
+										<div class="product-action">
+											<a href="#"><i class="fa fa-加入購物車"></i></a> <a href="#"><i
+												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
 										</div>
 									</div>
-								</div>
-								<div class="col-lg-3">
-									<div class="product-item">
-										<div class="product-title">
-											<a href="#">Product Name</a>
-											<div class="ratting">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<div class="product-image">
-											<a href="product-detail.html"> <img
-												src="img/product-6.jpg" alt="Product Image">
-											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-													class="fa fa-heart"></i></a> <a href="#"><i
-													class="fa fa-search"></i></a>
-											</div>
-										</div>
-										<div class="product-price">
-											<h3>
-												<span>$</span>99
-											</h3>
-											<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-												Now</a>
-										</div>
+									<div class="商品價格">
+										<h3>
+											<span>$</span>${categoryVO.productPrice}</h3>
+										<form name="shoppingForm"
+											action="${pageContext.request.contextPath}/SearchServlet"
+											method="POST">
+											<input type="hidden" name="action" value="getOne_For_Display">
+											<input type="hidden" name="productID"
+												value="${categoryVO.productID}"> <a class="btn"
+												href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
+												class="fa fa-shopping-cart"></i>查看</a>
+										</form>
 									</div>
 								</div>
-								<div class="col-lg-3">
-									<div class="product-item">
-										<div class="product-title">
-											<a href="#">Product Name</a>
-											<div class="ratting">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<div class="product-image">
-											<a href="product-detail.html"> <img
-												src="img/product-4.jpg" alt="Product Image">
-											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-													class="fa fa-heart"></i></a> <a href="#"><i
-													class="fa fa-search"></i></a>
-											</div>
-										</div>
-										<div class="product-price">
-											<h3>
-												<span>$</span>99
-											</h3>
-											<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-												Now</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3">
-									<div class="product-item">
-										<div class="product-title">
-											<a href="#">Product Name</a>
-											<div class="ratting">
-												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i>
-											</div>
-										</div>
-										<div class="product-image">
-											<a href="product-detail.html"> <img
-												src="img/product-2.jpg" alt="Product Image">
-											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-													class="fa fa-heart"></i></a> <a href="#"><i
-													class="fa fa-search"></i></a>
-											</div>
-										</div>
-										<div class="product-price">
-											<h3>
-												<span>$</span>99
-											</h3>
-											<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-												Now</a>
-										</div>
-									</div>
-								</div>
+							
+						</c:forEach>
 							</div>
 						</div>
 					</div>
@@ -608,143 +596,57 @@ cart.addEventListener('click', (event) => {
 							</ul>
 						</nav>
 					</div>
-
+					<br>
 					<div class="sidebar-widget widget-slider">
+					<br>
+						<h2 class="title">賣場好物推薦</h2>
 						<div class="sidebar-slider normal-slider">
-							<div class="product-item">
-								<div class="product-title">
-									<a href="#">Product Name</a>
-									<div class="ratting">
-										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i>
+							<c:forEach var="categoryVO" items="${categoryStoreID}">
+					
+								<div class="product-item">
+									<div class="product-title">
+										<a href="#">${categoryVO.productName}</a>
+										<div class="ratting">
+											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+												class="fa fa-star"></i>
+										</div>
+									</div>
+									<div class="商品圖片">
+										<a
+											href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
+											<img
+											src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
+											style="width: 230px; height: 200px" alt="Product Image">
+										</a>
+										<div class="product-action">
+											<a href="#"><i class="fa fa-加入購物車"></i></a> <a href="#"><i
+												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
+										</div>
+									</div>
+									<div class="商品價格">
+										<h3>
+											<span>$</span>${categoryVO.productPrice}</h3>
+									<a class="btn"
+												href="${pageContext.request.contextPath}
+													/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}&storeID=${categoryVO.storeID}"><i
+												class="fa fa-shopping-cart"></i>查看</a>
+		
 									</div>
 								</div>
-								<div class="product-image">
-									<a href="product-detail.html"> <img src="img/product-7.jpg"
-										alt="Product Image" />
-									</a>
-									<div class="product-action">
-										<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-											class="fa fa-heart"></i></a> <a href="#"><i
-											class="fa fa-search"></i></a>
-									</div>
-								</div>
-								<div class="product-price">
-									<h3>
-										<span>$</span>99
-									</h3>
-									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-										Now</a>
-								</div>
-							</div>
-							<div class="product-item">
-								<div class="product-title">
-									<a href="#">Product Name</a>
-									<div class="ratting">
-										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i>
-									</div>
-								</div>
-								<div class="product-image">
-									<a href="product-detail.html"> <img src="img/product-8.jpg"
-										alt="Product Image" />
-									</a>
-									<div class="product-action">
-										<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-											class="fa fa-heart"></i></a> <a href="#"><i
-											class="fa fa-search"></i></a>
-									</div>
-								</div>
-								<div class="product-price">
-									<h3>
-										<span>$</span>99
-									</h3>
-									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-										Now</a>
-								</div>
-							</div>
-							<div class="product-item">
-								<div class="product-title">
-									<a href="#">Product Name</a>
-									<div class="ratting">
-										<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-											class="fa fa-star"></i>
-									</div>
-								</div>
-								<div class="product-image">
-									<a href="product-detail.html"> <img src="img/product-9.jpg"
-										alt="Product Image" />
-									</a>
-									<div class="product-action">
-										<a href="#"><i class="fa fa-cart-plus"></i></a> <a href="#"><i
-											class="fa fa-heart"></i></a> <a href="#"><i
-											class="fa fa-search"></i></a>
-									</div>
-								</div>
-								<div class="product-price">
-									<h3>
-										<span>$</span>99
-									</h3>
-									<a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy
-										Now</a>
-								</div>
-							</div>
+							
+						</c:forEach>
 						</div>
 					</div>
 
-					<div class="sidebar-widget brands">
-						<h2 class="title">Our Brands</h2>
-						<ul>
-							<li><a href="#">Nulla </a><span>(45)</span></li>
-							<li><a href="#">Curabitur </a><span>(34)</span></li>
-							<li><a href="#">Nunc </a><span>(67)</span></li>
-							<li><a href="#">Ullamcorper</a><span>(74)</span></li>
-							<li><a href="#">Fusce </a><span>(89)</span></li>
-							<li><a href="#">Sagittis</a><span>(28)</span></li>
-						</ul>
-					</div>
-
-					<div class="sidebar-widget tag">
-						<h2 class="title">Tags Cloud</h2>
-						<a href="#">Lorem ipsum</a> <a href="#">Vivamus</a> <a href="#">Phasellus</a>
-						<a href="#">pulvinar</a> <a href="#">Curabitur</a> <a href="#">Fusce</a>
-						<a href="#">Sem quis</a> <a href="#">Mollis metus</a> <a href="#">Sit
-							amet</a> <a href="#">Vel posuere</a> <a href="#">orci luctus</a> <a
-							href="#">Nam lorem</a>
-					</div>
+					
 				</div>
 			</div>
 
 			<!-- Product Detail End -->
 
 			<!-- Brand Start -->
-			<div class="brand">
-				<div class="container-fluid">
-					<div class="brand-slider">
-						<div class="brand-item">
-							<img src="img/brand-1.png" alt="">
-						</div>
-						<div class="brand-item">
-							<img src="img/brand-2.png" alt="">
-						</div>
-						<div class="brand-item">
-							<img src="img/brand-3.png" alt="">
-						</div>
-						<div class="brand-item">
-							<img src="img/brand-4.png" alt="">
-						</div>
-						<div class="brand-item">
-							<img src="img/brand-5.png" alt="">
-						</div>
-						<div class="brand-item">
-							<img src="img/brand-6.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
+			
 			<!-- Brand End -->
 
 			<!-- Footer Start -->

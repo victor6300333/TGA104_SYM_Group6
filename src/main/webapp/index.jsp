@@ -72,9 +72,11 @@
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="index.html" class="nav-item nav-link">首頁</a> <a
-							href="product-list.html" class="nav-item nav-link">我的賣場</a>
-
+						<a href="${pageContext.request.contextPath}/" class="nav-item nav-link">首頁</a> 
+						<a href="${pageContext.request.contextPath}/front-end/store/myStore.jsp" class="nav-item nav-link">我的賣場</a>
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
+						</div>
 					</div>
 				</div>
 				<div class="navbar-nav ml-auto">
@@ -82,13 +84,9 @@
 
 						<c:choose>
 							<c:when test="${memVO.userName == null}">
-								<a href="#" class="nav-link dropdown-toggle"
-									data-toggle="dropdown"> 登入/註冊</a>
-								<div class="dropdown-menu">
-									<a
-										href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
-										class="dropdown-item">登入</a> <a href="#" class="dropdown-item">登出</a>
-								</div>
+								<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="nav-link"
+									> 登入/註冊</a>
+								
 							</c:when>
 
 
@@ -171,8 +169,8 @@
                 <i class="fa fa-heart"></i>
                 <span>(0)</span>
               </a> -->
-						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
+							class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})</span>
 						</a>
 					</div>
 				</div>
@@ -538,66 +536,7 @@
 	<!-- Recent Product End -->
 
 	<!-- Review Start -->
-	<div class="review">
-		<div class="container-fluid">
-			<div class="row align-items-center review-slider normal-slider">
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-1.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-2.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-3.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Review End -->
 
 	<!-- Footer Start -->
