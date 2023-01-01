@@ -77,7 +77,6 @@ public class GroupController {
         ) {
         List<String> errorMsgs = new LinkedList<String>();
         model.addAttribute("errorMsgs", errorMsgs);
-
         if (str == null || (str.trim()).length() == 0) {
             errorMsgs.add("請輸入折扣表編號");
         }
@@ -130,6 +129,7 @@ public class GroupController {
             session.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
             session.setAttribute("groupBuyCount", groupBuyCount);
             session.setAttribute("groupproductVO", groupproductVO);
+            
             
 //        Object account = session.getAttribute("mail");
 //        if (account == null) {
@@ -357,5 +357,13 @@ public class GroupController {
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   
 		   return"back-end/group/updateGroup";
+	   }
+	   @GetMapping("/getJoinAll")
+	   public String getJoinAll(
+			   Model model) {
+		   List<Object> groupVOs = groupSvc.getJoinAll();
+		   model.addAttribute("groupVOs",groupVOs);
+		   System.out.println("123");
+		   return "front-end/group/listAllGroup";
 	   }
 }

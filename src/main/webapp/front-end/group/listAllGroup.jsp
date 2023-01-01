@@ -169,7 +169,7 @@
 						<div class="col-md-12">
 							<div class="product-view-top">
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-6">
 										<form id="form">
 											<div class="product-search">
 												<input id="searchinput" name="groupbuyProductDescrip"
@@ -180,6 +180,7 @@
 											</div>
 										</form>
 									</div>
+									
 									<div class="col-md-4">
 										<div class="product-short">
 											<div class="dropdown">
@@ -191,26 +192,6 @@
 														class="dropdown-item">最新</a> <a
 														href="${pageContext.request.contextPath}/front-end/group/orderBy"
 														class="dropdown-item">最多參與</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="product-price-range">
-											<div class="dropdown">
-												<div class="dropdown-toggle" data-toggle="dropdown">價格
-												</div>
-												<div class="dropdown-menu dropdown-menu-right">
-													<a href="#" class="dropdown-item">$0 to $50</a> <a href="#"
-														class="dropdown-item">$51 to $100</a> <a href="#"
-														class="dropdown-item">$101 to $150</a> <a href="#"
-														class="dropdown-item">$151 to $200</a> <a href="#"
-														class="dropdown-item">$201 to $250</a> <a href="#"
-														class="dropdown-item">$251 to $300</a> <a href="#"
-														class="dropdown-item">$301 to $350</a> <a href="#"
-														class="dropdown-item">$351 to $400</a> <a href="#"
-														class="dropdown-item">$401 to $450</a> <a href="#"
-														class="dropdown-item">$451 to $500</a>
 												</div>
 											</div>
 										</div>

@@ -15,6 +15,7 @@ public interface GroupDAO_interface {
 
 	 public List<GroupVO> getAll();
 	 public List<GroupVO> orderBy();
+	 public List<Object> getJoinAll();
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //   public List<(GroupproductVO> getAll(Map<String, String[]> map); 
 }
