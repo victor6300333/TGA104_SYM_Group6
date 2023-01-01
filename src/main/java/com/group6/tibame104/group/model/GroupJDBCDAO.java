@@ -11,9 +11,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository
+//@Repository
 public class GroupJDBCDAO implements GroupDAO_interface {
-	@Autowired
+//	@Autowired
 	private DataSource dataSource;
 
 	private static final String UPDATE = "UPDATE groupBuying set groupBuyProductID=?,administratorID=?,groupBuyProductOrderTotal=?,groupBuyingState=?,groupBuyingOnLoadDate=?,groupBuyingOffLoadDate=?,updateTime= ? WHERE groupBuyID = ?";
@@ -190,6 +190,12 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public List<Object> getJoinAll() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

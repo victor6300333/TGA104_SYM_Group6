@@ -11,9 +11,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository
+//@Repository
 public class GrouporderJDBCDAO implements GrouporderDAO_interface {
-	@Autowired
+//	@Autowired
 	private DataSource dataSource;
 
 	private static final String INSERT_STMT = "INSERT INTO groupBuyOrder (groupBuyID,groupBuyProductID,memberID,groupBuyQuantity,groupBuyTotal,orderTime,paymentTerm,paymentState,giftVoucher,contactNumber,shippingLocation) VALUES(?,?,?,?,?,?,?,?,?,?,?)";

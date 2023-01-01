@@ -7,9 +7,9 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+@Repository
 public class GrouporderHibernate implements GrouporderDAO_interface {
-//	@PersistenceContext
+	@PersistenceContext
 	private Session session;
 
 	@Override
@@ -25,8 +25,8 @@ public class GrouporderHibernate implements GrouporderDAO_interface {
 
 	@Override
 	public void delete(Integer grouporderID) {
-//		final GrouporderVO grouporderVO = session.get(grouporderVO.class, grouporderID);
-		session.remove(grouporderID);
+		final GrouporderVO grouporderVO = session.get(GrouporderVO.class, grouporderID);
+		session.remove(grouporderVO);
 
 	}
 
@@ -38,8 +38,8 @@ public class GrouporderHibernate implements GrouporderDAO_interface {
 
 	@Override
 	public List<GrouporderVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		final String hql = "FROM GrouporderVO ORDER BY groupBuyOrderID";
+		return session.createQuery(hql, GrouporderVO.class).list();
 	}
 
 	@Override
