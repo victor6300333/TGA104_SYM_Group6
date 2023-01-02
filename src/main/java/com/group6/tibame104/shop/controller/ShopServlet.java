@@ -27,6 +27,8 @@ import org.springframework.stereotype.Component;
 
 import com.group6.tibame104.category.model.CategoryService;
 import com.group6.tibame104.category.model.CategoryVO;
+import com.group6.tibame104.creditCard.model.CreditCardService;
+import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.order.model.OrderService;
 import com.group6.tibame104.order.model.OrderVO;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
@@ -52,6 +54,8 @@ public class ShopServlet extends HttpServlet {
 	OrderService ordsvc;
 	@Autowired
 	CategoryService categorySvc;
+	@Autowired
+	CreditCardService creditSvc;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -153,15 +157,10 @@ public class ShopServlet extends HttpServlet {
 			Integer storeID = it.next();
 			List<Product> buylist = check.get(storeID);
 			List<Product> buylist_new = new ArrayList<Product>();
-			
-			
-			Map<String, String[]> map = req.getParameterMap();
-			
-			if(map.get("check"+storeID) != null) {
-				String[] valuelist = map.get("check"+storeID);
-			
-				for (int i = 0; i < valuelist.length; i++) {
-					if(valuelist[i].equals("1")) {
+	
+				for (int i = 0; i < buylist.size(); i++) {
+					String valuelist = req.getParameter("check"+storeID+i);
+					if("1".equals(valuelist)) {
 						Product product = buylist.get(i);
 
 						String str = req.getParameter("product"+product.getStoreID()+i);
@@ -174,14 +173,16 @@ public class ShopServlet extends HttpServlet {
 				}
 		
 			 }
-				check_new.put(storeID, buylist_new);
+				if(!buylist_new.isEmpty())
+					check_new.put(storeID, buylist_new);
 				
-			}
+	
 
-
 			}
+			List<CreditCardVO> credit = creditSvc.getAll(Integer.valueOf(req.getParameter("memberID")));
 			
 //			session.setAttribute("total", total);
+			session.setAttribute("credit", credit);
 			session.setAttribute("check_new", check_new);
 			String url = "/front-end/shop/Check.jsp";
 			RequestDispatcher rd = req.getRequestDispatcher(url);
@@ -190,11 +191,12 @@ public class ShopServlet extends HttpServlet {
 		}
 		
 		if("CHECKOUT".equals(action)) {
-			
+			@SuppressWarnings("unchecked")
+			Map<Integer, List<Product>> check_new = (Map<Integer, List<Product>>) session.getAttribute("check_new");
 //			List<OrderVO> orderVO_list = new ArrayList();
 			Map<OrderVO,List<OrderlistVO>> orderVO_list = new HashMap<OrderVO,List<OrderlistVO>>();
 			
-			Set<Integer> set = check.keySet();
+			Set<Integer> set = check_new.keySet();
 			Iterator<Integer> it = set.iterator();
 			
 			while (it.hasNext()) {
@@ -220,7 +222,7 @@ public class ShopServlet extends HttpServlet {
 					list.setSubTotal(product.getPrice()*product.getQuantity());
 					list.setUserAccount(req.getParameter("userAccount"));
 					
-//					total += product.getPrice()*product.getQuantity();
+					total += product.getPrice()*product.getQuantity();
 
 					orderlist.add(list);
 				}
@@ -241,9 +243,13 @@ public class ShopServlet extends HttpServlet {
 			ordervo.setStoreID(Integer.parseInt(str));
 			ordervo.setStoreName(req.getParameter("storeName"+str));
 			ordervo.setCreditcardNumber("10");
-			ordervo.setPayType(req.getParameter("paytype"));
 			ordervo.setReceiver(req.getParameter("receiver"+str));
-			ordervo.setOrderStatus(0);
+			ordervo.setPayType(req.getParameter("type"));
+			if("credit".equals(req.getParameter("type"))) {
+				ordervo.setOrderStatus(1);
+			} else {
+				ordervo.setOrderStatus(0);
+			}
 			ordervo.setPhone(req.getParameter("phone"+str));
 			ordervo.setAddress(req.getParameter("address"+str));
 			
@@ -264,16 +270,20 @@ public class ShopServlet extends HttpServlet {
 			
 			session.setAttribute("orderVO_list", orderVO_list);
 			
-			if(req.getParameter("paytype").equals("atm")) {
-				String url = "/front-end/shop/ATM.jsp";
-				RequestDispatcher rd = req.getRequestDispatcher(url);
-				rd.forward(req, res);
-			} else {
+			String url;
+			if(req.getParameter("type").equals("atm")) {
+				url = "/front-end/shop/ATM.jsp";
+				
+			} else if(req.getParameter("type").equals("credit")) {
 			
-			String url = "/front-end/shop/Checkout.jsp";
+			    url = "/front-end/shop/Confirm.jsp";
+			
+			} else {
+				url = "/front-end/shop/select_Order?status=0";
+			}
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
-			}
+			
 			session.removeAttribute("check");
 			session.removeAttribute("count_num");
 

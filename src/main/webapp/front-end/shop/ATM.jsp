@@ -7,10 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	 atm轉帳帳號 <br ><br >
 	<form action="${pageContext.request.contextPath}/front-end/order/select_Order"
 		method="post">
-		<input type="hidden" name="status" value="0">
+		
 		<input type="submit" value="確認">
 	
 	</form>

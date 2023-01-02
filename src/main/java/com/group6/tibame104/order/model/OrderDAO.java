@@ -33,7 +33,7 @@ public class OrderDAO implements OrderDAO_interface {
 			+ "VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 	private static final String GET_ONE_STMT = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
-			+ "	useCouponGold, finalTotal FROM `order` where orderID = ?";
+			+ "	useCouponGold, finalTotal FROM `order` where orderID = ? ";
 	private static final String GET_ALL = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order`";
@@ -174,7 +174,7 @@ public class OrderDAO implements OrderDAO_interface {
 	public List<OrderVO> getAllByComposite(Map<String, String> map) {
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		OrderVO orderVO = null;
-		String finalSQL = "select * from `order` " + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map);
+		String finalSQL = "select * from `order` " + jdbcUtil_CompositeQuery_Emp2.get_WhereCondition(map) ;
 
 		try (Connection con = dataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(finalSQL);) {
 
