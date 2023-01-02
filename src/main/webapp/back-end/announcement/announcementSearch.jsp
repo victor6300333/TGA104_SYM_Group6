@@ -273,7 +273,7 @@
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
-										<li class="breadcrumb-item"><a href="#">Home</a></li>
+										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
 										<li class="breadcrumb-item active">公告查詢</li>
 									</ol>
 								</div>
@@ -367,7 +367,7 @@
 														class="table table-bordered table-hover">
 														<thead>
 															<tr>
-																<th>公告流水編號</th>
+																<th>公告編號</th>
 																<th>管理員編號</th>
 																<th>標題</th>
 																<th>描述</th>

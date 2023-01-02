@@ -259,7 +259,7 @@
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
-										<li class="breadcrumb-item"><a href="#">Home</a></li>
+										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
 										<li class="breadcrumb-item active">公告查詢</li>
 									</ol>
 								</div>
@@ -303,6 +303,7 @@
 																<th>更新日期</th>
 																<th>上架狀態</th>
 																<th>首頁/賣場</th>
+																<th></th>
 															</tr>
 														</thead>
 														<tbody id="announList">
@@ -367,6 +368,12 @@
 <!--                                                 取消 -->
 <!--                                             </button> -->
 										</div>
+										<button
+																	type="submit"
+																	class="btn sym-darkpurple sym-yellow-font btn_style"
+																	onclick="window.location.href='${pageContext.request.contextPath}/Announcement/getAll'"
+																	id="addProduct">回上一頁
+																</button>
 									</div>
 									<!-- /.card -->
 								</div>
@@ -386,7 +393,7 @@
 				<!-- /.control-sidebar -->
 				<!-- ============ Footer段落 ============ -->
 				<!-- /.content-wrapper -->
-			</div>
+			
 			<!-- Content ends-->
 
 			<!-- Footer Start -->
@@ -408,6 +415,7 @@
 		<!-- Content End -->
 
 		<!-- Back to Top -->
+		<div>
 		<a href="#"
 			class="btn btn-lg sym-darkpurple sym-yellow-font btn-lg-square back-to-top btn_style"><i
 			class="bi bi-arrow-up"></i></a>
