@@ -95,7 +95,7 @@
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="${pageContext.request.contextPath}/index.jsp"
+						<a href="${pageContext.request.contextPath}/"
 							class="nav-item nav-link">首頁</a> <a
 							href="${pageContext.request.contextPath}/front-end/store/myStore.jsp"
 							class="nav-item nav-link">我的賣場</a>
@@ -139,7 +139,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="${pageContext.request.contextPath}/index.jsp"> <img
+						<a href="${pageContext.request.contextPath}/"> <img
 							src="${pageContext.request.contextPath}/front-end/member/img/logo.png"
 							alt="Logo" />
 						</a>
