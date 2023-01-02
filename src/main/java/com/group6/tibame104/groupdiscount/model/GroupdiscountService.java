@@ -16,9 +16,8 @@ public class GroupdiscountService {
 	// 新增
 	public GroupdiscountVO addGroupdiscount(Integer groupBuyID, Integer groupBuyProductOrderTotal,
 			Double groupBuyCount) {
-
+		
 		GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
-
 		groupdiscountVO.setGroupBuyID(groupBuyID);
 		groupdiscountVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);
 		groupdiscountVO.setGroupBuyCount(groupBuyCount);
@@ -33,9 +32,8 @@ public class GroupdiscountService {
 	// 修改
 	public GroupdiscountVO updateGroupdiscount(Integer countTableID, Integer groupBuyID, Integer groupBuyProductOrderTotal,
 			Double groupBuyCount) {
-
+		
 		GroupdiscountVO groupdiscountVO = new GroupdiscountVO();
-
 		groupdiscountVO.setCountTableID(countTableID);
 		groupdiscountVO.setGroupBuyID(groupBuyID);
 		groupdiscountVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);

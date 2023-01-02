@@ -422,9 +422,8 @@
 																			ACTION="${pageContext.request.contextPath}/Announcement/delete"
 																			style="margin-bottom: 0px;">
 																			<input type="submit"
-																				class="btn sym-darkpurple sym-yellow-font btn_style"
-																				value="刪除"> <input type="hidden"
-																				name="announcementSerialID"
+																				class="btn sym-darkpurple sym-yellow-font btn_style" value="刪除">
+																			<input type="hidden" name="announcementSerialID"
 																				value="${announcementVO.announcementSerialID}">
 																			<input type="hidden" name="action" value="delete">
 																		</FORM>

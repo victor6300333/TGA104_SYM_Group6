@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.group6.tibame104.group.model.GroupService;
-import com.group6.tibame104.group.model.GroupVO;
 import com.group6.tibame104.groupdiscount.model.GroupdiscountService;
 import com.group6.tibame104.groupdiscount.model.GroupdiscountVO;
 
@@ -23,9 +21,6 @@ import com.group6.tibame104.groupdiscount.model.GroupdiscountVO;
 public class GroupdiscountController {
 	@Autowired
 	private GroupdiscountService groupdiscountSvc;
-	@Autowired
-	private GroupService groupSvc;
-
 	
 	//新增
 	@PostMapping("/insert")
@@ -67,22 +62,23 @@ public class GroupdiscountController {
 		}
 
 		groupdiscountSvc.addGroupdiscount(groupBuyID, groupBuyProductOrderTotal, groupBuyCount);
-		List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		model.addAttribute("groupdiscountVOs", groupdiscountVOs);
+		List<GroupdiscountVO> list = groupdiscountSvc.getAll();
+		model.addAttribute("list", list);
 		return "/back-end/groupdiscount/listAllGroupDiscount";
 	}
 	
 	//修改
 	@PostMapping("/update")
-	public String update(Model model, @RequestParam("countTableID") Integer countTableID,
+	public String update(Model model, 
+			@RequestParam("countTableID") Integer countTableID,
 			@RequestParam("groupBuyID") Integer groupBuyID,
 			@RequestParam("groupBuyProductOrderTotal") Integer groupBuyProductOrderTotal,
 			@RequestParam("groupBuyCount") Double groupBuyCount) {
 
 		groupdiscountSvc.updateGroupdiscount(countTableID, groupBuyID, groupBuyProductOrderTotal, groupBuyCount);
 
-		List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		model.addAttribute("groupdiscountVOs", groupdiscountVOs);
+		List<GroupdiscountVO> list = groupdiscountSvc.getAll();
+		model.addAttribute("list", list);
 		return "/back-end/groupdiscount/listAllGroupDiscount";
 	}
 	
@@ -106,111 +102,109 @@ public class GroupdiscountController {
 		}
 
 		groupdiscountSvc.deleteGroupdiscount(countTableID);
-		List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		model.addAttribute("groupdiscountVOs", groupdiscountVOs);
+		List<GroupdiscountVO> list = groupdiscountSvc.getAll();
+		model.addAttribute("list", list);
 		return "/back-end/groupdiscount/listAllGroupDiscount";
 
 	}
 	
-	
-	//PK查詢
-	@GetMapping("/getPK4Display")
-	public String getPK4Display(Model model, @RequestParam("countTableID") String str) {
-		List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
-
-		if (str == null || (str.trim()).length() == 0) {
-			errorMsgs.add("請輸入折扣表編號");
-		}
-		if (!errorMsgs.isEmpty()) {
-			return "/front-end/groupdiscount/select_page";
-		}
-
-		Integer countTableID = null;
-		try {
-			countTableID = Integer.valueOf(str);
-		} catch (Exception e) {
-			errorMsgs.add("折扣表格式不正確");
-		}
-
-		if (!errorMsgs.isEmpty()) {
-			return "/front-end/groupdiscount/select_page";
-		}
-
-		GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
-
-		if (groupdiscountVO == null) {
-			errorMsgs.add("查無資料");
-		}
-
-		if (!errorMsgs.isEmpty()) {
-			return "/front-end/groupdiscount/select_page";
-		}
-
-		model.addAttribute("groupdiscountVO", groupdiscountVO);
-		return "/front-end/groupdiscount/listOneEmp";
-	}
-	
-	
-	//GroupBuyID查詢
-	@GetMapping("/getAllGroupBuyID4Display")
-	public String getAllGroupBuyID4Display(Model model, @RequestParam("groupBuyID") String str) {
-		List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
-		if (str == null || (str.trim()).length() == 0) {
-			errorMsgs.add("請輸入折扣表編號");
-		}
-		if (!errorMsgs.isEmpty()) {
-			return "/back-end/groupdiscount/listAllGroup";
-		}
-		Integer groupBuyID = null;
-		try {
-			groupBuyID = Integer.valueOf(str);
-		} catch (Exception e) {
-			errorMsgs.add("折扣表格式不正確");
-		}
-		if (!errorMsgs.isEmpty()) {
-			return "/back-end/groupdiscount/listAllGroup";
-		}
-		List<GroupdiscountVO> groupdiscountVO = groupdiscountSvc.getAllByGroupBuyID(groupBuyID);
-		if (groupdiscountVO.isEmpty()) {
-			errorMsgs.add("查無資料");
-		}
-		if (!errorMsgs.isEmpty()) {
-			return "/front-end/grouporder/select_page";
-		}
-		model.addAttribute("groupdiscountVO", groupdiscountVO);
-		return "/back-end/groupdiscount/listAllGroup";
-	}
-
-	
-	//
-	@GetMapping("/getPK4Update")
-	public String getPK4Update(Model model, @RequestParam("countTableID") String str) {
-		List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
-
-		Integer countTableID = null;
-		try {
-			countTableID = Integer.parseInt(str);
-		} catch (NumberFormatException e) {
-			errorMsgs.add("輸入的參數格式不正確");
-			return "/back-end/groupdiscount/update_discount";
-		}
-		GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
-
-		model.addAttribute("groupdiscountVO", groupdiscountVO);
-		return "/back-end/groupdiscount/update_discount";
-	}
-
-	
 	//查詢全部
 	@GetMapping("/getAll")
 	public String getAll(HttpSession session, Model model) {
-		List<GroupVO> groupVOs = groupSvc.getAll();
-		session.setAttribute("groupVOs", groupVOs);
-		List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		model.addAttribute("groupdiscountVOs", groupdiscountVOs);
+		List<GroupdiscountVO> list = groupdiscountSvc.getAll();
+		model.addAttribute("list", list);
 		return "back-end/groupdiscount/listAllGroupDiscount";
 	}
+	
+//	//PK查詢
+//	@GetMapping("/getPK4Display")
+//	public String getPK4Display(Model model, @RequestParam("countTableID") String str) {
+//		List<String> errorMsgs = new LinkedList<String>();
+//		model.addAttribute("errorMsgs", errorMsgs);
+//
+//		if (str == null || (str.trim()).length() == 0) {
+//			errorMsgs.add("請輸入折扣表編號");
+//		}
+//		if (!errorMsgs.isEmpty()) {
+//			return "/front-end/groupdiscount/select_page";
+//		}
+//
+//		Integer countTableID = null;
+//		try {
+//			countTableID = Integer.valueOf(str);
+//		} catch (Exception e) {
+//			errorMsgs.add("折扣表格式不正確");
+//		}
+//
+//		if (!errorMsgs.isEmpty()) {
+//			return "/front-end/groupdiscount/select_page";
+//		}
+//
+//		GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
+//
+//		if (groupdiscountVO == null) {
+//			errorMsgs.add("查無資料");
+//		}
+//
+//		if (!errorMsgs.isEmpty()) {
+//			return "/front-end/groupdiscount/select_page";
+//		}
+//
+//		model.addAttribute("groupdiscountVO", groupdiscountVO);
+//		return "/front-end/groupdiscount/listOneEmp";
+//	}
+	
+	
+//	//GroupBuyID查詢
+//	@GetMapping("/getAllGroupBuyID4Display")
+//	public String getAllGroupBuyID4Display(Model model, @RequestParam("groupBuyID") String str) {
+//		List<String> errorMsgs = new LinkedList<String>();
+//		model.addAttribute("errorMsgs", errorMsgs);
+//		if (str == null || (str.trim()).length() == 0) {
+//			errorMsgs.add("請輸入折扣表編號");
+//		}
+//		if (!errorMsgs.isEmpty()) {
+//			return "/back-end/groupdiscount/listAllGroup";
+//		}
+//		Integer groupBuyID = null;
+//		try {
+//			groupBuyID = Integer.valueOf(str);
+//		} catch (Exception e) {
+//			errorMsgs.add("折扣表格式不正確");
+//		}
+//		if (!errorMsgs.isEmpty()) {
+//			return "/back-end/groupdiscount/listAllGroup";
+//		}
+//		List<GroupdiscountVO> list = groupdiscountSvc.getAllByGroupBuyID(groupBuyID);
+//		if (list.isEmpty()) {
+//			errorMsgs.add("查無資料");
+//		}
+//		if (!errorMsgs.isEmpty()) {
+//			return "/front-end/grouporder/select_page";
+//		}
+//		model.addAttribute("list", list);
+//		return "/back-end/groupdiscount/listAllGroup";
+//	}
+//
+//	
+//	//
+//	@GetMapping("/getPK4Update")
+//	public String getPK4Update(Model model, @RequestParam("countTableID") String str) {
+//		List<String> errorMsgs = new LinkedList<String>();
+//		model.addAttribute("errorMsgs", errorMsgs);
+//
+//		Integer countTableID = null;
+//		try {
+//			countTableID = Integer.parseInt(str);
+//		} catch (NumberFormatException e) {
+//			errorMsgs.add("輸入的參數格式不正確");
+//			return "/back-end/groupdiscount/update_discount";
+//		}
+//		GroupdiscountVO groupdiscountVO = groupdiscountSvc.getByPK(countTableID);
+//
+//		model.addAttribute("groupdiscountVO", groupdiscountVO);
+//		return "/back-end/groupdiscount/addGroupDiscount";
+//	}
+
+	
 }
