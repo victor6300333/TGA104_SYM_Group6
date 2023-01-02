@@ -157,7 +157,7 @@
 	%>
 
 			<tr id="my-car-tr<%=1 + count%>">
-				<td width="125"><input type="checkbox" name="check<%=storeID%>" value='0' class="checkcount"/></td>
+				<td width="125"><input type="checkbox" name="check<%=storeID%><%=index%>" value='0' class="checksub<%=storeID%>"/></td>
 				<td width="160"><%=order.getName()%></td>
 				<td width="120"><img
 					src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
@@ -251,7 +251,7 @@ function add<%=storeID%>(){
 			var test<%=storeID%> = 0;
 			
 			for(var i=0 ; i<mount ; i++){ 
-				if(document.getElementsByName('check<%=storeID%>')[i].checked ) {
+				if(document.getElementsByName('check<%=storeID%>'+ i)[0].checked ) {
 					total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
 					test<%=storeID%>++;
 					
@@ -282,7 +282,8 @@ function add<%=storeID%>(){
 		
 		
 		var checktotal<%=storeID%> = document.getElementById('checktotal<%=storeID%>');
-		var check<%=storeID%> = document.getElementsByName('check<%=storeID%>');
+		
+		var check<%=storeID%> = document.getElementsByClassName('checksub<%=storeID%>');
 		var counting<%=storeID%>=0;
 		
 		checktotal<%=storeID%>.addEventListener('change', (event) => {
@@ -292,8 +293,8 @@ function add<%=storeID%>(){
 		        	checktotal<%=storeID%>.value = "1";
 		        	
 		        	for( var i=0 ; i < check<%=storeID%>.length ; i++){
-		        		check<%=storeID%>[i].checked="true";
-		        		check<%=storeID%>[i].value="1";
+		        		document.getElementsByName('check<%=storeID%>'+i)[0].checked="true";
+		        		document.getElementsByName('check<%=storeID%>'+i)[0].value="1";
 		        		
 		        	}
 		          
@@ -302,8 +303,8 @@ function add<%=storeID%>(){
 					checktotal<%=storeID%>.value = "0";
 		        	
 					for( var i=0 ; i < check<%=storeID%>.length ; i++){
-						check<%=storeID%>[i].checked="";
-						check<%=storeID%>[i].value="0";
+						document.getElementsByName('check<%=storeID%>'+i)[0].checked="";
+						document.getElementsByName('check<%=storeID%>'+i)[0].value="0";
 		        	}
 	
 		        }
@@ -313,15 +314,15 @@ function add<%=storeID%>(){
 		
 	for( var i=0 ; i < check<%=storeID%>.length ; i++){
 		(function(i){
-			check<%=storeID%>[i].addEventListener('change', (event) => {
+			document.getElementsByName('check<%=storeID%>'+i)[0].addEventListener('change', (event) => {
 				 if (event.currentTarget.checked) {
 			        		
-			        		check<%=storeID%>[i].value="1";
-			        		counting<%=storeID%>++;
+					 document.getElementsByName('check<%=storeID%>'+i)[0].value="1";
+			        counting<%=storeID%>++;
 			        		
 			      } else {
 
-							check<%=storeID%>[i].value="0";
+			    	  document.getElementsByName('check<%=storeID%>'+i)[0].value="0";
 							counting<%=storeID%>--;
 							
 			        }
@@ -378,18 +379,22 @@ function add<%=storeID%>(){
 	%>
 
 <script>
+var node_list = document.getElementsByTagName('input');
 
+for (var i = 0; i < node_list.length; i++) {
+    var node = node_list[i];
+ 
+    if (node.getAttribute('type') == 'checkbox'  ) {
+        countsum(node, 'change');
+    }  else if(node.getAttribute('type') == 'button'){
+    	countsum(node, 'click');
+    }
+} 
 	
 	var clickbutton = document.getElementsByName('clickbutton');
 	var checkcount = document.getElementsByClassName('checkcount');
 	
-	for(let a of clickbutton ){
-		countsum(a, 'click');
-	}
-	
-	for(let a of checkcount ){
-		countsum(a, 'change');	
-	}
+
 	
 	function countsum(a, event){
 	

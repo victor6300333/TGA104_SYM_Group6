@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page
 	import="java.util.* ,com.group6.tibame104.orderlist.model.Product, com.group6.tibame104.member.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 
@@ -272,9 +273,70 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 			<tr>
 				<td colspan="6" style="text-align: right;  background-color: #FFFBE3">
 				    <b>付款方式: </b>
-				    <input type="radio" name="paytype" value="creditcard">信用卡 
-					<input type="radio" name="paytype" value="atm">atm轉帳
-					<input type="radio" name="paytype" value="after">貨到付款
+				    
+				    
+				    
+				    <div class="container card mt-3">
+<div class="form-group mt-3 mb-3">
+  <label class="radio">
+    <input type="radio" name='type' value='credit' id="pay-by-domestic-credit"  > 信用卡
+  </label>
+  <label class="radio">
+    <input type="radio" name='type' value='atm' id="pay-by-aboard-credit" > ATM 轉帳
+  </label>
+  <label class="radio">
+    <input type="radio" name='type' value='after' id="pay-by-atm"> 貨到付款
+  </label>
+</div>
+
+<div id='domestic-credit-form' style="display: none;" class="form">
+	<c:forEach var="creditVO" items="${credit}">
+		<input type="radio" name='creditinfo'  style="float:left;" value='member'  >
+		<b style="float:left;">&nbsp; ${creditVO.creditCardNumber}</b> 
+	</c:forEach>
+	<br><br>
+	<input type="radio" name='creditinfo' style="float:left;" value='other' >
+		<b style="float:left">&nbsp; 使用其他信用卡</b>
+    <br><br>
+  
+  <div class="text-center" style="display: none;">
+    <h3>輸入信用卡資訊</h3>
+  </div>
+  <div class="input-group mb-3" id='detail-1' style="display: none;">
+    <div class="input-group-prepend">
+      <span class="input-group-text">信用卡卡號</span>
+    </div>
+    <input type="text" class="form-control" id="domestic-card-no" style="display: none;" >
+  </div>
+  <div class="input-group mb-3" id='detail-2' style="display: none;">
+    <div class="input-group-prepend">
+      <span class="input-group-text">月</span>
+    </div>
+    <input type="text" class="form-control" id="domestic-card-month" placeholder="輸入月份" >
+    <div class="input-group-prepend">
+      <span class="input-group-text">年</span>
+    </div>
+    <input type="text" class="form-control" id="domestic-card-year" placeholder="輸入年" >
+    <div class="input-group-prepend">
+      <label class="input-group-text">末三碼</label>
+    </div>
+    <input type="text" class="form-control" id="domestic-card-csv" placeholder="輸入末三碼" >
+  </div>
+  <div class="form-group"  >
+    <span style="color: #fc3762;" id="domestic-card-error"  style="display: none;"></span>
+  </div>
+  <div class="form-group"  >
+    <button type="button" id="domestic-submmit" class="btn btn-primary" style="display: none;">確認送出</button>
+  </div>
+</div>
+
+
+<div class="form-group" >
+  <button type="button" id="resetForm" class="btn btn-warning"  style="display: none;">重設</button>
+</div>
+</div>
+				   
+					
 					<br><br>
 					<b style='font-size: 20px;'>訂單總金額 :</b> &emsp;
 					<b id='ordertotal' style='font-size: 20px;'>0</b> &emsp; 
@@ -310,7 +372,20 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 	
 	document.getElementById('ordertotal').innerHTML = ordersum;
 	
-	var paytype = document.getElementsByName('paytype');
+	var creditcard = document.getElementById('creditcard');
+	
+
+		creditcard.addEventListener('change', function(event){
+			if(creditcard.checked == true){
+				document.getElementById('credit').style.display = 'inline';	
+			} else if(creditcard.checked == false){
+				document.getElementById('credit').style.display = 'none';	
+			}
+				
+		
+			
+		});
+
 	
 	
 	
@@ -461,6 +536,131 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 		});
 	</script>
+	<script type="text/javascript">
+	
+	$('input[type=radio][name="type"]').on('change', function() {
+		  switch($(this).val()) {
+		    case 'credit':
+		      $("#domestic-credit-form").show()
+		      $("#aboard-credit-form").hide()
+		      $("#atm-form").hide()
+		      break
+		    case 'atm':
+		      $("#domestic-credit-form").hide()
+		      $("#aboard-credit-form").show()
+		      $("#atm-form").hide()
+		      break
+		    case 'after':
+		      $("#domestic-credit-form").hide()
+		      $("#aboard-credit-form").hide()
+		      $("#atm-form").show()
+		      break
+		  }      
+		})
+		
+		$('input[type=radio][name="creditinfo"]').on('change', function() {
+		  switch($(this).val()) {
+		 
+	
+		    case 'member':
+		      $("#detail-1").hide()
+		      $("#detail-2").hide()
+		      $("#domestic-card-no").hide()
+		      $("#domestic-card-csv").hide()
+		      $("#domestic-card-error").hide()
+		      $("#domestic-submmit").hide()		  
+		      $("#resetForm").hide()		  
+		      $(".text-center").hide()
+		      break
+		    
+		    case 'other':
+			      $("#detail-1").show()
+			      $("#detail-2").show()
+			      $("#domestic-card-no").show()
+			      $("#domestic-card-csv").show()
+		     	  $("#domestic-card-error").show()
+		          $("#domestic-submmit").show()
+		          $("#resetForm").show()	
+			      $(".text-center").show()
+			      break
+
+		  }      
+		})
+
+		$('#domestic-submmit').on('click', function(event) {
+		  event.preventDefault()
+		  
+		  let cardNo = $("#domestic-card-no").val()
+		  let cardMonth = $("#domestic-card-month").val()
+		  let cardYear = $("#domestic-card-year").val()
+		  let cardCSV = $("#domestic-card-csv").val()
+		  
+		  let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
+		  if(errors.length) {
+		    $("#domestic-card-error").text(errors.join(','))
+		    return
+		  }
+		  
+		  blockForm('domestic', true)
+		  
+		  // ajax event
+		  // submitForm(cardNo, cardMonth, cardYear, cardCSV)
+		})
+
+		$('#aboard-submmit').on('click', function(event) {
+		  event.preventDefault()
+		  
+		  let cardNo = $("#aboard-card-no").val()
+		  let cardMonth = $("#aboard-card-month").val()
+		  let cardYear = $("#aboard-card-year").val()
+		  let cardCSV = $("#aboard-card-csv").val()
+		  
+		  let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
+		  if(errors.length) {
+		    $("#aboard-card-error").text(errors.join(', '))
+		    return
+		  }
+		  
+		  blockForm('aboard', true)
+		  
+		  // ajax event
+		  // submitForm(cardNo, cardMonth, cardYear, cardCSV)
+		  
+		})
+
+		$('#resetForm').on('click', function(event) {
+		  event.preventDefault()
+		  blockForm('domestic', false)
+		  blockForm('aboard', false)
+		})
+
+		function validateForm(no, month, year, csv) {
+		  let errors = []
+		  
+		  if(no.split('').length !== 12)  errors.push('invalid card number')
+		  if(month.split('').length !== 2)  errors.push('invalid card month')
+		  if(year.split('').length !== 2)  errors.push('invalid card year')
+		  if(csv.split('').length !== 3)  errors.push('invalid card csv')
+		  
+		  return errors
+		}
+
+		function blockForm(formType, isBlocking) {
+		  $('input[type=radio][name="type"]:not(:checked)').attr("disabled", isBlocking)
+		  $(`#${formType}-card-no`).prop('readonly', isBlocking)
+		  $(`#${formType}-card-month`).prop('readonly', isBlocking)
+		  $(`#${formType}-card-year`).prop('readonly', isBlocking)
+		  $(`#${formType}-card-csv`).prop('readonly', isBlocking)
+		  $(`#${formType}-card-error`).text('')
+		}
+
+		function submitForm(no, month, year, csv) {
+		  // $('input[type=radio][name="type"]':not(:checked)').attr("disabled", true)
+		}
+	
+	</script>
+	
+	
 </body>
 
 </html>
