@@ -168,6 +168,16 @@
 	src="${pageContext.request.contextPath}/back-end/group/js/admin.js"></script>
 <script
 	src="${pageContext.request.contextPath}/back-end/group/js/search.js"></script>
+	<script>
+	$('table tr').each(function() {
+// 		console.log($(this).find('td:nth-child(5)').text())
+		  if ($(this).find('td:nth-child(5)').text() == 'true') {
+		    $(this).find('td:nth-child(5)').text('上架');
+		  }else{
+			  $(this).find('td:nth-child(5)').text('下架');  
+		  }
+		});
+	</script>
 </body>
 
 </html>

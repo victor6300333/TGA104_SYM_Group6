@@ -301,6 +301,22 @@ public class GroupController {
 		  
 		   return "front-end/group/listAllGroup";
 	   }
+	   //團購主頁
+	   @GetMapping("/getAllDesc")
+	   public String getAllDesc(
+			   Model model
+			   ) {
+		   
+		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		  List<GroupVO> groupVOs = groupSvc.getAllDesc();
+		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+
+		  model.addAttribute("groupproductVOs",groupproductVOs);
+		  model.addAttribute("groupVOs",groupVOs);
+		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
+		  
+		   return "front-end/group/listAllGroup";
+	   }
 	   //團購主頁 數量排序
 	   @GetMapping("/orderBy")
 	   public String orderBy(
