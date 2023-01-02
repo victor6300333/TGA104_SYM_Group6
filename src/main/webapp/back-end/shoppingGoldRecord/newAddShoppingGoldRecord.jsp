@@ -312,7 +312,7 @@ ShoppingGoldRecordVO shoppingGoldRecordVO = (ShoppingGoldRecordVO) request.getAt
 											</tr>
 											<tr>
 												<td>日期:</td>
-												<td><input name="useDate" id="f_date1" type="text"></td>
+												<td><input name="useDate" id="f_date1" type="date"></td>
 											</tr>
 											<tr>
 												<td>購物金異動金額:</td>

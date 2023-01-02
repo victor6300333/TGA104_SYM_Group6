@@ -312,11 +312,11 @@ CouponVO couponVO = (CouponVO) request.getAttribute("couponVO");
 											</tr>
 											<tr>
 												<td>有效期起:</td>
-												<td><input name="startDate" id="f_date1" type="text"></td>
+												<td><input name="startDate" id="f_date1" type="date"></td>
 											</tr>
 											<tr>
 												<td>有效期止:</td>
-												<td><input name="endDate" id="f_date1" type="text"></td>
+												<td><input name="endDate" id="f_date1" type="date"></td>
 											</tr>
 											<tr>
 												<td>優惠折數:</td>
@@ -336,12 +336,12 @@ CouponVO couponVO = (CouponVO) request.getAttribute("couponVO");
 											<tr>
 												<td>搶券時間起:</td>
 												<td><input name="couponTimeBegins" id="f_date1"
-													type="text"></td>
+													type="date"></td>
 											</tr>
 											<tr>
 												<td>搶券時間止:</td>
 												<td><input name="couponTimeEnd" id="f_date1"
-													type="text"></td>
+													type="date"></td>
 											</tr>
 											<tr>
 												<td>已兌換數量:</td>

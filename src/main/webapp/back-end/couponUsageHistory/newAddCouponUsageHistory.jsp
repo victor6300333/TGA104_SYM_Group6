@@ -321,7 +321,7 @@ CouponUsageHistoryVO couponUsageHistoryVO = (CouponUsageHistoryVO) request.getAt
 											</tr>
 											<tr>
 												<td>使用日期:</td>
-												<td><input name="useDate" id="f_date1" type="text"></td>
+												<td><input name="useDate" id="f_date1" type="date"></td>
 											</tr>
 
 
