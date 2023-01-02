@@ -267,20 +267,20 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 							<table id="table-1" class="table" border="0" >
 
-								<tr>
+								<tr id="my-car-tr">
 									<th width="155">商品名稱</th>
 									<th width="155">商品圖片</th>
 									<th width="125">價格</th>
 
 									<th width="105">數量</th>
 									<th width="130">小計</th>
-									<th width="130">評價</th>
+									<th width="130" Class='rate<%=orderVO.getOrderID()%>'>評價</th>
 
 								</tr>
 
 								<c:forEach var="orderlistVO" items="<%=list%>">
 
-									<tr>
+									<tr id="my-car-tr">
 										<td width="155">${orderlistVO.productName}</td>
 										<td width="155"><img
 											src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
@@ -290,7 +290,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 										<td width="105">${orderlistVO.quantity}</td>
 										<td width="130">${orderlistVO.subTotal}</td>
-										<td width="130">
+										<td width="130" class='rate<%=orderVO.getOrderID()%>'>
 											<form
 												action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
 
@@ -312,15 +312,32 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 
 									</tr>
+									
+									
 								</c:forEach>
+									<tr id="my-car-tr">
+										
+										<td colspan="5" style="text-align: right">
+											<b id='paytotal<%=orderVO.getOrderID()%>' style='font-size: 20px;'>訂單總金額:</b>&nbsp;&nbsp;
+											
+											<b style='font-size: 20px;'>$<%=orderVO.getFinalTotal() %></b>
+										</td>
+									
+									</tr>
 							</table>
 							<br>
-							<b>訂單狀態:</b>	
+							<b>訂單狀態:</b>	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							<input type="submit" value="完成訂單" class="button<%=orderVO.getOrderID()%>"
+								style='display:none; height:40px; width:90px; background-color: #FFA9A9;
+								 border: 0px; font-weight: bold; float:right '>
+						    <input type="submit" value="查看付款資訊" class="check<%=orderVO.getOrderID()%>"
+								style='display:none; height:40px; width:110px; background-color: #FFA9A9;
+								 border: 0px; font-weight: bold; float:right '>
 							<br><br><br>
 							
 							<b>待繳款&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
 							   待出貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&emsp;
-							   已出貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
+							   待收貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;
 							   訂單完成
 							   </b>
 							  <br><br>
@@ -328,11 +345,12 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 							<p class="status" style="display:none">
 								<%=orderVO.getOrderStatus()%>
 							</p>
+							
 							<div class="container">
 								<div class="progress">
 									<div class="percent"></div>
 								</div>
-
+								
 								<div class="steps">
 									<div class="step" id="0"></div>
 									<div class="step" id="1"></div>
@@ -341,18 +359,45 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 								</div>
 							</div>
+							<br>
+							<b><%=orderVO.getOrderDate().toString().substring(0,10)%>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+							</b>
+							
+						    <br><b><%=orderVO.getOrderDate().toString().substring(11,19)%> </b> 
 
 							<br> <br> <br> <br>
 							<hr>
 
 
 							<br> <br> <br> 
+<script type="text/javascript">
+	var rate = document.getElementsByClassName('rate<%=orderVO.getOrderID()%>');
+	for(var sub of rate){
+		if(<%=orderVO.getOrderStatus()%> != '3'){
+			sub.style.display = 'none';	
+		}
+		
+	}
+	
+	var button = document.getElementsByClassName('button<%=orderVO.getOrderID()%>')[0];
+	if(<%=orderVO.getOrderStatus()%> == '2'){
+		button.style.display = 'inline';	
+	}
+	
+	var check = document.getElementsByClassName('check<%=orderVO.getOrderID()%>')[0];
+	var paytotal = document.getElementById('paytotal<%=orderVO.getOrderID()%>');
+	if(<%=orderVO.getOrderStatus()%> == '0'){
+		check.style.display = 'inline';	
+		paytotal.innerHTML = '付款總金額:';	
+	}
+	
 
+</script>
 							<%
 							}
 							%>
 
-<p id="size" style="display:none"><%=map_list.keySet().size() %></p>
+<p id="size" style="display:none"><%=map_list.keySet().size()%></p>
 
 						</div>
 

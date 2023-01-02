@@ -27,6 +27,8 @@ import org.springframework.stereotype.Component;
 
 import com.group6.tibame104.category.model.CategoryService;
 import com.group6.tibame104.category.model.CategoryVO;
+import com.group6.tibame104.creditCard.model.CreditCardService;
+import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.order.model.OrderService;
 import com.group6.tibame104.order.model.OrderVO;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
@@ -52,6 +54,8 @@ public class ShopServlet extends HttpServlet {
 	OrderService ordsvc;
 	@Autowired
 	CategoryService categorySvc;
+	@Autowired
+	CreditCardService creditSvc;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -70,7 +74,7 @@ public class ShopServlet extends HttpServlet {
 		else
 			count_num = count_string;
 
-		if (!action.equals("CHECKOUT")) {
+		if (!action.equals("CHECKOUT") && !action.equals("CHECK")) {
 			
 			// 新增書籍至購物車中
 			 if (action.equals("ADD")) {
@@ -83,7 +87,7 @@ public class ShopServlet extends HttpServlet {
 
 				if (check==null) {
 					
-					List list = new ArrayList();
+					List<Product> list = new ArrayList<Product>();
 					list.add(product);
 					
 					check = new HashMap<Integer, List<Product>>();
@@ -123,6 +127,7 @@ public class ShopServlet extends HttpServlet {
 			req.setAttribute("categoryVO", categoryVO);
 			
 			if(req.getParameter("method").equals("bag")) {
+				System.out.println(check.size());
 				String url = "/front-end/shop/Cart_new.jsp";
 				RequestDispatcher rd = req.getRequestDispatcher(url);
 				rd.forward(req, res);
@@ -139,12 +144,59 @@ public class ShopServlet extends HttpServlet {
 		
 
 		// 結帳，計算購物車書籍價錢總數
-		if (action.equals("CHECKOUT")) {
+		if (action.equals("CHECK")) {
+			Map<Integer, List<Product>> check_new = new HashMap<Integer, List<Product>>() ;
 			
+			Set<Integer> set = check.keySet();
+			Iterator<Integer> it = set.iterator();
+			
+			while (it.hasNext()) {
+			int total = 0;
+			
+
+			Integer storeID = it.next();
+			List<Product> buylist = check.get(storeID);
+			List<Product> buylist_new = new ArrayList<Product>();
+	
+				for (int i = 0; i < buylist.size(); i++) {
+					String valuelist = req.getParameter("check"+storeID+i);
+					if("1".equals(valuelist)) {
+						Product product = buylist.get(i);
+
+						String str = req.getParameter("product"+product.getStoreID()+i);
+						Integer quantity = Integer.parseInt(str);
+						
+						product.setQuantity(quantity);
+						
+						buylist_new.add(product);
+
+				}
+		
+			 }
+				if(!buylist_new.isEmpty())
+					check_new.put(storeID, buylist_new);
+				
+	
+
+			}
+			List<CreditCardVO> credit = creditSvc.getAll(Integer.valueOf(req.getParameter("memberID")));
+			
+//			session.setAttribute("total", total);
+			session.setAttribute("credit", credit);
+			session.setAttribute("check_new", check_new);
+			String url = "/front-end/shop/Check.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
+
+		}
+		
+		if("CHECKOUT".equals(action)) {
+			@SuppressWarnings("unchecked")
+			Map<Integer, List<Product>> check_new = (Map<Integer, List<Product>>) session.getAttribute("check_new");
 //			List<OrderVO> orderVO_list = new ArrayList();
 			Map<OrderVO,List<OrderlistVO>> orderVO_list = new HashMap<OrderVO,List<OrderlistVO>>();
 			
-			Set<Integer> set = check.keySet();
+			Set<Integer> set = check_new.keySet();
 			Iterator<Integer> it = set.iterator();
 			
 			while (it.hasNext()) {
@@ -154,59 +206,32 @@ public class ShopServlet extends HttpServlet {
 			Integer storeID = it.next();
 			List<Product> buylist = check.get(storeID);
 			
-			
-			Map<String, String[]> map = req.getParameterMap();
-			String[] valuelist = map.get("check"+storeID);
-			System.out.println(valuelist[0]);
+
 			
 			
-			for (int i = 0; i < valuelist.length; i++) {
-				if(valuelist[i].equals("1")) {
-					Product order = buylist.get(i);
-					String name = order.getName();
-					Integer price = order.getPrice();
-					String str = req.getParameter("product"+order.getStoreID()+i);
-					Integer quantity = Integer.parseInt(str);
-					Integer productID = order.getProductID();
-					String userAccount = req.getParameter("userAccount");
-				
-					total += (price * quantity);
-				
-//				double total1 = buylist.stream()
-//								      .mapToDouble(b -> b.getPrice()*b.getQuantity())
-//								      .sum();
+			for (int i = 0; i < buylist.size() ; i++) {
+					Product product = buylist.get(i);
 
 				
 					OrderlistVO list = new OrderlistVO(); //產生訂單明細物件
 
-					list.setProductID(productID);
-					list.setProductName(name);
-					list.setPrice(price);
-					list.setQuantity(quantity);
-					list.setSubTotal(price*quantity);
-					list.setUserAccount(userAccount);
-
+					list.setProductID(product.getProductID());
+					list.setProductName(product.getName());
+					list.setPrice(product.getPrice());
+					list.setQuantity(product.getQuantity());
+					list.setSubTotal(product.getPrice()*product.getQuantity());
+					list.setUserAccount(req.getParameter("userAccount"));
+					
+					total += product.getPrice()*product.getQuantity();
 
 					orderlist.add(list);
 				}
-		
-			 }
-			
-			
-			String amount = String.valueOf(total);
-			req.setAttribute("amount", amount);
 
 			OrderVO ordervo = new OrderVO(); //產生訂單物件
 			
-			Integer memberID = Integer.parseInt( req.getParameter("memberID") );
+			
 			
 			String str = req.getParameter("storeID"+storeID.toString());
-			Integer storeid = Integer.parseInt(str);
-			String storeName = req.getParameter("storeName"+str);
-			String receiver = req.getParameter("receiver"+str);
-			String phone = req.getParameter("phone"+str);
-			String address = req.getParameter("address"+str);
-			String paytype = req.getParameter("paytype"+str);
 
 			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"+str));
 			Double count = Double.valueOf(req.getParameter("couponID"+str));
@@ -214,15 +239,19 @@ public class ShopServlet extends HttpServlet {
 
 	      
 
-			ordervo.setMemberID(memberID);
-			ordervo.setStoreID(storeid);
-			ordervo.setStoreName(storeName);
+			ordervo.setMemberID(Integer.parseInt( req.getParameter("memberID") ));
+			ordervo.setStoreID(Integer.parseInt(str));
+			ordervo.setStoreName(req.getParameter("storeName"+str));
 			ordervo.setCreditcardNumber("10");
-			ordervo.setPayType(paytype);
-			ordervo.setReceiver(receiver);
-			ordervo.setOrderStatus(2);
-			ordervo.setPhone(phone);
-			ordervo.setAddress(address);
+			ordervo.setReceiver(req.getParameter("receiver"+str));
+			ordervo.setPayType(req.getParameter("type"));
+			if("credit".equals(req.getParameter("type"))) {
+				ordervo.setOrderStatus(1);
+			} else {
+				ordervo.setOrderStatus(0);
+			}
+			ordervo.setPhone(req.getParameter("phone"+str));
+			ordervo.setAddress(req.getParameter("address"+str));
 			
 			ordervo.setOriginalTotal(total);
 			ordervo.setCouponID(1);
@@ -235,45 +264,28 @@ public class ShopServlet extends HttpServlet {
 		
 			
 			orderVO_list.put(order, orderlist);
-
-
-			
-			
-		
-			
-//			session.setAttribute("orderVO"+str, ordervo);
-			
 			
 			
 			}
 			
 			session.setAttribute("orderVO_list", orderVO_list);
 			
+			String url;
+			if(req.getParameter("type").equals("atm")) {
+				url = "/front-end/shop/ATM.jsp";
+				
+			} else if(req.getParameter("type").equals("credit")) {
 			
-//			OrderlistService orderlistService = new OrderlistService();
-//			orderlistService.addOrderlist(orderlist);
-		
+			    url = "/front-end/shop/Confirm.jsp";
 			
-			
-
-			String url = "/front-end/shop/Checkout.jsp";
+			} else {
+				url = "/front-end/shop/select_Order?status=0";
+			}
 			RequestDispatcher rd = req.getRequestDispatcher(url);
 			rd.forward(req, res);
-
+			
 			session.removeAttribute("check");
 			session.removeAttribute("count_num");
-
-//			receiver:input, phone:input, address:input
-//			creditcard:信用卡, atm: atm轉帳, arrive:貨到付款, coupon:85 75, 
-
-//			ordervo.setCreditcardNumber(paytype);
-
-//			ordervo.setMemberID(null);
-
-//			ordervo.setOriginalTotal(null);
-//			ordervo.setUseShoppingGold(null);
-//			ordervo.setCouponGold();
-//			ordervo.setFinalTotal(null);
 
 		}
 	}

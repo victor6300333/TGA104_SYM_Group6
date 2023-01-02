@@ -108,7 +108,7 @@
 
 
 
-
+	<br><br>
 	<form id="checkoutForm" action="ShopServlet" method="POST">
 		<%
 	Set<Integer> set = check.keySet();
@@ -138,7 +138,7 @@
 				<td ></td>
 			</tr>
 			<tr>
-				<td width="95">全選<input type="checkbox"
+				<td width="95">全選<input type="checkbox" class="checkcount"
 					id="checktotal<%=storeID%>" /></td>
 				<td width="155">商品名稱</td>
 				<td width="165">商品圖片</td>
@@ -157,7 +157,7 @@
 	%>
 
 			<tr id="my-car-tr<%=1 + count%>">
-				<td width="125"><input type="checkbox" name="check<%=storeID%>" value='0'/></td>
+				<td width="125"><input type="checkbox" name="check<%=storeID%><%=index%>" value='0' class="checksub<%=storeID%>"/></td>
 				<td width="160"><%=order.getName()%></td>
 				<td width="120"><img
 					src="${pageContext.request.contextPath}/product/picServlet?productID=<%=order.getProductID()%>"
@@ -165,7 +165,7 @@
 				<td width="135"><%=order.getPrice()%></td>
 
 
-				<td id="minus"><input id="minus1" type="button"
+				<td id="minus"><input id="minus1" type="button" name='clickbutton'
 					onclick="minuser<%=1 + count%>()" value="-"
 					style="width: 25px; height: 29px;" /></td>
 
@@ -175,7 +175,7 @@
 					name="product<%=order.getStoreID() %><%=index%>"
 					value="<%=order.getQuantity()%>" />
 
-				<td id="plus"><input id="plus1" type="button"
+				<td id="plus"><input id="plus1" type="button" name='clickbutton'
 					onclick="adder<%=1 + count%>()" value="+"
 					style="width: 25px; height: 29px;" /></td>
 
@@ -186,7 +186,7 @@
 
 
 			<script src="./jquery/jquery-3.6.1.min.js"></script>
-			<script>
+<script>
 	   
 		
 		function adder<%=1 + count%>() {
@@ -209,6 +209,7 @@
 			if (count <= 1 && confirm("確認要刪除此商品嗎?")==true) {
 				
 					document.getElementById("my-car-tr<%=1 + count%>").remove();
+				
 		
 			} else if(count>1) {
 				count = parseInt(count) - 1;
@@ -237,38 +238,12 @@
 
 			<td colspan="3" style="text-align: right"></td>
 			<td colspan="5" style="text-align: right">總金額:<b
-				id="count<%=storeID%>">0</b></td>
+				class = 'countingmoney' id="count<%=storeID%>">0</b></td>
 		</table>
-
-		<div class="table<%=storeID%>">
-			<br> <input type="hidden" name="storeID<%=storeID%>"
-				value="<%=storeID%>"> <input type="hidden"
-				name="storeName<%=storeID%>"
-				value="<%=buylist.get(0).getStoreName()%>"> <input
-				type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>"><b>選用會員資料</b>
-			<br> <br> <b>收件者: </b><input type="text"
-				name="receiver<%=storeID%>" id="receiver<%=storeID%>"
-				style="width: 100px; height: 26px"> <br> <br> <b>電話號碼:
-			</b><input type="text" name="phone<%=storeID%>" id="phone<%=storeID%>"
-				style="width: 140px; height: 26px"> <br> <br> <b>收件地址:
-			</b><input type="text" name="address<%=storeID%>"
-				id="address<%=storeID%>" style="width: 300px; height: 26px">
-			<br> <br> <b>付款方式: </b> <input type="radio"
-				name="paytype<%=storeID%>" value="信用卡">信用卡 <input
-				type="radio" name="paytype<%=storeID%>" value="atm轉帳">atm轉帳
-			<input type="radio" name="paytype<%=storeID%>" value="貨到付款">貨到付款
-			<br> <br> <b>使用購物金: </b> <input type=text
-				name="useShoppingGold<%=storeID%>" style="width: 70px; height: 26px">
-			<br> <br> <b>使用優惠券: </b> <select
-				name="couponID<%=storeID%>">
-				<option value="0.85">85折</option>
-				<option value="0.75">75折</option>
-			</select> <br> <br>
-		</div>
-
 
 
 		<script>
+			
 function add<%=storeID%>(){
 			var count = document.querySelector('#count<%=storeID%>');
 			let total = 0;
@@ -276,42 +251,39 @@ function add<%=storeID%>(){
 			var test<%=storeID%> = 0;
 			
 			for(var i=0 ; i<mount ; i++){ 
-				if(document.getElementsByName('check<%=storeID%>')[i].checked ) {
+				if(document.getElementsByName('check<%=storeID%>'+ i)[0].checked ) {
 					total += parseInt(document.querySelectorAll('.my-car-td<%=storeID%>')[i].textContent,10);
-					count.innerHTML =  total;
 					test<%=storeID%>++;
+					
 				} 
+					count.innerHTML =  total;
 			}
+			
+	
+			
 			
 			if(test<%=storeID%> == 0){
 				count.innerHTML = '0';
 			}
 			
+			
+			
+			
 				
 		};
 		
+		
+
+		
+	
+		
 		add<%=storeID%>();
 		
-		var checkbox<%=storeID%> = document.getElementById('member<%=storeID%>');
-		var receiver<%=storeID%> = document.getElementById('receiver<%=storeID%>');
-		var phone<%=storeID%> = document.getElementById('phone<%=storeID%>');
-		var address<%=storeID%> = document.getElementById('address<%=storeID%>');
-
-		checkbox<%=storeID%>.addEventListener('change', (event) => {
-		  if (event.currentTarget.checked) {			
-			  receiver<%=storeID%>.value ="${memVO.userName}";
-			  phone<%=storeID%>.value = "${memVO.phone}";
-			  address<%=storeID%>.value = "${memVO.address}";
-		  } else {
-			  receiver<%=storeID%>.value = "";
-			  phone<%=storeID%>.value = "";
-			  address<%=storeID%>.value = "";
-		  }
-		  add<%=storeID%>();
-		})
+		
 		
 		var checktotal<%=storeID%> = document.getElementById('checktotal<%=storeID%>');
-		var check<%=storeID%> = document.getElementsByName('check<%=storeID%>');
+		
+		var check<%=storeID%> = document.getElementsByClassName('checksub<%=storeID%>');
 		var counting<%=storeID%>=0;
 		
 		checktotal<%=storeID%>.addEventListener('change', (event) => {
@@ -321,8 +293,8 @@ function add<%=storeID%>(){
 		        	checktotal<%=storeID%>.value = "1";
 		        	
 		        	for( var i=0 ; i < check<%=storeID%>.length ; i++){
-		        		check<%=storeID%>[i].checked="true";
-		        		check<%=storeID%>[i].value="1";
+		        		document.getElementsByName('check<%=storeID%>'+i)[0].checked="true";
+		        		document.getElementsByName('check<%=storeID%>'+i)[0].value="1";
 		        		
 		        	}
 		          
@@ -331,8 +303,8 @@ function add<%=storeID%>(){
 					checktotal<%=storeID%>.value = "0";
 		        	
 					for( var i=0 ; i < check<%=storeID%>.length ; i++){
-						check<%=storeID%>[i].checked="";
-						check<%=storeID%>[i].value="0";
+						document.getElementsByName('check<%=storeID%>'+i)[0].checked="";
+						document.getElementsByName('check<%=storeID%>'+i)[0].value="0";
 		        	}
 	
 		        }
@@ -342,15 +314,15 @@ function add<%=storeID%>(){
 		
 	for( var i=0 ; i < check<%=storeID%>.length ; i++){
 		(function(i){
-			check<%=storeID%>[i].addEventListener('change', (event) => {
+			document.getElementsByName('check<%=storeID%>'+i)[0].addEventListener('change', (event) => {
 				 if (event.currentTarget.checked) {
 			        		
-			        		check<%=storeID%>[i].value="1";
-			        		counting<%=storeID%>++;
+					 document.getElementsByName('check<%=storeID%>'+i)[0].value="1";
+			        counting<%=storeID%>++;
 			        		
 			      } else {
 
-							check<%=storeID%>[i].value="0";
+			    	  document.getElementsByName('check<%=storeID%>'+i)[0].value="0";
 							counting<%=storeID%>--;
 							
 			        }
@@ -375,18 +347,30 @@ function add<%=storeID%>(){
 		
 	</script>
 
-
+<br><br>
 
 
 		<%
 		}
 		%>
+		<table>
+			<tr>
+				<td colspan="6" style="text-align: right ; background-color: #FFFBE3">
+			 		 <b style='font-size: 20px;'>訂單總金額 :</b> &emsp;<b id='ordertotal' style='font-size: 20px;'>0</b>
+					&emsp; 
+			 		<input type="hidden" name="action" value="CHECK"> <input
+					type="hidden" name="memberID" value="${memVO.memberID}"> <input
+					type="hidden" name="userAccount" value="${memVO.userAccount}">
+					<input type="submit" value="送出" class="button" style='background-color: #FFA9A9 ; border:0px ; font-weight:bold'>
+			
+			    </td>
+		
+		</table>
+		
+  <br>
 
 
-		<input type="hidden" name="action" value="CHECKOUT"> <input
-			type="hidden" name="memberID" value="${memVO.memberID}"> <input
-			type="hidden" name="userAccount" value="${memVO.userAccount}">
-		<input type="submit" value="送出" class="button">
+		
 	</form>
 
 
@@ -394,7 +378,43 @@ function add<%=storeID%>(){
 	}
 	%>
 
+<script>
+var node_list = document.getElementsByTagName('input');
 
+for (var i = 0; i < node_list.length; i++) {
+    var node = node_list[i];
+ 
+    if (node.getAttribute('type') == 'checkbox'  ) {
+        countsum(node, 'change');
+    }  else if(node.getAttribute('type') == 'button'){
+    	countsum(node, 'click');
+    }
+} 
+	
+	var clickbutton = document.getElementsByName('clickbutton');
+	var checkcount = document.getElementsByClassName('checkcount');
+	
+
+	
+	function countsum(a, event){
+	
+		a.addEventListener(event, function(){
+			var countingmoney = document.getElementsByClassName('countingmoney');
+			var ordertotal = document.getElementById('ordertotal');
+			var countingtotal = 0;
+			
+			for(var i=0 ; i < countingmoney.length ; i++ ){
+				countingtotal += Number(countingmoney[i].innerHTML);
+	       }
+			
+			ordertotal.innerHTML = countingtotal;
+		})
+	}
+	
+	
+
+
+</script>
 
 
 

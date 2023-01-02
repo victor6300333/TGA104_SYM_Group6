@@ -235,10 +235,12 @@ public class GrouporderController {
 			groupVO = groupSvc.getOneGroup(groupBuyID);
 			/*取得現在團購數量*/
 			Integer currentQua = groupVO.getGroupBuyProductOrderTotal();
-			grouporderVO = grouporderSvc.addGrouporder(groupBuyID, groupBuyProductID, memberID, groupBuyQuantity,  groupBuyTotal, orderTime1, paymentTerm,
+			grouporderSvc.addGrouporder(groupBuyID, groupBuyProductID, memberID, groupBuyQuantity,  groupBuyTotal, orderTime1, paymentTerm,
 					 paymentState,  giftVoucher,  contactNumber, shippingLocation);
 			/**更新團購總數**/
-			groupVO = groupSvc.updateGroupQua(currentQua+groupBuyQuantity,groupBuyID);
+			System.out.println("已經新增訂單");
+			groupSvc.updateGroupQua(currentQua+groupBuyQuantity,groupBuyID);
+			System.out.println("已經更新團購數量");
 			/*取出所有團購訂單*/
 			List<GrouporderVO> grouporderVOs = grouporderSvc.getAll();
 			model.addAttribute("grouporderVOs",grouporderVOs);

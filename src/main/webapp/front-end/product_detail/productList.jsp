@@ -32,7 +32,7 @@
 <link href="lib/slick/slick-theme.css" rel="stylesheet" />
 
 <!-- Template Stylesheet -->
-<link href="css/style.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/front-end/product_detail/css/style.css" rel="stylesheet" />
 <link href="css/woody.css" rel="stylesheet" />
 </head>
 
@@ -118,16 +118,20 @@
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html"> <img src="./img/logoSYM.jpg" alt="Logo" />
+						<a href="${pageContext.request.contextPath}/"> <img src="./img/logoSYM.jpg" alt="Logo" />
 						</a>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="search">
-						<input type="text" placeholder="商品搜尋" />
-						<button>
-							<i class="fa fa-search"></i>
-						</button>
+						<FORM METHOD="post"
+							ACTION="${pageContext.request.contextPath}/SearchServlet">
+							<input type="hidden" name="action" value="getAll_For_Display" />
+							<input type="text" placeholder="商品搜尋" name="productName" />
+							<button>
+								<i class="fa fa-search"></i>
+							</button>
+						</FORM>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -136,8 +140,8 @@
                       <i class="fa fa-heart"></i>
                       <span>(0)</span>
                     </a> -->
-						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
+							class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})</span>
 						</a>
 					</div>
 				</div>
@@ -215,36 +219,36 @@
 								<div class="product-item">
 									<div class="product-title">
 										<a href="#">${categoryVO.productName}</a>
-										<div class="ratting">
-											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-												class="fa fa-star"></i>
-										</div>
+										<p class="previewing" style='display: none'>${categoryVO.commentAvgStar}</p>
+									<div class="ratting">
+										<i class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i> <i
+											class="fa fa-star" name="fa" style='display: none'></i>
 									</div>
-									<div class="商品圖片">
+									</div>
+									<div class="product-image">
 										<a
 											href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
 											<img
 											src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
 											style="width: 230px; height: 200px" alt="Product Image">
 										</a>
-										<div class="product-action">
+								<!-- 		<div class="product-action">
 											<a href="#"><i class="fa fa-加入購物車"></i></a> <a href="#"><i
 												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
-										</div>
+										</div> -->
 									</div>
-									<div class="商品價格">
-										<h3>
-											<span>$</span>${categoryVO.productPrice}</h3>
-										<form name="shoppingForm"
-											action="${pageContext.request.contextPath}/SearchServlet"
-											method="POST">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="productID"
-												value="${categoryVO.productID}"> <a class="btn"
-												href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
-												class="fa fa-shopping-cart"></i>查看</a>
-										</form>
+									<div class="product-price">
+										<h4 style="text-align:center">
+											<span>$</span>${categoryVO.productPrice}</h4>
+												
+												<a class="btn" href="${pageContext.request.contextPath}
+													/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}
+														&productMainID=${categoryVO.productMainID}&storeID=${categoryVO.storeID}">
+												<i class="fa fa-shopping-cart"></i>查看</a>
+								
 									</div>
 								</div>
 							</div>
@@ -288,10 +292,12 @@
 							</ul>
 						</nav>
 					</div>
-
+					<br>
 					<div class="sidebar-widget widget-slider">
+					<br>
+					<h2 class="title">好物推薦</h2>
 						<div class="sidebar-slider normal-slider">
-							<c:forEach var="categoryVO" items="${all}">
+							<c:forEach var="categoryVO" items="${categoryOther}">
 					
 								<div class="product-item">
 									<div class="product-title">
@@ -317,15 +323,12 @@
 									<div class="商品價格">
 										<h3>
 											<span>$</span>${categoryVO.productPrice}</h3>
-										<form name="shoppingForm"
-											action="${pageContext.request.contextPath}/SearchServlet"
-											method="POST">
-											<input type="hidden" name="action" value="getOne_For_Display">
-											<input type="hidden" name="productID"
-												value="${categoryVO.productID}"> <a class="btn"
-												href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
+									<a class="btn"
+												href="${pageContext.request.contextPath}
+													/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}
+														&productMainID=${categoryVO.productMainID}&storeID=${categoryVO.storeID}"><i
 												class="fa fa-shopping-cart"></i>查看</a>
-										</form>
+		
 									</div>
 								</div>
 							
@@ -348,30 +351,7 @@
 	<!-- Product List End -->
 
 	<!-- Brand Start -->
-	<div class="brand">
-		<div class="container-fluid">
-			<div class="brand-slider">
-				<div class="brand-item">
-					<img src="img/brand-1.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-2.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-3.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-4.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-5.png" alt="">
-				</div>
-				<div class="brand-item">
-					<img src="img/brand-6.png" alt="">
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Brand End -->
 
 	<!-- Footer Start -->
@@ -465,6 +445,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<!-- Footer Bottom End -->
 
 		<!-- Back to Top -->
@@ -479,5 +460,37 @@
 
 		<!-- Template Javascript -->
 		<script src="js/main.js"></script>
+		<script>
+		document.addEventListener("DOMContentLoaded", function(){
+			var fa = document.getElementsByName("fa");
+			
+			for(var i=0 ; i< ${categoryVOall.size()} ; i++){
+				
+			var previewing = Number(document.getElementsByClassName('previewing')[i].innerHTML);
+			
+			if(previewing >= 1 && previewing < 2){
+				fa[i*5].style.display = 'inline';		
+			}
+			else if(previewing >= 2 && previewing < 3){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+			}
+			else if(previewing >= 3 && previewing < 4){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+				fa[i*5+2].style.display = 'inline';	
+			}
+			else if(previewing >= 4 && previewing <= 5){
+				fa[i*5].style.display = 'inline';	
+				fa[i*5+1].style.display = 'inline';	
+				fa[i*5+2].style.display = 'inline';	
+				fa[i*5+3].style.display = 'inline';	
+			}
+		}
+			
+		});
+		
+		
+		</script>
 </body>
 </html>

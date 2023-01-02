@@ -33,10 +33,10 @@ public class OrderlistService {
 		return dao.findByOrderlistID(OrderlistID);
 		
 	}
-	public List<OrderlistVO> findByProductID(Integer productID) {
+	public List<OrderlistVO> findByProductID(Integer productID, Boolean all) {
 		
 		
-		return dao.findByProductID(productID);
+		return dao.findByProductID(productID, all);
 		
 	}
 }

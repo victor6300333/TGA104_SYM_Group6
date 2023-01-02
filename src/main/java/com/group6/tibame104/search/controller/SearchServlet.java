@@ -22,6 +22,7 @@ import com.group6.tibame104.orderlist.model.OrderlistService;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 import com.group6.tibame104.product.model.ProductVO;
 import com.group6.tibame104.product.service.ProductService;
+import com.group6.tibame104.store.model.StoreJDBCDAO;
 
 @Component
 @WebServlet("/SearchServlet")
@@ -64,57 +65,29 @@ public class SearchServlet extends HttpServlet {
 			 */
 			if (productName.trim().length() == 0) {
 				categoryVOall = categorySvc.getAll();
+				session.removeAttribute("categoryOther");
 			} else {
 				
-				categoryVOall = categorySvc.getbyProductName(productName) ;
+				categoryVOall = categorySvc.getbyProductName(productName, true) ;
+				List<CategoryVO> categoryOther = categorySvc.getbyProductName(productName, false) ;
+				session.setAttribute("categoryOther", categoryOther);
 			}
 
-			/*
-			 * 如果報錯 轉去 addProduct 頁面
-			 */
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/product/addProduct.jsp");
-				try {
-					failureView.forward(req, res);
-				} catch (ServletException | IOException e) {
-					e.printStackTrace();
-				}
-				return;
-			}
+
+			
+			
 
 			/*
 			 * 轉去 listAllProduct 頁面
 			 */
 			session.removeAttribute("categoryVOall_forsort");
 			session.setAttribute("categoryVOall", categoryVOall);
+			
 			String url = "/front-end/product_detail/productList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
 		
-		
-		if("getOne_For_Display".equals(action)) {
-			
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			String str = req.getParameter("productID");
-			
-			Integer productID = Integer.valueOf(str);
-
-			CategoryVO categoryVO = categorySvc.getbyProductID(productID);
-			List<OrderlistVO> list = orderlistSvc.findByProductID(productID);
-			/*
-			 * 導向 listOneProduct頁面
-			 */
-			req.setAttribute("categoryVO", categoryVO);
-			
-			session.setAttribute("list", list);
-
-			String url = "/front-end/product_detail/product_detail.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-		}
 		
 		if("category".equals(action)) {
 
@@ -127,8 +100,9 @@ public class SearchServlet extends HttpServlet {
 			Integer productMainID = Integer.valueOf(req.getParameter("productMainID"));
 			
 			
-			List<CategoryVO> categoryVOall = categorySvc.getbyProductMainID(productMainID);
-			List<CategoryVO> all = categorySvc.getAll();
+			List<CategoryVO> categoryVOall = categorySvc.getbyProductMainID(productMainID, true);
+			List<CategoryVO> categoryOther = categorySvc.getbyProductMainID(productMainID, false);
+			
 
 		
 
@@ -137,9 +111,42 @@ public class SearchServlet extends HttpServlet {
 			 * 轉去 listAllProduct 頁面
 			 */
 			session.removeAttribute("categoryVOall_forsort");
-			session.setAttribute("all", all);
+			
 			session.setAttribute("categoryVOall", categoryVOall);
+			session.setAttribute("categoryOther", categoryOther);
 			String url = "/front-end/product_detail/productList.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
+		
+		if("getOne_For_Display".equals(action)) {
+			
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			
+			Integer productID = Integer.valueOf(req.getParameter("productID"));
+			Integer productMainID = Integer.valueOf(req.getParameter("productMainID"));
+			Integer storeID = Integer.valueOf(req.getParameter("storeID"));
+
+			CategoryVO categoryVO = categorySvc.getbyProductID(productID);
+			List<CategoryVO> categoryMainID = categorySvc.getbyProductMainID(productMainID,  true);
+			List<CategoryVO> categoryStoreID  = categorySvc.getbyStoreID(storeID);
+			
+			
+			List<OrderlistVO> list = orderlistSvc.findByProductID(productID, false); //查詢有評價的訂單明細
+			List<OrderlistVO> listAll = orderlistSvc.findByProductID(productID, true); //查詢所有的訂單明細
+			/*
+			 * 導向 listOneProduct頁面
+			 */
+			req.setAttribute("categoryVO", categoryVO);
+			req.setAttribute("categoryMainID", categoryMainID);
+			req.setAttribute("categoryStoreID", categoryStoreID);
+			
+			session.setAttribute("list", list);
+			session.setAttribute("listAll", listAll);
+
+			String url = "/front-end/product_detail/product_detail.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

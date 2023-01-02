@@ -72,9 +72,11 @@
 				<div class="collapse navbar-collapse justify-content-between"
 					id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="index.html" class="nav-item nav-link">首頁</a> <a
-							href="product-list.html" class="nav-item nav-link">我的賣場</a>
-
+						<a href="${pageContext.request.contextPath}/" class="nav-item nav-link">首頁</a> 
+						<a href="${pageContext.request.contextPath}/front-end/store/myStore.jsp" class="nav-item nav-link">我的賣場</a>
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link " data-toggle="dropdown">客服中心</a>
+						</div>
 					</div>
 				</div>
 				<div class="navbar-nav ml-auto">
@@ -82,13 +84,9 @@
 
 						<c:choose>
 							<c:when test="${memVO.userName == null}">
-								<a href="#" class="nav-link dropdown-toggle"
-									data-toggle="dropdown"> 登入/註冊</a>
-								<div class="dropdown-menu">
-									<a
-										href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
-										class="dropdown-item">登入</a> <a href="#" class="dropdown-item">登出</a>
-								</div>
+								<a href="${pageContext.request.contextPath}/front-end/member/my-account.jsp" class="nav-link"
+									> 登入/註冊</a>
+								
 							</c:when>
 
 
@@ -171,8 +169,8 @@
                 <i class="fa fa-heart"></i>
                 <span>(0)</span>
               </a> -->
-						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
+							class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})</span>
 						</a>
 					</div>
 				</div>
@@ -189,24 +187,24 @@
 					<nav class="navbar bg-light">
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link"
-								href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
-									class="fa fa-home"></i>3C</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
-									class="fa fa-shopping-bag"></i>周邊</a></li>
+								href="${pageContext.request.contextPath}/"><i
+									class="fa fa-home"></i>居家生活</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
-									class="fa fa-plus-square"></i>精品</a></li>
-							<!--  	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
+									class="fa fa-shopping-bag"></i>包包/精品</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
+									class="fa fa-plus-square"></i>美妝保健</a></li>
+							 	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
 									class="fa fa-female"></i>女生配件</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
 									class="fa fa-child"></i>嬰幼童與母親</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
 									class="fa fa-tshirt"></i>男/女衣著</a></li>
-							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1"><i
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
 									class="fa fa-mobile-alt"></i>3C與電腦</a></li>
 							<li class="nav-item"><a class="nav-link" href="#"><i
-									class="fa fa-microchip"></i>家電影音</a></li> -->
+									class="fa fa-microchip"></i>家電影音</a></li> 
 						</ul>
 					</nav>
 				</div>
@@ -306,7 +304,7 @@
 			<div class="section-header">
 				<c:forEach var="list" items="${list1}" begin="1" end="2">
 					<a
-						href="${pageContext.request.contextPath}/front-end/announcement/listAllAnnoun.jsp">
+						href="${pageContext.request.contextPath}/Announcement/getIndexNews2">
 						<div class="centered" style="font-weight: bold; font-size: larger">最新消息：
 							${list.announcementContent}</div>
 					</a>
@@ -538,66 +536,7 @@
 	<!-- Recent Product End -->
 
 	<!-- Review Start -->
-	<div class="review">
-		<div class="container-fluid">
-			<div class="row align-items-center review-slider normal-slider">
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-1.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-2.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="review-slider-item">
-						<div class="review-img">
-							<img src="img/review-3.jpg" alt="Image" />
-						</div>
-						<div class="review-text">
-							<h2>Customer Name</h2>
-							<h3>Profession</h3>
-							<div class="ratting">
-								<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-									class="fa fa-star"></i>
-							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-								Curabitur vitae nunc eget leo finibus luctus et vitae lorem</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Review End -->
 
 	<!-- Footer Start -->

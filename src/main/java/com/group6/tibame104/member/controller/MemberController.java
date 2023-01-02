@@ -510,25 +510,23 @@ public class MemberController {
 				List<CreditCardVO> cardVO = cardSvc.getAll(memVO.getMemberID());
 				session.setAttribute("cardVO", cardVO);// 資料庫取出的storeVO物件,存入req
 				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
+				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
+				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
+
+				// 有賣場名稱才執行
+				if (storeVO2 != null && storeVO2.getStoreName() != null) {
+					String storeName = storeVO2.getStoreName();
+//					System.out.println("storeName = " + storeName);
+					session.setAttribute("storeName", storeName);
+					session.setAttribute("storeVO2", storeVO2);
+				}
 				String location = (String) session.getAttribute("location");
 				if (location != null) {
-					return "forward:" + location;
+					session.removeAttribute("location");
+					return "redirect:" + location;
 				}
-			} catch (Exception ignored) {
+			} catch (Exception e) {
 			}
-
-			StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
-			StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-
-			// 有賣場名稱才執行
-			if (storeVO2 != null && storeVO2.getStoreName() != null) {
-				String storeName = storeVO2.getStoreName();
-				session.setAttribute("storeName", storeName);
-			}
-
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-
-			session.setAttribute("storeVO2", storeVO2);// 資料庫取出的storeVO物件,存入req
 
 		}
 		return "/index"; // *工作3:
@@ -540,6 +538,8 @@ public class MemberController {
 
 		// 登出操作，清除用戶的登入狀態
 		session.removeAttribute("mail");
+		session.removeAttribute("storeName");
+		session.removeAttribute("memVO");
 		// 重定向到登入頁面
 		return "/front-end/member/login";
 
@@ -645,6 +645,7 @@ public class MemberController {
 		dao.insert(storeVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+		session.setAttribute("storeName", storeName);
 		session.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的memVO物件,存入req
 		return "front-end/store/myStore";
 

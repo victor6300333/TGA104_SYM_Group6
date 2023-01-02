@@ -9,7 +9,7 @@ body {
 }
 
 a {
-    color: #FF6F61;
+    color: #FFA9A9;
 }
 
 a:hover,
@@ -44,7 +44,7 @@ h2 {
 .back-to-top {
     position: fixed;
     display: none;
-    background: #FF6F61;
+    background: #FFA9A9;
     color: #ffffff;
     width: 40px;
     height: 40px;
@@ -686,7 +686,7 @@ h2 {
 .product-item .product-title {
     padding: 15px;
     text-align: center;
-    background: #000000;
+    background: #FFA9A9;
     transition: all .3s;
 }
 
@@ -708,7 +708,7 @@ h2 {
 
 .product-item .product-title .ratting i {
     font-size: 14px;
-    color: #FF6F61;
+    color: #ff8040;
 }
 
 .product-item .product-content .price span {
@@ -799,7 +799,7 @@ h2 {
 
 .product-item .product-price {
     padding: 20px;
-    background: #000000;
+    background: #FFA9A9 ;
     transition: all .3s;
 }
 
@@ -807,13 +807,13 @@ h2 {
     background: #FF6F61;
 }
 
-.product-item .product-price h3 {
+.product-item .product-price h4 {
     display: inline-block;
     color: #ffffff;
     margin: 0;
 }
 
-.product-item .product-price h3 span {
+.product-item .product-price h4 span {
     font-size: 16px;
 }
 
@@ -821,7 +821,7 @@ h2 {
     float: right;
     border: none;
     color: #000000;
-    background: #FF6F61;
+    background: #ff9080;
 }
 
 .product-item:hover .product-price .btn,
@@ -1152,7 +1152,7 @@ h2 {
     font-size: 16px;
     text-align: center;
     color: #ffffff;
-    background: #FF6F61;
+    background: #FFA9A9;
     border: none;
 }
 
@@ -1170,7 +1170,7 @@ h2 {
     color: #ffffff;
     font-size: 16px;
     text-align: center;
-    background: #000000;
+    background: #ff8080;
     border: none;
 }
 
@@ -1183,16 +1183,26 @@ h2 {
 }
 
 .product-detail .nav.nav-pills .nav-link {
-    color: #FF6F61;
-    background: #000000;
+    color: #000000;
+    background: #FFA9A9; 
+ 
     border-radius: 0;
     transition: all .3s;
 }
 
-.product-detail .nav.nav-pills .nav-link:hover,
+
+.product-detail .nav.nav-pills .nav-link.active1 {
+	color: #000000;
+	background: #FFA9A9;
+}
 .product-detail .nav.nav-pills .nav-link.active {
-    color: #000000;
-    background: #FF6F61;
+	color: #000000;
+	background: #ff8080;
+}
+
+.product-detail .nav.nav-pills .nav-link:hover{
+    color: #ffffff;
+    background: #ff8080;
 }
 
 .product-detail .tab-content {
@@ -1689,7 +1699,7 @@ h2 {
     font-size: 14px;
     text-align: center;
     color: #ffffff;
-    background: #FF6F61;
+    background: #FFA9A9;
     border: none;
     border-radius: 4px;
 }
@@ -1798,14 +1808,14 @@ h2 {
     font-size: 25px;
     text-align: center;
     color: #000000;
-    background: #FF6F61;
+    background: #FFA9A9;
     border: none;
     border-radius: 4px;
     transition: all .3s;
 }
 
 .checkout .checkout-payment .checkout-btn button:hover {
-    color: #FF6F61;
+    color: #FFA9A9;
     background: #000000;
 }
 

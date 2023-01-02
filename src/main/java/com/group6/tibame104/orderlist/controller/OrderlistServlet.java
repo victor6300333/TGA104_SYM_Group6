@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.group6.tibame104.category.model.CategoryService;
 import com.group6.tibame104.orderlist.model.OrderlistService;
 import com.group6.tibame104.orderlist.model.OrderlistVO;
 
@@ -28,6 +29,8 @@ public class OrderlistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	OrderlistService orderlistSvc;
+	@Autowired
+	CategoryService categorySvc;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -61,6 +64,7 @@ public class OrderlistServlet extends HttpServlet {
 			Integer buyerReview = Integer.parseInt(str.substring(0, 1));
 			String buyerComment = req.getParameter("buyerComment");
 			Integer orderDetailID = Integer.parseInt(req.getParameter("orderDetailID"));
+			Integer productID = Integer.parseInt(req.getParameter("productID"));
 			
 			InputStream in = part.getInputStream();
 			byte[] pic = new byte[in.available()];   // byte[] buf = in.readAllBytes();  // Java 9 ���s��k
@@ -75,6 +79,7 @@ public class OrderlistServlet extends HttpServlet {
 		
 		
 			orderlistSvc.updateOrderlist(orderDetailID, buyerReview, buyerComment, pic);
+			categorySvc.updateStar(productID);
 			
 			OrderlistVO orderlistVO = orderlistSvc.findByOrderlistID(orderDetailID);
 		

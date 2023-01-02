@@ -12,6 +12,6 @@ public interface OrderlistDAO_interface {
     
     public OrderlistVO findByOrderlistID(Integer orderlistID);
     
-    public List<OrderlistVO> findByProductID(Integer productID);
+    public List<OrderlistVO> findByProductID(Integer productID, Boolean all);
 
 }

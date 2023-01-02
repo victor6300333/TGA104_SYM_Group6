@@ -10,8 +10,8 @@ public class CategoryService {
 	@Autowired
 	CategoryDAO_interface dao;
 
-	public List<CategoryVO> getbyProductName(String productName){
-		return dao.getbyProductName(productName);
+	public List<CategoryVO> getbyProductName(String productName, Boolean correct){
+		return dao.getbyProductName(productName, correct);
 		
 	}
 
@@ -19,13 +19,17 @@ public class CategoryService {
 		return dao.getbyProductID(productID);
 		
 	}
+	public List<CategoryVO> getbyStoreID(Integer storeID) {
+		return dao.getbyStoreID(storeID);
+		
+	}
 
 	public List<CategoryVO> getbyProductSecID(Integer productSecID) {
 		return dao.getbyProductSecID(productSecID);
 	}
 
-	public List<CategoryVO> getbyProductMainID(Integer productMainID) {
-		return dao.getbyProductMainID(productMainID);
+	public List<CategoryVO> getbyProductMainID(Integer productMainID, Boolean correct) {
+		return dao.getbyProductMainID(productMainID, correct);
 	}
 	
 	public List<CategoryVO> getAll(){
@@ -35,5 +39,9 @@ public class CategoryService {
 	public List<String> getAllCategory(){
 		return dao.getAllCategory();
 		
+	}
+	
+	public void updateStar(Integer productID){
+		dao.updateStar(productID);
 	}
 }

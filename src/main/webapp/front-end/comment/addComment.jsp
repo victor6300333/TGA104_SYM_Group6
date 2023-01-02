@@ -275,6 +275,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 								<textarea type="TEXT" name="buyerComment" size="45"></textarea>
 
 
+								<input type="hidden" name="productID" value="${orderlistVO.productID}"> <br><br>
 
 								<input type="hidden" name="orderDetailID"
 									value="${orderlistVO.orderDetailID}" size="45" /> <input

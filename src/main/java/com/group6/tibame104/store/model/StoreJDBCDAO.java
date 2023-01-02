@@ -23,7 +23,9 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 	private static final String UPDATE_STATUS = "UPDATE store set storeAuditStatus =1 where memberID = ?";
 
 	private static final String GET_All_STMT_BY_AUDI_0 = "SELECT memberID,storeName,storeAddress,phoneNumber,createDate,updateDate,taxID,storeAuditStatus FROM store where storeAuditStatus = 0";
-	
+
+	private static final String GET_STORE_MEMBERID = "SELECT memberID FROM store where storeID = ?";
+
 	@Override
 	public void update(StoreVO storeVO) {
 
@@ -233,12 +235,13 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 		}
 
 	}
-	
+
 	@Override
 	public List<StoreVO> findAllByAudit0() {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		List<StoreVO> all = new ArrayList<StoreVO>();;
+		List<StoreVO> all = new ArrayList<StoreVO>();
+		;
 		try {
 
 			Class.forName(driver);
@@ -246,8 +249,8 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			pstmt = con.prepareStatement(GET_All_STMT_BY_AUDI_0);
 
 			ResultSet rs = pstmt.executeQuery();
-			StoreVO storeVO=null;
-			
+			StoreVO storeVO = null;
+
 			while (rs.next()) {
 				storeVO = new StoreVO();
 				storeVO.setMemberID(rs.getInt("memberID"));
@@ -288,10 +291,31 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 
 	}
 
+	@Override
+	public Integer findMemberID(Integer storeID) {
+		try (Connection con = DriverManager.getConnection(url, userid, passwd);
+				PreparedStatement pstmt = con.prepareStatement(GET_STORE_MEMBERID)) {
+
+			pstmt.setInt(1, storeID);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				Integer memberID = null;
+				while (rs.next()) {
+					memberID = rs.getInt("memberID");
+				}
+				return memberID;
+			}
+
+			// Handle any driver errors
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 
 	public static void main(String[] args) {
 
-		StoreJDBCDAO dao = new StoreJDBCDAO();
+//		StoreJDBCDAO dao = new StoreJDBCDAO();
 
 		// insert
 
@@ -334,12 +358,11 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		System.out.print(storeVO2.getStoreAuditStatus() + ",");
 //		System.out.println();
 //		System.out.println("---------------------");
-		
+
 //		List<StoreVO> a = dao.findAllByAudit0();
 //		for(StoreVO b : a) {
 //			System.out.println(b.getStoreID());
 //		}
-		
 
 	}
 }

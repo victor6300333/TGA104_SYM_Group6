@@ -11,13 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.group6.tibame104.coupon.model.CouponService;
 import com.group6.tibame104.coupon.model.CouponVO;
+import com.group6.tibame104.group.model.GroupService;
 
 @WebServlet("/CouponUpdate")
 public class CouponUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	@Autowired
+	private CouponService couponSvc;
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
 		List<String> errorMsgs = new LinkedList<String>();

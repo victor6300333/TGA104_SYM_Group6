@@ -85,5 +85,9 @@ public class GroupService {
 	public List<GroupVO> orderBy() {
 		return dao.orderBy();
 	}
+	//Hibernate join用
+	public List<Object> getJoinAll(){
+		return dao.getJoinAll();
+	}
 	
 }

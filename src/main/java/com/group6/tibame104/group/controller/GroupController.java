@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,12 @@ public class GroupController {
             Model model,
             @RequestParam("groupBuyID") String str,
             @RequestParam("groupBuyProductID") String str2,
-            @RequestParam("groupBuyCount") String str3
+            @RequestParam("groupBuyCount") String str3,
+            HttpServletRequest req,
+            HttpServletRequest res
         ) {
         List<String> errorMsgs = new LinkedList<String>();
         model.addAttribute("errorMsgs", errorMsgs);
-
         if (str == null || (str.trim()).length() == 0) {
             errorMsgs.add("請輸入折扣表編號");
         }
@@ -91,6 +93,7 @@ public class GroupController {
         if (!errorMsgs.isEmpty()) {
             return "front-end/groupdiscount/select_page";
         }
+       
         
         Integer groupBuyProductID = null;
         try {
@@ -120,17 +123,36 @@ public class GroupController {
         if (groupVO == null) {
             errorMsgs.add("查無資料");
         }
-        // Send the use back to the form, if there were errors
         if (!errorMsgs.isEmpty()) {
-            return "front-end/grouporder/select_page";// 程式中斷
-        }
-
-        /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-        session.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
-        session.setAttribute("groupBuyCount", groupBuyCount);
-        session.setAttribute("groupproductVO", groupproductVO);
-
+            return "front-end/grouporder/select_page";}// 程式中斷
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            session.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
+            session.setAttribute("groupBuyCount", groupBuyCount);
+            session.setAttribute("groupproductVO", groupproductVO);
+            
+            
+//        Object account = session.getAttribute("mail");
+//        if (account == null) {
+//         session.setAttribute("location", req.getServletPath());
+//         GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
+//         GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
+//         session.setAttribute("groupVO", groupVO); 
+//         session.setAttribute("groupproductVO", groupproductVO);
+//         session.setAttribute("groupBuyCount", groupBuyCount);
+//         return "/front-end/member/login";
+//        }
+//        if(groupBuyID != null) {
+//        	
+//        GroupVO groupVO1 = groupSvc.getOneGroup(groupBuyID);
+//        GroupproductVO groupproductVO1 = groupproductSvc.getOneGroupproduct(groupBuyProductID);
+//        model.addAttribute("groupVO", groupVO1); 
+//        model.addAttribute("groupproductVO", groupproductVO1);
+//        model.addAttribute("groupBuyCount", groupBuyCount);
+//       
+//        }
+        
         return "front-end/group/addOrder";
+        
     }
     @PostMapping("/getOneForUpdate")
     public String getOneForUpdate(
@@ -335,5 +357,13 @@ public class GroupController {
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   
 		   return"back-end/group/updateGroup";
+	   }
+	   @GetMapping("/getJoinAll")
+	   public String getJoinAll(
+			   Model model) {
+		   List<Object> groupVOs = groupSvc.getJoinAll();
+		   model.addAttribute("groupVOs",groupVOs);
+		   System.out.println("123");
+		   return "front-end/group/listAllGroup";
 	   }
 }
