@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group6.tibame104.groupdiscount.model.*"%>
 
-<%
-GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupdiscountVO");
-%>
-
 
 <html>
 
@@ -313,7 +309,7 @@ GroupdiscountVO groupdiscountVO = (GroupdiscountVO) request.getAttribute("groupd
 																<h5>團購人數門檻</h5>
 															</label> <input type="text" class="form-control"
 																id="groupBuyProductOrderTotal" name="groupBuyProductOrderTotal"
-																value="<%=(groupdiscountVO == null) ? "999" : groupdiscountVO.getGroupBuyProductOrderTotal()%>"
+																value="${(groupdiscountVO == null) ? "999" : groupdiscountVO.getGroupBuyProductOrderTotal()}"
 																placeholder="請輸入團購人數" />
 														</div>
 														<div class="col-sm-4 margin-left-1">

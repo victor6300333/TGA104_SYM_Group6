@@ -66,7 +66,7 @@ public class AnnounHibernateDao implements AnnouncementDAO_interface {
 	
 	@Override
 	public List<AnnouncementVO> findIndexNews() {
-		final String hql = "FROM AnnouncementVO WHERE (offLoadStatus = 1 AND showStatus = 1)";
+		final String hql = "FROM AnnouncementVO WHERE (offLoadStatus = 1 AND showStatus = 1) ORDER BY announcementSerialID DESC";
 		return session.createQuery(hql, AnnouncementVO.class).list();
 	}
 	

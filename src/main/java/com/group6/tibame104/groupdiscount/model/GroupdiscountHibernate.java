@@ -20,8 +20,7 @@ public class GroupdiscountHibernate implements GroupdiscountDAO_interface{
 		final String hql = "update GroupdiscountVO "
 				+ "set groupBuyID = :groupBuyID,"
 				+ "groupBuyProductOrderTotal = :groupBuyProductOrderTotal,"
-				+ "groupBuyCount = :groupBuyCount"
-				+ "where countTableID = :countTableID";
+				+ "groupBuyCount = :groupBuyCount where countTableID = :countTableID";
 
 		session.createQuery(hql).setParameter("groupBuyID", groupdiscountVO.getGroupBuyID())
 				.setParameter("groupBuyProductOrderTotal", groupdiscountVO.getGroupBuyProductOrderTotal())
