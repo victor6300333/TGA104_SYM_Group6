@@ -178,7 +178,7 @@
 							class="dropdown-menu dropdown-menu-end border-0 rounded-0 rounded-bottom m-0">
 							<a href="#" class="dropdown-item">
 								<div class="d-flex align-items-center">
-									<img class="rounded-circle" src="../img/logoSYM3.jpg" alt=""
+									<img class="rounded-circle" src="${pageContext.request.contextPath}/back-end/group/img/logoSYM3.jpg" alt=""
 										style="width: 40px; height: 40px" />
 									<div class="ms-2">
 										<h6 class="fw-normal mb-0">message</h6>
@@ -241,7 +241,7 @@
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown"> <img
-							class="rounded-circle me-lg-2" src="../img/logoSYM3.jpg" alt=""
+							class="rounded-circle me-lg-2" src="${pageContext.request.contextPath}/back-end/group/img/logoSYM3.jpg" alt=""
 							style="width: 40px; height: 40px" /> <span
 							class="d-none d-lg-inline-flex">歡迎您~ Admin</span>
 						</a>
@@ -375,7 +375,7 @@
 																<th>下架日期</th>
 																<th>更新日期</th>
 																<th>上架狀態</th>
-																<th>首頁/賣場</th>
+																<th>首頁(true)<br>/賣場(false)</th>
 																<th>修改</th>
 																<th>刪除</th>
 															</tr>

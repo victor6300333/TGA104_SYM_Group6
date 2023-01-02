@@ -4,18 +4,38 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "announcement")
 public class AnnouncementVO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer announcementSerialID;
-	private Integer administratorID;
-	private String announcementTitle;
-	private String announcementContent;
-	private Date startDate;
-	private Date endDate;
-	private Timestamp updateTime;
-	private Boolean offLoadStatus;
-	private Boolean showStatus;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "announcementSerialID")
+	private Integer announcementSerialID;
+	@Column(name = "administratorID")
+	private Integer administratorID;
+	@Column(name = "announcementTitle")
+	private String announcementTitle;
+	@Column(name = "announcementContent")
+	private String announcementContent;
+	@Column(name = "startDate")
+	private Date startDate;
+	@Column(name = "endDate")
+	private Date endDate;
+	@Column(name = "updateTime")
+	private Timestamp updateTime;
+	@Column(name = "offLoadStatus")
+	private Boolean offLoadStatus;
+	@Column(name = "showStatus")
+	private Boolean showStatus;
 	public Integer getAnnouncementSerialID() {
 		return announcementSerialID;
 	}
@@ -71,6 +91,4 @@ public class AnnouncementVO implements Serializable {
 		this.showStatus = showStatus;
 	}
 	
-	
-
 }
