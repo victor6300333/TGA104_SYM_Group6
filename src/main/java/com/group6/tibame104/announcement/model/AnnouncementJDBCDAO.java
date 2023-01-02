@@ -26,10 +26,10 @@ public class AnnouncementJDBCDAO implements AnnouncementDAO_interface {
 	private static final String GetByTitle = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementTitle=?";
 	// 依照公告ID做查詢
 	private static final String GetByPK = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementSerialID=?";
-	// 依照公告ID做查詢
-	private static final String GetByOffLoadStatus = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementSerialID=?";
-	// 依照公告ID做查詢
-	private static final String GetByShowStatus = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE announcementSerialID=?";
+	// 依照公告上架狀態做查詢
+	private static final String GetByOffLoadStatus = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE offLoadStatus=?";
+	// 依照公告顯示位置做查詢
+	private static final String GetByShowStatus = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement WHERE showStatus=?";
 	// 查詢全部公告
 	private static final String GetAll = "SELECT announcementSerialID, administratorID, announcementTitle, announcementContent, startDate, endDate, updateTime, offLoadStatus, showStatus FROM announcement ORDER BY announcementSerialID";
 	// 查詢上架中的最新消息

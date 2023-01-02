@@ -1,9 +1,6 @@
 package com.group6.tibame104.announcement.controller;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -35,19 +32,19 @@ public class AnnouncementController {
 			@RequestParam("endDate") Date endDate,
 			@RequestParam("offLoadStatus") Boolean offLoadStatus,
 			@RequestParam("showStatus") Boolean showStatus) {
-		List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
+//		List<String> errorMsgs = new LinkedList<String>();
+//		model.addAttribute("errorMsgs", errorMsgs);
 		
 		//未檢查請求參數
 		
 		announSvc.insertAnnoun(administratorID, announcementTitle, announcementContent, startDate, endDate, offLoadStatus, showStatus);
 		
-//		// 獲得時間戳記(JDBC方法已改已不需要)
+		//		// 獲得時間戳記(JDBC方法已改已不需要)
 //		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 //		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		String strUpdateTime = df.format(updateTime);
 //		updateTime = Timestamp.valueOf(strUpdateTime);
-		List<AnnouncementVO> list = announSvc.getAnnounByPK(administratorID);
+		List<AnnouncementVO> list = announSvc.getAllAnnoun();
 		model.addAttribute("list",list);	
 		return "/back-end/announcement/announcementSearch";	
 	}
@@ -65,8 +62,8 @@ public class AnnouncementController {
 			@RequestParam("offLoadStatus") Boolean offLoadStatus,
 			@RequestParam("showStatus") Boolean showStatus) {
 		
-		List<String> errorMsgs = new LinkedList<String>();
-		session.setAttribute("errorMsgs", errorMsgs);	
+//		List<String> errorMsgs = new LinkedList<String>();
+//		session.setAttribute("errorMsgs", errorMsgs);	
 		
 		announSvc.updateAnnoun(
 				announcementSerialID,
@@ -107,28 +104,31 @@ public class AnnouncementController {
 			// 查詢By公告編號
 			list = announSvc.getAnnounByPK(Integer.valueOf(searchValue));
 			model.addAttribute("list", list);
-			System.out.println(list);
+//			System.out.println("1:"+list);
 			break;
 		case "2":
 			// 查詢By公告標題
 			list = announSvc.getAnnounByTitle(searchValue);
 			model.addAttribute("list", list);
-			System.out.println(list);
+//			System.out.println("2:"+list);
 			break;
 		case "3":
 			// 查詢By公告狀態
-			list = announSvc.getAnnounByOffLoadStatus(Boolean.parseBoolean(searchValue));
+			list = announSvc.getAnnounByOffLoadStatus(Boolean.valueOf(searchValue));
 			model.addAttribute("list", list);
+//			System.out.println("3:"+list);
 			break;
 		case "4":
 			// 查詢By公告位置
-			list = announSvc.getAnnounByOffLoadStatus(Boolean.parseBoolean(searchValue));
+			list = announSvc.getAnnounByShowStatus(Boolean.parseBoolean(searchValue));
 			model.addAttribute("list", list);
+//			System.out.println("4:"+list);
 			break;
 		case "5":
 			// 查詢By公告位置
 			list = announSvc.getAllAnnoun();
 			model.addAttribute("list", list);
+//			System.out.println("5:"+list);
 			break;
 		}
 			// 返回查詢結果
