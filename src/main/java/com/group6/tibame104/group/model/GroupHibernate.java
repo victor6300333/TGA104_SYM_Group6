@@ -47,7 +47,12 @@ public class GroupHibernate implements GroupDAO_interface {
 
 	@Override
 	public List<GroupVO> getAll() {
-		final String hql = "FROM GroupVO ORDER BY groupBuyID";
+		final String hql = "FROM GroupVO ORDER BY groupBuyID ";
+		return session.createQuery(hql, GroupVO.class).list();
+	}
+	@Override
+	public List<GroupVO> getAllDesc() {
+		final String hql = "FROM GroupVO ORDER BY groupBuyID DESC";
 		return session.createQuery(hql, GroupVO.class).list();
 	}
 

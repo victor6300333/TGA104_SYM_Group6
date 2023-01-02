@@ -188,7 +188,7 @@
 												</div>
 												<div class="dropdown-menu dropdown-menu-right">
 													<a
-														href="${pageContext.request.contextPath}/front-end/group/allGroup"
+														href="${pageContext.request.contextPath}/front-end/group/getAllDesc"
 														class="dropdown-item">最新</a> <a
 														href="${pageContext.request.contextPath}/front-end/group/orderBy"
 														class="dropdown-item">最多參與</a>

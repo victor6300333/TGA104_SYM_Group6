@@ -199,4 +199,10 @@ public class GroupJDBCDAO implements GroupDAO_interface {
 		return null;
 	}
 
+	@Override
+	public List<GroupVO> getAllDesc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

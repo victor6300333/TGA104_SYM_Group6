@@ -80,6 +80,10 @@ public class GroupService {
 	public List<GroupVO> getAll() {
 		return dao.getAll();
 	}
+	// 查詢全部
+		public List<GroupVO> getAllDesc() {
+			return dao.getAllDesc();
+		}
 
 	// 查詢按照團購數
 	public List<GroupVO> orderBy() {
