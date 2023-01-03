@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.group6.tibame104.couponUsageHistory.model.CouponUsageHistoryService;
+import com.group6.tibame104.couponUsageHistory.model.CouponUsageHistoryVO;
 import com.group6.tibame104.creditCard.model.CreditCardService;
 import com.group6.tibame104.creditCard.model.CreditCardVO;
 import com.group6.tibame104.member.model.MailService;
@@ -32,6 +34,8 @@ import com.group6.tibame104.member.model.MemberService;
 import com.group6.tibame104.member.model.MemberVO;
 import com.group6.tibame104.memberBlockList.model.MemberBlockListService;
 import com.group6.tibame104.memberBlockList.model.ViewMemberBlockListVO;
+import com.group6.tibame104.shoppingGoldRecord.model.ShoppingGoldRecordService;
+import com.group6.tibame104.shoppingGoldRecord.model.ShoppingGoldRecordVO;
 import com.group6.tibame104.store.model.StoreJDBCDAO;
 import com.group6.tibame104.store.model.StoreVO;
 
@@ -50,7 +54,12 @@ public class MemberController {
 	private CreditCardService cardSvc;
 	@Autowired
 	private MemberBlockListService blockSvc;
-
+	@Autowired
+	private CouponUsageHistoryService couponUsageHistorySvc;
+	@Autowired
+	private ShoppingGoldRecordService shoppingGoldRecordSvc;
+	private Integer memberID;
+	
 	@PostMapping("/getOneForDisplay")
 	public String getOneForDisplay(Model model, @RequestParam("memberID") Integer memberID) {
 
@@ -512,7 +521,11 @@ public class MemberController {
 				session.setAttribute("memblVO", memblVO);// 資料庫取出的storeVO物件,存入req
 				StoreJDBCDAO storeJDBCDAO = new StoreJDBCDAO();
 				StoreVO storeVO2 = storeJDBCDAO.findByPrimaryKey(memVO.getMemberID());
-
+				List<CouponUsageHistoryVO> couponUsageHistoryVO = couponUsageHistorySvc.getAll2();
+				session.setAttribute("couponUsageHistoryVO", couponUsageHistoryVO);
+				List<ShoppingGoldRecordVO> shoppingGoldRecordVO = shoppingGoldRecordSvc.getAll();
+				session.setAttribute("shoppingGoldRecordVO", shoppingGoldRecordVO);
+				
 				// 有賣場名稱才執行
 				if (storeVO2 != null && storeVO2.getStoreName() != null) {
 					String storeName = storeVO2.getStoreName();
