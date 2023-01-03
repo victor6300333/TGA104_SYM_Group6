@@ -374,7 +374,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="ShoppingGoldRecordVO" items="${sgrlist}">
+										<c:forEach var="ShoppingGoldRecordVO" items="${shoppingGoldRecordVO}">
 											<tr>
 
 												<td>${ShoppingGoldRecordVO.shoppingGoldRecordID}</td>
@@ -476,7 +476,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="couponUsageHistoryVO" items="${cuhlist}">
+										<c:forEach var="couponUsageHistoryVO" items="${couponUsageHistoryVO}">
 											<tr>
 
 												<td>${couponUsageHistoryVO.memberID}</td>
