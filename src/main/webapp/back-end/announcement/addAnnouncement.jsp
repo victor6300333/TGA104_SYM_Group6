@@ -16,13 +16,13 @@
 						<div class="container-fluid">
 							<div class="row mb-2">
 								<div class="col-sm-6">
-									<h1 class="m-0 sym-dark-font">公告查詢</h1>
+									<h1 class="m-0 sym-dark-font">新增公告</h1>
 								</div>
 								<!-- /.col -->
 								<div class="col-sm-6 flex-direction">
 									<ol class="breadcrumb float-sm-right">
 										<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
-										<li class="breadcrumb-item active">公告查詢</li>
+										<li class="breadcrumb-item active">新增公告</li>
 									</ol>
 								</div>
 								<!-- /.col -->
