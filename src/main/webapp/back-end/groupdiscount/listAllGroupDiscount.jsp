@@ -20,7 +20,7 @@
 							<!-- /.col -->
 							<div class="col-sm-6 flex-direction">
 								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a href="#">Home</a></li>
+									<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
 									<li class="breadcrumb-item active">新增 / 修改折扣</li>
 								</ol>
 							</div>
