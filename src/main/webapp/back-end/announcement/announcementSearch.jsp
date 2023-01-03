@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group6.tibame104.announcement.model.*"%>
 <%@ include file="/back-end/group/header.jsp"%>
-
 			<!-- Content starts-->
 			<div class="wrapper">
 				<header id="header"></header>
@@ -125,7 +124,7 @@
 																<th>下架日期</th>
 																<th>更新日期</th>
 																<th>上架狀態</th>
-																<th>首頁(true)<br>/賣場(false)</th>
+																<th>首頁/賣場</th>
 																<th>修改</th>
 																<th>刪除</th>
 															</tr>
@@ -147,19 +146,21 @@
 																		<td><input type="text" name="announcementContent"
 																			value="${announcementVO.announcementContent}"
 																			style="width: 120px"></td>
-																		<td><input type="text" name="startDate"
+																		<td><input type="text" name="startDate" autocomplete="off"
 																			value="${announcementVO.startDate}"
 																			style="width: 100px"></td>
-																		<td><input type="text" name="endDate"
+																		<td><input type="text" name="endDate" autocomplete="off"
 																			value="${announcementVO.endDate}"
 																			style="width: 100px"></td>
 																		<td style="width: 100px">${announcementVO.updateTime}</td>
-																		<td><input type="text" name="offLoadStatus"
-																			value="${announcementVO.offLoadStatus}"
-																			style="width: 50px"></td>
-																		<td><input type="text" name="showStatus"
-																			value="${announcementVO.showStatus}"
-																			style="width: 50px"></td>
+																		<td><input type="radio" name="offLoadStatus" value="true" 
+																				${announcementVO.offLoadStatus == 'true' ? 'checked' : ''}>上架
+																			<input type="radio" name="offLoadStatus" value="false"
+																				${announcementVO.offLoadStatus == 'false' ? 'checked' : ''}>下架</td>
+																		<td><input type="radio" name="showStatus" value="true" 
+																				${announcementVO.showStatus == 'true' ? 'checked' : ''}>首頁
+																			<input type="radio" name="showStatus" value="false"
+																				${announcementVO.showStatus == 'false' ? 'checked' : ''}>賣場</td>
 																		<td><input type="submit"
 																			class="btn sym-darkpurple sym-yellow-font btn_style"
 																			value="修改"> <input type="hidden"
@@ -242,6 +243,55 @@
 	</div>
 
 	<!-- JavaScript Libraries -->
+	<script>
+	window.onload = function() {
+		  var radioButtons = document.getElementsByName(annoucementVO.offLoadStatus);
+		  for (var i = 0; i < radioButtons.length; i++) {
+		    if (booleanArray[i]) {
+		      radioButtons[i].checked = true;
+		    }
+		  }
+		};
+		window.onload = function() {
+			  var radioButtons = document.getElementsByName(annoucementVO.showStatus);
+			  for (var i = 0; i < radioButtons.length; i++) {
+			    if (booleanArray[i]) {
+			      radioButtons[i].checked = true;
+			    }
+			  }
+			};	
+	</script>
+	<link rel="stylesheet" type="text/css"
+		href="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.css" />
+	<script
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/front-end/order/datetimepicker/jquery.datetimepicker.full.js"></script>
+	<script>
+		$.datetimepicker.setLocale('zh');
+		$('#f_date1').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+		$('#f_date2').datetimepicker({
+			theme : '', //theme: 'dark',
+			timepicker : false, //timepicker:true,
+			step : 1, //step: 60 (這是timepicker的預設間隔60分鐘)
+			format : 'Y-m-d', //format:'Y-m-d H:i:s',
+			value : '', // value:   new Date(),
+		//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+		//startDate:	            '2017/07/10',  // 起始日
+		//minDate:               '-1970-01-01', // 去除今日(不含)之前
+		//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+		});
+	</script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
