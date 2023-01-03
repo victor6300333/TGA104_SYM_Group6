@@ -82,21 +82,18 @@
 															<td><input type="text" name="announcementContent"
 																value="${announcementVO.announcementContent}"
 																style="width: 120px"></td>
-															<td><input id="f_date1" type="text" name="startDate"
+															<td><input id="f_date1" type="text" name="startDate" autocomplete="off"
 																value="${announcementVO.startDate}" style="width: 100px">
 															</td>
-															<td><input id="f_date2" type="text" name="endDate"
+															<td><input id="f_date2" type="text" name="endDate" autocomplete="off"
 																value="${announcementVO.endDate}" style="width: 100px">
 															</td>
 															<td style="width: 100px">${announcementVO.updateTime}</td>
-															<td><input type="text" name=offLoadStatus
-																value="${announcementVO.offLoadStatus}"
-																style="width: 50px"></td>
+															<td><input type="radio" name="offLoadStatus" value="true">上架
+																<input type="radio" name="offLoadStatus" value="false">下架</td>
 															
-															<td><input type="text" name=showStatus
-																value="${announcementVO.showStatus}"
-																style="width: 50px">
-															</td>
+															<td><input type="radio" name="showStatus" value="true">首頁
+																<input type="radio" name="showStatus" value="false">賣場</td>
 															<td>
 																<button
 																	type="submit"
@@ -218,16 +215,27 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="../lib/chart/chart.min.js"></script>
-	<script src="../lib/easing/easing.min.js"></script>
-	<script src="../lib/waypoints/waypoints.min.js"></script>
-	<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
-	<script src="../lib/tempusdominus/js/moment.min.js"></script>
-	<script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
-	<script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/chart/chart.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/easing/easing.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/waypoints/waypoints.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/moment-timezone.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 	<!-- Template Javascript -->
-	<script src="../js/main.js"></script>
-	<script src="../js/admin.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/group/js/admin.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/back-end/announcement/js/search.js"></script>
 </body>
 </html>
