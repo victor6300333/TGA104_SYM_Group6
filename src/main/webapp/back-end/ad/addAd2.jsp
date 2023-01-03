@@ -67,29 +67,32 @@ AdVO adVO = (AdVO) request.getAttribute("adVO");
 										<div class="col-sm-4">
 											<div class="form-group">
 												<h5>管理員編號:</h5>
-												<!-- 												<div class="mg-bottom-2"><input type="TEXT" name="administratorID" size="45"  -->
-												<%-- 													 value="<%=(adVO==null)? "1" : adVO.getAdministratorID()%>" /> --%>
-												<!-- 												</div> -->
-												<jsp:useBean id="adSvc" scope="page"
-													class="com.group6.tibame104.ad.model.AdService" />
-												<select  size="1" name="administratorID">
-													<c:forEach var="adVO" items="${adSvc.all}">
-														<option value="${adVO.administratorID}"
-															${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID}
-													</c:forEach>
-												</select>
+																								<div class="mg-bottom-2"><input type="TEXT" name="administratorID" size="45" 
+																									 value="<%=(adVO==null)? "1" : adVO.getAdministratorID()%>" />
+																								</div>
+<%-- 												<jsp:useBean id="adSvc" scope="page" --%>
+<%-- 													class="com.group6.tibame104.ad.model.AdService" /> --%>
+<!-- 												<select  size="1" name="administratorID"> -->
+<%-- 													<c:forEach var="adVO" items="${list}"> --%>
+<%-- 														<option value="${adVO.administratorID}" --%>
+<%-- 															${(adVO.administratorID==adVO.administratorID)? 'selected':'' }>${adVO.administratorID} --%>
+<%-- 													</c:forEach> --%>
+<!-- 												</select> -->
 											</div>
 											<div class="col-sm-4">
 												<%-- 												<jsp:useBean id="adSvc" scope="page" class="com.ad.model.AdService" /> --%>
 												<h5>
 													廣告類別:<font color=red><b>*</b></font>
 												</h5>
-												<select  size="1" name="adType">
-													<c:forEach var="adVO" items="${adSvc.all}">
-														<option value="${adVO.adType}"
-															${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType}
-													</c:forEach>
-												</select>
+												<input type="text" name="AdType" class="mb-2rem"
+													id="proName" placeholder=""
+													value="<%=(adVO == null) ? "團購相關" : adVO.getAdType()%>" />
+<!-- 												<select  size="1" name="adType"> -->
+<%-- 													<c:forEach var="adVO" items="${adSvc.all}"> --%>
+<%-- 														<option value="${adVO.adType}" --%>
+<%-- 															${(adVO.adType==adVO.adType)? 'selected':'' }>${adVO.adType} --%>
+<%-- 													</c:forEach> --%>
+<!-- 												</select> -->
 											</div>
 										</div>
 									</div>
