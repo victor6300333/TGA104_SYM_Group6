@@ -77,14 +77,20 @@
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/front-end/order/img/account.jpg"
-							alt="" style="width: 40px; height: 40px" /> 帳號名稱
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
 						</a>
 						<div class="dropdown-menu">
-							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
-								href="index.html" class="dropdown-item">登出</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
 
 						</div>
 					</div>
@@ -197,34 +203,36 @@
 		</table>
 
 		<div class="table<%=storeID%>">
-			<br> 
-			<input type="hidden" name="storeID<%=storeID%>"
-				value="<%=storeID%>"> 
-			<input type="hidden"
+			<br> <input type="hidden" name="storeID<%=storeID%>"
+				value="<%=storeID%>"> <input type="hidden"
 				name="storeName<%=storeID%>"
-				value="<%=buylist.get(0).getStoreName()%>"> 
-			<input type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>">
-			<b>選用會員資料</b>
-			<br> <br> 
-			<b>收件者: </b>
-			<input type="text" name="receiver<%=storeID%>" id="receiver<%=storeID%>"
+				value="<%=buylist.get(0).getStoreName()%>"> <input
+				type="checkbox" id="member<%=storeID%>" name="member<%=storeID%>">
+			<b>選用會員資料</b> <br> <br> <b>收件者: </b> <input type="text"
+				name="receiver<%=storeID%>" id="receiver<%=storeID%>"
 				style="width: 100px; height: 26px"> <br> <br> 
-			<b>電話號碼:</b>
+				<b>電話號碼:</b>
 			<input type="text" name="phone<%=storeID%>" id="phone<%=storeID%>"
 				style="width: 140px; height: 26px"> <br> <br> 
-			<b>收件地址:</b>
+				<b>收件地址:</b>
+			<select id="city" name="city">
+				<option value="">請選擇</option>
+			</select>
+			<!-- 																		第二層選單(先隱藏，選完第一層後再出現) -->
+			<select id="area" name="area">
+				<option value="">請選擇</option>
+			</select> <input name="address<%=storeID%>" type="text"
+				style="width: 380px; height: 26px" />
+
+			<!-- 	<b>收件地址:</b>
 			<input type="text" name="address<%=storeID%>"
 				id="address<%=storeID%>" style="width: 300px; height: 26px">
-			<br> <br> 
-			<b>使用購物金: </b> 
-			<input type=text name="useShoppingGold<%=storeID%>" style="width: 70px; height: 26px">
-			<br> <br> 
-			<b>使用優惠券: </b> 
-			<select name="couponID<%=storeID%>">
-				<option value="0.85">85折</option>
-				<option value="0.75">75折</option>
-			</select> <br> <br>
+			<br> <br>  -->
+
 		</div>
+
+		<script
+			src="${pageContext.request.contextPath}/back-end/grouporder/js/address.js"></script>
 
 		<script>
 
@@ -267,83 +275,102 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 		<%
 		}
 		%>
-		
+
+<hr width=610px align="left">
+<br> 
 		<table>
-		
+
 			<tr>
-				<td colspan="6" style="text-align: right;  background-color: #FFFBE3">
-				    <b>付款方式: </b>
-				    
-				    
-				    
-				    <div class="container card mt-3">
-<div class="form-group mt-3 mb-3">
-  <label class="radio">
-    <input type="radio" name='type' value='credit' id="pay-by-domestic-credit"  > 信用卡
-  </label>
-  <label class="radio">
-    <input type="radio" name='type' value='atm' id="pay-by-aboard-credit" > ATM 轉帳
-  </label>
-  <label class="radio">
-    <input type="radio" name='type' value='after' id="pay-by-atm"> 貨到付款
-  </label>
-</div>
 
-<div id='domestic-credit-form' style="display: none;" class="form">
-	<c:forEach var="creditVO" items="${credit}">
-		<input type="radio" name='creditinfo'  style="float:left;" value='member'  >
-		<b style="float:left;">&nbsp; ${creditVO.creditCardNumber}</b> 
-	</c:forEach>
-	<br><br>
-	<input type="radio" name='creditinfo' style="float:left;" value='other' >
-		<b style="float:left">&nbsp; 使用其他信用卡</b>
-    <br><br>
-  
-  <div class="text-center" style="display: none;">
-    <h3>輸入信用卡資訊</h3>
-  </div>
-  <div class="input-group mb-3" id='detail-1' style="display: none;">
-    <div class="input-group-prepend">
-      <span class="input-group-text">信用卡卡號</span>
-    </div>
-    <input type="text" class="form-control" id="domestic-card-no" style="display: none;" >
-  </div>
-  <div class="input-group mb-3" id='detail-2' style="display: none;">
-    <div class="input-group-prepend">
-      <span class="input-group-text">月</span>
-    </div>
-    <input type="text" class="form-control" id="domestic-card-month" placeholder="輸入月份" >
-    <div class="input-group-prepend">
-      <span class="input-group-text">年</span>
-    </div>
-    <input type="text" class="form-control" id="domestic-card-year" placeholder="輸入年" >
-    <div class="input-group-prepend">
-      <label class="input-group-text">末三碼</label>
-    </div>
-    <input type="text" class="form-control" id="domestic-card-csv" placeholder="輸入末三碼" >
-  </div>
-  <div class="form-group"  >
-    <span style="color: #fc3762;" id="domestic-card-error"  style="display: none;"></span>
-  </div>
-  <div class="form-group"  >
-    <button type="button" id="domestic-submmit" class="btn btn-primary" style="display: none;">確認送出</button>
-  </div>
-</div>
-
-
-<div class="form-group" >
-  <button type="button" id="resetForm" class="btn btn-warning"  style="display: none;">重設</button>
-</div>
-</div>
-				   
+				<td colspan="6" style="text-align: right; background-color: #FFFBE3">
+					<b>使用購物金:</b> 
+					<input type="text" name="useShoppingGold" id="old" style="width: 60px; height: 26px"  > 
 					
-					<br><br>
-					<b style='font-size: 20px;'>訂單總金額 :</b> &emsp;
-					<b id='ordertotal' style='font-size: 20px;'>0</b> &emsp; 
-					<input type="hidden" name="action" value="CHECKOUT"> 
-					<input type="hidden" name="memberID" value="${memVO.memberID}"> 
-					<input type="hidden" name="userAccount" value="${memVO.userAccount}">
-					
+					<p id="lert" style='visibility: hidden ; color:red;'></p>
+				    <b>使用優惠券:
+				</b> <select name="couponID" id='couponID'>
+						<option value="0.85">85折</option>
+						<option value="0.75">75折</option>
+				</select> <br> <br> 
+				<b></b>
+				<b>總運費:</b><b id='fee'></b> 
+				
+				<br><br>
+				<b>付款方式: </b>
+
+
+
+					<div class="container card mt-3">
+						<div class="form-group mt-3 mb-3">
+							<label class="radio"> <input type="radio" name='type'
+								value='credit' id="pay-by-domestic-credit"> 信用卡
+							</label> <label class="radio"> <input type="radio" name='type'
+								value='atm' id="pay-by-aboard-credit"> ATM 轉帳
+							</label> <label class="radio"> <input type="radio" name='type'
+								value='after' id="pay-by-atm"> 貨到付款
+							</label>
+						</div>
+
+						<div id='domestic-credit-form' style="display: none;" class="form">
+							<c:forEach var="creditVO" items="${credit}">
+								<input type="radio" name='creditinfo' style="float: left;"
+									value='member'>
+								<b style="float: left;">&nbsp; *********${creditVO.creditCardNumber.toString().substring(9)}</b>
+							</c:forEach>
+							<br> <br> <input type="radio" name='creditinfo'
+								style="float: left;" value='other'> <b
+								style="float: left">&nbsp; 使用其他信用卡</b> <br> <br>
+
+							<div class="text-center" style="display: none;">
+								<h3>輸入信用卡資訊</h3>
+							</div>
+							<div class="input-group mb-3" id='detail-1'
+								style="display: none;">
+								<div class="input-group-prepend" style='height:35px'>
+									<span class="input-group-text">信用卡卡號</span>
+								</div>
+								<input type="text" class="form-control" id="domestic-card-no"
+									style="display: none;">
+							</div>
+							<div class="input-group mb-3" id='detail-2'
+								style="display: none;">
+								<div class="input-group-prepend" style='height:35px; background-color: #FFA9A9'>
+									<span class="input-group-text">月</span>
+								</div>
+								<input type="text" class="form-control" id="domestic-card-month"
+									placeholder="輸入月份">
+								<div class="input-group-prepend" style='height:35px; background-color: #FFA9A9'>
+									<span class="input-group-text">年</span>
+								</div>
+								<input type="text" class="form-control" id="domestic-card-year"
+									placeholder="輸入年">
+								<div class="input-group-prepend" style='height:35px; background-color: #FFA9A9'>
+									<label class="input-group-text">末三碼</label>
+								</div>
+								<input type="text" class="form-control" id="domestic-card-csv"
+									placeholder="輸入末三碼">
+							</div>
+							<div class="form-group">
+								<span style="color: #fc3762;" id="domestic-card-error"
+									style="display: none;"></span>
+							</div>
+							<div class="form-group">
+								<button type="button" id="domestic-submmit"
+									class="btn btn-primary" style="display: none;">確認送出</button>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<button type="button" id="resetForm" class="btn btn-warning"
+								style="display: none;">重設</button>
+						</div>
+					</div> <br> <br> <b style='font-size: 20px;'>訂單總金額 :</b> &emsp;
+					<b id='ordertotal' style='font-size: 20px;'>0</b> &emsp; <input
+					type="hidden" name="action" value="CHECKOUT"> <input
+					type="hidden" name="memberID" value="${memVO.memberID}"> <input
+					type="hidden" name="userAccount" value="${memVO.userAccount}">
+
 					<input type="submit" value="送出" class="button"
 					style='background-color: #FFA9A9; border: 0px; font-weight: bold'>
 
@@ -355,7 +382,10 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 
 
 	</form>
-
+<script>
+	var fee = document.getElementById('fee');
+	fee.innerHTML = 60*<%=set.size()%>;
+</script>
 
 	<%
 	}
@@ -363,14 +393,64 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 
 	<script>
 
-	var countingmoney = document.getElementsByClassName('countingmoney');
-	var ordersum = 0 ;
+	$(function(){
+		$('#couponID').change(function(){
+			
+			total();
+		});		
+	});
 	
-	for(var sub of countingmoney){
-		ordersum += Number(sub.innerHTML);
+	$(function(){
+		$('#lert').click(function(){
+			
+			total();
+		});		
+	});
+	var old = document.getElementById('old');
+	var lert = document.getElementById('lert');
+	
+	
+	old.addEventListener('keyup', function(){
+		if(old.value > 30){
+			 old.value = 30;
+			 lert.style.visibility = ' visible';
+		     lert.innerHTML = "已達您的購物金上限";
+		     event.preventDefault();
+    } else{
+   	 lert.innerHTML = "";
+    }
+		total();
+		
+	})
+	
+	
+	window.addEventListener("load", (event) => {
+		  	total();
+		});
+
+
+	
+	function total(){
+	
+		var couponID = document.getElementById('couponID');
+		var index = couponID.selectedIndex;
+		var coupon = Number(couponID.options[index].value);
+	    var ordersum = 0 ;
+		
+	var countingmoney = document.getElementsByClassName('countingmoney');
+	var feenum = document.getElementById('fee');
+	
+		for(var sub of countingmoney){
+			ordersum += Number(sub.innerHTML);
+		}
+	
+		document.getElementById('ordertotal').innerHTML = 
+			coupon * ordersum + Number(feenum.innerHTML)-Number(old.value);
+		
 	}
 	
-	document.getElementById('ordertotal').innerHTML = ordersum;
+	
+	
 	
 	var creditcard = document.getElementById('creditcard');
 	
@@ -386,7 +466,9 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 			
 		});
 
+		
 	
+		
 	
 	
 	
@@ -659,8 +741,8 @@ checkbox<%=storeID%>.addEventListener('change', (event) => {
 		}
 	
 	</script>
-	
-	
+
+
 </body>
 
 </html>

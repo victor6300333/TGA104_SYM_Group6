@@ -42,7 +42,7 @@ public class jdbcUtil_CompositeQuery_Emp2 {
 				}
 				
 				else if("orderID".equals(key)  )
-					whereCondition.append("where orderID = " + value);
+					whereCondition.append(" orderID = " + value);
 				
 				System.out.println("key:"+ key + ", value:" + value + ", 次數: " + count);
 			}

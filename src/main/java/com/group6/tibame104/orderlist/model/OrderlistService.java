@@ -1,5 +1,6 @@
 package com.group6.tibame104.orderlist.model;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,11 @@ public class OrderlistService {
 		
 		return dao.findByProductID(productID, all);
 		
+	}
+
+	public int findquantityByProductID(Integer productID) {
+
+		return dao.findquantityByProductID(productID);
+
 	}
 }

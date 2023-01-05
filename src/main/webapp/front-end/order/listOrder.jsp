@@ -54,7 +54,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	href="${pageContext.request.contextPath}/front-end/order/css/table.css"
 	rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
@@ -110,10 +110,10 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/back-end/order/img/account.jpg"
-							alt="" style="width: 40px; height: 40px" /> 帳號名稱
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
 						</a>
 						<div class="dropdown-menu">
 							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
@@ -154,8 +154,8 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
                 <i class="fa fa-heart"></i>
                 <span>(0)</span>
               </a> -->
-						<a href="cart.html" class="btn cart"> <i
-							class="fa fa-shopping-cart"></i> <span>(0)</span>
+						<a href="${pageContext.request.contextPath}/front-end/shop/Cart_new.jsp" class="btn cart"> <i
+							class="fa fa-shopping-cart"></i> <span>(${count_num == null ? "0" : count_num})</span>
 						</a>
 					</div>
 				</div>
@@ -208,19 +208,25 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 						role="tabpanel" aria-labelledby="orders-nav">
 						<div class="table-responsive">
 
-
-							<table class="table table-bordered">
-								<thead class="thead-dark">
-									<ul>
+							<div id='search'>
+							
+								 <div id='search1'>
+									<ul >
 										<li>
 											<FORM METHOD="post"
 												ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
-												<b>輸入訂單編號: </b> <input type="text" name="orderID"
-													style="width: 100px; height: 25px"> <input
-													type="submit" value="送出">
+												<b>輸入訂單編號: </b> 
+												<input type="text" id="orderID" name="orderID"
+													style="width: 100px; height: 25px"> 
+												<br><br>
+												<input type="submit" value="送出">
 											</FORM> <br>
 										<br>
 										</li>
+									</ul>
+								</div>
+								<div id='search2'>
+									<ul>
 										<li>
 											<FORM METHOD="post"
 												ACTION="${pageContext.request.contextPath}/front-end/order/select_Order">
@@ -230,13 +236,13 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 												<input name="todate" id="f_date2" type="text"
 													style="width: 100px; height: 25px"> <br> <br>
 												<b>選擇訂單狀態:</b> <select name="status"
-													style="width: 80px; height: 25px">
+													style="width: 90px; height: 25px">
 
-													<option value="-1">全部</option>
-													<option value="0">待付款</option>
-													<option value="1">待出貨</option>
-													<option value="2">已出貨</option>
-													<option value="3">訂單完成</option>
+													<option id='-1' value="-1">全部</option>
+													<option id='0' value="0">待繳款</option>
+													<option id='1' value="1">待出貨</option>
+													<option id='2' value="2">待收貨</option>
+													<option id='3' value="3">訂單完成</option>
 
 												</select> <br> <br> <input type="hidden" name="memberID"
 													value="${memVO.memberID}"> <input type="submit"
@@ -246,8 +252,36 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 										</li>
 									</ul>
-								</thead>
-							</table>
+								</div>
+							</div>
+								<br><br><br>
+						<c:if test="${orderID != null}">
+							<script type="text/javascript">
+								document.getElementById('orderID').value = '${orderID}';
+							</script>						
+						</c:if>
+						<c:if test="${status != null}">
+							<script type="text/javascript">
+							if(${status} == '-1'){
+								document.getElementById('-1').selected = true;
+							}else if(${status} == '0'){
+								document.getElementById('0').selected = true;
+							}else if(${status} == '1'){
+								document.getElementById('1').selected = true;
+							}else if(${status} == '2'){
+								document.getElementById('2').selected = true;
+							}else if(${status} == '3'){
+								document.getElementById('3').selected = true;
+							}
+							</script>						
+						</c:if>
+						<c:if test="${fromdate != null && todate != null}">
+							<script type="text/javascript">
+								document.getElementById('f_date1').value = '${fromdate}';
+								document.getElementById('f_date2').value = '${todate}';
+							</script>						
+						</c:if>
+							
 
 							<%
 							Set<OrderVO> set = map_list.keySet();
@@ -284,7 +318,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 										<td width="155">${orderlistVO.productName}</td>
 										<td width="155"><img
 											src="${pageContext.request.contextPath}/product/picServlet?productID=${orderlistVO.productID}"
-											style="width: 230px; height: 200px" alt="Product Image">
+											style="width: 200px; height: 160px" alt="Product Image">
 										</td>
 										<td width="125">${orderlistVO.price}</td>
 
@@ -298,15 +332,17 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 												<input type="hidden" name="orderlistID"
 													value="${orderlistVO.orderDetailID}" /> <input
 													type="hidden" name="action" value="do_buyercomment" /> <input
-													type="submit" value="給予評價" />
+													type="submit" value="給予評價"
+													style='height:40px; width:90px;  ' />
 											</form>
+											<br>
 
 											<form
 												action="<%=request.getContextPath()%>/front-end/comment/OrderlistServlet">
 												<input type="hidden" name="orderlistID"
 													value="${orderlistVO.orderDetailID}" /> <input
 													type="hidden" name="action" value="check_buyercomment" />
-												<input type="submit" value="查看評價" />
+												
 											</form>
 										</td>
 
@@ -316,7 +352,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 									
 								</c:forEach>
 									<tr id="my-car-tr">
-										
+										<td colspan="3" style="text-align: right"></td>
 										<td colspan="5" style="text-align: right">
 											<b id='paytotal<%=orderVO.getOrderID()%>' style='font-size: 20px;'>訂單總金額:</b>&nbsp;&nbsp;
 											
@@ -327,13 +363,17 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 							</table>
 							<br>
 							<b>訂單狀態:</b>	&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+						<form method="post" action="${pageContext.request.contextPath}/front-end/order/complete">
 							<input type="submit" value="完成訂單" class="button<%=orderVO.getOrderID()%>"
 								style='display:none; height:40px; width:90px; background-color: #FFA9A9;
 								 border: 0px; font-weight: bold; float:right '>
+							
+							<input type="hidden" name="orderID" value="<%=orderVO.getOrderID() %>">
+						</form>			
 						    <input type="submit" value="查看付款資訊" class="check<%=orderVO.getOrderID()%>"
 								style='display:none; height:40px; width:110px; background-color: #FFA9A9;
 								 border: 0px; font-weight: bold; float:right '>
-							<br><br><br>
+							<br><br>
 							
 							<b>待繳款&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
 							   待出貨&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&emsp;
@@ -360,10 +400,7 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 								</div>
 							</div>
 							<br>
-							<b><%=orderVO.getOrderDate().toString().substring(0,10)%>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
-							</b>
 							
-						    <br><b><%=orderVO.getOrderDate().toString().substring(11,19)%> </b> 
 
 							<br> <br> <br> <br>
 							<hr>

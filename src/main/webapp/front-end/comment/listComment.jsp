@@ -58,10 +58,13 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	href="${pageContext.request.contextPath}/front-end/order/css/table.css"
 	rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
+	rel="stylesheet" />
+	<link
+	href="${pageContext.request.contextPath}/front-end/order/css/bar.css"
 	rel="stylesheet" />
 	
 <link rel="stylesheet" href="./css/review.css" />
@@ -113,14 +116,20 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/back-end/order/img/account.jpg"
-							alt="" style="width: 40px; height: 40px" /> 帳號名稱
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
 						</a>
 						<div class="dropdown-menu">
-							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
-								href="index.html" class="dropdown-item">登出</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
 
 						</div>
 					</div>
@@ -182,72 +191,39 @@ Map<OrderVO,List<OrderlistVO>> map_list = (Map<OrderVO,List<OrderlistVO>>) reque
 	<!-- My Account Start -->
 	<div class="my-account">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="nav flex-column nav-pills" role="tablist"
-						aria-orientation="vertical">
-						<a class="nav-link" id="account-nav" data-toggle="pill"
-							href="#account-tab" role="tab"><i class="fa fa-user"></i>我的帳戶</a>
-						<a class="nav-link" id="password-nav" data-toggle="pill"
-							href="#password-tab" role="tab"><i
-							class="fa-solid fa-lock-open"></i>修改密碼</a> <a class="nav-link active"
-							id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"
-							aria-selected="true"><i class="fa fa-shopping-bag"></i>訂單管理</a> <a
-							class="nav-link" id="payment-nav" data-toggle="pill"
-							href="#payment-tab" role="tab"><i class="fa-solid fa-coins"></i>我的購物金</a>
-						<a class="nav-link" id="address-nav" data-toggle="pill"
-							href="#address-tab" role="tab"><i class="fa-solid fa-ticket"></i></i>我的優惠券</a>
-						<a class="nav-link" id="blocklist-nav" data-toggle="pill"
-							href="#blocklist-tab" role="tab"><i
-							class="fa-solid fa-user-xmark"></i>封鎖名單</a>
-						<!-- <a class="nav-link" href="index.html"
-                ><i class="fa fa-sign-out-alt"></i>登出</a
-              > -->
-					</div>
-				</div>
+			<div class="row" style='display: flex; justify-content: center;'>
+				
 				<div class="col-md-9">
 
 					<div class="tab-pane fade active show" id="orders-tab"
 						role="tabpanel" aria-labelledby="orders-nav">
-						<div class="table-responsive">
+						<div class="table-responsqive">
 
 
-
-							<br> <br>
-
-							<FORM METHOD="post" ACTION="OrderServlet">
-								<b>輸入訂單編號: </b> <input type="text" name="order"> <input
-									type="hidden" name="action" value="getOne_For_Display">
-								<input type="submit" value="送出">
-							</FORM>
-							<br> <br>
 							
 							
 
-<table>
-	<tr>
-		<th>會員ID</th>
-		<th>會員姓名</th>
-		<th>訂單明細ID</th>
-		<th>訂單ID</th>
-		<th>商品ID</th>
-		<th>數量</th>
-		<th>單價</th>
-		<th>小計</th>
-		<th>買家評價</th>
-		<th>買家評論</th>
-		<th>買家圖片</th>
+<table  >
+	<tr  id="my-car-tr">
+		
+		
+	
+		<th width="120">訂單編號</th>
+		<th width="200">商品名稱</th>
+		<th width="120">時間</th>	
+		<th width="120">買家評價</th>
+		<th width="200">買家評論</th>
+		<th width="170">評價圖片</th>
 	</tr>
 		
 		<tr>
-			<td>${memVO.memberID}</td>
-			<td>${memVO.userName}</td>
-			<td>${orderlistVO.getOrderDetailID()}</td>
+			
+			
+			
 			<td>${orderlistVO.getOrderID()}</td>
-			<td>${orderlistVO.getProductID()}</td>
-			<td>${orderlistVO.getQuantity()}</td>
-			<td>${orderlistVO.getPrice()}</td>
-			<td>${orderlistVO.getSubTotal()}</td> 		
+			<td>${orderlistVO.getProductName()}</td>
+			<td>${orderlistVO.getOrderDate().toString().substring(0,19)}</td>
+					
 			<td>${orderlistVO.getBuyerReview()}分</td>
 			<td>${orderlistVO.getBuyerComment()}</td>
 			<td><img src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.getOrderDetailID()}"

@@ -28,10 +28,12 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			+ "			subTotal, shopReview,shopComment, buyerReview, buyerComment, buyerCommentPic "
 			+ "				FROM orderDetail where orderID = ?";
 	private static final String UPDATE = 
-		"UPDATE orderDetail set buyerReview=?, buyerComment=?, buyerCommentPic=? where orderDetailID = ?";
+		"UPDATE orderDetail set buyerReview=?, buyerComment=?, buyerCommentPic=?, orderDate=NOW() where orderDetailID = ?";
 	
 	private static final String GET_ONE_STMT_PRODUCT = "SELECT orderDetailID, orderID, productID, userAccount, orderDate,buyerReview, buyerComment, buyerCommentPic"
 		     + " FROM orderDetail where productID = ?";
+	
+	private static final String GET_QUANTITY = "select sum(quantity) from orderDetail where productID = ?";
 
 	public List<OrderlistVO> findByOrderID(Integer orderID) {
 		List<OrderlistVO> list = new ArrayList<OrderlistVO>();
@@ -197,6 +199,32 @@ public class OrderlistDAO implements OrderlistDAO_interface {
 			e.printStackTrace();
 		} 
 		return list;
+	}
+
+	@Override
+	public int findquantityByProductID(Integer productID) {
+		
+		int quantity = 0 ;
+	
+		
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(GET_QUANTITY); ){
+			pstmt.setInt(1, productID);
+
+			try (ResultSet rs = pstmt.executeQuery();){
+				while (rs.next()) {
+						
+				quantity = rs.getInt("sum(quantity)");
+		
+			}
+				
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return quantity ;
 	}
 
 

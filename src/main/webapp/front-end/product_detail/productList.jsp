@@ -79,31 +79,23 @@
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<!-- 登入前 -->
-						<a href="#" class="nav-link dropdown-toggle"
-							data-toggle="dropdown"> 登入/註冊</a>
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
+							data-toggle="dropdown"> <img class="rounded-circle "
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
+						</a>
 						<div class="dropdown-menu">
-							<a href="#" class="dropdown-item">登入</a> <a href="#"
-								class="dropdown-item">註冊</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
+
 						</div>
-						<!-- 登入後 -->
-						<!-- <a
-                    href="#"
-                    class="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                    >
-                    <img
-                        class="rounded-circle "
-                        src="img/account.jpg"
-                        alt=""
-                        style="width: 40px; height: 40px"
-                      />
-                    帳號名稱</a
-                  >
-                  <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">我的帳號</a>
-                    <a href="#" class="dropdown-item">註冊</a>
-                  </div> -->
+						
 					</div>
 				</div>
 		</div>
@@ -217,15 +209,10 @@
 						<c:forEach var="categoryVO" items="${categoryVOall}">
 							<div class="col-md-4">
 								<div class="product-item">
-									<div class="product-title">
+									<div class="product-title" style="height:80px;" >
 										<a href="#">${categoryVO.productName}</a>
-										<p class="previewing" style='display: none'>${categoryVO.commentAvgStar}</p>
 									<div class="ratting">
-										<i class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i> <i
-											class="fa fa-star" name="fa" style='display: none'></i>
+										
 									</div>
 									</div>
 									<div class="product-image">
@@ -276,19 +263,29 @@
 
 				<!-- Side Bar Start -->
 				<div class="col-lg-4 sidebar">
-					<div class="sidebar-widget 類別">
+					<div class="sidebar-widget category">
 						<h2 class="title">類別</h2>
 						<nav class="navbar bg-light">
 							<ul class="navbar-nav">
 								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
-										class="fa fa-home"></i>3C</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
-										class="fa fa-shopping-bag"></i>周邊</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
-										class="fa fa-plus-square"></i>精品</a></li>
+								href="${pageContext.request.contextPath}/"><i
+									class="fa fa-home"></i>居家生活</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
+									class="fa fa-shopping-bag"></i>包包/精品</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
+									class="fa fa-plus-square"></i>美妝保健</a></li>
+							 	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fa fa-female"></i>女生配件</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fa fa-child"></i>嬰幼童與母親</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fas fa-tshirt"></i>男/女衣著</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
+									class="fas fa-mobile-alt"></i>3C與電腦</a></li>
+							<li class="nav-item"><a class="nav-link" href="#"><i
+									class="fa fa-microchip"></i>家電影音</a></li> 
 							</ul>
 						</nav>
 					</div>
@@ -296,17 +293,25 @@
 					<div class="sidebar-widget widget-slider">
 					<br>
 					<h2 class="title">好物推薦</h2>
+					<c:if test="${categoryOther==null}">
+							<script type="text/javascript">
+								document.getElementsByClassName('title')[1].style.display = 'none';
+							
+							</script>
+						
+						
+						</c:if>
 						<div class="sidebar-slider normal-slider">
 							<c:forEach var="categoryVO" items="${categoryOther}">
 					
 								<div class="product-item">
 									<div class="product-title">
 										<a href="#">${categoryVO.productName}</a>
-										<div class="ratting">
+								<!-- 		<div class="ratting">
 											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 												class="fa fa-star"></i>
-										</div>
+										</div> -->
 									</div>
 									<div class="商品圖片">
 										<a
@@ -335,6 +340,7 @@
 						</c:forEach>
 						</div>
 					</div>
+			
 
 					<div class="sidebar-widget tag">
 						<h2 class="title">標籤</h2>
@@ -460,34 +466,77 @@
 
 		<!-- Template Javascript -->
 		<script src="js/main.js"></script>
+		
 		<script>
-		document.addEventListener("DOMContentLoaded", function(){
-			var fa = document.getElementsByName("fa");
 			
-			for(var i=0 ; i< ${categoryVOall.size()} ; i++){
-				
-			var previewing = Number(document.getElementsByClassName('previewing')[i].innerHTML);
-			
-			if(previewing >= 1 && previewing < 2){
-				fa[i*5].style.display = 'inline';		
-			}
-			else if(previewing >= 2 && previewing < 3){
-				fa[i*5].style.display = 'inline';	
-				fa[i*5+1].style.display = 'inline';	
-			}
-			else if(previewing >= 3 && previewing < 4){
-				fa[i*5].style.display = 'inline';	
-				fa[i*5+1].style.display = 'inline';	
-				fa[i*5+2].style.display = 'inline';	
-			}
-			else if(previewing >= 4 && previewing <= 5){
-				fa[i*5].style.display = 'inline';	
-				fa[i*5+1].style.display = 'inline';	
-				fa[i*5+2].style.display = 'inline';	
-				fa[i*5+3].style.display = 'inline';	
-			}
+		
+		var fa = document.getElementsByClassName("fa fa-star");
+		var previewing = Number(document.getElementById('previewing').innerHTML);
+		var fahalf = document.getElementsByClassName("fa fa-star-half-o");
+		var faempty = document.getElementsByClassName("fa fa-star-o");
+		
+		document.addEventListener("DOMContentLoaded", function(){	
+		for(var i=0 ; i < ${categoryVOall.size()} ; i++) {
+	if(previewing == 0){				
+		document.getElementById('previewing').innerHTML = '尚無評價';
+		
+    }else if(previewing >= 1 && previewing < 1.5){
+		fa[i*5].style.display = 'inline';						
+		faempty[i*5].style.display = 'inline';						
+		faempty[i*5+1].style.display = 'inline';						
+		faempty[i*5+2].style.display = 'inline';						
+		faempty[i*5+3].style.display = 'inline';						
+	} else if (previewing >= 1.5 && previewing < 2){
+		fa[i*5].style.display = 'inline';
+		fahalf[i*5].style.display = 'inline';
+		faempty[i*5].style.display = 'inline';
+		faempty[i*5+1].style.display = 'inline';
+		faempty[i*5+2].style.display = 'inline';
+		
+	} else if(previewing >= 2 && previewing < 2.5){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		faempty[i*5].style.display = 'inline';	
+		faempty[i*5+1].style.display = 'inline';	
+		faempty[i*5+2].style.display = 'inline';	
+	} else if(previewing >= 2.5 && previewing < 3){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fahalf[i*5+1].style.display = 'inline';
+		faempty[i*5].style.display = 'inline';
+		faempty[i*5+1].style.display = 'inline';
+	} else if(previewing >= 3 && previewing < 3.5){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fa[i*5+2].style.display = 'inline';	
+		faempty[i*5].style.display = 'inline';	
+		faempty[i*5+1].style.display = 'inline';	
+	} else if(previewing >= 3.5 && previewing < 4){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fa[i*5+2].style.display = 'inline';	
+		fahalf[i*5+2].style.display = 'inline';
+		faempty[i*5].style.display = 'inline';
+	} else if(previewing >= 4 && previewing <= 4.5){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fa[i*5+2].style.display = 'inline';	
+		fa[i*5+3].style.display = 'inline';	
+		faempty[i*5].style.display = 'inline';	
+	} else if(previewing >= 4.5 && previewing < 5){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fa[i*5+2].style.display = 'inline';	
+		fa[i*5+3].style.display = 'inline';	
+		fahalf[i*5+3].style.display = 'inline';
+	} else if(previewing == 5){
+		fa[i*5].style.display = 'inline';	
+		fa[i*5+1].style.display = 'inline';	
+		fa[i*5+2].style.display = 'inline';	
+		fa[i*5+3].style.display = 'inline';	
+		fa[i*5+4].style.display = 'inline';	
+	}
 		}
-			
 		});
 		
 		

@@ -37,7 +37,7 @@ public class OrderDAO implements OrderDAO_interface {
 	private static final String GET_ALL = "SELECT orderID, storeID, storeName, memberID, orderDate ,orderStatus,receiver, phone,"
 			+ "	creditcardNumber, address, payType, couponID, originalTotal, useShoppingGold,"
 			+ "	useCouponGold, finalTotal FROM `order`";
-
+	private static final String UPDATE = "update `order` set orderStatus=? where orderID = ?";
 	@Override
 	public int insert(OrderVO orderVO, List<OrderlistVO> buylist) {
 		Integer next_deptno = 0;
@@ -209,5 +209,23 @@ public class OrderDAO implements OrderDAO_interface {
 		}
 		return list;
 
+	}
+
+	@Override
+	public void updateOrder(Integer orderID, Integer orderStatus) {
+		
+		try (Connection con = dataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
+
+			pstmt.setInt(1, orderStatus);
+			pstmt.setInt(2, orderID);
+		
+			pstmt.executeUpdate();
+		
+
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

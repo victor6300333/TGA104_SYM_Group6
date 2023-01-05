@@ -1,6 +1,7 @@
 package com.group6.tibame104.search.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,9 @@ public class SearchServlet extends HttpServlet {
 			
 			
 			List<OrderlistVO> list = orderlistSvc.findByProductID(productID, false); //查詢有評價的訂單明細
-			List<OrderlistVO> listAll = orderlistSvc.findByProductID(productID, true); //查詢所有的訂單明細
+			int listAll = orderlistSvc.findquantityByProductID(productID); //查詢所有的訂單明細
+			
+			Collections.reverse(list);
 			/*
 			 * 導向 listOneProduct頁面
 			 */
