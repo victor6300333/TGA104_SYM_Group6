@@ -96,31 +96,22 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 				</div>
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
-						<!-- 登入前 -->
-						<a href="#" class="nav-link dropdown-toggle"
-							data-toggle="dropdown"> 登入/註冊</a>
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
+							data-toggle="dropdown"> <img class="rounded-circle "
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
+						</a>
 						<div class="dropdown-menu">
-							<a href="#" class="dropdown-item">登入</a> <a href="#"
-								class="dropdown-item">註冊</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
+
 						</div>
-						<!-- 登入後 -->
-						<!-- <a
-                    href="#"
-                    class="nav-link dropdown-toggle"
-                    data-toggle="dropdown"
-                    >
-                    <img
-                        class="rounded-circle "
-                        src="img/account.jpg"
-                        alt=""
-                        style="width: 40px; height: 40px"
-                      />
-                    帳號名稱</a
-                  >
-                  <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">我的帳號</a>
-                    <a href="#" class="dropdown-item">註冊</a>
-                  </div> -->
 					</div>
 				</div>
 		</div>
@@ -243,7 +234,7 @@ Integer count_num = (Integer) session.getAttribute("count_num");
 											class="fa fa-star-o" aria-hidden="true" style='display: none'></i>
 										<i class="fa fa-star-o" aria-hidden="true"
 											style='display: none'></i>&emsp; <b id='rate'>|&emsp;
-											${list.size()} 評價 &emsp;</b> <b>|&emsp; ${listAll.size()} 已售出
+											${list.size()} 評價 &emsp;</b> <b>|&emsp; ${listAll} 已售出
 										</b>
 									</div>
 									<div class="price">
@@ -317,7 +308,7 @@ cart.addEventListener('click', (event) => {
   }
 )
 							var stock = document.getElementById('stock');
-							stock.innerHTML = Number(${categoryVO.productStock}) - Number(${listAll.size()});
+							stock.innerHTML = Number(${categoryVO.productStock}) - Number(${listAll});
 </script>
 
 								</div>
@@ -383,7 +374,7 @@ cart.addEventListener('click', (event) => {
 													class="fa fa-star" style='display: none'></i> <i
 													class="fa fa-star" style='display: none'></i> <i
 													class="fa fa-star" style='display: none'></i>
-											</div>
+											</div> 
 											<p>
 												<img style="width: 200px; height: 160px;"
 													src="${pageContext.request.contextPath}/CommentPicServlet?orderdetailid=${orderlistVO.orderDetailID}"
@@ -444,16 +435,17 @@ cart.addEventListener('click', (event) => {
 									} else if (previewing >= 1.5 && previewing < 2){
 										fa[0].style.display = 'inline';
 										fahalf[0].style.display = 'inline';
-										fahalf[0].style.display = 'inline';
-										fahalf[1].style.display = 'inline';
-										fahalf[2].style.display = 'inline';
+										faempty[0].style.display = 'inline';
+										
+										faempty[1].style.display = 'inline';
+										faempty[2].style.display = 'inline';
 										
 									} else if(previewing >= 2 && previewing < 2.5){
 										fa[0].style.display = 'inline';	
 										fa[1].style.display = 'inline';	
-										fa[0].style.display = 'inline';	
-										fa[1].style.display = 'inline';	
-										fa[2].style.display = 'inline';	
+										faempty[0].style.display = 'inline';	
+										faempty[1].style.display = 'inline';	
+										faempty[2].style.display = 'inline';	
 									} else if(previewing >= 2.5 && previewing < 3){
 										fa[0].style.display = 'inline';	
 										fa[1].style.display = 'inline';	
@@ -499,8 +491,8 @@ cart.addEventListener('click', (event) => {
 									
 									quantity.addEventListener("keyup", function(event) {
 										
-											 if(quantity.value > Number(${categoryVO.productStock})){
-												 quantity.value = Number(${categoryVO.productStock})
+											 if(quantity.value > Number(${categoryVO.productStock}) - Number(${listAll})){
+												 quantity.value = Number(${categoryVO.productStock}) - Number(${listAll});
 											alert.innerHTML = "已達庫存上限";							 		
 									 		event.preventDefault();
 									     } else{
@@ -510,8 +502,8 @@ cart.addEventListener('click', (event) => {
 									
 									btnplus.addEventListener("click", function(event) {
 										
-										if(quantity.value >= Number(${categoryVO.productStock})){
-												 quantity.value = Number(${categoryVO.productStock})-1
+										if(quantity.value >= Number(${categoryVO.productStock}) - Number(${listAll})){
+												 quantity.value = Number(${categoryVO.productStock}) - Number(${listAll})-1;
 											alert.innerHTML = "已達庫存上限";							 		
 									 		event.preventDefault();
 									     } else{
@@ -544,43 +536,36 @@ cart.addEventListener('click', (event) => {
 								class="row align-items-center product-slider product-slider-3">
 
 								<c:forEach var="categoryVO" items="${categoryMainID}">
-
+								<div class="col-lg-3">
 									<div class="product-item">
 										<div class="product-title">
 											<a href="#">${categoryVO.productName}</a>
-											<div class="ratting">
+										<!--  <div class="ratting">
 												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 													class="fa fa-star"></i>
-											</div>
+											</div>-->	
 										</div>
-										<div class="商品圖片">
+										<div class="product-image">
 											<a
 												href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
 												<img
 												src="${pageContext.request.contextPath}/product/picServlet?productID=${categoryVO.productID}"
 												style="width: 230px; height: 200px" alt="Product Image">
 											</a>
-											<div class="product-action">
-												<a href="#"><i class="fa fa-加入購物車"></i></a> <a href="#"><i
-													class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
-											</div>
+										
 										</div>
-										<div class="商品價格">
+										<div class="product-price">
 											<h3>
 												<span>$</span>${categoryVO.productPrice}</h3>
-											<form name="shoppingForm"
-												action="${pageContext.request.contextPath}/SearchServlet"
-												method="POST">
-												<input type="hidden" name="action"
-													value="getOne_For_Display"> <input type="hidden"
-													name="productID" value="${categoryVO.productID}"> <a
-													class="btn"
-													href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}"><i
-													class="fa fa-shopping-cart"></i>查看</a>
-											</form>
+											
+									           <a class="btn" tabindex="0"
+													href="${pageContext.request.contextPath}/SearchServlet?action=getOne_For_Display&productID=${categoryVO.productID}">
+													<i class="fa fa-shopping-cart"></i>查看</a>
+											
 										</div>
 									</div>
+								</div>
 
 								</c:forEach>
 							</div>
@@ -589,19 +574,29 @@ cart.addEventListener('click', (event) => {
 				</div>
 				<div class="col-lg-4 sidebar">
 					<div class="sidebar-widget category">
-						<h2 class="title">Category</h2>
+						<h2 class="title">商品類別</h2>
 						<nav class="navbar bg-light">
-							<ul class="navbar-nav">
-								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
-										class="fa fa-home"></i>3C</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
-										class="fa fa-shopping-bag"></i>周邊</a></li>
-								<li class="nav-item"><a class="nav-link"
-									href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
-										class="fa fa-plus-square"></i>精品</a></li>
-							</ul>
+						  <ul class="navbar-nav">
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/"><i
+									class="fa fa-home"></i>居家生活</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=3&action=category"><i
+									class="fa fa-shopping-bag"></i>包包/精品</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${pageContext.request.contextPath}/SearchServlet?productMainID=2&action=category"><i
+									class="fa fa-plus-square"></i>美妝保健</a></li>
+							 	<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fa fa-female"></i>女生配件</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fa fa-child"></i>嬰幼童與母親</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i
+									class="fas fa-tshirt"></i>男/女衣著</a></li>
+							<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/SearchServlet?productMainID=1&action=category"><i
+									class="fas fa-mobile-alt"></i>3C與電腦</a></li>
+							<li class="nav-item"><a class="nav-link" href="#"><i
+									class="fa fa-microchip"></i>家電影音</a></li> 
+						  </ul>
 						</nav>
 					</div>
 					<br>
@@ -614,13 +609,13 @@ cart.addEventListener('click', (event) => {
 								<div class="product-item">
 									<div class="product-title">
 										<a href="#">${categoryVO.productName}</a>
-										<div class="ratting">
+									<!--  	<div class="ratting">
 											<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 												class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 												class="fa fa-star"></i>
-										</div>
+										</div> -->
 									</div>
-									<div class="商品圖片">
+									<div class="product-image">
 										<a
 											href="<%=request.getContextPath()%>/front-end/product/product-detail.html">
 											<img
@@ -632,7 +627,7 @@ cart.addEventListener('click', (event) => {
 												class="fa fa-我的最愛"></i></a> <a href="#"><i class="fa fa-搜尋"></i></a>
 										</div>
 									</div>
-									<div class="商品價格">
+									<div class="product-price">
 										<h3>
 											<span>$</span>${categoryVO.productPrice}</h3>
 										<a class="btn"

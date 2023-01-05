@@ -76,14 +76,20 @@
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/front-end/order/img/account.jpg"
-							alt="" style="width: 40px; height: 40px" /> 帳號名稱
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
 						</a>
 						<div class="dropdown-menu">
-							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
-								href="index.html" class="dropdown-item">登出</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
 
 						</div>
 					</div>
@@ -106,9 +112,9 @@
 	if (!check.isEmpty() && (check.size() > 0)) {
 	%>
 
+	
 
-
-	<br><br>
+	
 	<form id="checkoutForm" action="ShopServlet" method="POST">
 		<%
 	Set<Integer> set = check.keySet();
@@ -119,7 +125,9 @@
 	Integer storeID = it.next();
 	List<Product> buylist = check.get(storeID);
 	%>
-
+		<p id='size<%=storeID%>' style='visibility: hidden'><%=buylist.size()%></p>
+		
+	
 		<table id="table-1" class="table<%=storeID%>" border="1">
 			<tr>
 				<td width="140" colspan="6"><font size="4">賣場: <%=buylist.get(0).getStoreName()%></font></td>
@@ -156,7 +164,7 @@
 		Product order = buylist.get(index);
 	%>
 
-			<tr id="my-car-tr<%=1 + count%>">
+			<tr class="my-car-tr<%=1 + count%>">
 				<td width="125"><input type="checkbox" name="check<%=storeID%><%=index%>" value='0' class="checksub<%=storeID%>"/></td>
 				<td width="160"><%=order.getName()%></td>
 				<td width="120"><img
@@ -203,14 +211,34 @@
 			
 			
 		}
+		
+		var size<%=storeID%> = document.getElementById('size<%=storeID%>');
+		var sizecount<%=storeID%> = <%=buylist.size()%>;
+		var table<%=storeID%> =	document.getElementsByClassName('table<%=storeID%>');
+		
 		function minuser<%=1 + count%>() {
 			var count = document.getElementById("<%=1 + count%>").innerHTML;
 			var sum = document.getElementById("<%=-1 - count%>").innerHTML;
 			if (count <= 1 && confirm("確認要刪除此商品嗎?")==true) {
 				
-					document.getElementById("my-car-tr<%=1 + count%>").remove();
+				document.getElementsByName("check<%=storeID%><%=index%>")[0].value = '0';
+				document.getElementsByName("check<%=storeID%><%=index%>")[0].checked = '';
+					document.getElementsByClassName("my-car-tr<%=1 + count%>")[0].style.display='none';
+					
+					
 				
-		
+				sizecount<%=storeID%> -= 1 ;
+				size<%=storeID%>.innerHTML = sizecount<%=storeID%>;
+					if(size<%=storeID%>.innerHTML == '0'){
+						table<%=storeID%>[0].style.display='none';
+						table<%=storeID%>[1].style.display='none';
+					document.getElementsByClassName('my-car-total<%=storeID%>')[0].style.display= 'none';
+					document.getElementsByClassName('my-car-total<%=storeID%>')[0].innerHTML= '0';
+					size<%=storeID%>.remove();
+						
+					}
+					
+
 			} else if(count>1) {
 				count = parseInt(count) - 1;
 				sum = <%=order.getPrice()%> * count;
@@ -235,10 +263,13 @@
 	count = count +10000;
 	}
 	%>
-
+<tr class="my-car-total<%=storeID%>">
 			<td colspan="3" style="text-align: right"></td>
 			<td colspan="5" style="text-align: right">總金額:<b
 				class = 'countingmoney' id="count<%=storeID%>">0</b></td>
+	
+</tr>
+
 		</table>
 
 
@@ -347,7 +378,7 @@ function add<%=storeID%>(){
 		
 	</script>
 
-<br><br>
+
 
 
 		<%

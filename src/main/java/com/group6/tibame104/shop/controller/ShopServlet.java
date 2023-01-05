@@ -204,7 +204,7 @@ public class ShopServlet extends HttpServlet {
 			
 			List<OrderlistVO> orderlist = new ArrayList<OrderlistVO>();
 			Integer storeID = it.next();
-			List<Product> buylist = check.get(storeID);
+			List<Product> buylist = check_new.get(storeID);
 			
 
 			
@@ -233,8 +233,8 @@ public class ShopServlet extends HttpServlet {
 			
 			String str = req.getParameter("storeID"+storeID.toString());
 
-			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"+str));
-			Double count = Double.valueOf(req.getParameter("couponID"+str));
+			Integer useShoppingGold = Integer.valueOf(req.getParameter("useShoppingGold"));
+			Double count = Double.valueOf(req.getParameter("couponID"));
 			
 
 	      
@@ -257,7 +257,7 @@ public class ShopServlet extends HttpServlet {
 			ordervo.setCouponID(1);
 			ordervo.setUseCouponGold((int) (total * (1 - count)));
 			ordervo.setUseShoppingGold(useShoppingGold);
-			ordervo.setFinalTotal((int) (total * count - useShoppingGold));
+			ordervo.setFinalTotal((int) (total * count - useShoppingGold + 60));
 			
 			int orderID = ordsvc.addOrder(ordervo, orderlist);
 			OrderVO order =ordsvc.getOrder(orderID);

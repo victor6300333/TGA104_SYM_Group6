@@ -32,5 +32,9 @@ public class OrderService {
 		return  dao.getAllByComposite( map );
 	}
 	
+	public void updateOrder(Integer orderID, Integer orderStatus) {
+		
+		dao.updateOrder(orderID, orderStatus);
+	}
 
 }

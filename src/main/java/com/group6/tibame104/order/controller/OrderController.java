@@ -61,10 +61,56 @@ public class OrderController {
 			List<OrderlistVO> list_OrderlistVO = orderlistSvc.searchOrderlist(orderVO.getOrderID());
 			map_list.put(orderVO, list_OrderlistVO);
 		}
+		if(map.get("orderID") != null) {
+			model.addAttribute("orderID", map.get("orderID"));		
+		}else {
+			model.addAttribute("orderID", null);
+		}
+		
+		if(map.get("status") != null) {
+			model.addAttribute("status", map.get("status"));
+		} else {
+			model.addAttribute("status", null);
+		}
+		
+		if(map.get("fromdate") != null && map.get("todate") != null ) {
+			model.addAttribute("fromdate", map.get("fromdate"));
+			model.addAttribute("todate", map.get("todate"));
+		}else {
+			model.addAttribute("fromdate", null);
+			model.addAttribute("todate", null);
+		}
 		
 		model.addAttribute("map_list", map_list);
 	
 				return "front-end/order/listOrder";
+		
+	}
+	
+	@PostMapping("/complete")
+	public String complete(Model model, @RequestParam("orderID") String orderID) {
+		
+		orderSvc.updateOrder(Integer.valueOf(orderID), 3);
+				
+		
+		
+	
+        Map<OrderVO,List<OrderlistVO>> map_list = new HashMap<OrderVO,List<OrderlistVO>>();
+		
+		
+        OrderVO orderVO  = orderSvc.getOrder(Integer.valueOf(orderID));
+		List<OrderlistVO> list_OrderlistVO = orderlistSvc.searchOrderlist(orderVO.getOrderID());
+		map_list.put(orderVO, list_OrderlistVO);
+		
+		
+		
+		model.addAttribute("orderID", orderID);
+		
+		
+		model.addAttribute("map_list", map_list);
+	
+				return "front-end/order/listOrder";
+
 		
 	}
 }

@@ -18,5 +18,6 @@ public interface OrderDAO_interface {
      
      public List<OrderVO> getAllByComposite(Map<String, String> queryString );
 
+     public void updateOrder(Integer orderID, Integer orderStatus);
      
 }

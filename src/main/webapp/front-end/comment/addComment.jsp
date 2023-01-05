@@ -54,10 +54,13 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 	href="${pageContext.request.contextPath}/front-end/member/css/coupon.css"
 	rel="stylesheet" />
 <link
-	href="${pageContext.request.contextPath}/front-end/member/css/table.css"
+	href="${pageContext.request.contextPath}/front-end/order/css/table.css"
 	rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/front-end/member/css/signupDay.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/front-end/order/css/bar.css"
 	rel="stylesheet" />
 
 <link rel="stylesheet" href="./css/review.css" />
@@ -109,14 +112,20 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 				<div class="navbar-nav ml-auto">
 					<div class="nav-item dropdown">
 
-						<a href="my-account.html" class="nav-link dropdown-toggle"
+						<a href="my-account.jsp" class="nav-link dropdown-toggle"
 							data-toggle="dropdown"> <img class="rounded-circle "
-							src="${pageContext.request.contextPath}/back-end/order/img/account.jpg"
-							alt="" style="width: 40px; height: 40px" /> 帳號名稱
+							src="${pageContext.request.contextPath}/member/DBGifReader?memberID=${memVO.memberID}"
+							alt="" style="width: 40px; height: 40px; object-fit: cover" onerror="this.src='${pageContext.request.contextPath}/front-end/member/img/account.jpg'"/> ${memVO.userAccount}
 						</a>
 						<div class="dropdown-menu">
-							<a href="my-account.html" class="dropdown-item">我的帳號</a> <a
-								href="index.html" class="dropdown-item">登出</a>
+							<a
+								href="${pageContext.request.contextPath}/front-end/member/my-account.jsp"
+								class="dropdown-item">我的帳號</a>
+							<FORM METHOD="post"
+								ACTION="${pageContext.request.contextPath}/front-end/member/getOneForLogOut">
+								<input class="dropdown-item" type="submit" name="action"
+									value="登出"></a>
+							</FORM>
 
 						</div>
 					</div>
@@ -176,59 +185,29 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 	<!-- Breadcrumb End -->
 
 	<!-- My Account Start -->
-	<div class="my-account">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="nav flex-column nav-pills" role="tablist"
-						aria-orientation="vertical">
-						<a class="nav-link" id="account-nav" data-toggle="pill"
-							href="#account-tab" role="tab"><i class="fa fa-user"></i>我的帳戶</a>
-						<a class="nav-link" id="password-nav" data-toggle="pill"
-							href="#password-tab" role="tab"><i
-							class="fa-solid fa-lock-open"></i>修改密碼</a> <a class="nav-link active"
-							id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"
-							aria-selected="true"><i class="fa fa-shopping-bag"></i>訂單管理</a> <a
-							class="nav-link" id="payment-nav" data-toggle="pill"
-							href="#payment-tab" role="tab"><i class="fa-solid fa-coins"></i>我的購物金</a>
-						<a class="nav-link" id="address-nav" data-toggle="pill"
-							href="#address-tab" role="tab"><i class="fa-solid fa-ticket"></i></i>我的優惠券</a>
-						<a class="nav-link" id="blocklist-nav" data-toggle="pill"
-							href="#blocklist-tab" role="tab"><i
-							class="fa-solid fa-user-xmark"></i>封鎖名單</a>
-						<!-- <a class="nav-link" href="index.html"
-                ><i class="fa fa-sign-out-alt"></i>登出</a
-              > -->
-					</div>
-				</div>
-				<div class="col-md-9">
+	<div class="my-account" >
+		<div class="container-fluid" >
+			<div class="row" style='display: flex; justify-content: center;'>
+				
+				<div class="col-md-9" >
 
 					<div class="tab-pane fade active show" id="orders-tab"
 						role="tabpanel" aria-labelledby="orders-nav">
-						<div class="table-responsive">
+						<div class="table-reswponsive">
 
 
-
-							<br> <br>
-
-							<FORM METHOD="post" ACTION="OrderServlet">
-								<b>輸入訂單編號: </b> <input type="text" name="order"> <input
-									type="hidden" name="action" value="getOne_For_Display">
-								<input type="submit" value="送出">
-							</FORM>
-							<br> <br>
 
 
 
 							<table id="table-1" class="table">
 
-								<tr>
-									<td width="155">商品名稱</td>
-									<td width="155">商品圖片</td>
-									<td width="125">價格</td>
+								<tr id="my-car-tr">
+									<th width="155">商品名稱</th>
+									<th width="155">商品圖片</th>
+									<th width="125">價格</th>
 
-									<td width="105">數量</td>
-									<td width="130">小計</td>
+									<th width="105">數量</th>
+									<th width="130">小計</th>
 
 								</tr>
 								<tr>
@@ -244,8 +223,8 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 							</table>
 
 
-
-							<p>評價:</p>
+						    <br>
+							&nbsp; &nbsp; &nbsp; &ensp;&emsp;    <b>評價:</b> <br>
 							<div class="star-mark">
 
 								<ul class="star">
@@ -262,17 +241,25 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 									<span class="mark"></span>&nbsp;<span class="decri"></span><br />
 									<span class="detail"></span>
 								</div>
-							</div>
+							</div> 
 							<br>
 
 							<FORM id="upload" METHOD="post" ACTION="OrderlistServlet"
 								enctype="multipart/form-data">
-								
+							<div class='upload1'>
+								<b>上傳圖片:</b> &emsp; 
 								<input type="file" name="upfile" id="upfile"> <br><br>
 			 					<img id="preview" style="width: 200px; height: 160px;" border="0" />
 								<br><br>
-								<p>買家評論:</p>
-								<textarea type="TEXT" name="buyerComment" size="45"></textarea>
+							
+							</div>	
+							<div class='text'>
+							   <b>留言:</b>
+							</div>
+							<div class='upload2'>
+								 <br>
+								<textarea type="TEXT" name="buyerComment" 
+									style="width: 380px; height: 280px; "></textarea>
 
 
 								<input type="hidden" name="productID" value="${orderlistVO.productID}"> <br><br>
@@ -280,9 +267,18 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 								<input type="hidden" name="orderDetailID"
 									value="${orderlistVO.orderDetailID}" size="45" /> <input
 									type="hidden" name="buyerReview" id="buyerComment" value="" />
-								<input type="hidden" name="action" value="update"> <input
-									type="submit" value="送出新增">
+								<input type="hidden" name="action" value="update">
+								 <input type="submit" value="送出新增" 
+								 	style='height:40px; width:90px; background-color: #FFA9A9;
+										 border: 0px; font-weight: bold; float:right '>
+								<br><br><br>
+							</div>	
+								
+							
+							
 							</FORM>
+					
+								
 
 							
 
@@ -334,7 +330,6 @@ Map<OrderVO, List<OrderlistVO>> map_list = (Map<OrderVO, List<OrderlistVO>>) req
 
 
 
-			<hr>
 
 		</div>
 
