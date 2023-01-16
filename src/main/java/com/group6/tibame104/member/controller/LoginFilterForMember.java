@@ -38,9 +38,12 @@ public class LoginFilterForMember extends HttpFilter {
 //			System.out.println(req.getRequestURI());
 //			System.out.println(req.getRequestURL());
 //			System.out.println(req.getHeader("Referer"));
-			String fullURL = req.getHeader("Referer");
-			String targetURL = fullURL.split(req.getContextPath())[1];
-			session.setAttribute("location", targetURL);
+			if (req.getHeader("Referer") != null) {
+				String fullURL = req.getHeader("Referer");
+				String targetURL = fullURL.split(req.getContextPath())[1];
+				session.setAttribute("location", targetURL);
+			}
+
 			res.sendRedirect(req.getContextPath() + "/front-end/member/login.jsp");
 			return;
 		} else {
