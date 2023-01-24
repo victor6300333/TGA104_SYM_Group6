@@ -15,7 +15,4 @@ public interface GrouporderDAO_interface {
 
 	public List<GrouporderVO> getAll();
 	
-	public List<GrouporderVO> getAllByMemID(Integer memberID);
-	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
-//   public List<(GroupproductVO> getAll(Map<String, String[]> map); 
 }

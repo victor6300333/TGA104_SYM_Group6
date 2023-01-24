@@ -51,7 +51,7 @@
 			<td>No.${groupproductVO.groupBuyProductID}</td>
 			<td>${groupproductVO.groupBuyProductPrice} $</td>
 			<td><img src="${pageContext.request.contextPath}/back-end/groupproduct/DBJPGReader?groupBuyProductID=${groupproductVO.groupBuyProductID}"style="width: 80px ""text-align: middle"></td>
-			<td>${groupproductVO.groupBuyProductDescrip}</td>
+			<td style="white-space: pre-line">${groupproductVO.groupBuyProductDescrip}</td>
 	
 			
 			<td>

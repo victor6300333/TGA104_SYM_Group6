@@ -160,15 +160,5 @@ public class GroupproductJDBCDAO implements GroupproductDAO_interface {
 		}
 		return null;
 			}
-//	public static void main(String[] args) {
-////		單一查詢
-//		GroupproductJDBCDAO dao = new GroupproductJDBCDAO();
-//		GroupproductVO groupproductVO3 = dao.findByPrimaryKey(1);
-//		
-//		System.out.print(groupproductVO3.getGroupBuyProductID() + ",");
-//		System.out.print(groupproductVO3.getGroupBuyProductPrice() + ",");
-//		System.out.print(groupproductVO3.getGroupBuyProductPicture()+ ",");
-//		System.out.println(groupproductVO3.getGroupBuyProductDescrip());
-//		System.out.println("---------------------");
-//	}
+
 }

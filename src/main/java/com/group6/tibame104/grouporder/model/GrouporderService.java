@@ -68,10 +68,6 @@ public class GrouporderService {
 	public List<GrouporderVO> getAll() {
 		return dao.getAll();
 	}
-//用會員編號查詢全部訂單	
-	public List<GrouporderVO> getAllByMemID(Integer memberID){
-		return dao.getAllByMemID(memberID);
-	}
 	public void deleteGrouporder(Integer groupBuyOrderID) {
 		dao.delete(groupBuyOrderID);
 	}

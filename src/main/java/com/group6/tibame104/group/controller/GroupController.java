@@ -1,12 +1,11 @@
 package com.group6.tibame104.group.controller;
 
-import java.sql.Timestamp;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.group6.tibame104.group.model.GroupService;
+import com.group6.tibame104.group.model.GroupVO;
+import com.group6.tibame104.groupdiscount.model.GroupdiscountService;
+import com.group6.tibame104.groupdiscount.model.GroupdiscountVO;
+import com.group6.tibame104.groupproduct.model.GroupproductService;
+import com.group6.tibame104.groupproduct.model.GroupproductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.group6.tibame104.group.model.GroupService;
-import com.group6.tibame104.group.model.GroupVO;
-import com.group6.tibame104.groupdiscount.model.GroupdiscountService;
-import com.group6.tibame104.groupdiscount.model.GroupdiscountVO;
-import com.group6.tibame104.groupproduct.model.GroupproductService;
-import com.group6.tibame104.groupproduct.model.GroupproductVO;
+import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/front-end/group")
@@ -32,143 +29,87 @@ public class GroupController {
     @Autowired
     private GroupdiscountService groupdiscountSvc;
 
-    @PostMapping("/getOne_For_Display")
-    public String getOneForDisplay(Model model, @RequestParam("groupBuyID") String str) {
-        List<String> errorMsgs = new LinkedList<String>();
-        model.addAttribute("errorMsgs", errorMsgs);
-        if (str == null || (str.trim()).length() == 0) {
-            errorMsgs.add("請輸入折扣表編號");
-        }
-        if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";
-        }
-
-        Integer groupBuyID = null;
-        try {
-            groupBuyID = Integer.valueOf(str);
-        } catch (Exception e) {
-            errorMsgs.add("折扣表格式不正確");
-        }
-        if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";
-        }
-        
-        GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
-        if (groupVO == null) {
-            errorMsgs.add("查無資料");
-        }
-        if (!errorMsgs.isEmpty()) {
-            return "front-end/grouporder/select_page";
-        }
-
-        model.addAttribute("groupVO", groupVO);
-        return "back-end/group/listOneEmp";
-    }
-    
+	/*
+	 * 新增團購訂單
+	 * */
     @PostMapping("/addOrder")
     public String addOrder(
             HttpSession session,
             Model model,
             @RequestParam("groupBuyID") String str,
             @RequestParam("groupBuyProductID") String str2,
-            @RequestParam("groupBuyCount") String str3,
-            HttpServletRequest req,
-            HttpServletRequest res
+            @RequestParam("groupBuyCount") String str3
         ) {
         List<String> errorMsgs = new LinkedList<String>();
         model.addAttribute("errorMsgs", errorMsgs);
-        if (str == null || (str.trim()).length() == 0) {
-            errorMsgs.add("請輸入折扣表編號");
-        }
-        if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";
-        }
 
         Integer groupBuyID = null;
         try {
             groupBuyID = Integer.valueOf(str);
         } catch (Exception e) {
-            errorMsgs.add("折扣表格式不正確1");
+            errorMsgs.add("團購編號錯誤");
         }
         if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";
+            return "front-end/group/addOrder";
         }
-       
-        
+
         Integer groupBuyProductID = null;
         try {
             groupBuyProductID = Integer.valueOf(str2);
         } catch (Exception e) {
-            errorMsgs.add("團購編號錯了");
+            errorMsgs.add("團購商品編號錯誤");
         }
-        // Send the use back to the form, if there were errors
         if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";
+            return "front-end/group/addOrder";
         }
         
         Double groupBuyCount = null;
         try {
             groupBuyCount = Double.valueOf(str3);
         } catch (Exception e) {
-            errorMsgs.add("折扣表格不正確");
+            errorMsgs.add("折扣錯誤");
         }
-        // Send the use back to the form, if there were errors
+       	/*如果有錯誤就中斷*/
         if (!errorMsgs.isEmpty()) {
-            return "front-end/groupdiscount/select_page";// 程式中斷
+            return "front-end/group/addOrder";// 程式中斷
         }
-
+		/*
+		*  取得當前團購跟團購商品資訊
+		* */
         GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
         GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
 
         if (groupVO == null) {
             errorMsgs.add("查無資料");
         }
-        if (!errorMsgs.isEmpty()) {
-            return "front-end/grouporder/select_page";}// 程式中斷
-            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-            session.setAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
-            session.setAttribute("groupBuyCount", groupBuyCount);
-            session.setAttribute("groupproductVO", groupproductVO);
-            
-            
-//        Object account = session.getAttribute("mail");
-//        if (account == null) {
-//         session.setAttribute("location", req.getServletPath());
-//         GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
-//         GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
-//         session.setAttribute("groupVO", groupVO); 
-//         session.setAttribute("groupproductVO", groupproductVO);
-//         session.setAttribute("groupBuyCount", groupBuyCount);
-//         return "/front-end/member/login";
-//        }
-//        if(groupBuyID != null) {
-//        	
-//        GroupVO groupVO1 = groupSvc.getOneGroup(groupBuyID);
-//        GroupproductVO groupproductVO1 = groupproductSvc.getOneGroupproduct(groupBuyProductID);
-//        model.addAttribute("groupVO", groupVO1); 
-//        model.addAttribute("groupproductVO", groupproductVO1);
-//        model.addAttribute("groupBuyCount", groupBuyCount);
-//       
-//        }
-        
+
+		session.setAttribute("groupVO", groupVO);
+		session.setAttribute("groupBuyCount", groupBuyCount);
+		session.setAttribute("groupproductVO", groupproductVO);
+
         return "front-end/group/addOrder";
         
     }
+	/*
+	* 後台取得該筆團購
+	* */
     @PostMapping("/getOneForUpdate")
     public String getOneForUpdate(
     		Model model,
     		@RequestParam("groupBuyID") Integer groupBuyID
     		) {
-    	List<String> errorMsgs = new LinkedList<String>();
-    	model.addAttribute("errorMsgs", errorMsgs);
 
 		GroupVO groupVO = groupSvc.getOneGroup(groupBuyID);
 		 List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-		model.addAttribute("groupVO", groupVO); // 資料庫取出的empVO物件,存入req
+
+		model.addAttribute("groupVO", groupVO);
 		model.addAttribute("groupproductVOs",groupproductVOs);
+
 		return "back-end/group/updateGroup";
     }
+	/*
+	 *	後台更新該筆團購
+	 * */
    @PostMapping("/update")
    public String update(
 		   Model model,
@@ -179,39 +120,31 @@ public class GroupController {
 		   @RequestParam("groupBuyingState") Boolean groupBuyingState,
 		   @RequestParam("groupBuyingOnLoadDate") Timestamp groupBuyingOnLoadDate,
 		   @RequestParam("groupBuyingOffLoadDate") Timestamp groupBuyingOffLoadDate
-		   
 		   ) {
-		List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
-//時間處理
-		
-		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 
-		GroupVO groupVO = new GroupVO();
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 
-		groupVO.setGroupBuyProductID(groupBuyProductID);
-		groupVO.setAdministratorID(administratorID);
-		groupVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);
-		groupVO.setGroupBuyingState(groupBuyingState);
-		groupVO.setGroupBuyingOnLoadDate(groupBuyingOnLoadDate);
-		groupVO.setGroupBuyingOffLoadDate(groupBuyingOffLoadDate);
-		groupVO.setUpdateTime(updateTime);
-		groupVO.setGroupBuyID(groupBuyID);
+			GroupVO groupVO = new GroupVO();
 
-		// Send the use back to the form, if there were errors
-		if (!errorMsgs.isEmpty()) {
-			model.addAttribute("groupVO", groupVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/emp/update_emp_input.jsp"; // 程式中斷
-		}
+			groupVO.setGroupBuyProductID(groupBuyProductID);
+			groupVO.setAdministratorID(administratorID);
+			groupVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);
+			groupVO.setGroupBuyingState(groupBuyingState);
+			groupVO.setGroupBuyingOnLoadDate(groupBuyingOnLoadDate);
+			groupVO.setGroupBuyingOffLoadDate(groupBuyingOffLoadDate);
+			groupVO.setUpdateTime(updateTime);
+			groupVO.setGroupBuyID(groupBuyID);
 
-		/*************************** 2.開始修改資料 *****************************************/
 		groupVO = groupSvc.updateGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal,
 				groupBuyingState, groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime, groupBuyID);
 
-		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-		model.addAttribute("groupVO", groupVO); // 資料庫update成功後,正確的的empVO物件,存入req
+		model.addAttribute("groupVO", groupVO);
+
 	   return getAll(model);
    }
+	/*
+	 * 後台新增團購
+	 * */
    @PostMapping("/insert")
    public String insert(
 		   Model model,
@@ -222,54 +155,40 @@ public class GroupController {
 		   @RequestParam("groupBuyingOnLoadDate") Timestamp groupBuyingOnLoadDate,
 		   @RequestParam("groupBuyingOffLoadDate") Timestamp groupBuyingOffLoadDate
 		   ) {
-	   
-	   List<String> errorMsgs = new LinkedList<String>();
-		model.addAttribute("errorMsgs", errorMsgs);
 
-		/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
 
-		// 獲得時間戳記
-		Timestamp updateTime = new Timestamp(System.currentTimeMillis());// 獲取系統當前時間
+			GroupVO groupVO = new GroupVO();
 
-		GroupVO groupVO = new GroupVO();
+			groupVO.setGroupBuyProductID(groupBuyProductID);
+			groupVO.setAdministratorID(administratorID);
+			groupVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);
+			groupVO.setGroupBuyingState(groupBuyingState);
+			groupVO.setGroupBuyingOnLoadDate(groupBuyingOnLoadDate);
+			groupVO.setGroupBuyingOffLoadDate(groupBuyingOffLoadDate);
+			groupVO.setUpdateTime(updateTime);
 
-		groupVO.setGroupBuyProductID(groupBuyProductID);
-		groupVO.setAdministratorID(administratorID);
-		groupVO.setGroupBuyProductOrderTotal(groupBuyProductOrderTotal);
-		groupVO.setGroupBuyingState(groupBuyingState);
-		groupVO.setGroupBuyingOnLoadDate(groupBuyingOnLoadDate);
-		groupVO.setGroupBuyingOffLoadDate(groupBuyingOffLoadDate);
-		groupVO.setUpdateTime(updateTime);
+			groupVO = groupSvc.addGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal, groupBuyingState,
+					groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime);
 
-		// Send the use back to the form, if there were errors
-		if (!errorMsgs.isEmpty()) {
-			model.addAttribute("groupVO", groupVO); // 含有輸入格式錯誤的empVO物件,也存入req
-			return "/back-end/group/addEmp";
-		}
-
-		/*************************** 2.開始新增資料 ***************************************/
-		groupVO = groupSvc.addGroup(groupBuyProductID, administratorID, groupBuyProductOrderTotal, groupBuyingState,
-				groupBuyingOnLoadDate, groupBuyingOffLoadDate, updateTime);
-
-		/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 		return getAll(model);
-   }
+   		}
+		/*
+		 * 後台刪除團購
+		 * */
 	   @PostMapping("/delete")
 	   public String delete(
 			   Model model,
 			   @RequestParam("groupBuyID") Integer groupBuyID
 			   ) {
-		   
-		   List<String> errorMsgs = new LinkedList<String>();
-			model.addAttribute("errorMsgs", errorMsgs);
 
-			/*************************** 2.開始刪除資料 ***************************************/
 			groupSvc.deleteGroup(groupBuyID);
 
-			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 			return getAll(model);
 	   }
-	   //團購主頁
+	   /*
+	   * 首頁用，取得所有團購資訊
+	   * */
 	   @GetMapping("/allGroup")
 	   public String allGroup(
 			   Model model
@@ -278,30 +197,16 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.getAll();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
-		  
-		  
-//		  List<GroupVO> list = new ArrayList<GroupVO>();
-//		  List<GroupproductVO> list2 = new ArrayList<GroupproductVO>();
-//		  
-//		 for(int i = 0; i < groupVOs.size();i++) {
-//			 for(int j = 0; j< groupproductVOs.size(); j++ ) {
-//				 
-//				 if(groupVOs.get(i).getGroupBuyProductID() == groupproductVOs.get(j).getGroupBuyProductID()) {
-//					
-//					 System.out.println(i);
-//					 list.add(groupVOs.get(i));
-//					 System.out.println(j);
-//					 list2.add(groupproductVOs.get(j));
-//				 }
-//			 }
-//		 }
+
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
 		  
 		   return "front-end/group/listAllGroup";
 	   }
-	   //團購主頁
+	   /*
+	   * 團購主頁用，排序新到舊
+	   * */
 	   @GetMapping("/getAllDesc")
 	   public String getAllDesc(
 			   Model model
@@ -314,10 +219,12 @@ public class GroupController {
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
-		  
-		   return "front-end/group/listAllGroup";
+
+		  return "front-end/group/listAllGroup";
 	   }
-	   //團購主頁 數量排序
+		/*
+		 * 團購主頁用，團購數量多到少
+		 * */
 	   @GetMapping("/orderBy")
 	   public String orderBy(
 			   Model model
@@ -326,13 +233,17 @@ public class GroupController {
 		  List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
 		  List<GroupVO> groupVOs = groupSvc.orderBy();
 		  List<GroupdiscountVO> groupdiscountVOs = groupdiscountSvc.getAll();
+
 		  model.addAttribute("groupproductVOs",groupproductVOs);
 		  model.addAttribute("groupVOs",groupVOs);
 		  model.addAttribute("groupdiscountVOs",groupdiscountVOs);
-		   return "front-end/group/listAllGroup";
+
+		  return "front-end/group/listAllGroup";
 	   }
-	   
-	   //後台團購主頁用
+
+		/*
+		* 後台用，取的所有團購資訊
+		* */
 	   @GetMapping("/getAll")
 	   public String getAll(
 			   Model model
@@ -343,17 +254,7 @@ public class GroupController {
 		   model.addAttribute("groupproductVOs",groupproductVOs);
 		   return "back-end/group/listAllGroup";
 	   }
-	 //首頁測試用
-	   @GetMapping("/index1")
-	   public String index(
-			   Model model
-			   ) {
-		   List<GroupVO> groupVOs = groupSvc.getAll();
-		   model.addAttribute("groupVOs",groupVOs);
-		   List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
-		   model.addAttribute("groupproductVOs",groupproductVOs);
-		   return "front-end/group/index";
-	   }
+
 	   //取得全部團購商品 for新增
 	   @GetMapping("/getGroupproduct")
 	   public String getGroupproduct(
@@ -374,12 +275,15 @@ public class GroupController {
 		   
 		   return"back-end/group/updateGroup";
 	   }
+		/*
+		 * 測試用
+		 * */
 	   @GetMapping("/getJoinAll")
 	   public String getJoinAll(
 			   Model model) {
 		   List<Object> groupVOs = groupSvc.getJoinAll();
 		   model.addAttribute("groupVOs",groupVOs);
-		   System.out.println("123");
+
 		   return "front-end/group/listAllGroup";
 	   }
 }

@@ -15,9 +15,7 @@ public class GrouporderHibernate implements GrouporderDAO_interface {
 	@Override
 	public void insert(GrouporderVO grouporderVO) {
 		session.persist(grouporderVO);
-
 	}
-
 	@Override
 	public void update(GrouporderVO grouporderVO) {
 		session.update(grouporderVO);
@@ -27,25 +25,14 @@ public class GrouporderHibernate implements GrouporderDAO_interface {
 	public void delete(Integer grouporderID) {
 		final GrouporderVO grouporderVO = session.get(GrouporderVO.class, grouporderID);
 		session.remove(grouporderVO);
-
 	}
-
 	@Override
 	public GrouporderVO findByPrimaryKey(Integer groupBuyOrderID) {
-		
 		return session.get(GrouporderVO.class, groupBuyOrderID);
 	}
-
 	@Override
 	public List<GrouporderVO> getAll() {
 		final String hql = "FROM GrouporderVO ORDER BY groupBuyOrderID";
 		return session.createQuery(hql, GrouporderVO.class).list();
 	}
-
-	@Override
-	public List<GrouporderVO> getAllByMemID(Integer memberID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
