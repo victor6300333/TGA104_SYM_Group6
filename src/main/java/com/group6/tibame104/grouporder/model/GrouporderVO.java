@@ -1,6 +1,10 @@
 package com.group6.tibame104.grouporder.model;
 
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -11,6 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name="groupBuyOrder")
 public class GrouporderVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
@@ -40,110 +47,5 @@ public class GrouporderVO implements java.io.Serializable {
 	private String contactNumber;
 	@Column(name="shippingLocation")
 	private String shippingLocation;
-
-	@Override
-	public String toString() {
-		return "GrouporderVO [groupBuyOrderID=" + groupBuyOrderID + ", groupBuyID=" + groupBuyID + ", memberID="
-				+ memberID + ", groupBuyProductID=" + groupBuyProductID + ", groupBuyQuantity=" + groupBuyQuantity
-				+ ", groupBuyTotal=" + groupBuyTotal + ", orderTime=" + orderTime + ", paymentTerm=" + paymentTerm
-				+ ", paymentState=" + paymentState + ", giftVoucher=" + giftVoucher + ", contactNumber=" + contactNumber
-				+ ", shippingLocation=" + shippingLocation + "]";
-	}
-
-	public Integer getGroupBuyOrderID() {
-		return groupBuyOrderID;
-	}
-
-	public void setGroupBuyOrderID(Integer groupBuyOrderID) {
-		this.groupBuyOrderID = groupBuyOrderID;
-	}
-
-	public Integer getGroupBuyID() {
-		return groupBuyID;
-	}
-
-	public void setGroupBuyID(Integer groupBuyID) {
-		this.groupBuyID = groupBuyID;
-	}
-
-	public Integer getMemberID() {
-		return memberID;
-	}
-
-	public void setMemberID(Integer memberID) {
-		this.memberID = memberID;
-	}
-
-	public Integer getGroupBuyProductID() {
-		return groupBuyProductID;
-	}
-
-	public void setGroupBuyProductID(Integer groupBuyProductID) {
-		this.groupBuyProductID = groupBuyProductID;
-	}
-
-	public Integer getGroupBuyQuantity() {
-		return groupBuyQuantity;
-	}
-
-	public void setGroupBuyQuantity(Integer groupBuyQuantity) {
-		this.groupBuyQuantity = groupBuyQuantity;
-	}
-
-	public Integer getGroupBuyTotal() {
-		return groupBuyTotal;
-	}
-
-	public void setGroupBuyTotal(Integer groupBuyTotal) {
-		this.groupBuyTotal = groupBuyTotal;
-	}
-
-	public Timestamp getOrderTime() {
-		return orderTime;
-	}
-
-	public void setOrderTime(Timestamp orderTime) {
-		this.orderTime = orderTime;
-	}
-
-	public String getPaymentTerm() {
-		return paymentTerm;
-	}
-
-	public void setPaymentTerm(String paymentTerm) {
-		this.paymentTerm = paymentTerm;
-	}
-
-	public Integer getPaymentState() {
-		return paymentState;
-	}
-
-	public void setPaymentState(Integer paymentState) {
-		this.paymentState = paymentState;
-	}
-
-	public Integer getGiftVoucher() {
-		return giftVoucher;
-	}
-
-	public void setGiftVoucher(Integer giftVoucher) {
-		this.giftVoucher = giftVoucher;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public String getShippingLocation() {
-		return shippingLocation;
-	}
-
-	public void setShippingLocation(String shippingLocation) {
-		this.shippingLocation = shippingLocation;
-	}
 
 }

@@ -64,42 +64,58 @@ public class GroupproductController {
 			return "front-end/groupproduct/select_page";// 程式中斷
 		}
 
-		/*************************** 2.開始查詢資料 *****************************************/
+		/*
+		*
+		* 首頁獲得商品資訊
+		* */
 		GroupproductVO groupproductVO = groupproductSvc.getOneGroupproduct(groupBuyProductID);
-		List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
-		model.addAttribute("groupproductVOs", groupproductVOs);
+
 		if (groupproductVO == null) {
 			errorMsgs.add("查無資料");
 		}
-		// Send the use back to the form, if there were errors
+
 		if (!errorMsgs.isEmpty()) {
 			return "front-end/groupproduct/select_page";// 程式中斷
 		}
 
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-		// 瀏覽次數
+		model.addAttribute("groupproductVO", groupproductVO);
+
+		List<GroupproductVO> groupproductVOs = groupproductSvc.getAll();
+		model.addAttribute("groupproductVOs", groupproductVOs);
+
+
+		/*Redis 記錄瀏覽次數*/
 		Jedis jedis = new Jedis("localhost", 6379);
 
 		double count_num = 1;
 
 		Map<String, Double> groupViews = new HashMap<>();
 		String strID = groupBuyProductID.toString();
+
 		Double count_current = jedis.zscore("groupViews", strID);
-		// 如果資料庫沒有資料
+		/*
+		* 如果剛上架的商品還沒有瀏覽次數，先給定1
+		* */
 		if (count_current == null) {
 			count_num = 1;
 		} else {
-			// 有資料 : 1 + 目前瀏覽數
+			/* 有資料 : 1 + 目前瀏覽數 */
 			count_num += count_current;
 		}
 
 		groupViews.put(strID, count_num);
-
+		/*
+		* Jedis設定Key & Value
+		* */
 		jedis.zadd("groupViews", groupViews);
-//			由多到少排序 前五
 
+		/*
+		* 從大到小排序瀏覽次數的三個商品
+		* */
 		Set<String> popProducts = jedis.zrevrangeByScore("groupViews", "+inf", "0", 0, 3);
-
+		/*
+		* 最熱門的三個商品編號，存在popProducts
+		* */
 		model.addAttribute("popProducts", popProducts);
 
 		model.addAttribute("count_num" + groupBuyProductID, count_num);
@@ -110,7 +126,7 @@ public class GroupproductController {
 
 		jedis.close();
 
-		model.addAttribute("groupproductVO", groupproductVO); // 資料庫取出的empVO物件,存入req
+
 		return "back-end/groupproduct/listOneGroupProduct";
 	}
 

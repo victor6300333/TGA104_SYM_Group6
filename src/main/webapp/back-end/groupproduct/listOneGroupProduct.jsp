@@ -196,7 +196,7 @@
 							<div class="tab-content">
 								<div id="description" class="container tab-pane active">
 									<h4>商品描述</h4>
-									<p>${groupproductVO.groupBuyProductDescrip}</p>
+									<p style="white-space: pre-line">${groupproductVO.groupBuyProductDescrip}</p>
 								</div>
 								<div id="specification" class="container tab-pane fade">
 									<h4>Product specification</h4>

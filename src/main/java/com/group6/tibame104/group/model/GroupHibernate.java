@@ -21,7 +21,9 @@ public class GroupHibernate implements GroupDAO_interface {
 	public void update(GroupVO groupVO) {
 		session.update(groupVO);
 	}
-
+	/*
+	 * 參加團購後，更新團購總人數
+	 * */
 	@Override
 	public void updateGroupQua(GroupVO groupVO) {
 		final String hql = "UPDATE GroupVO "

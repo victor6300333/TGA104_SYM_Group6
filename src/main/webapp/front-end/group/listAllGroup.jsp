@@ -106,7 +106,7 @@
               </div> -->
 					</div>
 				</div>
-		</div>
+
 		</nav>
 	</div>
 	</div>
@@ -153,7 +153,7 @@
 			<ul class="breadcrumb">
 				<li class="breadcrumb-item"><a
 					href="${pageContext.request.contextPath}/front-end/group/listAllGroup.jsp">首頁</a></li>
-				<li class="breadcrumb-item active">團購</a></li>
+				<li class="breadcrumb-item active">團購</li>
 
 			</ul>
 		</div>
@@ -206,7 +206,7 @@
 										test="${(groupVO.groupBuyingState == true)&&(groupVO.groupBuyProductID == groupproductVO.groupBuyProductID) }"
 										var="cc">
 										<div class="col-md-4">
-											<form id="msform" METHOD="post" class="col-md-12"
+											<form id="msform1" METHOD="post" class="col-md-12"
 												style="border: 0px"
 												ACTION="${pageContext.request.contextPath}/back-end/groupproduct/getOneForDisplay">
 												<div class="col-md-4">
@@ -235,12 +235,11 @@
 												</div>
 											</form>
 										</div>
-										<form id="msform" METHOD="post"
-											ACTION="${pageContext.request.contextPath}/front-end/group/addOrder"
-											style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px; border: 0.1px solid #cdcdcd; margin-bottom: 10px">
 											<div class="product-content">
 												<div class="col-md-12">
-
+													<form id="msform" METHOD="post"
+														  ACTION="${pageContext.request.contextPath}/front-end/group/addOrder"
+														  style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 5px; border: 0.1px solid #cdcdcd; margin-bottom: 10px">
 													<br>
 													<div>
 														<h3>目前團購數 :</h3>
@@ -255,7 +254,7 @@
 															pattern="yyyy-MM-dd HH:mm:ss" /></td> <br>
 
 													<td><h3>商品描述 :</h3></td>
-													<td>${groupproductVO.groupBuyProductDescrip}</td> <br>
+													<p style="white-space: pre-line">${groupproductVO.groupBuyProductDescrip}</p> <br>
 													<br>
 
 													<ul id="progressbar" class="progressbar">
@@ -290,7 +289,7 @@
 														value="${groupVO.groupBuyID}"> <input
 														type="hidden" name="groupBuyProductID"
 														value="${groupVO.groupBuyProductID}">
-										</FORM>
+										</form>
 						</div>
 					</div>
 					<br>
@@ -559,20 +558,10 @@
 										</form>
 									</div>
 									  `;
-									  
 									  str = str + str1;
-									  
 							}
 							console.log(str);
 						  $("#listAll").html(str);
-						  
-						  
-						  
-						  
-						  
-						  
-						  
-						  
 						  },
 						  error: function(xhr){         // request 發生錯誤的話執行
 						    console.log(xhr);
